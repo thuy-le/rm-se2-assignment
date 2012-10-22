@@ -5,7 +5,6 @@
 package devfortress.models;
 
 import devfortress.enumerations.SkillInfo;
-import devfortress.enumerations.SkillTypes;
 
 /**
  *
@@ -26,7 +25,7 @@ public class Skill {
     public Skill(SkillInfo skill) {
         this.level = 0;
         this.skillInfo = skill;
-        calculateCost();
+        nextLevelCost = calculateCost();
     }
 
     public int getLevel() {
@@ -35,6 +34,10 @@ public class Skill {
 
     public SkillInfo getSkillInfo() {
         return skillInfo;
+    }
+
+    public int getNextLevelCost() {
+        return nextLevelCost;
     }
 
     public void levelUp() {
