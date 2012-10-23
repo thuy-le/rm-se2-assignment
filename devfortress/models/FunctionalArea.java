@@ -4,6 +4,7 @@
  */
 package devfortress.models;
 
+import devfortress.enumerations.SkillInfo;
 import java.util.LinkedList;
 
 /**
@@ -11,10 +12,6 @@ import java.util.LinkedList;
  * @author btqua_000
  */
 public class FunctionalArea {
-
-    private LinkedList<Developer> developers;
+    private SkillInfo name;
     private int functionPoints;
-    private int duration;
-    private int level;
-    private LinkedList<FunctionalArea> areas;
 }

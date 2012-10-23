@@ -4,6 +4,8 @@
  */
 package devfortress;
 
+import devfortress.enumerations.SkillInfo;
+
 /**
  *
  * @author btqua_000
@@ -15,5 +17,6 @@ public class DevFortress {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+       
     }
 }

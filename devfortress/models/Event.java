@@ -1,4 +1,4 @@
-package the.devfortress;
+package devfortress.models;
 
 /*
  * To change this template, choose Tools | Templates
