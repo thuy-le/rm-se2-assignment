@@ -1,14 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package devfortress.models;
 
 import devfortress.enumerations.SkillInfo;
 import java.util.TreeMap;
 
 /**
- *
+ * Implementation of the Developer class in the game.
+ * <p>Each developer has a {@code name} ({@code String}), {@code happy} status
+ * {@code boolean} (happy, unhappy and neutral), a skill set({@link java.util.TreeMap})
+ * for skills and a {@code salary} calculated base on skill set.</p>
  * @author PC
  */
 public class Developer {
@@ -24,8 +23,6 @@ public class Developer {
         this.salary = salary;
     }
 
-    
-    
     public boolean isHappy() {
         return happy;
     }

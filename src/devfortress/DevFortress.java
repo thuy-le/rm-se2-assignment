@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package devfortress;
 
 import devfortress.enumerations.SkillInfo;
@@ -17,6 +13,5 @@ public class DevFortress {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       
     }
 }
