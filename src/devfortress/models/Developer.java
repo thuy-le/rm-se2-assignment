@@ -97,13 +97,13 @@ public class Developer {
     /* Used when initialize a new developer or train a new skill */
     public void addSkill(Skill skill) {
         skills.put(skill.getSkillInfo(), skill);
-        notifySkillsChanged();
+        re_calculateDeveloperInfo();
     }
 
     /* NOT FINISHED!!! Null Pointer Exception*/
     public void trainSkill(SkillInfo skillInfo) {
         skills.get(skillInfo).levelUp();
-        notifySkillsChanged();
+        re_calculateDeveloperInfo();
     }
 
     /* This function is called by project */
@@ -117,7 +117,7 @@ public class Developer {
     }
 
     /*Private methods */
-    private void notifySkillsChanged() {
+    private void re_calculateDeveloperInfo() {
         determineMainSkill();
         calculateSalary();
     }
