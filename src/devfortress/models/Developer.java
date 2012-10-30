@@ -12,7 +12,7 @@ import java.util.TreeMap;
 
 /**
  *
- * @author PC
+ * @author Team Poseidon
  */
 public class Developer {
 
@@ -102,7 +102,13 @@ public class Developer {
 
     /* NOT FINISHED!!! Null Pointer Exception*/
     public void trainSkill(SkillInfo skillInfo) {
-        skills.get(skillInfo).levelUp();
+        Skill skill = skills.get(skillInfo);
+        if (skill != null) {
+            skills.get(skillInfo).levelUp();
+        } else {
+            Skill s = new Skill(1, skillInfo);
+            skills.put(skillInfo, s);
+        }
         re_calculateDeveloperInfo();
     }
 

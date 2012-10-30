@@ -7,7 +7,7 @@ package devfortress.models;
 
 /**
  *
- * @author PC
+ * @author Team Poseidon
  */
 public class Event {
     private String name;

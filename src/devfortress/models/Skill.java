@@ -8,7 +8,7 @@ import devfortress.enumerations.SkillInfo;
 
 /**
  *
- * @author btqua_000
+ * @author Team Poseidon
  */
 public class Skill implements Comparable<Skill> {
 
@@ -23,7 +23,7 @@ public class Skill implements Comparable<Skill> {
     }
 
     public Skill(SkillInfo skill) {
-        this.level = 0;
+        this.level = 1;
         this.skillInfo = skill;
         nextLevelCost = calculateCost();
     }

@@ -4,7 +4,7 @@ import devfortress.enumerations.SkillInfo;
 
 /**
  *
- * @author btqua_000
+ * @author Team Poseidon
  */
 public class DevFortress {
 

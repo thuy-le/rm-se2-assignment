@@ -2,7 +2,7 @@ package devfortress.models;
 
 /**
  *
- * @author PC
+ * @author Team Poseidon
  */
 public interface EffectImplementation {
     void takeEffect(Event event);

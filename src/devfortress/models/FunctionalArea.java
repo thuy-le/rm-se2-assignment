@@ -4,14 +4,15 @@
  */
 package devfortress.models;
 
-import devfortress.enumerations.SkillInfo;
+import devfortress.enumerations.AreaName;
 
 /**
  *
- * @author btqua_000
+ * @author Team Poseidon
  */
 public class FunctionalArea {
-    private SkillInfo name;
+
+    private AreaName name;
     private int functionPoints;
     private int reducedPoints;
 }

@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 /**
  *
- * @author btqua_000
+ * @author Team Poseidon
  */
 public class Project {
 

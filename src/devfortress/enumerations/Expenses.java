@@ -2,7 +2,7 @@ package devfortress.enumerations;
 
 /**
  *
- * @author btqua_000
+ * @author Team Poseidon
  */
 public enum Expenses {
 
