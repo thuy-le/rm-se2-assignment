@@ -10,7 +10,7 @@ import devfortress.enumerations.SkillInfo;
  *
  * @author btqua_000
  */
-public class Skill {
+public class Skill implements Comparable<Skill> {
 
     private int level;
     private SkillInfo skillInfo;
@@ -98,5 +98,16 @@ public class Skill {
             n *= m;
         }
         return n;
+    }
+
+    @Override
+    public int compareTo(Skill o) {
+        if (this.level < o.getLevel()) {
+            return -1;
+        } else if (this.level > o.getLevel()) {
+            return 1;
+        } else {
+            return this.skillInfo.getName().compareTo(o.getSkillInfo().getName());
+        }
     }
 }

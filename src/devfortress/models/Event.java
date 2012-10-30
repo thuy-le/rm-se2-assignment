@@ -14,6 +14,7 @@ public class Event {
     private float chance;
     private int effect;
     private EffectImplementation imp;
+    private Project effectedProject;
 
     public float getChance() {
         return chance;

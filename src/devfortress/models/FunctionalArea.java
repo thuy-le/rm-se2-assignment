@@ -13,4 +13,5 @@ import devfortress.enumerations.SkillInfo;
 public class FunctionalArea {
     private SkillInfo name;
     private int functionPoints;
+    private int reducedPoints;
 }

@@ -4,7 +4,10 @@
  */
 package devfortress.models;
 
+import devfortress.exceptions.WorkingProjectException;
 import devfortress.enumerations.SkillInfo;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.TreeMap;
 
 /**
@@ -15,54 +18,127 @@ public class Developer {
 
     private String name;
     private TreeMap<SkillInfo, Skill> skills;
-    private boolean happy;
+    private SkillInfo mainSkill;
+    private boolean happy, fed, drunk;
     private int salary;
+    private Project workingProject;
 
-    public Developer(String name, TreeMap<SkillInfo, Skill> skills, int salary) {
+    public Developer(String name) {
         this.name = name;
-        this.skills = skills;
-        this.salary = salary;
+        this.skills = new TreeMap<SkillInfo, Skill>();
+        this.mainSkill = null;
+        this.salary = 0;
+        this.workingProject = null;
     }
+    /* Getters */
 
-    
-    
     public boolean isHappy() {
         return happy;
     }
 
-    public void setHappy(boolean happy) {
-        this.happy = happy;
+    public boolean isFed() {
+        return fed;
+    }
+
+    public boolean isDrunk() {
+        return drunk;
+    }
+
+    public SkillInfo getMainSkill() {
+        return mainSkill;
+    }
+
+    public Project getWorkingProject() {
+        return workingProject;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getSalary() {
         return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
     }
 
     public TreeMap<SkillInfo, Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(TreeMap<SkillInfo, Skill> skills) {
-        if (this.skills != null && this.skills != skills) {
-            this.skills.clear();
-            this.skills = null;
+    /* Setters */
+    public void setHappy(boolean happy) {
+        this.happy = happy;
+    }
+    /* Everyweek, have to feed developers */
+
+    public void feed() {
+        this.fed = true;
+    }
+    /* Give him some beers */
+
+    public void drink() {
+        this.drunk = true;
+        this.happy = true;
+    }
+    /* This method is called every week */
+
+    public void getTired() {
+        double rand = Math.random();
+        if (rand < 0.4) {
+            happy = false;
         }
-        this.skills = skills;
+        fed = false;
     }
 
-    public void trainSkill(SkillInfo skill) {
+    /* Events can make developers unhappy */
+    public void getUnhappy() {
+        happy = false;
     }
-//Add skill
+
+    /* Used when initialize a new developer or train a new skill */
+    public void addSkill(Skill skill) {
+        skills.put(skill.getSkillInfo(), skill);
+        notifySkillsChanged();
+    }
+
+    /* NOT FINISHED!!! Null Pointer Exception*/
+    public void trainSkill(SkillInfo skillInfo) {
+        skills.get(skillInfo).levelUp();
+        notifySkillsChanged();
+    }
+
+    /* This function is called by project */
+    public void acceptProject(Project project) throws WorkingProjectException {
+        workingProject = project;
+    }
+
+    /* This function is called by project */
+    public void leaveProject() {
+        workingProject = null;
+    }
+
+    /*Private methods */
+    private void notifySkillsChanged() {
+        determineMainSkill();
+        calculateSalary();
+    }
+
+    private void determineMainSkill() {
+        LinkedList<Skill> skillList = new LinkedList<Skill>();
+        for (SkillInfo key : skills.keySet()) {
+            skillList.add(skills.get(key));
+        }
+        Collections.sort(skillList);
+        mainSkill = skillList.get(0).getSkillInfo();
+    }
+
+    private void calculateSalary() {
+        int totalPoint = 0;
+        for (SkillInfo key : skills.keySet()) {
+            totalPoint += skills.get(key).getLevel();
+        }
+        if (mainSkill != null) {
+            totalPoint += skills.get(mainSkill).getLevel();
+        }
+        this.salary = totalPoint * 10;
+    }
 }
