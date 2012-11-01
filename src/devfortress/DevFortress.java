@@ -1,7 +1,5 @@
 package devfortress;
 
-import devfortress.enumerations.SkillInfo;
-
 /**
  *
  * @author Team Poseidon
