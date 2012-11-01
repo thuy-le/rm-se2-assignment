@@ -18,6 +18,7 @@ public class GameEngine {
     private List<Developer> developers, marketDevelopers;
     private List<Project> projects, marketProjects;
     private static GameEngine instance;
+    private String fileName;
 
     private GameEngine(int budget) {
         this.budget = budget;
@@ -25,6 +26,7 @@ public class GameEngine {
         this.projects = new LinkedList<Project>();
         this.marketProjects = new LinkedList<Project>();
         this.marketDevelopers = new LinkedList<Developer>();
+        this.fileName = null;
     }
 
     public static void initialize(int budget) {
@@ -88,5 +90,21 @@ public class GameEngine {
     }
 
     public void removeDeveloperFromProject(Developer dev, Project pro) {
+    }
+
+    /* System */
+    public void nextWeek() {
+    }
+
+    public void save(String file) {
+    }
+
+    public void load(String file) {
+    }
+
+    public void quit() {
+        if (fileName == null || fileName.length() == 0) {
+        } else {
+        }
     }
 }
