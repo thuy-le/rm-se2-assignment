@@ -4,7 +4,7 @@
  */
 package devfortress.models;
 
-import devfortress.exceptions.WorkingProjectException;
+import devfortress.exceptions.DeveloperBusyException;
 import devfortress.enumerations.SkillInfo;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -110,12 +110,14 @@ public class Developer {
     }
 
     /* This function is only called by project */
-    public void acceptProject(Project project) throws WorkingProjectException {
+    public void acceptProject(Project project) throws DeveloperBusyException {
         if (workingProject != null) {
-            throw new WorkingProjectException();
-        } else {
-            workingProject = project;
+            if (workingProject == project) {
+                throw new DeveloperBusyException("Developer has already accepted this project");
+            }
+            throw new DeveloperBusyException();
         }
+        workingProject = project;
     }
 
     /* This function is only called by project */

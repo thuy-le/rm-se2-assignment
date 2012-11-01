@@ -49,6 +49,6 @@ public class Event {
     }
     
     public void takeEffect(){
-        imp.takeEffect(this);
+        imp.takeEffect(effectedProject);
     }
 }

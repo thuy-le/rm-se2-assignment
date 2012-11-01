@@ -5,5 +5,5 @@ package devfortress.models;
  * @author Team Poseidon
  */
 public interface EffectImplementation {
-    void takeEffect(Event event);
+    void takeEffect(Project project);
 }

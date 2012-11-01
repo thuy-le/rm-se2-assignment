@@ -15,4 +15,5 @@ public class FunctionalArea {
     private AreaName name;
     private int functionPoints;
     private int reducedPoints;
+    private boolean visible;
 }
