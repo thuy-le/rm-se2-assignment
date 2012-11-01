@@ -7,8 +7,8 @@ package devfortress.models;
 import devfortress.exceptions.WorkingProjectException;
 import devfortress.enumerations.SkillInfo;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.LinkedList;
-import java.util.TreeMap;
 
 /**
  *
@@ -17,7 +17,7 @@ import java.util.TreeMap;
 public class Developer {
 
     private String name;
-    private TreeMap<SkillInfo, Skill> skills;
+    private EnumMap<SkillInfo, Skill> skills;
     private SkillInfo mainSkill;
     private boolean happy, fed, drunk;
     private int salary;
@@ -25,7 +25,7 @@ public class Developer {
 
     public Developer(String name) {
         this.name = name;
-        this.skills = new TreeMap<SkillInfo, Skill>();
+        this.skills = new EnumMap<SkillInfo, Skill>(SkillInfo.class);
         this.mainSkill = null;
         this.salary = 0;
         this.workingProject = null;
@@ -60,27 +60,29 @@ public class Developer {
         return salary;
     }
 
-    public TreeMap<SkillInfo, Skill> getSkills() {
+    public EnumMap<SkillInfo, Skill> getSkills() {
         return skills;
     }
 
-    /* Setters */
+    /* Setters
+     * Events can make developers unhappy or happy
+     */
     public void setHappy(boolean happy) {
         this.happy = happy;
     }
-    /* Everyweek, have to feed developers */
 
+    /* Everyweek, have to feed developers */
     public void feed() {
         this.fed = true;
     }
-    /* Give him some beers */
 
+    /* Give him some beers */
     public void drink() {
         this.drunk = true;
         this.happy = true;
     }
-    /* This method is called every week */
 
+    /* This method is called every week */
     public void getTired() {
         double rand = Math.random();
         if (rand < 0.4) {
@@ -89,18 +91,13 @@ public class Developer {
         fed = false;
     }
 
-    /* Events can make developers unhappy */
-    public void getUnhappy() {
-        happy = false;
-    }
-
     /* Used when initialize a new developer or train a new skill */
     public void addSkill(Skill skill) {
         skills.put(skill.getSkillInfo(), skill);
         re_calculateDeveloperInfo();
     }
 
-    /* NOT FINISHED!!! Null Pointer Exception*/
+    /* Select the skill to train */
     public void trainSkill(SkillInfo skillInfo) {
         Skill skill = skills.get(skillInfo);
         if (skill != null) {
@@ -112,12 +109,16 @@ public class Developer {
         re_calculateDeveloperInfo();
     }
 
-    /* This function is called by project */
+    /* This function is only called by project */
     public void acceptProject(Project project) throws WorkingProjectException {
-        workingProject = project;
+        if (workingProject != null) {
+            throw new WorkingProjectException();
+        } else {
+            workingProject = project;
+        }
     }
 
-    /* This function is called by project */
+    /* This function is only called by project */
     public void leaveProject() {
         workingProject = null;
     }
