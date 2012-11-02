@@ -113,7 +113,7 @@ public class GameEngine {
         /* Time changes */
         date.nextWeek();
         /* Calculate other factors */
-        if (date.getMonth() == 0) {
+        if (date.getMonth() == 1) {
             /* Projects, Developers, Events... */
         }
     }
