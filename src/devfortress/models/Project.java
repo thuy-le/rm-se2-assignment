@@ -47,15 +47,15 @@ public class Project {
         return level;
     }
 
-    public LinkedList<FunctionalArea> getAreas() {
+    public final LinkedList<FunctionalArea> getAreas() {
         return areas;
     }
 
-    public LinkedList<Developer> getDevelopers() {
+    public final LinkedList<Developer> getDevelopers() {
         return developers;
     }
 
-    public LinkedList<Event> getEvents() {
+    public final LinkedList<Event> getEvents() {
         return events;
     }
 

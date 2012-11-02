@@ -15,7 +15,8 @@ import java.util.List;
  */
 public class GameEngine {
 
-    private int budget, year, month, week;
+    private int budget;
+    private DevDate date;
     private List<Developer> developers, marketDevelopers;
     private List<Project> projects, marketProjects;
     private static GameEngine instance;
@@ -27,9 +28,7 @@ public class GameEngine {
         this.projects = new LinkedList<Project>();
         this.marketProjects = new LinkedList<Project>();
         this.marketDevelopers = new LinkedList<Developer>();
-        this.year = 0;
-        this.month = 1;
-        this.week = 1;
+        this.date = new DevDate();
         this.playerName = playerName;
         this.fileName = null;
     }
@@ -57,20 +56,12 @@ public class GameEngine {
         return playerName;
     }
 
-    public int getWeek() {
-        return week;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public int getYear() {
-        return year;
+    public DevDate getDate() {
+        return date;
     }
 
     /* Manage Developers */
-    public List<Developer> getAllDevelopers() {
+    public List<Developer> getDevelopers() {
         return developers;
     }
 
@@ -94,7 +85,7 @@ public class GameEngine {
     }
 
     /* Manage Projects */
-    public List<Project> getAllProjects() {
+    public List<Project> getProjects() {
         return projects;
     }
 
@@ -120,19 +111,11 @@ public class GameEngine {
     /* System */
     public void nextWeek() {
         /* Time changes */
-        if (week < 3) {
-            week++;
-        } else {
-            week = 0;
-            if (month < 12) {
-                month++;
-            } else {
-                month = 0;
-                year++;
-            }
-        }
+        date.nextWeek();
         /* Calculate other factors */
-        /* Projects, Developers, Events... */
+        if (date.getMonth() == 0) {
+            /* Projects, Developers, Events... */
+        }
     }
 
     public void save(String file) {
