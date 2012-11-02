@@ -4,6 +4,7 @@
  */
 package devfortress.models;
 
+import devfortress.exceptions.GameNotInitilizedException;
 import devfortress.enumerations.SkillInfo;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,30 +19,54 @@ public class GameEngine {
     private List<Developer> developers, marketDevelopers;
     private List<Project> projects, marketProjects;
     private static GameEngine instance;
-    private String fileName;
+    private String playerName, fileName;
 
-    private GameEngine(int budget) {
+    private GameEngine(String playerName, int budget) {
         this.budget = budget;
         this.developers = new LinkedList<Developer>();
         this.projects = new LinkedList<Project>();
         this.marketProjects = new LinkedList<Project>();
         this.marketDevelopers = new LinkedList<Developer>();
+        this.year = 0;
+        this.month = 1;
+        this.week = 1;
+        this.playerName = playerName;
         this.fileName = null;
     }
 
-    public static void initialize(int budget) {
+    public synchronized static void initialize(String playerName, int budget) {
         if (instance != null) {
-            instance = new GameEngine(budget);
+            instance = new GameEngine(playerName, budget);
         }
     }
 
-    public static GameEngine getInstance() {
+    public synchronized static GameEngine getInstance() throws GameNotInitilizedException {
         if (instance != null) {
             return instance;
         } else {
-            initialize(1000);
-            return instance;
+            throw new GameNotInitilizedException();
         }
+    }
+
+    /* Getters */
+    public int getBudget() {
+        return budget;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public int getWeek() {
+        return week;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getYear() {
+        return year;
     }
 
     /* Manage Developers */
@@ -94,6 +119,20 @@ public class GameEngine {
 
     /* System */
     public void nextWeek() {
+        /* Time changes */
+        if (week < 3) {
+            week++;
+        } else {
+            week = 0;
+            if (month < 12) {
+                month++;
+            } else {
+                month = 0;
+                year++;
+            }
+        }
+        /* Calculate other factors */
+        /* Projects, Developers, Events... */
     }
 
     public void save(String file) {
