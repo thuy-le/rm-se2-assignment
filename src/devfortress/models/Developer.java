@@ -4,11 +4,13 @@
  */
 package devfortress.models;
 
+import devfortress.enumerations.AreaName;
 import devfortress.exceptions.DeveloperBusyException;
 import devfortress.enumerations.SkillInfo;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
@@ -17,11 +19,12 @@ import java.util.LinkedList;
 public class Developer {
 
     private String name;
-    private EnumMap<SkillInfo, Skill> skills;
+    private Map<SkillInfo, Skill> skills;
     private SkillInfo mainSkill;
     private boolean happy, fed, drunk;
     private int salary;
     private Project workingProject;
+    private AreaName workingArea;
 
     public Developer(String name) {
         this.name = name;
@@ -29,6 +32,7 @@ public class Developer {
         this.mainSkill = null;
         this.salary = 0;
         this.workingProject = null;
+        this.workingArea = null;
     }
     /* Getters */
 
@@ -44,12 +48,20 @@ public class Developer {
         return drunk;
     }
 
+    public boolean isAvailable() {
+        return workingProject == null && workingArea == null;
+    }
+
     public SkillInfo getMainSkill() {
         return mainSkill;
     }
 
     public Project getWorkingProject() {
         return workingProject;
+    }
+
+    public AreaName getWorkingArea() {
+        return workingArea;
     }
 
     public String getName() {
@@ -60,7 +72,7 @@ public class Developer {
         return salary;
     }
 
-    public EnumMap<SkillInfo, Skill> getSkills() {
+    public final Map<SkillInfo, Skill> getSkills() {
         return skills;
     }
 
@@ -110,7 +122,7 @@ public class Developer {
     }
 
     /* This function is only called by project */
-    public void acceptProject(Project project) throws DeveloperBusyException {
+    public void acceptProject(Project project, AreaName area) throws DeveloperBusyException {
         if (workingProject != null) {
             if (workingProject == project) {
                 throw new DeveloperBusyException("Developer has already accepted this project");
@@ -118,12 +130,15 @@ public class Developer {
             throw new DeveloperBusyException();
         }
         workingProject = project;
+        workingArea = area;
     }
 
     /* This function is only called by project */
     public void leaveProject() {
         workingProject = null;
+        workingArea = null;
     }
+
 
     /* Private methods */
     private void re_calculateDeveloperInfo() {
