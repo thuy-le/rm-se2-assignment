@@ -5,11 +5,8 @@
 package devfortress.models;
 
 import devfortress.enumerations.AreaName;
-import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.ReadOnlySet;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -75,7 +72,7 @@ public class FunctionalArea {
         }
         return false;
     }
-    
+
     /* Assume that developer is occupied by this Functional Area.
      * This function is called by Project */
     public boolean removeDeveloper(Developer dev) {

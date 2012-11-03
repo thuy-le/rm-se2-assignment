@@ -7,6 +7,7 @@ package devfortress.models;
 import devfortress.enumerations.AreaName;
 import devfortress.exceptions.DeveloperBusyException;
 import devfortress.enumerations.SkillInfo;
+import devfortress.utilities.ReadOnlyMap;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -72,8 +73,8 @@ public class Developer {
         return salary;
     }
 
-    public final Map<SkillInfo, Skill> getSkills() {
-        return skills;
+    public Map<SkillInfo, Skill> getSkills() {
+        return new ReadOnlyMap<SkillInfo, Skill>(skills);
     }
 
     /* Setters

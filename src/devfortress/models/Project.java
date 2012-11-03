@@ -50,17 +50,17 @@ public class Project {
         return level;
     }
 
-    public final Map<AreaName, FunctionalArea> getAreas() {
+    public Map<AreaName, FunctionalArea> getAreas() {
         return new ReadOnlyMap<AreaName, FunctionalArea>(areas);
     }
 
-    public final List<Developer> getDevelopers() {
+    public List<Developer> getDevelopers() {
         List<Developer> devs = new LinkedList<Developer>();
         /*$$$ Need elaboration*/
         return new ReadOnlyList<Developer>(devs);
     }
 
-    public final List<Event> getEvents() {
+    public List<Event> getEvents() {
         return new ReadOnlyList<Event>(events);
     }
 

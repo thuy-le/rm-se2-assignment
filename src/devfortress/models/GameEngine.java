@@ -6,6 +6,7 @@ package devfortress.models;
 
 import devfortress.exceptions.GameNotInitilizedException;
 import devfortress.enumerations.SkillInfo;
+import devfortress.utilities.ReadOnlyList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,11 +63,11 @@ public class GameEngine {
 
     /* Manage Developers */
     public List<Developer> getDevelopers() {
-        return developers;
+        return new ReadOnlyList<Developer>(developers);
     }
 
     public List<Developer> getMarketDevelopers() {
-        return marketDevelopers;
+        return new ReadOnlyList<Developer>(marketDevelopers);
     }
 
     public void hireDeveloper(Developer dev) {
@@ -86,11 +87,11 @@ public class GameEngine {
 
     /* Manage Projects */
     public List<Project> getProjects() {
-        return projects;
+        return new ReadOnlyList<Project>(projects);
     }
 
     public List<Project> getMarketProjects() {
-        return marketProjects;
+        return new ReadOnlyList<Project>(marketProjects);
     }
 
     public void cancelProject(Project project) {
