@@ -61,6 +61,6 @@ public enum SkillInfo {
 
     @Override
     public String toString() {
-        return "SkillInfo{" + "name=" + name + ", type=" + type + '}';
+        return name;
     }
 }

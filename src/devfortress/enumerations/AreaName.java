@@ -9,5 +9,5 @@ package devfortress.enumerations;
  * @author Team Poseidon
  */
 public interface AreaName {
-    
+   
 }
