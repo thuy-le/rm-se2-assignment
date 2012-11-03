@@ -12,7 +12,7 @@ public enum AreaName {
 
     //Area Name
     CODING("Coding"),
-    PROJECT_MANAGER("Project Manager"),
+    PROJECT_MANAGEMENT("Project Management"),
     DATABASE_DESIGN("Database Designing"),
     SYSTEM_DESIGN("System Designing"),
     SQL_DESIGN("SQL Designing"),
@@ -25,8 +25,8 @@ public enum AreaName {
     ITERATION_TESTING("Iteration Testing"),
     SYSTEM_TESTING("System Testing"),
     TEST_MANAGEMENT("Test Management"),
-    SYSTEM_ANALYZE("System Analyze"),
-    UI_ANALYZE("UI Analyze"),
+    SYSTEM_ANALYSIS("System Analysis"),
+    UI_ANALYSIS("UI Analysis"),
     UI_DEVELOPMENT("UI Development"),
     DOCUMENTATION("Documentation"),
     DATABASE_DEVELOPMENT("Database Development"),

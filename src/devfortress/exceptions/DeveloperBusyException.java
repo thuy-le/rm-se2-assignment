@@ -8,7 +8,7 @@ package devfortress.exceptions;
  *
  * @author Team Poseidon
  */
-public class DeveloperBusyException extends Exception {
+public class DeveloperBusyException extends DevFortressException {
 
     public DeveloperBusyException(String message) {
         super(message);
