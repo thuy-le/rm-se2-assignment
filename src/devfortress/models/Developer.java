@@ -125,7 +125,7 @@ public class Developer {
         workingProject = null;
     }
 
-    /*Private methods */
+    /* Private methods */
     private void re_calculateDeveloperInfo() {
         determineMainSkill();
         calculateSalary();
@@ -140,6 +140,9 @@ public class Developer {
         mainSkill = skillList.get(0).getSkillInfo();
     }
 
+    /**
+     * Calculate the salary of the developer.
+     */
     private void calculateSalary() {
         int totalPoint = 0;
         for (SkillInfo key : skills.keySet()) {
