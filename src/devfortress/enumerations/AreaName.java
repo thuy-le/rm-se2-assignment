@@ -12,7 +12,7 @@ public enum AreaName {
 
     //Area Name
     CODING("Coding"),
-    PROJECT_MANAGER("Project Manager"),
+    PROJECT_MANAGING("Project Managing"),
     DATABASE_DESIGN("Database Designing"),
     SYSTEM_DESIGN("System Designing"),
     SQL_DESIGN("SQL Designing"),
