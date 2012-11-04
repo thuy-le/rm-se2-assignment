@@ -41,7 +41,9 @@ public class GameEngine {
         this.fileName = null;
     }
 
-    /* This method should only be called once */
+    /**
+     * This method should only be called once
+     */
     public static void initialize(String playerName, int budget) throws GameAlreadyInitializedException {
         synchronized (GameEngine.class) {
             if (instance != null) {
@@ -52,7 +54,9 @@ public class GameEngine {
         }
     }
 
-    /* initialize(name,budget) need to be called first */
+    /**
+     * <code>{@link #initialize(String, int)}</code> need to be called first
+     */
     public synchronized static GameEngine getInstance() throws GameNotInitilizedException {
         if (instance != null) {
             return instance;
@@ -87,6 +91,10 @@ public class GameEngine {
         return new ReadOnlyList<Developer>(marketDevelopers);
     }
 
+    /**
+     * Hire a <code>{@link Developer}</code> and purchare a new PC if needed.
+     * @param dev new <code>{@link Developer}</code> to hire.
+     */
     public void hireDeveloper(Developer dev) {
         int cost = (numPCs > developers.size()) ? 0 : Expenses.PC.getCost();
         if (developers.add(dev)) {
@@ -95,6 +103,12 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Fire a <code>{@link Developer}</code>.
+     * @param dev the <code>{@link Developer}</code> to fire.
+     * @throws DeveloperBusyException Cannot fire the developer when he is working
+     * on a project.
+     */
     public void fireDeveloper(Developer dev) throws DeveloperBusyException {
         if (dev.isAvailable()) {
             developers.remove(dev);
@@ -103,6 +117,14 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Feed the <code>{@link Developer}</code> with pizza, coffee and redbull to
+     * keep the Developer work for 1 week.
+     * @param dev
+     * @throws InsufficientBudgetException Cannot feed the developer if the
+     * budget is too short
+     * @see Expenses
+     */
     public void feedDeveloper(Developer dev) throws InsufficientBudgetException {
         int cost = (Expenses.PIZZA.getCost() + Expenses.COFFEE.getCost()) * 5 + Expenses.REDBULL.getCost();
         if (budget >= cost) {
@@ -114,6 +136,13 @@ public class GameEngine {
 
     }
 
+    /**
+     * Give beer to <code>{@link Developer}</code> to keep he happy,
+     * but also halve his productivity.
+     * @param dev
+     * @throws InsufficientBudgetException
+     * @see Expenses
+     */
     public void giveDeveloperBeer(Developer dev) throws InsufficientBudgetException {
         int cost = Expenses.BEER.getCost();
         if (budget >= cost) {
@@ -124,6 +153,12 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Spend money to train or upgrade a skill for one <code>{@link Developer}</code>.
+     * @param dev
+     * @param skill the skill that need to be learn or upgrade
+     * @throws InsufficientBudgetException 
+     */
     public void trainDeveloper(Developer dev, SkillInfo skill) throws InsufficientBudgetException {
         int cost = dev.getSkills().get(skill).getNextLevelCost();
         if (budget >= cost) {
@@ -154,12 +189,20 @@ public class GameEngine {
         budget -= project.getBudget() / 4;
     }
 
+    /**
+     * Accept project and receive 25% of project budget.
+     * @param project 
+     */
     public void acceptProject(Project project) {
         projects.add(project);
         marketProjects.remove(project);
         budget += project.getBudget() / 4;
     }
 
+    /**
+     * Receive 75% of project budget when the project completed.
+     * @param project 
+     */
     public void receiveMoney(Project project) {
         budget += project.getBudget() * 3 / 4 + project.getBonus();
         project.removeAllDevelopers();
@@ -190,10 +233,20 @@ public class GameEngine {
         }
     }
 
-    public void save(String file) {
+    /**
+     * Save the game to the file. (Binary file)
+     * @param file Namepath of the save file
+     */
+    public void saveBinary(String file) {
     }
 
-    public void load(String file) {
+    /**
+     * Load the game from the file. (Binary file)
+     * <p>Override the current instance of <code>GameEngine</code> by the loaded
+     * instance from the saved file.</p>
+     * @param file Namepath of the saved file
+     */
+    public static void loadBinary(String file) {
     }
 
     public void quit() {
