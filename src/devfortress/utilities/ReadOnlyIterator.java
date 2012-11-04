@@ -10,7 +10,7 @@ import java.util.Iterator;
  *
  * @author Team Poseidon
  */
-public class ReadOnlyIterator<E> implements Iterator<E> {
+class ReadOnlyIterator<E> implements Iterator<E> {
 
     private Iterator<E> itr;
 

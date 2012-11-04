@@ -19,13 +19,13 @@ public class Skill implements Comparable<Skill> {
     public Skill(int level, SkillInfo skill) {
         this.level = level;
         this.skillInfo = skill;
-        nextLevelCost = calculateCost();
+        nextLevelCost = calculateNextLevelCost();
     }
 
     public Skill(SkillInfo skill) {
         this.level = 1;
         this.skillInfo = skill;
-        nextLevelCost = calculateCost();
+        nextLevelCost = calculateNextLevelCost();
     }
 
     public int getLevel() {
@@ -45,43 +45,45 @@ public class Skill implements Comparable<Skill> {
         if (level < 10) {
             level++;
         }
-        calculateCost();
+        nextLevelCost = calculateNextLevelCost();
     }
 
-    private int calculateCost() {
-        int cost;
-        switch (skillInfo.getType()) {
-            case TECHNICAL:
-                switch (skillInfo) {
-                    case LISP:
-                    case HASKELL:
-                    case FORTH:
-                        cost = formula1(2, 4);
-                        break;
-                    case VHDL:
-                        cost = formula1(2, 2);
-                        break;
-                    default:
-                        cost = formula1(1, 2);
-                }
-                break;
-            case META:
-                switch (skillInfo) {
-                    case ALGORITHMS:
-                        cost = formula2(3, 2);
-                        break;
-                    default:
-                        cost = formula2(2, 2);
-                }
-                break;
-            case PERSONAL:
-                cost = formula2(2, 2);
-                break;
-            case CONFIGURATION_MANAGEMENT:
-                cost = formula1(5, 2);
-                break;
-            default:
-                cost = 1;
+    private int calculateNextLevelCost() {
+        int cost = 0;
+        if (level < 10) {
+            switch (skillInfo.getType()) {
+                case TECHNICAL:
+                    switch (skillInfo) {
+                        case LISP:
+                        case HASKELL:
+                        case FORTH:
+                            cost = formula1(2, 4);
+                            break;
+                        case VHDL:
+                            cost = formula1(2, 2);
+                            break;
+                        default:
+                            cost = formula1(1, 2);
+                    }
+                    break;
+                case META:
+                    switch (skillInfo) {
+                        case ALGORITHMS:
+                            cost = formula2(3, 2);
+                            break;
+                        default:
+                            cost = formula2(2, 2);
+                    }
+                    break;
+                case PERSONAL:
+                    cost = formula2(2, 2);
+                    break;
+                case CONFIGURATION_MANAGEMENT:
+                    cost = formula1(5, 2);
+                    break;
+                default:
+                    cost = 1;
+            }
         }
         return cost;
     }
