@@ -8,7 +8,7 @@ package devfortress.exceptions;
  *
  * @author Team Poseidon
  */
-public class GameNotInitilizedException extends Exception {
+public class GameNotInitilizedException extends DevFortressException {
 
     public GameNotInitilizedException(String message) {
         super(message);

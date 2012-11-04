@@ -8,13 +8,13 @@ package devfortress.exceptions;
  *
  * @author Team Poseidon
  */
-public class DeveloperBusyException extends DevFortressException {
+public class DevFortressException extends Exception {
 
-    public DeveloperBusyException(String message) {
+    public DevFortressException(String message) {
         super(message);
     }
 
-    public DeveloperBusyException() {
-        super("Developer is working on a project");
+    public DevFortressException() {
+        super("Unspecified exception has been thrown");
     }
 }

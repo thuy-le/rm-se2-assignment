@@ -6,8 +6,13 @@ package devfortress.models;
 
 import devfortress.enumerations.AreaName;
 import devfortress.exceptions.DeveloperBusyException;
-import java.util.Iterator;
+import devfortress.exceptions.InvalidFunctionalAreaException;
+import devfortress.utilities.ReadOnlyList;
+import devfortress.utilities.ReadOnlyMap;
+import java.util.EnumMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,16 +21,14 @@ import java.util.LinkedList;
 public class Project {
 
     private int duration, level, budget, bonus;
-    private LinkedList<Developer> developers;
-    private LinkedList<FunctionalArea> areas;
-    private LinkedList<Event> events;
+    private Map<AreaName, FunctionalArea> areas;
+    private List<Event> events;
 
-    public Project(int duration, int level, LinkedList<FunctionalArea> areas) {
+    public Project(int duration, int level, EnumMap<AreaName, FunctionalArea> areas) {
         this.duration = duration;
         this.level = level;
         this.areas = areas;
-        this.developers = new LinkedList<Developer>();
-        this.areas = new LinkedList<FunctionalArea>();
+        this.areas = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
         this.events = new LinkedList<Event>();
         calculateBudget();
     }
@@ -47,35 +50,35 @@ public class Project {
         return level;
     }
 
-    public final LinkedList<FunctionalArea> getAreas() {
-        return areas;
+    public Map<AreaName, FunctionalArea> getAreas() {
+        return new ReadOnlyMap<AreaName, FunctionalArea>(areas);
     }
 
-    public final LinkedList<Developer> getDevelopers() {
-        return developers;
+    public List<Developer> getDevelopers() {
+        List<Developer> devs = new LinkedList<Developer>();
+        for (FunctionalArea area : areas.values()) {
+            devs.addAll(area.getDevelopers());
+        }
+        return new ReadOnlyList<Developer>(devs);
     }
 
-    public final LinkedList<Event> getEvents() {
-        return events;
+    public List<Event> getEvents() {
+        return new ReadOnlyList<Event>(events);
     }
 
     /* Developers are added when project is created */
-    public void addDeveloper(Developer dev) throws DeveloperBusyException {
-        dev.acceptProject(this);
-        developers.add(dev);
+    public void addDeveloper(Developer dev, AreaName area) throws DeveloperBusyException, InvalidFunctionalAreaException {
+        FunctionalArea fArea = areas.get(area);
+        if (fArea == null) {
+            throw new InvalidFunctionalAreaException("\"" + area + "\" is not in the project's requirements");
+        }
+        dev.acceptProject(this, area);
     }
 
     /* Developers can be removed after each turn */
     public void removeDeveloper(Developer dev) {
-        Iterator<Developer> itr = developers.iterator();
-        while (itr.hasNext()) {
-            Developer d = itr.next();
-            if (d == dev) {
-                d.leaveProject();
-                itr.remove();
-                break;
-            }
-        }
+        areas.get(dev.getWorkingArea()).removeDeveloper(dev);
+        dev.leaveProject();
     }
 
     public void removeFunctionalArea(AreaName area) {
@@ -98,15 +101,14 @@ public class Project {
      * or a faster way to remove developers after each turn */
 
     public void removeAllDevelopers() {
-        for (Developer d : developers) {
-            d.leaveProject();
-        }
-        developers.clear();
     }
 
     /* Private methods and functions */
     private void calculateBudget() {
         budget = level * duration * 300;
         bonus = 0;
+    }
+
+    private void generateRandomMarketEvents() {
     }
 }

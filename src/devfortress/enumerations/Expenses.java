@@ -7,7 +7,7 @@ package devfortress.enumerations;
 public enum Expenses {
 
     PC("PC", 2000),
-    BEAR("Bear", 5),
+    BEER("Beer", 5),
     COFFEE("Coffee", 5),
     REDBULL("Red Bull", 5),
     PIZZA("Pizza", 20);
