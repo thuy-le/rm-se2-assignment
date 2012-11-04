@@ -56,7 +56,9 @@ public class Project {
 
     public List<Developer> getDevelopers() {
         List<Developer> devs = new LinkedList<Developer>();
-        /*$$$ Need elaboration*/
+        for (FunctionalArea area : areas.values()) {
+            devs.addAll(area.getDevelopers());
+        }
         return new ReadOnlyList<Developer>(devs);
     }
 
@@ -75,6 +77,8 @@ public class Project {
 
     /* Developers can be removed after each turn */
     public void removeDeveloper(Developer dev) {
+        areas.get(dev.getWorkingArea()).removeDeveloper(dev);
+        dev.leaveProject();
     }
 
     public void removeFunctionalArea(AreaName area) {
