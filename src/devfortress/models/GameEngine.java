@@ -7,7 +7,6 @@ package devfortress.models;
 import devfortress.enumerations.AreaName;
 import devfortress.exceptions.InsufficientBudgetException;
 import devfortress.enumerations.Expenses;
-import devfortress.enumerations.ProjectStatus;
 import devfortress.exceptions.GameNotInitilizedException;
 import devfortress.enumerations.SkillInfo;
 import devfortress.exceptions.DeveloperBusyException;
