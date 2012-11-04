@@ -5,6 +5,7 @@
 package devfortress.models;
 
 import devfortress.enumerations.AreaName;
+import devfortress.enumerations.ProjectStatus;
 import devfortress.exceptions.DeveloperBusyException;
 import devfortress.exceptions.InvalidFunctionalAreaException;
 import devfortress.utilities.ReadOnlyList;
@@ -21,6 +22,7 @@ import java.util.Map;
 public class Project {
 
     private int duration, level, budget, bonus;
+    private ProjectStatus status;
     private Map<AreaName, FunctionalArea> areas;
     private List<Event> events;
 
@@ -30,6 +32,7 @@ public class Project {
         this.areas = areas;
         this.areas = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
         this.events = new LinkedList<Event>();
+        this.status = ProjectStatus.AVAILABLE;
         calculateBudget();
     }
 
@@ -50,6 +53,10 @@ public class Project {
         return level;
     }
 
+    public ProjectStatus getStatus() {
+        return status;
+    }
+
     public Map<AreaName, FunctionalArea> getAreas() {
         return new ReadOnlyMap<AreaName, FunctionalArea>(areas);
     }
@@ -62,6 +69,11 @@ public class Project {
 
     public List<Event> getEvents() {
         return new ReadOnlyList<Event>(events);
+    }
+
+    /* Setters */
+    public void setStatus(ProjectStatus status) {
+        this.status = status;
     }
 
     /* Developers are added when project is created */

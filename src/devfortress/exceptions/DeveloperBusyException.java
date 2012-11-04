@@ -15,6 +15,6 @@ public class DeveloperBusyException extends DevFortressException {
     }
 
     public DeveloperBusyException() {
-        super("Developer is working on another project");
+        super("Developer is working on a project");
     }
 }
