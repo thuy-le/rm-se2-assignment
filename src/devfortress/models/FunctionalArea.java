@@ -31,7 +31,7 @@ public class FunctionalArea {
     }
 
     /* Getters */
-    public final Set<Developer> getDevelopers() {
+    public Set<Developer> getDevelopers() {
         return new ReadOnlySet<Developer>(developers);
     }
 

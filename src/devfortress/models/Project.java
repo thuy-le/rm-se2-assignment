@@ -71,7 +71,6 @@ public class Project {
             throw new InvalidFunctionalAreaException("\"" + area + "\" is not in the project's requirements");
         }
         dev.acceptProject(this, area);
-
     }
 
     /* Developers can be removed after each turn */
