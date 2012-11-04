@@ -4,6 +4,7 @@
  */
 package devfortress.models;
 
+import devfortress.enumerations.AreaName;
 import devfortress.exceptions.GameNotInitilizedException;
 import devfortress.enumerations.SkillInfo;
 import java.util.LinkedList;
@@ -102,7 +103,7 @@ public class GameEngine {
     public void receiveMoney(Project project) {
     }
 
-    public void assignDeveloperToProject(Developer dev, Project pro) {
+    public void assignDeveloperToProject(Developer dev, Project pro, AreaName area) {
     }
 
     public void removeDeveloperFromProject(Developer dev, Project pro) {
