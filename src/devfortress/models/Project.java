@@ -104,4 +104,7 @@ public class Project {
         budget = level * duration * 300;
         bonus = 0;
     }
+
+    private void generateRandomMarketEvents() {
+    }
 }

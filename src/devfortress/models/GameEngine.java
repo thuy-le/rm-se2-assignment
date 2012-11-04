@@ -130,4 +130,23 @@ public class GameEngine {
         } else {
         }
     }
+    /* Private methods and functions*/
+
+    private Developer getRandomDeveloper() {
+        return null;
+    }
+
+    private Event getRandomEvent() {
+        return null;
+    }
+
+    private Project getRandomProject() {
+        return null;
+    }
+
+    private void generateRandomMarketDevelopers() {
+    }
+
+    private void generateRandomMarketProjects() {
+    }
 }
