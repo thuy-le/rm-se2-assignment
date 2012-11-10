@@ -27,7 +27,7 @@ public class DevFortress {
     public static void main(String[] args) {
         List<String> names = null;
         long t1 = System.currentTimeMillis();
-        for (long i = 0; i < 1000000000; i++) {
+        for (long i = 0; i < 1000000; i++) {
             names = Utilities.getNameList();
         }
         System.out.println("Done: " + (System.currentTimeMillis() - t1));
