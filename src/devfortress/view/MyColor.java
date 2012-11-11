@@ -36,4 +36,7 @@ public class MyColor {
     public static Color lightBlue4 = new Color(51, 183, 253);
     public static Color lightBlue5 = new Color(26, 173, 251);
     public static Color lightBlue6 = new Color(6, 168, 253);
+    public static Color redOrange = new Color(251,100,75);
+    public static Color redOrangeDark = new Color(251,88,37);
+    public static Color blueGrey = new Color(99,120,187);
 }
