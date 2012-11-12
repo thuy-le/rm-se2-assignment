@@ -11,8 +11,10 @@ import javax.swing.JPanel;
  *
  * @author PC
  */
+
+//Create a class which could be transparent
 public class GlassPanel extends JPanel {
-    
+    //declare variables
     public int x;
     public int y;
     public int width;
@@ -21,7 +23,7 @@ public class GlassPanel extends JPanel {
     public Color colour;
     public int arcW;
     public int arcH;
-    
+    //constructor
     GlassPanel(final int x, final int y, final int width, final int height, final float alpha, final Color colour, final int arcW, final int arcH){
         this.x = x;
         this.y = y;
@@ -33,7 +35,7 @@ public class GlassPanel extends JPanel {
         this.arcH = arcH;
         setOpaque(false);
     }
-
+    //override paintComponent method
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -43,9 +45,9 @@ public class GlassPanel extends JPanel {
         if(colour!=null)
         g2d.setColor(colour);
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
-        //g2d.dispose();
     }
-    
+    //override getPreferredSize method
+    @Override
     public Dimension getPreferredSize(){
         return new Dimension(width, height);
     }

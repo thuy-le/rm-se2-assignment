@@ -23,9 +23,9 @@ public class DevFortress extends JFrame {
     JMenuBar menuBar;
     JMenu fileMenu, devMenu, prjMenu, aboutMenu;
     JMenuItem newMI, exitMI, viewAllDevMI, viewAllPrjMI;
-    GlassPanel systemTab;
-    GlassPanel developerTab;
-    GlassPanel projectTab;
+    DeveloperContainer developerContainer;
+    ProjectContainer projectContainer;
+    SystemContainer systemContainer;
     JTabbedPane containerTab;
 
     //constructor
@@ -51,6 +51,7 @@ public class DevFortress extends JFrame {
         setContentPane(jpanel);
         
         //JFrame default config;
+        setTitle("❤ DevFortress");
         jpanel.setLayout(new BorderLayout());
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -61,13 +62,13 @@ public class DevFortress extends JFrame {
         //customize look and feel
         menuBar.setUI(new CustomMenuBarUI());
         menuBar.setBorderPainted(true);
-        menuBar.setBorder(BorderFactory.createLineBorder(MyColor.blueGrey, 1, true));
+        menuBar.setBorder(BorderFactory.createLineBorder(Colour.blueGrey, 1, true));
         UIManager.put("MenuBar.font", new Font("Century Gothic", Font.BOLD, 16));
         UIManager.put("Menu.font", new Font("Century Gothic", Font.BOLD, 16));
         UIManager.put("MenuItem.font", new Font("Century Gothic", Font.PLAIN, 15));
-        UIManager.put("Menu.foreground", MyColor.lightBlue1);
-        UIManager.put("Menu.selectionBackground", MyColor.lightBlue1);
-        UIManager.put("Menu.selectionForeground", MyColor.darkBlue2);
+        UIManager.put("Menu.foreground", Colour.lightBlue1);
+        UIManager.put("Menu.selectionBackground", Colour.lightBlue1);
+        UIManager.put("Menu.selectionForeground", Colour.darkBlue2);
         menuBar.setPreferredSize(new Dimension(800, 38));
         JMenu blank = new JMenu("");
         blank.setEnabled(false);
@@ -100,17 +101,14 @@ public class DevFortress extends JFrame {
         containerTab.setOpaque(false);
 
         //initialize System Container
-        systemTab = new GlassPanel(0, 5, 750, 420, 0.8f, MyColor.middleRed, 10, 10);
-        //add System Container to JTabbedPane
-        containerTab.add("System", systemTab);
+        systemContainer = new SystemContainer();
+        containerTab.add("System", systemContainer);
         //initialize the Developer Container
-        DeveloperContainer devTab = new DeveloperContainer();
-        //add Developer Container to JTabbedPane
-        containerTab.add("Developer", devTab);
+        developerContainer = new DeveloperContainer();
+        containerTab.add("Developer", developerContainer);
         //initialize the Project Container
-        projectTab = new GlassPanel(0, 5, 750, 420, 0.8f, MyColor.youngGreen, 10, 10);        
-        //Add project Container to JTabbedPane
-        containerTab.add("Project", projectTab);
+        projectContainer = new ProjectContainer();
+        containerTab.add("Project", projectContainer);
 
         //add menu bar and tab pane to JFrame
         getContentPane().add(menuBar, BorderLayout.NORTH);

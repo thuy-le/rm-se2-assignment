@@ -10,7 +10,7 @@ import java.awt.Color;
  *
  * @author PC
  */
-public class MyColor {
+public class Colour {
 
     public static Color matenga = new Color(184, 250, 228);
     public static Color orange = new Color(252,183,48);
@@ -26,7 +26,7 @@ public class MyColor {
     public static Color darkGrey = new Color(58, 70, 93);
     public static Color greenBlue = new Color(162, 250, 214);
     public static Color purple = new Color(236, 188, 252);
-    public static Color yellow = new Color(252, 245, 48);
+    public static Color yellow = new Color(251, 253, 124);
     public static Color darkPink = new Color(248, 82, 121);
     public static Color lightRed = new Color(253, 230, 230);
     public static Color middleRed = new Color(254,104,118);
@@ -39,4 +39,10 @@ public class MyColor {
     public static Color redOrange = new Color(251,100,75);
     public static Color redOrangeDark = new Color(251,88,37);
     public static Color blueGrey = new Color(99,120,187);
+    public static Color lightOrange = new Color(253,246,213);
+    public static Color brown = new Color(62,17,4);
+    public static Color darkOrange = new Color(234,178,44);
+    public static Color greenYellow = new Color(169,234,44);
+    public static Color greenYellow2 = new Color(144,215,8);
+    public static Color deepBlue = new Color(8,81,215);
 }

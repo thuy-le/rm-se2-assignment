@@ -26,6 +26,7 @@ public class CustomButton extends JPanel {
     private int width;
     private int height;
     private Color colour;
+    private Color textColour;
     private String text;
 
     //constructor
@@ -36,6 +37,8 @@ public class CustomButton extends JPanel {
         this.height = height;
         this.colour = colour;
         this.text = text;
+        this.textColour = Color.WHITE;
+        this.setOpaque(false);
     }
 
     //accessors and mutators
@@ -45,6 +48,11 @@ public class CustomButton extends JPanel {
 
     public void setColour(Color colour) {
         this.colour = colour;
+    }
+    
+    public void setTextColour(Color c){
+        this.textColour = c;
+        repaint();
     }
 
     //override the paintComponent method --> draw the button
@@ -59,7 +67,7 @@ public class CustomButton extends JPanel {
         }
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
         g.setFont(f);
-        g.setColor(new Color(255, 255, 255));
+        g.setColor(textColour);
         FontMetrics fm = g.getFontMetrics();
         int fx = (width - fm.stringWidth(text)) / 2;
         int fy = (fm.getAscent() + (height - (fm.getAscent() + fm.getDescent())) / 2);

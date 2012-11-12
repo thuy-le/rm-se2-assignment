@@ -77,7 +77,7 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
             int mnemIndex = tabPane.getDisplayedMnemonicIndexAt(tabIndex);
             if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
                 if (tabPane.getSelectedIndex() != tabIndex) {
-                    g.setColor(MyColor.lightBlue1);
+                    g.setColor(Colour.lightBlue1);
                 } else {
                     g.setColor(new Color(7, 53, 170));
                 }
