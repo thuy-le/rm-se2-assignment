@@ -4,6 +4,7 @@
  */
 package devfortress.view;
 
+import devfortress.utilities.Colour;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.JTableHeader;

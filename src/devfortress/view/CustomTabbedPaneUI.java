@@ -1,5 +1,6 @@
 package devfortress.view;
 
+import devfortress.utilities.Colour;
 import java.awt.*;
 import java.util.Arrays;
 import javax.swing.JComponent;

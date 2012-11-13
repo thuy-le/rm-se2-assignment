@@ -4,10 +4,9 @@
  */
 package devfortress.view;
 
+import devfortress.utilities.Colour;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.plaf.InsetsUIResource;
 
 /**
  *
@@ -38,6 +37,7 @@ public class DevFortress extends JFrame {
         //set background for JFrame;
         background = new ImageIcon(strImagePath);
         jpanel = new JPanel() {
+
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -49,16 +49,9 @@ public class DevFortress extends JFrame {
             }
         };
         setContentPane(jpanel);
-        
-        //JFrame default config;
-        setTitle("❤ DevFortress");
         jpanel.setLayout(new BorderLayout());
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         //initialize JMenu:
         menuBar = new JMenuBar();
-        
         //customize look and feel
         menuBar.setUI(new CustomMenuBarUI());
         menuBar.setBorderPainted(true);
@@ -74,7 +67,6 @@ public class DevFortress extends JFrame {
         blank.setEnabled(false);
         blank.setPreferredSize(new Dimension(15, 0));
         menuBar.add(blank);
-
         //add items to JMenu
         fileMenu = new JMenu("File");
         newMI = new JMenuItem("New");
@@ -92,14 +84,12 @@ public class DevFortress extends JFrame {
         menuBar.add(prjMenu);
         aboutMenu = new JMenu("About");
         menuBar.add(aboutMenu);
-
         //initialize JTabbedPane
         containerTab = new JTabbedPane();
         containerTab.setUI(new CustomTabbedPaneUI());
         containerTab.setSize(750, 550);
         UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE);
         containerTab.setOpaque(false);
-
         //initialize System Container
         systemContainer = new SystemContainer();
         containerTab.add("System", systemContainer);
@@ -109,13 +99,17 @@ public class DevFortress extends JFrame {
         //initialize the Project Container
         projectContainer = new ProjectContainer();
         containerTab.add("Project", projectContainer);
-
         //add menu bar and tab pane to JFrame
         getContentPane().add(menuBar, BorderLayout.NORTH);
         getContentPane().add(containerTab, BorderLayout.CENTER);
-
         //pack
         pack();
+        //JFrame default config;
+        setTitle("❤ DevFortress");
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     public static void main(String agrs[]) {
