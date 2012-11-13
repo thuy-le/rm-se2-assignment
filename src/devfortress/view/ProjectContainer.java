@@ -135,9 +135,9 @@ public class ProjectContainer extends JPanel {
         table.setBorder(BorderFactory.createLineBorder(Colour.brown, 1));
         table.setRowHeight(25);
         JTableHeader header = table.getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(Colour.brown, 1));
+        header.setBorder(BorderFactory.createLineBorder(Colour.darkGreen, 1));
         header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(Colour.orange);
+        header.setBackground(Colour.darkGreen);
         header.setForeground(Color.WHITE);
         JScrollPane tableScroll = new JScrollPane(table);
         tableScroll.setBorder(BorderFactory.createEmptyBorder());
