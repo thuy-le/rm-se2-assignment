@@ -74,7 +74,7 @@ public class Developer {
     }
 
     public Map<SkillInfo, Skill> getSkills() {
-        return new ReadOnlyMap<SkillInfo, Skill>(skills);
+        return new ReadOnlyMap<>(skills);
     }
 
     /* Setters
@@ -148,7 +148,7 @@ public class Developer {
     }
 
     private void determineMainSkill() {
-        LinkedList<Skill> skillList = new LinkedList<Skill>();
+        LinkedList<Skill> skillList = new LinkedList<>();
         for (SkillInfo key : skills.keySet()) {
             skillList.add(skills.get(key));
         }
