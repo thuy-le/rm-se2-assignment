@@ -8,7 +8,7 @@ import static org.junit.Assert.fail;
 import org.junit.*;
 
 /**
- *
+ * Unit test for <code>{@link DevDate}</code>.
  * @author Team Poseidon
  */
 public class DevDateTest {
