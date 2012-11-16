@@ -4,6 +4,7 @@
  */
 package devfortress.view;
 
+import devfortress.utilities.Colour;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
  *
  * @author PC
  */
-public class CustomButton extends JPanel {
+public class CustomButton extends JPanel{
 
     //declare constant variables 
     private static final int arcW = 5;
@@ -30,15 +31,16 @@ public class CustomButton extends JPanel {
     private String text;
 
     //constructor
-    public CustomButton(final int x, final int y, final int width, final int height, final Color colour, final String text) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.colour = colour;
+    public CustomButton(final String text) {
+        this.x = 0;
+        this.y = 0;
+        this.width = 150;
+        this.height = 35;
+        this.colour = Colour.DARKBLUE;
         this.text = text;
-        this.textColour = Color.WHITE;
+        this.textColour = Colour.LIGHTBLUE;
         this.setOpaque(false);
+        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     //accessors and mutators
@@ -48,10 +50,18 @@ public class CustomButton extends JPanel {
 
     public void setColour(Color colour) {
         this.colour = colour;
+        repaint();
     }
     
     public void setTextColour(Color c){
         this.textColour = c;
+        repaint();
+    }
+    public void setButtonSize(final int x, final int y, final int width, final int height){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         repaint();
     }
 
