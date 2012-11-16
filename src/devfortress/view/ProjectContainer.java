@@ -4,12 +4,8 @@
  */
 package devfortress.view;
 
-import devfortress.models.Developer;
-import devfortress.models.Project;
 import devfortress.utilities.Colour;
-import devfortress.view.interfaces.ProjectInterface;
 import java.awt.*;
-import java.util.LinkedList;
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 
@@ -17,11 +13,11 @@ import javax.swing.table.JTableHeader;
  *
  * @author PC
  */
-public class ProjectContainer extends JPanel implements ProjectInterface{
+public class ProjectContainer extends JPanel {
 
     //initialize constant variables
     static private final float alpha = 0.8f;
-    static private final Color colour = Colour.YOUNGGREEN;
+    static private final Color colour = Colour.youngGreen;
     static private final int x = 0;
     static private final int y = 5;
     static private final int width = 750;
@@ -39,31 +35,38 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
         //set border layout to the container
         setLayout(new BorderLayout());
 
-        //------Create a JList of developers
-            //list
+        //-------Left Hand Side:
+            //Create a container for contents on the left
+        GlassPanel gp = new GlassPanel(20, 20, 279, 330, 1f, Colour.darkGreen, 10, 10);
+            //Initialize items of JList
         String s[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        JList prjList = new JList(s);
-            //buttons
-        java.util.List<CustomButton> btnList = new LinkedList<>();
-        CustomButton btnAdd = new CustomButton("Add Project");
-        btnList.add(btnAdd);
-            //add button(s) and list together
-        CustomList projectList = new CustomList(prjList, btnList);        
-        //-------Adjust look and feel
-        btnAdd.setColour(Colour.DARKBLUE);
-        projectList.setColor(Colour.DARKBLUE);
-        btnAdd.setTextColour(Colour.LIGHTBLUE);
-        btnAdd.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-        prjList.setSelectionBackground(Colour.LIGHTGREEN);
-        prjList.setSelectionForeground(Colour.DARKBLUE);
-        prjList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-        //-------Add component
-        add(projectList, BorderLayout.WEST);
+            //create a JList with those items
+        JList projectList = new JList(s);
+            //create a scrollpane
+        JScrollPane scrollPane = new JScrollPane(projectList);
+            //adjust look and feel
+        projectList.setSelectionBackground(Colour.lightGreen);
+        projectList.setSelectionForeground(Colour.darkGreen);
+        projectList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+        scrollPane.setPreferredSize(new Dimension(250, 320));
+        GlassPanel marginLeft = new GlassPanel(0, 0, 15, 360, 0f, Colour.darkBlue2, 0, 0);
+        gp.add(marginLeft, BorderLayout.WEST);
+            //Button: Add new Project
+        GlassPanel bottom = new GlassPanel(0, 0, 250, 40, 0f, null, 0, 0);
+        CustomButton btnAdd = new CustomButton(0, 0, 150, 35, Colour.darkGreen, "Add Project");
+        btnAdd.addMouseListener(new CustomButtonEvent(Colour.darkGreen, Colour.darkGreenYellow));
+            //add components
+        gp.add(projectList, BorderLayout.CENTER);
+        gp.add(scrollPane, BorderLayout.CENTER);
+        scrollPane.getViewport().add(projectList);
+        add(gp, BorderLayout.WEST);
+        bottom.add(btnAdd);
+        gp.add(bottom, BorderLayout.SOUTH);
 
         //------Right Hand Side:
         //---Top:
             //Create a container for contents on the right
-        GlassPanel rightPanel = new GlassPanel(25, 25, 450, 380, 1f, Colour.LIGHTORANGE, 5, 5);
+        GlassPanel rightPanel = new GlassPanel(25, 25, 425, 380, 1f, Colour.lightOrange, 5, 5);
             //display developer name
         JLabel developerDetail = new JLabel("Project Details");
         //the "top" panel contain (1) avatar, and basic details about developer
@@ -72,37 +75,44 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
             //display cancel button
         String picture = "images/cancel.png";
         Icon imgIcon = new ImageIcon(picture);
-        JLabel imageIcon = new CustomLabel(imgIcon);
+        JLabel imageIcon = new JLabel(imgIcon) {
+            @Override
+            public JToolTip createToolTip() {
+                JToolTip tooltip = super.createToolTip();
+                tooltip.setFont(new Font("Century Gothic", Font.BOLD, 16));
+                tooltip.setForeground(Colour.darkGreen);
+                tooltip.setBorder(BorderFactory.createLineBorder(Colour.darkGreen, 1));
+                tooltip.setOpaque(false);
+                return tooltip;
+            }
+        };
         imageIcon.setOpaque(false);
         imageIcon.setPreferredSize(new Dimension(50, 50));
         imageIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
             //display basic details
         JPanel topR = new JPanel();
-        JLabel prjName = new JLabel("Project Name");
-        JLabel deadline = new JLabel("Deadline");
-        JLabel cost = new JLabel("Cost");
-        JLabel info1 = new JLabel("Info1");
+        JLabel devName = new JLabel("Project Name");
+        JLabel mainSkill = new JLabel("Deadline");
+        JLabel workingPrj = new JLabel("Cost");
         JLabel status = new JLabel("Status");
             //adjust look and feel
         imageIcon.setToolTipText("Cancel this project");
-        topR.setBackground(Colour.LIGHTORANGE);
-        topR.setPreferredSize(new Dimension(200, 120));
-        topR.setLayout(new GridLayout(5, 1));
-        top.setBackground(Colour.LIGHTORANGE);
+        topR.setBackground(Colour.lightOrange);
+        topR.setPreferredSize(new Dimension(200, 100));
+        topR.setLayout(new GridLayout(4, 1));
+        top.setBackground(Colour.lightOrange);
         top.setLayout(new GridLayout(1, 2));
         Font font = new Font("Century Gothic", Font.BOLD, 17);
-        prjName.setFont(font);
-        deadline.setFont(font);
-        info1.setFont(font);
+        devName.setFont(font);
+        mainSkill.setFont(font);
+        workingPrj.setFont(font);
         status.setFont(font);
-        cost.setFont(font);
-        developerDetail.setForeground(Colour.DARKBLUE);
+        developerDetail.setForeground(Colour.brown);
         developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
             //add components
-        topR.add(prjName);
-        topR.add(deadline);
-        topR.add(info1);
-        topR.add(cost);
+        topR.add(devName);
+        topR.add(mainSkill);
+        topR.add(workingPrj);
         topR.add(status);
         top.add(topR);
         top.add(imageIcon);
@@ -112,7 +122,7 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
 
         //---Bottom: contains a list of developers who belong to the project
             //Create a table:
-        String data[][] = {{"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}};
+        String data[][] = {{"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}};
         String col[] = {"Developer", "Skill"};
         JTable table = new JTable(data, col) {
             @Override
@@ -120,40 +130,24 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
                 return false;
             }
         };
-        
-        //add buttons
-        JPanel bottom = new JPanel();
-        CustomButton btnAddDev = new CustomButton("Add Developer");
-        CustomButton btnRemoveDev = new CustomButton("Remove Developer");
-        
             //adjust look and feel:
         table.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        table.setBorder(BorderFactory.createLineBorder(Colour.GREEN, 1));
+        table.setBorder(BorderFactory.createLineBorder(Colour.brown, 1));
         table.setRowHeight(25);
         JTableHeader header = table.getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(Colour.DARKGREEN, 1));
+        header.setBorder(BorderFactory.createLineBorder(Colour.darkGreen, 1));
         header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(Colour.DARKGREEN);
+        header.setBackground(Colour.darkGreen);
         header.setForeground(Color.WHITE);
         JScrollPane tableScroll = new JScrollPane(table);
         tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(400, 180));
-        tableScroll.setBackground(Colour.DARKGREEN);
-        tableScroll.getViewport().setBackground(Colour.LIGHTORANGE);
+        tableScroll.setPreferredSize(new Dimension(400, 220));
+        tableScroll.setBackground(Colour.lightOrange);
+        tableScroll.getViewport().setBackground(Colour.lightOrange);
         tableScroll.setBounds(30, 0, 380, 150);
         tableScroll.getViewport().setViewPosition(new Point(0, 0));
-        bottom.setPreferredSize(new Dimension(440, 45));
-        bottom.setBackground(Colour.LIGHTORANGE);
-        bottom.setLayout(new FlowLayout());
-        btnAddDev.setButtonSize(0, 0, 175, 35);
-        btnAddDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-        btnRemoveDev.setButtonSize(0, 0, 175, 35);
-        btnRemoveDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
             //add components
-        bottom.add(btnAddDev);
-        bottom.add(btnRemoveDev);
         rightPanel.add(tableScroll, BorderLayout.NORTH);
-        rightPanel.add(bottom, BorderLayout.SOUTH);
     }
 
     //override the paint component method
@@ -172,25 +166,5 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
-    }
-
-    @Override
-    public void addNewProject(Project project) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void cancelProject(Project project) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void addDeveloper(Project project, Developer developer) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void removeDeveloper(Project project, Developer developer) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

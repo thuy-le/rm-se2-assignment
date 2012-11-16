@@ -6,8 +6,6 @@ package devfortress.view;
 
 import devfortress.utilities.Colour;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 /**
@@ -21,7 +19,9 @@ public class DevFortress extends JFrame {
     //declare variables
     ImageIcon background;
     JPanel jpanel;
-    JToolBar toolbar;
+    JMenuBar menuBar;
+    JMenu fileMenu, devMenu, prjMenu, aboutMenu;
+    JMenuItem newMI, exitMI, viewAllDevMI, viewAllPrjMI;
     DeveloperContainer developerContainer;
     ProjectContainer projectContainer;
     SystemContainer systemContainer;
@@ -50,47 +50,40 @@ public class DevFortress extends JFrame {
         };
         setContentPane(jpanel);
         jpanel.setLayout(new BorderLayout());
-
-        //initialize JToolbar:
-        toolbar = new JToolBar() {
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setPaint(new GradientPaint(0, 0, Colour.DARKBLUE2, 0, getHeight(), Colour.DARKBLUE));
-                g2.fillRect(0, 0, getWidth(), 55);
-                g2.dispose();
-            }
-
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(getWidth(), 55);
-            }
-        };
-        toolbar.setBorder(BorderFactory.createEmptyBorder());
-        JLabel exitGame = new CustomLabel(new ImageIcon("images/exit.png"));
-        exitGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        exitGame.setToolTipText("Exit Game");
-        JLabel newGame = new CustomLabel(new ImageIcon("images/new2.png"));
-        newGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        newGame.setToolTipText("New Game");
-        JLabel saveGame = new CustomLabel(new ImageIcon("images/save.png"));
-        saveGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        saveGame.setToolTipText("Save Game");
-        JLabel aboutGame = new CustomLabel(new ImageIcon("images/about.png"));
-        aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        aboutGame.setToolTipText("About Us");
-        toolbar.add(newGame);
-        toolbar.add(saveGame);
-        toolbar.add(aboutGame);
-        toolbar.add(exitGame);
-
-        //adjust look and feel
-        exitGame.setOpaque(false);
-        newGame.setOpaque(false);
-        saveGame.setOpaque(false);
-        aboutGame.setOpaque(false);
-
+        //initialize JMenu:
+        menuBar = new JMenuBar();
+        //customize look and feel
+        menuBar.setUI(new CustomMenuBarUI());
+        menuBar.setBorderPainted(true);
+        menuBar.setBorder(BorderFactory.createLineBorder(Colour.blueGrey, 1, true));
+        UIManager.put("MenuBar.font", new Font("Century Gothic", Font.BOLD, 16));
+        UIManager.put("Menu.font", new Font("Century Gothic", Font.BOLD, 16));
+        UIManager.put("MenuItem.font", new Font("Century Gothic", Font.PLAIN, 15));
+        UIManager.put("Menu.foreground", Colour.lightBlue1);
+        UIManager.put("Menu.selectionBackground", Colour.lightBlue1);
+        UIManager.put("Menu.selectionForeground", Colour.darkBlue2);
+        menuBar.setPreferredSize(new Dimension(800, 38));
+        JMenu blank = new JMenu("");
+        blank.setEnabled(false);
+        blank.setPreferredSize(new Dimension(15, 0));
+        menuBar.add(blank);
+        //add items to JMenu
+        fileMenu = new JMenu("File");
+        newMI = new JMenuItem("New");
+        exitMI = new JMenuItem("Exit");
+        fileMenu.add(newMI);
+        fileMenu.add(exitMI);
+        menuBar.add(fileMenu);
+        devMenu = new JMenu("Developer");
+        viewAllDevMI = new JMenuItem("View All Developers");
+        devMenu.add(viewAllDevMI);
+        menuBar.add(devMenu);
+        prjMenu = new JMenu("Project");
+        viewAllPrjMI = new JMenuItem("View All Projects");
+        prjMenu.add(viewAllPrjMI);
+        menuBar.add(prjMenu);
+        aboutMenu = new JMenu("About");
+        menuBar.add(aboutMenu);
         //initialize JTabbedPane
         containerTab = new JTabbedPane();
         containerTab.setUI(new CustomTabbedPaneUI());
@@ -106,25 +99,9 @@ public class DevFortress extends JFrame {
         //initialize the Project Container
         projectContainer = new ProjectContainer();
         containerTab.add("Project", projectContainer);
-        
-        //add tool bar and tab pane to JFrame
-        getContentPane().add(toolbar, BorderLayout.NORTH);
+        //add menu bar and tab pane to JFrame
+        getContentPane().add(menuBar, BorderLayout.NORTH);
         getContentPane().add(containerTab, BorderLayout.CENTER);
-        
-        
-        GlassPanel bottomPanel = new GlassPanel(13,0, 752,50,.85f,Colour.DARKBLUE,10,10);
-        add(bottomPanel, BorderLayout.SOUTH);
-        bottomPanel.setLayout(new FlowLayout());
-        JLabel dateLabel = new JLabel("16/11/2012");
-        dateLabel.setFont(new Font("Century Gothic", Font.BOLD, 27));
-        dateLabel.setForeground(Colour.LIGHTBLUE);
-        JLabel nextTurn = new CustomLabel(new ImageIcon("images/right.png"));
-        nextTurn.setToolTipText("Go to the next turn");        
-        nextTurn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        bottomPanel.add(dateLabel);
-        bottomPanel.add(nextTurn);
-        
-        
         //pack
         pack();
         //JFrame default config;
@@ -142,6 +119,6 @@ public class DevFortress extends JFrame {
     //override the getPreferredSize method
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(800, 650);
+        return new Dimension(800, 600);
     }
 }

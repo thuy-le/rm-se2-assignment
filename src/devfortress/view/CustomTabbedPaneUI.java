@@ -43,38 +43,20 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
         //paint the shape of tabs
         int xp[] = new int[]{x, x, x + 3, x + w - inclTab - 6, x + w - inclTab - 2, x + w - inclTab, x + w - inclTab, x};
         int yp[] = new int[]{y + h, y + 3, y, y, y + 1, y + 3, y + h, y + h};
-        gradientShadow = new GradientPaint(0, 0, Colour.DARKBLUE, 0, y + h / 2, Colour.LIGHTBLUE6);
+        gradientShadow = new GradientPaint(0, 0, new Color(113, 174, 250), 0, y + h / 2, new Color(223, 236, 252));
         shape = new Polygon(xp, yp, xp.length);
         if (isSelected) {
-            if (tabIndex == 0) {
-                g2D.setComposite(AlphaComposite.getInstance(
-                        AlphaComposite.SRC_OVER, .7f));
-                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.LIGHTRED, 0, y + 15 + h / 2, Colour.LIGHTRED2);
-                g2D.setPaint(gradientShadowTmp);
-            } else if (tabIndex == 1) {
-                g2D.setComposite(AlphaComposite.getInstance(
-                        AlphaComposite.SRC_OVER, .7f));
-                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.LIGHTORANGE, 0, y + 15 + h / 2, Colour.ORANGE);
-                g2D.setPaint(gradientShadowTmp);
-            } else {
-                g2D.setComposite(AlphaComposite.getInstance(
-                        AlphaComposite.SRC_OVER, .7f));
-                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.LIGHTGREEN, 0, y + 15 + h / 2, Colour.YOUNGGREEN);
-                g2D.setPaint(gradientShadowTmp);
-            }
+            g2D.setComposite(AlphaComposite.getInstance(
+                    AlphaComposite.SRC_OVER, .8f));
+            g2D.setPaint(gradientShadow);
         } else {
             if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
                 g2D.setColor(deSelectColor);
-                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.DARKBLUE2, 0, y + h / 2, Colour.DARKBLUE2);
+                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, new Color(7, 53, 170), 0, y + h / 2, new Color(7, 53, 170));
                 g2D.setPaint(gradientShadowTmp);
             } else {
-                if (tabIndex == 1) {
-                    GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.ORANGE, 0, y + 15 + h / 2, Colour.ORANGE);
-                    g2D.setPaint(gradientShadowTmp);
-                } else {
-                    GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.DARKBLUE, 0, y + 15 + h / 2, Colour.LIGHTBLUE6);
-                    g2D.setPaint(gradientShadowTmp);
-                }
+                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, new Color(240, 255, 210), 0, y + 15 + h / 2, new Color(171, 251, 11));
+                g2D.setPaint(gradientShadowTmp);
             }
         }
         g2D.fill(shape);
@@ -88,7 +70,6 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
     @Override
     protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected) {
         font = new Font("Century Gothic", Font.BOLD, 18);
-        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         g.setFont(font);
         View v = getTextViewForTab(tabIndex);
         if (v != null) {
@@ -97,9 +78,9 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
             int mnemIndex = tabPane.getDisplayedMnemonicIndexAt(tabIndex);
             if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
                 if (tabPane.getSelectedIndex() != tabIndex) {
-                    g.setColor(Colour.LIGHTBLUE);
+                    g.setColor(Colour.lightBlue1);
                 } else {
-                    g.setColor(Colour.DARKGREY);
+                    g.setColor(new Color(7, 53, 170));
                 }
                 BasicGraphicsUtils.drawStringUnderlineCharAt(g, title, mnemIndex, textRect.x - 15, textRect.y + metrics.getAscent());
             } else {
@@ -136,10 +117,8 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
     @Override
     protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
         ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .8f));
-       if(!isSelected){
         g.setColor(new Color(7, 53, 170));
         g.drawPolygon(shape);
-       }
     }
 
     //override the paint method -> make the tabbed pane transparent
@@ -148,8 +127,8 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
         if (tabPane.getTabCount() > 1 || !hideSingleTab) {
             ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
-            c.setSize(750, 450);
-            c.setLocation(15, 75);
+            c.setSize(750, 600);
+            c.setLocation(15, 60);
             super.paint(g, c);
         }
     }
