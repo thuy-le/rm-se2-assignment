@@ -136,7 +136,7 @@ public class DevFortress extends JFrame {
     }
 
     public static void main(String agrs[]) {
-        new DevFortress();
+        DevFortress devFortress = new DevFortress();
     }
 
     //override the getPreferredSize method
