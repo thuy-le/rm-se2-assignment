@@ -5,6 +5,7 @@
 package devfortress.view;
 
 import devfortress.utilities.Colour;
+import devfortress.view.interfaces.CustomListInterface;
 import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -18,7 +19,7 @@ import javax.swing.*;
  *
  * @author PC
  */
-public class CustomList extends JPanel{
+public class CustomList extends JPanel implements CustomListInterface{
     
     //declare static variables:
     private int x;
@@ -46,13 +47,13 @@ public class CustomList extends JPanel{
         this.jList = jList;
         this.buttons = buttons;
         //
+        setLayout(new BorderLayout());
         init();
+        setOpaque(false);
     }
     
     private void init(){
         removeAll();
-        setLayout(new BorderLayout());
-        setOpaque(false);
         GlassPanel topPanel = new GlassPanel(x,y,width-20, height-55,alpha,color,arcW,arcH);
         JScrollPane scrollPane = new JScrollPane(jList);
         GlassPanel bottomPanel = new GlassPanel(x,0,width-20,80, 0f, null, 0, 0);
@@ -92,4 +93,10 @@ public class CustomList extends JPanel{
         repaint();
         init();
     }
+
+    @Override
+    public void viewItem(Object item) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 }
