@@ -40,7 +40,18 @@ public class DeveloperContainer extends JPanel implements DeveloperInterface{
         //------Create a JList of developers
         //list
         String s[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        JList developerList = new JList(s);
+        List<Developer> developers = new LinkedList<>();
+        for(int i = 0; i < s.length; i++){
+            Developer dev = new Developer(s[i]);
+            developers.add(dev);
+        }
+        DefaultListModel listModel = new DefaultListModel();
+        for (Developer developer : developers) {
+            listModel.addElement(developer);
+        }
+        JList developerList = new JList();
+        developerList.setCellRenderer(new GListRenderer());
+        developerList.setModel(listModel);
         //buttons
         List<CustomButton> btnList = new LinkedList<>();
         CustomButton btnHire = new CustomButton("Hire");
