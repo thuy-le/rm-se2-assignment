@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package devfortress.view;
+package devfortress.utilities;
 
 import devfortress.utilities.Colour;
 import java.awt.*;
@@ -14,13 +14,12 @@ import javax.swing.JPanel;
  *
  * @author PC
  */
-public class CustomButton extends JPanel{
+public class CustomButton extends JPanel {
 
     //declare constant variables 
     private static final int arcW = 5;
     private static final int arcH = 5;
     private static final Font f = new Font("Century Gothic", Font.BOLD, 17);
-    
     //declare variables
     private int x;
     private int y;
@@ -29,6 +28,7 @@ public class CustomButton extends JPanel{
     private Color colour;
     private Color textColour;
     private String text;
+    private boolean isActive;
 
     //constructor
     public CustomButton(final String text) {
@@ -41,6 +41,7 @@ public class CustomButton extends JPanel{
         this.textColour = Colour.LIGHTBLUE;
         this.setOpaque(false);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.isActive = true;
     }
 
     //accessors and mutators
@@ -52,17 +53,42 @@ public class CustomButton extends JPanel{
         this.colour = colour;
         repaint();
     }
-    
-    public void setTextColour(Color c){
+
+    public void setTextColour(Color c) {
         this.textColour = c;
         repaint();
     }
-    public void setButtonSize(final int x, final int y, final int width, final int height){
+    
+    public String getText(){
+        return text;
+    }
+    
+    public void setText(String text){
+        this.text = text;
+        repaint();
+    }
+
+    public void setButtonSize(final int x, final int y, final int width, final int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         repaint();
+    }
+
+    public void disableButton() {
+        this.isActive = false;
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        repaint();
+    }
+    public void enableButton(){
+        this.isActive = true;
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+        repaint();
+    }
+    
+    public boolean isActive(){
+        return isActive;
     }
 
     //override the paintComponent method --> draw the button
@@ -73,11 +99,19 @@ public class CustomButton extends JPanel{
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         if (colour != null) {
-            g2d.setColor(colour);
+            if (isActive) {
+                g2d.setColor(colour);
+            } else {
+                g2d.setColor(Colour.MIDDLEGREY);
+            }
         }
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
         g.setFont(f);
-        g.setColor(textColour);
+        if (isActive) {
+            g.setColor(textColour);
+        } else {
+            g.setColor(Colour.LIGHTGREY);
+        }
         FontMetrics fm = g.getFontMetrics();
         int fx = (width - fm.stringWidth(text)) / 2;
         int fy = (fm.getAscent() + (height - (fm.getAscent() + fm.getDescent())) / 2);
@@ -88,37 +122,5 @@ public class CustomButton extends JPanel{
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
-    }
-}
-
-//button's custom events
-class CustomButtonEvent extends MouseAdapter {
-
-    private Color oldColour;
-    private Color newColour;
-
-    public CustomButtonEvent(final Color oldColour, final Color newColour) {
-        this.oldColour = oldColour;
-        this.newColour = newColour;
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        super.mouseEntered(e);
-        if (e.getSource() instanceof CustomButton) {
-            CustomButton cb = (CustomButton) e.getSource();
-            cb.setColour(newColour);
-            cb.repaint();
-        }
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        super.mouseExited(e);
-        if (e.getSource() instanceof CustomButton) {
-            CustomButton cb = (CustomButton) e.getSource();
-            cb.setColour(oldColour);
-            cb.repaint();
-        }
     }
 }

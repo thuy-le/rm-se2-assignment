@@ -1,8 +1,7 @@
-package devfortress.view;
+package devfortress.utilities;
 
 import devfortress.utilities.Colour;
 import java.awt.*;
-import java.util.Arrays;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
@@ -35,7 +34,6 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
     // override the paintTabBackground method
     @Override
     protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
-        GradientPaint gradientShadow;
         Graphics2D g2D = (Graphics2D) g;
         //since in the paint method, tabbed pane is set to be transparent, these 2 lines is needed to make the tabs (only the tabs) visible;
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -43,7 +41,6 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
         //paint the shape of tabs
         int xp[] = new int[]{x, x, x + 3, x + w - inclTab - 6, x + w - inclTab - 2, x + w - inclTab, x + w - inclTab, x};
         int yp[] = new int[]{y + h, y + 3, y, y, y + 1, y + 3, y + h, y + h};
-        gradientShadow = new GradientPaint(0, 0, Colour.DARKBLUE, 0, y + h / 2, Colour.LIGHTBLUE6);
         shape = new Polygon(xp, yp, xp.length);
         if (isSelected) {
             if (tabIndex == 0) {
@@ -145,11 +142,11 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
     //override the paint method -> make the tabbed pane transparent
     @Override
     public void paint(Graphics g, JComponent c) {
+        g.drawRect(0,0,0,0);
         if (tabPane.getTabCount() > 1 || !hideSingleTab) {
             ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
-            c.setSize(750, 450);
-            c.setLocation(15, 75);
+            c.setSize(795, 457);
             super.paint(g, c);
         }
     }

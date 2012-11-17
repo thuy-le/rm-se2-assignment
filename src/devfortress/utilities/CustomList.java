@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package devfortress.view;
+package devfortress.utilities;
 
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.CustomListInterface;
@@ -28,11 +28,11 @@ public class CustomList extends JPanel implements CustomListInterface {
     private JList jList;
     private List<CustomButton> buttons;
 
-    CustomList(final JList jList, final List<CustomButton> buttons) {
+    public CustomList(final JList jList, final List<CustomButton> buttons) {
         //
         x = 10;
         y = 15;
-        width = 250;
+        width = 272;
         height = 410;
         arcW = 7;
         arcH = 7;
@@ -58,6 +58,8 @@ public class CustomList extends JPanel implements CustomListInterface {
         }
         //adjust look and feel
         jList.setOpaque(false);
+        jList.setCellRenderer(new CustomListRenderer());
+        jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setPreferredSize(new Dimension(width - 30, height - 80));
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
