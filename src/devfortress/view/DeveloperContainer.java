@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 
@@ -18,9 +19,10 @@ import javax.swing.table.JTableHeader;
  *
  * @author PC
  */
-public class DeveloperContainer extends JPanel implements DeveloperInterface {
+public class DeveloperContainer extends JPanel implements DeveloperInterface, Observer {
 
     //initialize constant variables
+    static private final String picture = "images/i6.png";
     static private final float alpha = 0.8f;
     static private final Color colour = Colour.ORANGE;
     static private final int x = 0;
@@ -30,8 +32,11 @@ public class DeveloperContainer extends JPanel implements DeveloperInterface {
     static private final int arcW = 10;
     static private final int arcH = 10;
     //private variables
-
+    private CustomButton btnHire, btnFeed, btnParty;
+    private JLabel devName, mainSkill, workingPrj, status;
+    private JList developerList;
     //constructor
+
     public DeveloperContainer() {
         setOpaque(false);
         init();
@@ -40,36 +45,29 @@ public class DeveloperContainer extends JPanel implements DeveloperInterface {
     private void init() {
         //local variables
         String s[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        String picture = "images/i6.png";
         String data[][] = {{"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}};
         String col[] = {"Skill", "Level"};
-
-        JList developerList = new JList(s);
-        List<CustomButton> btnList = new LinkedList<>();
-        CustomButton btnHire = new CustomButton("Hire");
-        CustomButton btnFeed = new CustomButton("Feed");
-        CustomButton btnParty = new CustomButton("Party");
-        CustomList cl = new CustomList(developerList, btnList);
-        GlassPanel rightPanel = new GlassPanel(25, 25, 450, 380, 1f, Colour.LIGHTORANGE, 5, 5);
+        //Global variables
+        btnHire = new CustomButton("Hire");
+        btnFeed = new CustomButton("Feed");
+        btnParty = new CustomButton("Party");
+        devName = new JLabel("Developer Name");
+        mainSkill = new JLabel("Main Skill (Level)");
+        workingPrj = new JLabel("Working Project");
+        status = new JLabel("Status");
+        developerList = new JList(s);
+        //local variables
+        Icon imgIcon = new ImageIcon(picture);
         JLabel developerDetail = new JLabel("Developer Details");
         JPanel top = new JPanel();
         JPanel topR = new JPanel();
-        JLabel devName = new JLabel("Developer Name");
-        JLabel mainSkill = new JLabel("Main Skill (Level)");
-        JLabel workingPrj = new JLabel("Working Project");
-        Icon imgIcon = new ImageIcon(picture);
         JLabel imageIcon = new JLabel(imgIcon);
-        JLabel status = new JLabel("Status");
+        List<CustomButton> btnList = new LinkedList<>();
+        CustomList cl = new CustomList(developerList, btnList);
+        GlassPanel rightPanel = new GlassPanel(25, 25, 450, 380, 1f, Colour.LIGHTORANGE, 5, 5);
         Font font = new Font("Century Gothic", Font.BOLD, 17);
-
-
-
-
         setLayout(new BorderLayout());
-        //------Create a JList of developers
-        //list
-
-        //buttons
+        //Set up
         btnList.add(btnHire);
         btnList.add(btnFeed);
         btnList.add(btnParty);
@@ -86,9 +84,7 @@ public class DeveloperContainer extends JPanel implements DeveloperInterface {
         developerList.setSelectionBackground(Colour.LIGHTORANGE);
         developerList.setSelectionForeground(Colour.REDORANGEDARK);
         developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-        btnFeed.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-        btnParty.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+
         JPanel bottom = new JPanel();
         CustomButton btnFireDev = new CustomButton("Fire");
         CustomButton btnFeedDev = new CustomButton("Feed");
@@ -103,14 +99,10 @@ public class DeveloperContainer extends JPanel implements DeveloperInterface {
         //-------Add component
         add(cl, BorderLayout.WEST);
 
-        //------Right Hand Side:
-        //---Top:
-        //Create a container for contents on the right
-        //display developer name
-        //the "top" panel contain (1) avatar, and basic details about developer
-        //display avatar
-        //display basic details
         //adjust look and feel
+        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+        btnFeed.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+        btnParty.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         topR.setBackground(Colour.LIGHTORANGE);
         topR.setPreferredSize(new Dimension(200, 100));
         topR.setLayout(new GridLayout(4, 1));

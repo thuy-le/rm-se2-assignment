@@ -5,13 +5,12 @@
 package devfortress.view.interfaces;
 
 import java.awt.event.MouseListener;
-import java.util.Observer;
 
 /**
  *
  * @author PC
  */
-public interface DeveloperInterface extends Observer {
+public interface DeveloperInterface {
 
     void addHireDevListener(MouseListener l);
 
