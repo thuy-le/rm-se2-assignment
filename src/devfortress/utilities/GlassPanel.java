@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package devfortress.view;
+package devfortress.utilities;
 
 import java.awt.*;
 import javax.swing.JPanel;
@@ -24,7 +24,18 @@ public class GlassPanel extends JPanel {
     public int arcW;
     public int arcH;
     //constructor
-    GlassPanel(final int x, final int y, final int width, final int height, final float alpha, final Color colour, final int arcW, final int arcH){
+    public GlassPanel(final int width, final int height){
+        this.x = 0;
+        this.y = 0;
+        this.width = width;
+        this.height = height;
+        this.alpha = 0f;
+        this.colour = null;
+        this.arcW = 0;
+        this.arcH = 0;
+        setOpaque(false);
+    }
+    public GlassPanel(final int x, final int y, final int width, final int height, final float alpha, final Color colour, final int arcW, final int arcH){
         this.x = x;
         this.y = y;
         this.width = width;

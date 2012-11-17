@@ -15,6 +15,7 @@ public class Colour {
     public final static Color MATENGA = new Color(184, 250, 228);
     public final static Color ORANGE = new Color(253,187,82);
     public final static Color LIGHTGREEN = new Color(222, 252, 223);
+    public final static Color LIGHTGREEN2 = new Color(237, 251, 227);
     public final static Color DARKGREEN = new Color(44, 148, 12);
     public final static Color LIGHTGREENYELLOW = new Color(226, 248, 150);
     public final static Color DARKGREENYELLOW = new Color(109, 139, 4);
@@ -47,5 +48,7 @@ public class Colour {
     public final static Color GREENYELLOW2 = new Color(144,215,8);
     public final static Color DEEPBLUE = new Color(8,81,215);
     public final static Color GREY = new Color(66,66,66);
+    public final static Color MIDDLEGREY = new Color(92,93,92);
+    public final static Color LIGHTGREY = new Color(192,192,191);
     public final static Color GREEN = new Color(37,161,41);
 }

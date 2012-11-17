@@ -4,11 +4,19 @@
  */
 package devfortress.view;
 
+import devfortress.enumerations.AreaName;
+import devfortress.utilities.GlassPanel;
+import devfortress.utilities.CustomList;
+import devfortress.utilities.CustomButtonEvent;
+import devfortress.utilities.CustomButton;
+import devfortress.utilities.CustomLabel;
 import devfortress.models.Developer;
+import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.ProjectInterface;
 import java.awt.*;
+import java.util.EnumMap;
 import java.util.LinkedList;
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
@@ -17,20 +25,33 @@ import javax.swing.table.JTableHeader;
  *
  * @author PC
  */
-public class ProjectContainer extends JPanel implements ProjectInterface{
+public class TabbedPaneProject extends JPanel implements ProjectInterface{
 
     //initialize constant variables
     static private final float alpha = 0.8f;
     static private final Color colour = Colour.YOUNGGREEN;
     static private final int x = 0;
     static private final int y = 5;
-    static private final int width = 750;
-    static private final int height = 420;
+    static private final int width = 793;
+    static private final int height = 418;
     static private final int arcW = 10;
     static private final int arcH = 10;
-
+    static private final Color contentColor = Colour.LIGHTORANGE;
+    private static volatile TabbedPaneProject instance = null;
+    
+    public static TabbedPaneProject getInstance() {
+        if (instance == null) {
+            synchronized (TabbedPaneProject.class) {
+                if (instance == null) {
+                    instance = new TabbedPaneProject();
+                }
+            }
+        }
+        return instance;
+    }
+    
     //constructor
-    public ProjectContainer() {
+    public TabbedPaneProject() {
         setOpaque(false);
         init();
     }
@@ -41,8 +62,16 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
 
         //------Create a JList of developers
             //list
-        String s[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        JList prjList = new JList(s);
+        String projects[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
+        DefaultListModel prjModel = new DefaultListModel();
+        for (int i = 0; i < projects.length; i++) {
+            EnumMap<AreaName,FunctionalArea> prjFA= new EnumMap<>(AreaName.class);
+            prjFA.put(AreaName.CODING, new FunctionalArea(AreaName.CODING, 10, 0, true));
+            Project prj = new Project(30, 2, prjFA);
+            prjModel.addElement(prj);
+        }
+        JList prjList = new JList();
+        prjList.setModel(prjModel);
             //buttons
         java.util.List<CustomButton> btnList = new LinkedList<>();
         CustomButton btnAdd = new CustomButton("Add Project");
@@ -63,7 +92,7 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
         //------Right Hand Side:
         //---Top:
             //Create a container for contents on the right
-        GlassPanel rightPanel = new GlassPanel(25, 25, 450, 380, 1f, Colour.LIGHTORANGE, 5, 5);
+        GlassPanel rightPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
             //display developer name
         JLabel developerDetail = new JLabel("Project Details");
         //the "top" panel contain (1) avatar, and basic details about developer
@@ -85,10 +114,10 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
         JLabel status = new JLabel("Status");
             //adjust look and feel
         imageIcon.setToolTipText("Cancel this project");
-        topR.setBackground(Colour.LIGHTORANGE);
-        topR.setPreferredSize(new Dimension(200, 120));
+        topR.setBackground(contentColor);
+        topR.setPreferredSize(new Dimension(220, 120));
         topR.setLayout(new GridLayout(5, 1));
-        top.setBackground(Colour.LIGHTORANGE);
+        top.setBackground(contentColor);
         top.setLayout(new GridLayout(1, 2));
         Font font = new Font("Century Gothic", Font.BOLD, 17);
         prjName.setFont(font);
@@ -137,13 +166,10 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
         header.setForeground(Color.WHITE);
         JScrollPane tableScroll = new JScrollPane(table);
         tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(400, 180));
+        tableScroll.setPreferredSize(new Dimension(440, 180));
         tableScroll.setBackground(Colour.DARKGREEN);
-        tableScroll.getViewport().setBackground(Colour.LIGHTORANGE);
-        tableScroll.setBounds(30, 0, 380, 150);
-        tableScroll.getViewport().setViewPosition(new Point(0, 0));
-        bottom.setPreferredSize(new Dimension(440, 45));
-        bottom.setBackground(Colour.LIGHTORANGE);
+        tableScroll.getViewport().setBackground(contentColor);
+        bottom.setBackground(contentColor);
         bottom.setLayout(new FlowLayout());
         btnAddDev.setButtonSize(0, 0, 175, 35);
         btnAddDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
@@ -165,6 +191,7 @@ public class ProjectContainer extends JPanel implements ProjectInterface{
         if (colour != null) {
             g2d.setColor(colour);
         }
+        g2d.drawRoundRect(x, y, width, height, width, height);
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
     }
 

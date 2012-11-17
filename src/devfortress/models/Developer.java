@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package devfortress.models;
 
 import devfortress.enumerations.AreaName;
@@ -14,7 +10,18 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- *
+ * Developer is the work force of the game.
+ * He provide the function point each week on the project.
+ * <p>A <code>Developer</code> has skills which has level. The skill can be
+ * leveled up when he work on the project require the skill or be trained with
+ * money. His salary is calculated base on the skills.</p>
+ * <p>He can be fed every week with pizza, coffee and redbull. He will not work
+ * when he hungry or thirsty. The developer can also drink beer, which keep him
+ * happy but halve his productivity.</p>
+ * <p>An developer can be happy or unhappy. He can be kept happy with beer and
+ * party. The developer become unhappy when he is assigned to a project which is
+ * not match his skills. An unhappy developer may leave at the end of the month.
+ * (20%)</p>
  * @author Team Poseidon
  */
 public class Developer {
@@ -77,9 +84,8 @@ public class Developer {
         return new ReadOnlyMap<>(skills);
     }
 
-    /* Setters
-     * Events can make developers unhappy or happy
-     */
+    /* Setters */
+    /* Events can make developers unhappy or happy */
     public void setHappy(boolean happy) {
         this.happy = happy;
     }
@@ -95,7 +101,9 @@ public class Developer {
         this.happy = true;
     }
 
-    /* This method is called every week */
+    /**
+     * This method is called at the end of week
+     */
     public void getTired() {
         double rand = Math.random();
         if (rand < 0.4) {
@@ -104,13 +112,21 @@ public class Developer {
         fed = false;
     }
 
-    /* Used when initialize a new developer or train a new skill */
+    /**
+     * Used when initialize a new developer or train a new skill
+     * @see Skill
+     * @see SkillInfo
+     */
     public void addSkill(Skill skill) {
         skills.put(skill.getSkillInfo(), skill);
         re_calculateDeveloperInfo();
     }
 
-    /* Select the skill to train */
+    /**
+     * Select the skill to train
+     * @see Skill
+     * @see SkillInfo
+     */
     public void trainSkill(SkillInfo skillInfo) {
         Skill skill = skills.get(skillInfo);
         if (skill != null) {
@@ -122,7 +138,9 @@ public class Developer {
         re_calculateDeveloperInfo();
     }
 
-    /* This function is only called by project */
+    /** 
+     * This function should be only called by <code>{@link Project}</code>.
+     */
     public void acceptProject(Project project, AreaName area) throws DeveloperBusyException {
         if (workingProject != null) {
             if (workingProject == project) {
@@ -134,7 +152,9 @@ public class Developer {
         workingArea = area;
     }
 
-    /* This function is only called by project */
+    /**
+     * This function should be only called by <code>{@link Project}</code>.
+     */
     public void leaveProject() {
         workingProject = null;
         workingArea = null;
