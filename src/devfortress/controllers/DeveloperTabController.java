@@ -6,7 +6,6 @@ package devfortress.controllers;
 
 import devfortress.models.GameEngine;
 import devfortress.view.interfaces.DeveloperInterface;
-import devfortress.view.interfaces.SystemInterface;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
