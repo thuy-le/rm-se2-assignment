@@ -4,12 +4,13 @@
  */
 package devfortress.view;
 
-import devfortress.models.Developer;
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.DeveloperInterface;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 
@@ -17,7 +18,7 @@ import javax.swing.table.JTableHeader;
  *
  * @author PC
  */
-public class DeveloperContainer extends JPanel implements DeveloperInterface{
+public class DeveloperContainer extends JPanel implements DeveloperInterface {
 
     //initialize constant variables
     static private final float alpha = 0.8f;
@@ -28,6 +29,7 @@ public class DeveloperContainer extends JPanel implements DeveloperInterface{
     static private final int height = 420;
     static private final int arcW = 10;
     static private final int arcH = 10;
+    //private variables
 
     //constructor
     public DeveloperContainer() {
@@ -36,64 +38,84 @@ public class DeveloperContainer extends JPanel implements DeveloperInterface{
     }
 
     private void init() {
+        //local variables
+        String s[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
+        String picture = "images/i6.png";
+        String data[][] = {{"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}};
+        String col[] = {"Skill", "Level"};
+
+        JList developerList = new JList(s);
+        List<CustomButton> btnList = new LinkedList<>();
+        CustomButton btnHire = new CustomButton("Hire");
+        CustomButton btnFeed = new CustomButton("Feed");
+        CustomButton btnParty = new CustomButton("Party");
+        CustomList cl = new CustomList(developerList, btnList);
+        GlassPanel rightPanel = new GlassPanel(25, 25, 450, 380, 1f, Colour.LIGHTORANGE, 5, 5);
+        JLabel developerDetail = new JLabel("Developer Details");
+        JPanel top = new JPanel();
+        JPanel topR = new JPanel();
+        JLabel devName = new JLabel("Developer Name");
+        JLabel mainSkill = new JLabel("Main Skill (Level)");
+        JLabel workingPrj = new JLabel("Working Project");
+        Icon imgIcon = new ImageIcon(picture);
+        JLabel imageIcon = new JLabel(imgIcon);
+        JLabel status = new JLabel("Status");
+        Font font = new Font("Century Gothic", Font.BOLD, 17);
+
+
+
+
         setLayout(new BorderLayout());
         //------Create a JList of developers
         //list
-        String s[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        JList developerList = new JList(s);
+
         //buttons
-        List<CustomButton> btnList = new LinkedList<>();
-        CustomButton btnHire = new CustomButton("Hire");
         btnList.add(btnHire);
-        CustomButton btnFeed = new CustomButton("Feed");
         btnList.add(btnFeed);
-        CustomButton btnParty = new CustomButton("Party");
         btnList.add(btnParty);
 
         //add button(s) and list together
-        CustomList cl = new CustomList(developerList, btnList);
         //-------Adjust look and feel
         btnHire.setButtonSize(0, 0, 55, 35);
         btnFeed.setButtonSize(0, 0, 55, 35);
         btnParty.setButtonSize(0, 0, 55, 35);
         cl.setColor(Colour.DARKBLUE);
         btnHire.setTextColour(Colour.LIGHTBLUE);
-        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnFeed.setTextColour(Colour.LIGHTBLUE);
-        btnFeed.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnParty.setTextColour(Colour.LIGHTBLUE);
-        btnParty.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         developerList.setSelectionBackground(Colour.LIGHTORANGE);
         developerList.setSelectionForeground(Colour.REDORANGEDARK);
         developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+        btnFeed.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+        btnParty.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+        JPanel bottom = new JPanel();
+        CustomButton btnFireDev = new CustomButton("Fire");
+        CustomButton btnFeedDev = new CustomButton("Feed");
+        CustomButton btnPartyDev = new CustomButton("Party");
+        JTable table = new JTable(data, col) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         //-------Add component
         add(cl, BorderLayout.WEST);
 
         //------Right Hand Side:
         //---Top:
         //Create a container for contents on the right
-        GlassPanel rightPanel = new GlassPanel(25, 25, 450, 380, 1f, Colour.LIGHTORANGE, 5, 5);
         //display developer name
-        JLabel developerDetail = new JLabel("Developer Details");
         //the "top" panel contain (1) avatar, and basic details about developer
-        JPanel top = new JPanel();
         //display avatar
-        String picture = "images/i6.png";
-        Icon imgIcon = new ImageIcon(picture);
-        JLabel imageIcon = new JLabel(imgIcon);
         //display basic details
-        JPanel topR = new JPanel();
-        JLabel devName = new JLabel("Developer Name");
-        JLabel mainSkill = new JLabel("Main Skill (Level)");
-        JLabel workingPrj = new JLabel("Working Project");
-        JLabel status = new JLabel("Status");
         //adjust look and feel
         topR.setBackground(Colour.LIGHTORANGE);
         topR.setPreferredSize(new Dimension(200, 100));
         topR.setLayout(new GridLayout(4, 1));
         top.setBackground(Colour.LIGHTORANGE);
         top.setLayout(new GridLayout(1, 2));
-        Font font = new Font("Century Gothic", Font.BOLD, 17);
         devName.setFont(font);
         mainSkill.setFont(font);
         workingPrj.setFont(font);
@@ -113,20 +135,9 @@ public class DeveloperContainer extends JPanel implements DeveloperInterface{
 
         //---Bottom:
         //Create a table:
-        String data[][] = {{"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}};
-        String col[] = {"Skill", "Level"};
-        JTable table = new JTable(data, col) {
 
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
         //add buttons
-        JPanel bottom = new JPanel();
-        CustomButton btnFireDev = new CustomButton("Fire");
-        CustomButton btnFeedDev = new CustomButton("Feed");
-        CustomButton btnPartyDev = new CustomButton("Party");
+
         //adjust look and feel:
         table.setFont(new Font("Century Gothic", Font.PLAIN, 15));
         table.setBorder(BorderFactory.createLineBorder(Colour.ORANGE, 1));
@@ -181,37 +192,22 @@ public class DeveloperContainer extends JPanel implements DeveloperInterface{
     }
 
     @Override
-    public void hireNewDeveloper(Developer developer) {
+    public void addHireDevListener(MouseListener l) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void fireDeveloper(Developer developer) {
+    public void addFeedAllDevListener(MouseListener l) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void feedDeveloper(Developer developer) {
+    public void addPartyListener(MouseListener l) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void party(Developer developer) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void viewDeveloper(Developer developer) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void feedAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void partyAll() {
+    public void update(Observable o, Object arg) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

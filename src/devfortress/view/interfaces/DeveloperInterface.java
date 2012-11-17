@@ -4,18 +4,18 @@
  */
 package devfortress.view.interfaces;
 
-import devfortress.models.Developer;
+import java.awt.event.MouseListener;
+import java.util.Observer;
 
 /**
  *
  * @author PC
  */
-public interface DeveloperInterface {
-    public void hireNewDeveloper(Developer developer);
-    public void fireDeveloper(Developer developer);
-    public void feedDeveloper(Developer developer);
-    public void party(Developer developer);
-    public void viewDeveloper(Developer developer);
-    public void feedAll();
-    public void partyAll();
+public interface DeveloperInterface extends Observer {
+
+    void addHireDevListener(MouseListener l);
+
+    void addFeedAllDevListener(MouseListener l);
+
+    void addPartyListener(MouseListener l);
 }

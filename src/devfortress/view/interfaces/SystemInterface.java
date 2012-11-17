@@ -4,9 +4,6 @@
  */
 package devfortress.view.interfaces;
 
-import devfortress.models.Developer;
-import devfortress.models.Project;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.Observer;
 
