@@ -48,6 +48,18 @@ public class CustomButtonEvent extends MouseAdapter {
     }
 
     @Override
+    public void mouseReleased(MouseEvent e) {
+        super.mouseReleased(e);
+        if (e.getSource() instanceof CustomButton) {
+            CustomButton cb = (CustomButton) e.getSource();
+            if (cb.isActive()) {
+                cb.setColour(oldColour);
+                cb.repaint();
+            }
+        }
+    }
+
+    @Override
     public void mouseClicked(MouseEvent e) {
         super.mouseExited(e);
     }

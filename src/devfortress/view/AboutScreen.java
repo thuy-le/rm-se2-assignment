@@ -4,6 +4,7 @@
  */
 package devfortress.view;
 
+import devfortress.controllers.GameController;
 import devfortress.utilities.*;
 import java.awt.*;
 import javax.swing.JLabel;
@@ -14,11 +15,12 @@ import javax.swing.JPanel;
  * @author Michael
  */
 public class AboutScreen extends JPanel {
+
     private int x, y, width, height, arcH, arcW;
     private float alpha;
-    private Color colour;   
+    private Color colour;
     private static volatile AboutScreen instance = null;
-    
+
     private AboutScreen() {
         this.x = 20;
         this.y = 25;
@@ -31,10 +33,10 @@ public class AboutScreen extends JPanel {
         setOpaque(false);
         init();
     }
-    
-    public static AboutScreen getInstance(){
+
+    public static AboutScreen getInstance() {
         if (instance == null) {
-            synchronized (DevFortress.class) {
+            synchronized (AboutScreen.class) {
                 if (instance == null) {
                     instance = new AboutScreen();
                 }
@@ -42,29 +44,49 @@ public class AboutScreen extends JPanel {
         }
         return instance;
     }
-    
+
     private void init() {
         //Local Variables
         GlassPanel marginTop = new GlassPanel(800, 100);
-        GlassPanel content = new GlassPanel(500,500);      
-        JLabel welcome = new CustomLabel("About DevFortress");
+        GlassPanel content = new GlassPanel(500, 500);
+        JLabel welcome = new CustomLabel("<html>DevFortress v1.0</html>");
+        GlassPanel infoWrapper = new GlassPanel(500, 200);
+        JLabel info = new JLabel("<html><center>"
+                + "Pham Ngoc Thach "
+                + "<br/> "
+                + "To Bao Thien Quan "
+                + "<br/> "
+                + "Nguyen Vinh Thanh "
+                + "<br/> "
+                + "Le Huynh Ngoc Thuy"
+                + "</center></html>") {
 
-        CustomButton btnBack = new CustomButton("Back");
+            @Override
+            protected void paintComponent(Graphics g) {
+                ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                super.paintComponent(g);
+            }
+        };
         
+        CustomButton btnBack = new CustomButton("Back");
         //Global Variables        
-               
+
+        //
         btnBack.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnBack.addMouseListener(new GameController());
         welcome.setForeground(Colour.DARKBLUE);
-        
-        content.add(welcome);       
-        add(marginTop, BorderLayout.NORTH);
+        info.setFont(new Font("Century Gocthic", Font.PLAIN, 22));
+        //add components
+        infoWrapper.add(info);
+        content.add(welcome);
+        content.add(infoWrapper);
         content.add(btnBack);
+        add(marginTop, BorderLayout.NORTH);
         add(content, BorderLayout.CENTER);
     }
-    
+
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -74,10 +96,9 @@ public class AboutScreen extends JPanel {
         }
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
     }
-    
-      @Override
+
+    @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
     }
 }
-

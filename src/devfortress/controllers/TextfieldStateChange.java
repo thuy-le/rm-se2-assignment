@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package devfortress.view;
+package devfortress.controllers;
 
 import devfortress.utilities.CustomButton;
+import devfortress.view.WelcomeScreen;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JTextField;
@@ -40,7 +41,6 @@ public class TextfieldStateChange implements KeyListener{
             WelcomeScreen.getInstance().setPlayerName(playerTxt.getText()+" ");
             if(!playerTxt.getText().trim().equals("")){
                 button.enableButton();
-                System.out.println("enteref");
             }
             else{
                 button.disableButton();

@@ -4,6 +4,7 @@
  */
 package devfortress.view;
 
+import devfortress.controllers.MyListEvent;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomList;
 import devfortress.utilities.CustomListRenderer;

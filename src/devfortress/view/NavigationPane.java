@@ -4,6 +4,7 @@
  */
 package devfortress.view;
 
+import devfortress.controllers.GameController;
 import devfortress.utilities.CustomLabel;
 import devfortress.utilities.Colour;
 import java.awt.*;
