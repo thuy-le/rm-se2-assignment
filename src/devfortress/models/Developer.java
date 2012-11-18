@@ -3,6 +3,7 @@ package devfortress.models;
 import devfortress.enumerations.AreaName;
 import devfortress.exceptions.DeveloperBusyException;
 import devfortress.enumerations.SkillInfo;
+import devfortress.enumerations.SkillTypes;
 import devfortress.utilities.ReadOnlyMap;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -170,10 +171,17 @@ public class Developer {
     private void determineMainSkill() {
         LinkedList<Skill> skillList = new LinkedList<>();
         for (SkillInfo key : skills.keySet()) {
-            skillList.add(skills.get(key));
+            if (key.getType() == SkillTypes.TECHNICAL) {
+                skillList.add(skills.get(key));
+            }
+        }
+        if (skillList.isEmpty()) {
+            mainSkill = null;
+            return;
         }
         Collections.sort(skillList);
-        mainSkill = skillList.get(0).getSkillInfo();
+        // The collection is sorted in ascending order, therefore the highest level skill is the last one
+        mainSkill = skillList.getLast().getSkillInfo();
     }
 
     /**

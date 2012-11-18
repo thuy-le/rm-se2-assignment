@@ -124,8 +124,8 @@ public class DeveloperTest {
     public void testGetMainSkill3() {
         Skill techSkill = new Skill(1, SkillInfo.JAVA);
         Skill comSkill = new Skill(4, SkillInfo.COMMUNICATION);
-        testObject.addSkill(techSkill);
         testObject.addSkill(comSkill);
+        testObject.addSkill(techSkill);
         SkillInfo expResult = techSkill.getSkillInfo();
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
@@ -133,7 +133,7 @@ public class DeveloperTest {
     
     /**
      * Test of getMainSkill method, of class Developer.
-     * Case 4: developer with 2 skills, 1 technical skill and 1 communication skill.
+     * Case 4: developer with 2 skills, both technical.
      */
     @Test
     public void testGetMainSkill4() {
@@ -142,6 +142,40 @@ public class DeveloperTest {
         testObject.addSkill(techSkill1);
         testObject.addSkill(techSkill2);
         SkillInfo expResult = techSkill2.getSkillInfo();
+        SkillInfo result = testObject.getMainSkill();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getMainSkill method, of class Developer.
+     * Case 5 (extra): developer with 3 skills.
+     */
+    @Test
+    public void testGetMainSkill5() {
+        Skill techSkill1 = new Skill(1, SkillInfo.JAVA);
+        Skill techSkill2 = new Skill(4, SkillInfo.C);
+        Skill techSkill3 = new Skill(10, SkillInfo.JAVA);
+        testObject.addSkill(techSkill1);
+        testObject.addSkill(techSkill2);
+        testObject.addSkill(techSkill3);
+        SkillInfo expResult = techSkill3.getSkillInfo();
+        SkillInfo result = testObject.getMainSkill();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getMainSkill method, of class Developer.
+     * Case 6: developer no technical skill.
+     */
+    @Test
+    public void testGetMainSkill6() {
+        Skill comSkill = new Skill(1, SkillInfo.COMMUNICATION);
+        Skill metaSkill = new Skill(4, SkillInfo.DESIGN);
+        Skill teamSkill = new Skill(10, SkillInfo.TEAM_PLAYER);
+        testObject.addSkill(comSkill);
+        testObject.addSkill(metaSkill);
+        testObject.addSkill(teamSkill);
+        SkillInfo expResult = null;
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
