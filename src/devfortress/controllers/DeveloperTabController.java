@@ -6,7 +6,6 @@ package devfortress.controllers;
 
 import devfortress.models.GameEngine;
 import devfortress.view.interfaces.DeveloperInterface;
-import devfortress.view.interfaces.SystemInterface;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -43,7 +42,7 @@ public class DeveloperTabController implements Initilizable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
+            super.mouseClicked(e);           
         }
     }
 
