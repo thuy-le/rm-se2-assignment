@@ -12,6 +12,8 @@ import static org.junit.Assert.*;
  */
 public class DeveloperTest {
     
+    Developer testObject = null;
+    
     public DeveloperTest() {
     }
 
@@ -25,6 +27,7 @@ public class DeveloperTest {
     
     @Before
     public void setUp() {
+        testObject = new Developer("test developer");
     }
     
     @After
@@ -91,16 +94,56 @@ public class DeveloperTest {
 
     /**
      * Test of getMainSkill method, of class Developer.
+     * Case 1: developer with no skill.
      */
     @Test
-    public void testGetMainSkill() {
-        System.out.println("getMainSkill");
-        Developer instance = null;
+    public void testGetMainSkill1() {
         SkillInfo expResult = null;
-        SkillInfo result = instance.getMainSkill();
+        SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of getMainSkill method, of class Developer.
+     * Case 2: developer with 1 technical skill.
+     */
+    @Test
+    public void testGetMainSkill2() {
+        Skill testSkill = new Skill(1, SkillInfo.JAVA);
+        testObject.addSkill(testSkill);
+        SkillInfo expResult = testSkill.getSkillInfo();
+        SkillInfo result = testObject.getMainSkill();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getMainSkill method, of class Developer.
+     * Case 3: developer with 2 skills, 1 technical skill and 1 communication skill.
+     */
+    @Test
+    public void testGetMainSkill3() {
+        Skill techSkill = new Skill(1, SkillInfo.JAVA);
+        Skill comSkill = new Skill(4, SkillInfo.COMMUNICATION);
+        testObject.addSkill(techSkill);
+        testObject.addSkill(comSkill);
+        SkillInfo expResult = techSkill.getSkillInfo();
+        SkillInfo result = testObject.getMainSkill();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getMainSkill method, of class Developer.
+     * Case 4: developer with 2 skills, 1 technical skill and 1 communication skill.
+     */
+    @Test
+    public void testGetMainSkill4() {
+        Skill techSkill1 = new Skill(1, SkillInfo.JAVA);
+        Skill techSkill2 = new Skill(4, SkillInfo.C);
+        testObject.addSkill(techSkill1);
+        testObject.addSkill(techSkill2);
+        SkillInfo expResult = techSkill2.getSkillInfo();
+        SkillInfo result = testObject.getMainSkill();
+        assertEquals(expResult, result);
     }
 
     /**
