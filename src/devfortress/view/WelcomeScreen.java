@@ -74,7 +74,7 @@ public class WelcomeScreen extends JPanel {
         CustomButton submitName = new CustomButton("SUBMIT");
         TextfieldStateChange validation = new TextfieldStateChange(submitName);
         //Global Variables
-        playerTxt = new JTextField("player name", 15) {
+        playerTxt = new JTextField("DevFortress", 15) {
             @Override
             protected void paintComponent(Graphics g) {
                 ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
