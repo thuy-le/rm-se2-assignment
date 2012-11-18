@@ -34,6 +34,16 @@ public class GameController extends MouseAdapter {
             }
         }
         
+        //Customize Back Button in the About screen
+          if (e.getSource() instanceof CustomButton) {
+                DevFortress.getInstance().remove(AboutScreen.getInstance());
+                DevFortress.getInstance().add(TabbedPane.getInstance().getContainerTab(), BorderLayout.CENTER);                
+                NavigationPane.getInstance().getToolbar().setVisible(true);
+                InfomationPane.getInstance().getInfoPanel().setVisible(true);
+                DevFortress.getInstance().repaint();
+            
+        }
+        
         // New Game Command Execute in the Game controller
          if(e.getSource() instanceof CustomLabel){
             CustomLabel label = (CustomLabel) e.getSource();
@@ -59,7 +69,12 @@ public class GameController extends MouseAdapter {
          if(e.getSource() instanceof CustomLabel){
             CustomLabel label = (CustomLabel) e.getSource();
             if(label.getLabelName().equals("about")){
-                System.out.println("About");                
+                System.out.println("About");
+                DevFortress.getInstance().remove(TabbedPane.getInstance().getContainerTab());              
+                NavigationPane.getInstance().getToolbar().setVisible(false);
+                InfomationPane.getInstance().getInfoPanel().setVisible(false);
+                DevFortress.getInstance().getContentPane().add(AboutScreen.getInstance());
+                DevFortress.getInstance().getContentPane().repaint();
             }
         }
          
