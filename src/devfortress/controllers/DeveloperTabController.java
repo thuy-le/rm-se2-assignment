@@ -42,7 +42,7 @@ public class DeveloperTabController implements Initilizable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);           
+            super.mouseClicked(e);
         }
     }
 
