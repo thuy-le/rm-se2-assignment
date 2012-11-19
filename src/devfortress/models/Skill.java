@@ -100,12 +100,14 @@ public class Skill implements Comparable<Skill> {
 
     @Override
     public int compareTo(Skill s) {
+        // The skill will be sorted in descending order
         if (this.level < s.level) {
             return -1;
         } else if (this.level > s.level) {
             return 1;
         } else {
-            return this.skillInfo.getName().compareTo(s.getSkillInfo().getName());
+            // But the name is sorted in ascending order
+            return -this.skillInfo.getName().compareTo(s.getSkillInfo().getName());
         }
     }
 }

@@ -27,7 +27,7 @@ import javax.swing.*;
  *
  * @author PC
  */
-public class TabbedPaneSystem extends JPanel implements SystemInterface,Observer {
+public class TabbedPaneSystem extends JPanel implements SystemInterface, Observer {
 
     //initialize constant variables
     static private final String picture = "images/i5.png";

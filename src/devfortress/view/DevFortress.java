@@ -4,6 +4,8 @@
  */
 package devfortress.view;
 
+import devfortress.controllers.SystemController;
+import devfortress.exceptions.GameNotInitilizedException;
 import devfortress.utilities.GlassPanel;
 import java.awt.*;
 import javax.swing.*;
@@ -72,10 +74,9 @@ public class DevFortress extends JFrame {
         df.setResizable(false);
         df.pack();
         df.setLocationRelativeTo(null);
-        
     }
 
-    //override the getPreferredS    ize method
+    //override the getPreferredSize method
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(800, 600);

@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
  *
  * @author PC
  */
-public interface SystemInterface{
+public interface SystemInterface {
 
     void addBtnHireDevListener(MouseListener l);
 

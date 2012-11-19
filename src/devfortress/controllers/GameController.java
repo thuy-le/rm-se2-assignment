@@ -4,6 +4,7 @@
  */
 package devfortress.controllers;
 
+import devfortress.exceptions.GameNotInitilizedException;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.CustomLabel;
 import devfortress.utilities.GlassPanel;
@@ -23,8 +24,19 @@ import java.awt.event.MouseEvent;
  * @author PC
  */
 public class GameController extends MouseAdapter {
+    
+    DevFortress devFortress = null;
 
     public GameController() {
+        devFortress = DevFortress.getInstance();
+    }
+    
+    private void addControllers() {
+        try {
+            SystemController systemController = new SystemController();
+        } catch (GameNotInitilizedException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -35,21 +47,22 @@ public class GameController extends MouseAdapter {
             CustomButton button = (CustomButton) e.getSource();
             if (button.getText().trim().equalsIgnoreCase("submit")) {
                 if (!WelcomeScreen.getInstance().getPlayerName().trim().equals("")) {
-                    DevFortress.getInstance().remove(WelcomeScreen.getInstance());
-                    DevFortress.getInstance().add(TabbedPane.getInstance().getContainerTab(), BorderLayout.CENTER);
+                    devFortress.remove(WelcomeScreen.getInstance());
+                    devFortress.add(TabbedPane.getInstance().getContainerTab(), BorderLayout.CENTER);
                     NavigationPane.getInstance().getToolbar().setVisible(true);
                     InfomationPane.getInstance().getInfoPanel().setVisible(true);
                     TabbedPaneSystem.getInstance().setPlayerName(WelcomeScreen.getInstance().getPlayerName());
-                    DevFortress.getInstance().repaint();
+                    addControllers();
+                    devFortress.repaint();
                 }
             }
             //Customize Back Button in the About screen
             if (button.getText().trim().equalsIgnoreCase("back")) {
-                DevFortress.getInstance().remove(AboutScreen.getInstance());
-                DevFortress.getInstance().add(TabbedPane.getInstance().getContainerTab(), BorderLayout.CENTER);
+                devFortress.remove(AboutScreen.getInstance());
+                devFortress.add(TabbedPane.getInstance().getContainerTab(), BorderLayout.CENTER);
                 NavigationPane.getInstance().getToolbar().setVisible(true);
                 InfomationPane.getInstance().getInfoPanel().setVisible(true);
-                DevFortress.getInstance().repaint();
+                devFortress.repaint();
             }
         }
         //-------Events for CustomLabels
@@ -58,11 +71,11 @@ public class GameController extends MouseAdapter {
             CustomLabel label = (CustomLabel) e.getSource();
             if (label.getLabelName().equals("new")) {
                 System.out.println("New Game Command");
-                DevFortress.getInstance().remove(TabbedPane.getInstance().getContainerTab());
+                devFortress.remove(TabbedPane.getInstance().getContainerTab());
                 NavigationPane.getInstance().getToolbar().setVisible(false);
                 InfomationPane.getInstance().getInfoPanel().setVisible(false);
-                DevFortress.getInstance().getContentPane().add(WelcomeScreen.getInstance());
-                DevFortress.getInstance().getContentPane().repaint();
+                devFortress.getContentPane().add(WelcomeScreen.getInstance());
+                devFortress.getContentPane().repaint();
             }
         }
 
@@ -74,16 +87,16 @@ public class GameController extends MouseAdapter {
             }
         }
 
-        //Save game windows appear
+        //About windows appear
         if (e.getSource() instanceof CustomLabel) {
             CustomLabel label = (CustomLabel) e.getSource();
             if (label.getLabelName().equals("about")) {
                 System.out.println("About");
-                DevFortress.getInstance().remove(TabbedPane.getInstance().getContainerTab());
+                devFortress.remove(TabbedPane.getInstance().getContainerTab());
                 NavigationPane.getInstance().getToolbar().setVisible(false);
                 InfomationPane.getInstance().getInfoPanel().setVisible(false);
-                DevFortress.getInstance().getContentPane().add(AboutScreen.getInstance());
-                DevFortress.getInstance().getContentPane().repaint();
+                devFortress.getContentPane().add(AboutScreen.getInstance());
+                devFortress.getContentPane().repaint();
             }
         }
 

@@ -4,23 +4,27 @@
  */
 package devfortress.controllers;
 
+import devfortress.exceptions.GameNotInitilizedException;
 import devfortress.models.GameEngine;
+import devfortress.view.TabbedPaneSystem;
 import devfortress.view.interfaces.SystemInterface;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Team Poseidon
  */
-public class SystemController implements Initilizable {
+public final class SystemController implements Initilizable {
 
     private SystemInterface view;
     private GameEngine model;
 
-    public SystemController(SystemInterface view, GameEngine model) {
-        this.view = view;
-        this.model = model;
+    public SystemController() throws GameNotInitilizedException {
+        this.view = TabbedPaneSystem.getInstance();
+        this.model = GameEngine.getInstance();
+        initilize();
     }
 
     @Override
@@ -36,6 +40,12 @@ public class SystemController implements Initilizable {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            super.mouseReleased(e);
+            System.out.println("Mouse Released");
         }
     }
 

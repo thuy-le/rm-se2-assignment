@@ -153,17 +153,15 @@ public class DeveloperTest {
     /**
      * Test of getMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
-     * Case 5 (extra): developer with 3 skills.
+     * Case 5: developer with 2 technical skills with the same level.
      */
     @Test
     public void testGetMainSkill5() {
-        Skill techSkill1 = new Skill(1, SkillInfo.JAVA);
+        Skill techSkill1 = new Skill(4, SkillInfo.JAVA);
         Skill techSkill2 = new Skill(4, SkillInfo.C);
-        Skill techSkill3 = new Skill(10, SkillInfo.JAVA);
         testObject.addSkill(techSkill1);
         testObject.addSkill(techSkill2);
-        testObject.addSkill(techSkill3);
-        SkillInfo expResult = techSkill3.getSkillInfo();
+        SkillInfo expResult = techSkill2.getSkillInfo();
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
