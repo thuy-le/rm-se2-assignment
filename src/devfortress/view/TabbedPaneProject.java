@@ -16,6 +16,7 @@ import devfortress.models.Project;
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.ProjectInterface;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.Observable;
@@ -197,34 +198,34 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface,Observ
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
     }
 
+     @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void addNewProjectListener(MouseListener l) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void cancelProjectListener(MouseListener l) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void addDevToProjectListener(MouseListener l) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void removeDevFromProjectListener(MouseListener l) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     //override the getPreferredSize method
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
-    }
-
-    @Override
-    public void addNewProject(Project project) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void cancelProject(Project project) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void addDeveloper(Project project, Developer developer) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void removeDeveloper(Project project, Developer developer) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    }   
 }

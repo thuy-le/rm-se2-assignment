@@ -13,12 +13,12 @@ import java.awt.event.MouseEvent;
  *
  * @author Team Poseidon
  */
-public class DeveloperTabController implements Initilizable {
+public class DeveloperController implements Initilizable {
 
     private DeveloperInterface view;
     private GameEngine model;
 
-    public DeveloperTabController(DeveloperInterface view, GameEngine model) {
+    public DeveloperController(DeveloperInterface view, GameEngine model) {
         this.view = view;
         this.model = model;
     }

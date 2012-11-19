@@ -6,14 +6,15 @@ package devfortress.view.interfaces;
 
 import devfortress.models.Developer;
 import devfortress.models.Project;
+import java.awt.event.MouseListener;
 
 /**
  *
  * @author PC
  */
 public interface ProjectInterface {
-    public void addNewProject(Project project);
-    public void cancelProject(Project project);
-    public void addDeveloper(Project project, Developer developer);
-    public void removeDeveloper(Project project, Developer developer);
+    void addNewProjectListener(MouseListener l);
+    void cancelProjectListener(MouseListener l);
+    void addDevToProjectListener(MouseListener l);
+    void removeDevFromProjectListener(MouseListener l);
 }
