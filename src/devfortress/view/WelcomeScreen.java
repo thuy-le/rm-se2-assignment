@@ -4,6 +4,8 @@
  */
 package devfortress.view;
 
+import devfortress.controllers.TextfieldStateChange;
+import devfortress.controllers.GameController;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomButtonEvent;
 import devfortress.utilities.CustomButton;
@@ -45,7 +47,7 @@ public class WelcomeScreen extends JPanel {
 
     public static WelcomeScreen getInstance() {
         if (instance == null) {
-            synchronized (DevFortress.class) {
+            synchronized (WelcomeScreen.class) {
                 if (instance == null) {
                     instance = new WelcomeScreen();
                 }
@@ -73,8 +75,9 @@ public class WelcomeScreen extends JPanel {
         JLabel decor = new CustomLabel("***");
         CustomButton submitName = new CustomButton("SUBMIT");
         TextfieldStateChange validation = new TextfieldStateChange(submitName);
+        
         //Global Variables
-        playerTxt = new JTextField("player name", 15) {
+        playerTxt = new JTextField("DevFortress", 15) {
             @Override
             protected void paintComponent(Graphics g) {
                 ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
@@ -83,12 +86,13 @@ public class WelcomeScreen extends JPanel {
         };
         playerName = playerTxt.getText();
         doc = (PlainDocument) playerTxt.getDocument();
-        //
         
+        //
         doc.setDocumentFilter(new TextLengthDocFilter(15));
         playerTxt.addKeyListener(validation);
         submitName.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         submitName.addMouseListener(new GameController());
+        
         //look and feel
         playerTxt.setOpaque(false);
         playerTxt.setFont(new Font("Century Gothic", Font.BOLD, 32));
@@ -96,6 +100,7 @@ public class WelcomeScreen extends JPanel {
         playerTxt.setBorder(BorderFactory.createLineBorder(Colour.DARKBLUE, 2, true));
         welcome.setForeground(Colour.DARKBLUE);
         decor.setForeground(Colour.DARKBLUE);
+        
         //add components
         textHolder.add(playerTxt);
         content.add(welcome);

@@ -75,7 +75,7 @@ public class DevFortress extends JFrame {
         
     }
 
-    //override the getPreferredSize method
+    //override the getPreferredS    ize method
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(800, 600);

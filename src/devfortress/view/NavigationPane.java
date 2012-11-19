@@ -4,6 +4,7 @@
  */
 package devfortress.view;
 
+import devfortress.controllers.GameController;
 import devfortress.utilities.CustomLabel;
 import devfortress.utilities.Colour;
 import java.awt.*;
@@ -60,15 +61,22 @@ public class NavigationPane {
         exitGame.setLabelName("exit");
         exitGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         exitGame.setToolTipText("Exit Game");
-        JLabel newGame = new CustomLabel(new ImageIcon("images/new2.png"));
+        
+        CustomLabel newGame = new CustomLabel(new ImageIcon("images/new2.png"));
+        newGame.setLabelName("new");
         newGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         newGame.setToolTipText("New Game");
-        JLabel saveGame = new CustomLabel(new ImageIcon("images/save.png"));
+        
+        CustomLabel saveGame = new CustomLabel(new ImageIcon("images/save.png"));
+        saveGame.setLabelName("save");
         saveGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         saveGame.setToolTipText("Save Game");
-        JLabel aboutGame = new CustomLabel(new ImageIcon("images/about.png"));
+        
+        CustomLabel aboutGame = new CustomLabel(new ImageIcon("images/about.png"));
+        aboutGame.setLabelName("about");
         aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aboutGame.setToolTipText("About Us");
+        
         //adjust look and feel
         exitGame.setOpaque(false);
         newGame.setOpaque(false);
@@ -76,6 +84,10 @@ public class NavigationPane {
         aboutGame.setOpaque(false);
         //add action events
         exitGame.addMouseListener(new GameController());
+        newGame.addMouseListener(new GameController());
+        saveGame.addMouseListener(new GameController());
+        aboutGame.addMouseListener(new GameController());
+        
         //add components
         toolbar.add(newGame);
         toolbar.add(saveGame);

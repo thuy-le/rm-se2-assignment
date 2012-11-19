@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package devfortress.view;
+package devfortress.controllers;
 
 import devfortress.models.Developer;
+import devfortress.view.TabbedPaneDeveloper;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;

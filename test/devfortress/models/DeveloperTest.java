@@ -12,6 +12,8 @@ import static org.junit.Assert.*;
  */
 public class DeveloperTest {
     
+    Developer testObject = null;
+    
     public DeveloperTest() {
     }
 
@@ -25,6 +27,7 @@ public class DeveloperTest {
     
     @Before
     public void setUp() {
+        testObject = new Developer("test developer");
     }
     
     @After
@@ -91,35 +94,102 @@ public class DeveloperTest {
 
     /**
      * Test of getMainSkill method, of class Developer.
+     * <p>Actually, this is the test of determineMainSkill() method.</p>
+     * Case 1: developer with no skill.
      */
     @Test
-    public void testGetMainSkill() {
-        System.out.println("getMainSkill");
-        Developer instance = null;
+    public void testGetMainSkill1() {
         SkillInfo expResult = null;
-        SkillInfo result = instance.getMainSkill();
+        SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-
+    
     /**
-     * Test of getWorkingProject method, of class Developer.
+     * Test of getMainSkill method, of class Developer.
+     * <p>Actually, this is the test of determineMainSkill() method.</p>
+     * Case 2: developer with 1 technical skill.
      */
     @Test
-    public void testGetWorkingProject() {
-        System.out.println("getWorkingProject");
-        Developer instance = null;
-        Project expResult = null;
-        Project result = instance.getWorkingProject();
+    public void testGetMainSkill2() {
+        Skill testSkill = new Skill(1, SkillInfo.JAVA);
+        testObject.addSkill(testSkill);
+        SkillInfo expResult = testSkill.getSkillInfo();
+        SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of getMainSkill method, of class Developer.
+     * <p>Actually, this is the test of determineMainSkill() method.</p>
+     * Case 3: developer with 2 skills, 1 technical skill and 1 communication skill.
+     */
+    @Test
+    public void testGetMainSkill3() {
+        Skill techSkill = new Skill(1, SkillInfo.JAVA);
+        Skill comSkill = new Skill(4, SkillInfo.COMMUNICATION);
+        testObject.addSkill(comSkill);
+        testObject.addSkill(techSkill);
+        SkillInfo expResult = techSkill.getSkillInfo();
+        SkillInfo result = testObject.getMainSkill();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getMainSkill method, of class Developer.
+     * <p>Actually, this is the test of determineMainSkill() method.</p>
+     * Case 4: developer with 2 skills, both technical.
+     */
+    @Test
+    public void testGetMainSkill4() {
+        Skill techSkill1 = new Skill(1, SkillInfo.JAVA);
+        Skill techSkill2 = new Skill(4, SkillInfo.C);
+        testObject.addSkill(techSkill1);
+        testObject.addSkill(techSkill2);
+        SkillInfo expResult = techSkill2.getSkillInfo();
+        SkillInfo result = testObject.getMainSkill();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getMainSkill method, of class Developer.
+     * <p>Actually, this is the test of determineMainSkill() method.</p>
+     * Case 5 (extra): developer with 3 skills.
+     */
+    @Test
+    public void testGetMainSkill5() {
+        Skill techSkill1 = new Skill(1, SkillInfo.JAVA);
+        Skill techSkill2 = new Skill(4, SkillInfo.C);
+        Skill techSkill3 = new Skill(10, SkillInfo.JAVA);
+        testObject.addSkill(techSkill1);
+        testObject.addSkill(techSkill2);
+        testObject.addSkill(techSkill3);
+        SkillInfo expResult = techSkill3.getSkillInfo();
+        SkillInfo result = testObject.getMainSkill();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getMainSkill method, of class Developer.
+     * <p>Actually, this is the test of determineMainSkill() method.</p>
+     * Case 6: developer no technical skill.
+     */
+    @Test
+    public void testGetMainSkill6() {
+        Skill comSkill = new Skill(1, SkillInfo.COMMUNICATION);
+        Skill metaSkill = new Skill(4, SkillInfo.DESIGN);
+        Skill teamSkill = new Skill(10, SkillInfo.TEAM_PLAYER);
+        testObject.addSkill(comSkill);
+        testObject.addSkill(metaSkill);
+        testObject.addSkill(teamSkill);
+        SkillInfo expResult = null;
+        SkillInfo result = testObject.getMainSkill();
+        assertEquals(expResult, result);
     }
 
     /**
      * Test of getWorkingArea method, of class Developer.
      */
+    @Ignore
     @Test
     public void testGetWorkingArea() {
         System.out.println("getWorkingArea");
@@ -134,6 +204,7 @@ public class DeveloperTest {
     /**
      * Test of getName method, of class Developer.
      */
+    @Ignore
     @Test
     public void testGetName() {
         System.out.println("getName");
@@ -148,6 +219,7 @@ public class DeveloperTest {
     /**
      * Test of getSalary method, of class Developer.
      */
+    @Ignore
     @Test
     public void testGetSalary() {
         System.out.println("getSalary");
@@ -162,6 +234,7 @@ public class DeveloperTest {
     /**
      * Test of getSkills method, of class Developer.
      */
+    @Ignore
     @Test
     public void testGetSkills() {
         System.out.println("getSkills");
@@ -176,6 +249,7 @@ public class DeveloperTest {
     /**
      * Test of setHappy method, of class Developer.
      */
+    @Ignore
     @Test
     public void testSetHappy() {
         System.out.println("setHappy");
@@ -189,6 +263,7 @@ public class DeveloperTest {
     /**
      * Test of feed method, of class Developer.
      */
+    @Ignore
     @Test
     public void testFeed() {
         System.out.println("feed");
@@ -201,6 +276,7 @@ public class DeveloperTest {
     /**
      * Test of drink method, of class Developer.
      */
+    @Ignore
     @Test
     public void testDrink() {
         System.out.println("drink");
@@ -213,6 +289,7 @@ public class DeveloperTest {
     /**
      * Test of getTired method, of class Developer.
      */
+    @Ignore
     @Test
     public void testGetTired() {
         System.out.println("getTired");
@@ -225,6 +302,7 @@ public class DeveloperTest {
     /**
      * Test of addSkill method, of class Developer.
      */
+    @Ignore
     @Test
     public void testAddSkill() {
         System.out.println("addSkill");
@@ -237,20 +315,34 @@ public class DeveloperTest {
 
     /**
      * Test of trainSkill method, of class Developer.
+     * Simple test.
      */
     @Test
-    public void testTrainSkill() {
-        System.out.println("trainSkill");
-        SkillInfo skillInfo = null;
-        Developer instance = null;
-        instance.trainSkill(skillInfo);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testTrainSkill1() {
+        SkillInfo testSkillInfo = SkillInfo.C;
+        testObject.trainSkill(testSkillInfo);
+        testObject.trainSkill(testSkillInfo);
+        int expResult = 2;
+        assertEquals(expResult, testObject.getSkills().get(testSkillInfo).getLevel());
+    }
+    
+    /**
+     * Test of trainSkill method, of class Developer.
+     * Simple test.
+     */
+    @Test
+    public void testTrainSkill2() {
+        SkillInfo testSkillInfo = SkillInfo.C;
+        testObject.addSkill(new Skill(10, testSkillInfo));
+        testObject.trainSkill(testSkillInfo);
+        int expResult = 10;
+        assertEquals(expResult, testObject.getSkills().get(testSkillInfo).getLevel());
     }
 
     /**
      * Test of acceptProject method, of class Developer.
      */
+    @Ignore
     @Test
     public void testAcceptProject() throws Exception {
         System.out.println("acceptProject");
@@ -265,6 +357,7 @@ public class DeveloperTest {
     /**
      * Test of leaveProject method, of class Developer.
      */
+    @Ignore
     @Test
     public void testLeaveProject() {
         System.out.println("leaveProject");
