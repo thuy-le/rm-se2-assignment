@@ -4,11 +4,9 @@
  */
 package devfortress.controllers;
 
-import devfortress.exceptions.GameNotInitilizedException;
 import devfortress.models.GameEngine;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.CustomLabel;
-import devfortress.utilities.GlassPanel;
 import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
