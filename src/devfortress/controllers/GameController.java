@@ -40,7 +40,7 @@ public class GameController extends MouseAdapter {
         try {
             GameEngine.initialize("player 1", 100000);
             SystemController systemController = new SystemController(TabbedPaneSystem.getInstance(), GameEngine.getInstance());
-            DeveloperTabController developerController = new DeveloperTabController(TabbedPaneDeveloper.getInstance(), GameEngine.getInstance());
+            DeveloperController developerController = new DeveloperController(TabbedPaneDeveloper.getInstance(), GameEngine.getInstance());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
