@@ -5,6 +5,7 @@
 package devfortress.controllers;
 
 import devfortress.exceptions.GameNotInitilizedException;
+import devfortress.models.GameEngine;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.CustomLabel;
 import devfortress.utilities.GlassPanel;
@@ -13,6 +14,7 @@ import devfortress.view.DevFortress;
 import devfortress.view.InfomationPane;
 import devfortress.view.NavigationPane;
 import devfortress.view.TabbedPane;
+import devfortress.view.TabbedPaneDeveloper;
 import devfortress.view.TabbedPaneSystem;
 import devfortress.view.WelcomeScreen;
 import java.awt.BorderLayout;
@@ -31,10 +33,15 @@ public class GameController extends MouseAdapter {
         devFortress = DevFortress.getInstance();
     }
     
+    /**
+     * A temporary method to initialize the game and set up the controllers
+     */
     private void addControllers() {
         try {
-            SystemController systemController = new SystemController();
-        } catch (GameNotInitilizedException ex) {
+            GameEngine.initialize("player 1", 100000);
+            SystemController systemController = new SystemController(TabbedPaneSystem.getInstance(), GameEngine.getInstance());
+            DeveloperTabController developerController = new DeveloperTabController(TabbedPaneDeveloper.getInstance(), GameEngine.getInstance());
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
