@@ -1,10 +1,11 @@
 package devfortress;
 
 import devfortress.controllers.DeveloperController;
-import devfortress.controllers.GameController;
+import devfortress.controllers.GameViewController;
 import devfortress.controllers.ProjectController;
 import devfortress.controllers.SystemController;
 import devfortress.models.GameEngine;
+import devfortress.view.AboutScreen;
 import devfortress.view.DevFortress;
 import devfortress.view.InfomationPane;
 import devfortress.view.NavigationPane;
@@ -29,13 +30,14 @@ public class DevFortressMain {
         WelcomeScreen welCm = new WelcomeScreen();
         NavigationPane nav = new NavigationPane();
         InfomationPane inf = new InfomationPane();
+        AboutScreen aboutScr = new AboutScreen();
         //Views
         DevFortress devFortress = new DevFortress(welCm, nav, inf);
         TabbedPaneSystem sysTab = new TabbedPaneSystem();
         TabbedPaneDeveloper devTab = new TabbedPaneDeveloper();
         TabbedPaneProject projTab = new TabbedPaneProject();
         //Controllers
-        GameController gameController = new GameController(devFortress, model);
+        GameViewController gameController = new GameViewController(devFortress, welCm, nav, inf, sysTab, aboutScr, model);
         DeveloperController devController = new DeveloperController(devTab, model);
         ProjectController projectController = new ProjectController(projTab, model);
         SystemController systemController = new SystemController(sysTab, model);

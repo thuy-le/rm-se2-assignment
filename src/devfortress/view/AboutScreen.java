@@ -4,9 +4,10 @@
  */
 package devfortress.view;
 
-import devfortress.controllers.GameController;
+import devfortress.controllers.GameViewController;
 import devfortress.utilities.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -19,9 +20,10 @@ public class AboutScreen extends JPanel {
     private int x, y, width, height, arcH, arcW;
     private float alpha;
     private Color colour;
-    private static volatile AboutScreen instance = null;
+    private CustomButton btnBack;
+//    private static volatile AboutScreen instance = null;
 
-    private AboutScreen() {
+    public AboutScreen() {
         this.x = 20;
         this.y = 25;
         this.width = 755;
@@ -33,17 +35,17 @@ public class AboutScreen extends JPanel {
         setOpaque(false);
         init();
     }
-
-    public static AboutScreen getInstance() {
-        if (instance == null) {
-            synchronized (AboutScreen.class) {
-                if (instance == null) {
-                    instance = new AboutScreen();
-                }
-            }
-        }
-        return instance;
-    }
+//
+//    public static AboutScreen getInstance() {
+//        if (instance == null) {
+//            synchronized (AboutScreen.class) {
+//                if (instance == null) {
+//                    instance = new AboutScreen();
+//                }
+//            }
+//        }
+//        return instance;
+//    }
 
     private void init() {
         //Local Variables
@@ -67,13 +69,11 @@ public class AboutScreen extends JPanel {
                 super.paintComponent(g);
             }
         };
-        
-        CustomButton btnBack = new CustomButton("Back");
-        //Global Variables        
 
-        //
+        btnBack = new CustomButton("Back");
+        //Global Variables        
         btnBack.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-        btnBack.addMouseListener(new GameController());
+//        btnBack.addMouseListener(new GameViewController());
         welcome.setForeground(Colour.DARKBLUE);
         info.setFont(new Font("Century Gocthic", Font.PLAIN, 22));
         //add components
@@ -100,5 +100,10 @@ public class AboutScreen extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
+    }
+
+    public void addBackListener(MouseListener l) {
+        btnBack.addMouseListener(l);
+        System.out.println("Mouse Listener added");
     }
 }

@@ -5,13 +5,14 @@
 package devfortress.view;
 
 import devfortress.controllers.TextfieldStateChange;
-import devfortress.controllers.GameController;
+import devfortress.controllers.GameViewController;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomButtonEvent;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.CustomLabel;
 import devfortress.utilities.Colour;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,6 +31,7 @@ public class WelcomeScreen extends JPanel {
     private Color colour;
     private String playerName;
     private JTextField playerTxt;
+    private CustomButton submitName;
     private static volatile WelcomeScreen instance = new WelcomeScreen();
 
     public WelcomeScreen() {
@@ -46,13 +48,6 @@ public class WelcomeScreen extends JPanel {
     }
 
     public static WelcomeScreen getInstance() {
-//        if (instance == null) {
-//            synchronized (WelcomeScreen.class) {
-//                if (instance == null) {
-//                    instance = new WelcomeScreen();
-//                }
-//            }
-//        }
         return instance;
     }
 
@@ -73,18 +68,11 @@ public class WelcomeScreen extends JPanel {
         PlainDocument doc;
         JLabel welcome = new CustomLabel("Welcome to DevFortress");
         JLabel decor = new CustomLabel("***");
-        CustomButton submitName = new CustomButton("SUBMIT");
+        submitName = new CustomButton("SUBMIT");
         TextfieldStateChange validation = new TextfieldStateChange(submitName);
 
         //Global Variables
-        playerTxt = new JTextField("DevFortress", 15) {
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                super.paintComponent(g);
-            }
-        };
+        playerTxt = new CustomJTextField("DevFortress", 15);
         playerName = playerTxt.getText();
         doc = (PlainDocument) playerTxt.getDocument();
 
@@ -92,7 +80,7 @@ public class WelcomeScreen extends JPanel {
         doc.setDocumentFilter(new TextLengthDocFilter(15));
         playerTxt.addKeyListener(validation);
         submitName.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-        submitName.addMouseListener(new GameController());
+//        submitName.addMouseListener(new WelcomeScreenController());
 
         //look and feel
         playerTxt.setOpaque(false);
@@ -127,6 +115,10 @@ public class WelcomeScreen extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
+    }
+
+    public void addSubmitNameListener(MouseListener l) {
+        submitName.addMouseListener(l);
     }
 }
 
@@ -181,5 +173,18 @@ class TextLengthDocFilter extends DocumentFilter {
         if (verifyText(sb.toString())) {
             super.remove(fb, offset, length);
         }
+    }
+}
+
+class CustomJTextField extends JTextField {
+
+    public CustomJTextField(String text, int columns) {
+        super(text, columns);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        super.paintComponent(g);
     }
 }
