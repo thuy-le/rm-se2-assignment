@@ -9,14 +9,7 @@ import devfortress.models.GameEngine;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.CustomLabel;
 import devfortress.utilities.GlassPanel;
-import devfortress.view.AboutScreen;
-import devfortress.view.DevFortress;
-import devfortress.view.InfomationPane;
-import devfortress.view.NavigationPane;
-import devfortress.view.TabbedPane;
-import devfortress.view.TabbedPaneDeveloper;
-import devfortress.view.TabbedPaneSystem;
-import devfortress.view.WelcomeScreen;
+import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -41,6 +34,7 @@ public class GameController extends MouseAdapter {
             GameEngine.initialize("player 1", 100000);
             SystemController systemController = new SystemController(TabbedPaneSystem.getInstance(), GameEngine.getInstance());
             DeveloperController developerController = new DeveloperController(TabbedPaneDeveloper.getInstance(), GameEngine.getInstance());
+            ProjectController projectController = new ProjectController(TabbedPaneProject.getInstance(), GameEngine.getInstance());            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
