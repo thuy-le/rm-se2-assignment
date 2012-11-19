@@ -28,10 +28,6 @@ public class GameViewController {
     private TabbedPaneSystem sysPne;
     private AboutScreen aboutScr;
     private GameEngine model;
-//
-//    public WelcomeScreenController() {
-//        view = WelcomeScreen.getInstance();
-//    }
 
     public GameViewController(DevFortress devFortress, WelcomeScreen welCm, NavigationPane navPne, InfomationPane infoPne, TabbedPaneSystem sysPne, AboutScreen aboutScr, GameEngine model) {
         this.devFortress = devFortress;

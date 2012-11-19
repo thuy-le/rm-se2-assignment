@@ -25,8 +25,11 @@ public class DeveloperController implements Initilizable {
 
     @Override
     public void initilize() {
+        //Feed all developers
         view.addFeedAllDevListener(new FeedAllMouseListener());
+        //Open new windown, choose developer to add
         view.addHireDevListener(new HireDeveloperMouseListener());
+        //Give all developers beer
         view.addPartyListener(new PartyMouseListener());
     }
 
