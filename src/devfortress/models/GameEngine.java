@@ -18,18 +18,18 @@ public class GameEngine {
     private DevDate date;
     private List<Developer> developers, marketDevelopers;
     private List<Project> projects, marketProjects, pastProjects;
-    private static GameEngine instance;
+    private static GameEngine instance = new GameEngine();
     private String playerName, fileName;
     private int numPCs;
 
-    private GameEngine(String playerName, int budget) {
-        this.budget = budget;
-        this.developers = new LinkedList<Developer>();
-        this.projects = new LinkedList<Project>();
-        this.marketProjects = new LinkedList<Project>();
-        this.marketDevelopers = new LinkedList<Developer>();
+    private GameEngine() {
+        this.budget = 1000000;
+        this.developers = new LinkedList<>();
+        this.projects = new LinkedList<>();
+        this.marketProjects = new LinkedList<>();
+        this.marketDevelopers = new LinkedList<>();
         this.date = new DevDate();
-        this.playerName = playerName;
+        this.playerName = "";
         this.fileName = null;
     }
 
@@ -37,24 +37,19 @@ public class GameEngine {
      * This method should only be called once
      */
     public static void initialize(String playerName, int budget) throws GameAlreadyInitializedException {
-        synchronized (GameEngine.class) {
-            if (instance != null) {
-                instance = new GameEngine(playerName, budget);
-            } else {
-                throw new GameAlreadyInitializedException();
-            }
+        if (playerName.length() > 0) {
+            throw new GameAlreadyInitializedException();
+        } else {
+            instance.playerName = playerName;
+            instance.budget = budget;
         }
     }
 
     /**
      * <code>{@link #initialize(String, int)}</code> need to be called first
      */
-    public synchronized static GameEngine getInstance() throws GameNotInitilizedException {
-        if (instance != null) {
-            return instance;
-        } else {
-            throw new GameNotInitilizedException();
-        }
+    public synchronized static GameEngine getInstance() {
+        return instance;
     }
 
     /*

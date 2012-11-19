@@ -17,7 +17,6 @@ public final class SystemController implements Initilizable {
     public SystemController(SystemInterface view, GameEngine model) {
         this.view = view;
         this.model = model;
-        initilize();
     }
 
     @Override

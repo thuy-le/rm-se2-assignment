@@ -22,7 +22,7 @@ public class NavigationPane {
     private JToolBar toolbar;
     private static volatile NavigationPane instance = null;
 
-    private NavigationPane() {        
+    public NavigationPane() {
         init();
     }
 
@@ -43,6 +43,7 @@ public class NavigationPane {
 
     private void init() {
         toolbar = new JToolBar() {
+
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -61,22 +62,22 @@ public class NavigationPane {
         exitGame.setLabelName("exit");
         exitGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         exitGame.setToolTipText("Exit Game");
-        
+
         CustomLabel newGame = new CustomLabel(new ImageIcon("images/new2.png"));
         newGame.setLabelName("new");
         newGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         newGame.setToolTipText("New Game");
-        
+
         CustomLabel saveGame = new CustomLabel(new ImageIcon("images/save.png"));
         saveGame.setLabelName("save");
         saveGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         saveGame.setToolTipText("Save Game");
-        
+
         CustomLabel aboutGame = new CustomLabel(new ImageIcon("images/about.png"));
         aboutGame.setLabelName("about");
         aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aboutGame.setToolTipText("About Us");
-        
+
         //adjust look and feel
         exitGame.setOpaque(false);
         newGame.setOpaque(false);
@@ -87,7 +88,7 @@ public class NavigationPane {
         newGame.addMouseListener(new GameController());
         saveGame.addMouseListener(new GameController());
         aboutGame.addMouseListener(new GameController());
-        
+
         //add components
         toolbar.add(newGame);
         toolbar.add(saveGame);

@@ -18,13 +18,14 @@ import javax.swing.JLabel;
  * @author PC
  */
 public class InfomationPane {
+
     private GlassPanel infoPanel;
     private static volatile InfomationPane instance = null;
-    
-    private InfomationPane(){
+
+    public InfomationPane() {
         init();
     }
-    
+
     public static InfomationPane getInstance() {
         if (instance == null) {
             synchronized (InfomationPane.class) {
@@ -36,12 +37,11 @@ public class InfomationPane {
         return instance;
     }
 
-    
-    public GlassPanel getInfoPanel(){
+    public GlassPanel getInfoPanel() {
         return infoPanel;
     }
-    
-    private void init(){
+
+    private void init() {
         JLabel dateLabel = new JLabel("16/11/2012");
         JLabel nextTurn = new CustomLabel(new ImageIcon("images/right.png"));
         infoPanel = new GlassPanel(0, 0, 795, 50, .85f, Colour.DARKBLUE, 10, 10);

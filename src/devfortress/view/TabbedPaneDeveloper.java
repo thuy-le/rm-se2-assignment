@@ -44,7 +44,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     private JLabel devName, mainSkill, workingPrj, status;
     //constructor
 
-    private TabbedPaneDeveloper() {
+    public TabbedPaneDeveloper() {
         setOpaque(false);
         init();
     }
@@ -255,21 +255,17 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
 
     @Override
     public void addHireDevListener(MouseListener l) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void addFeedAllDevListener(MouseListener l) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void addPartyListener(MouseListener l) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

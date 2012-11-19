@@ -30,9 +30,9 @@ public class WelcomeScreen extends JPanel {
     private Color colour;
     private String playerName;
     private JTextField playerTxt;
-    private static volatile WelcomeScreen instance = null;
+    private static volatile WelcomeScreen instance = new WelcomeScreen();
 
-    private WelcomeScreen() {
+    public WelcomeScreen() {
         this.x = 20;
         this.y = 25;
         this.width = 755;
@@ -46,22 +46,22 @@ public class WelcomeScreen extends JPanel {
     }
 
     public static WelcomeScreen getInstance() {
-        if (instance == null) {
-            synchronized (WelcomeScreen.class) {
-                if (instance == null) {
-                    instance = new WelcomeScreen();
-                }
-            }
-        }
+//        if (instance == null) {
+//            synchronized (WelcomeScreen.class) {
+//                if (instance == null) {
+//                    instance = new WelcomeScreen();
+//                }
+//            }
+//        }
         return instance;
     }
-    
+
     //Getters and Setters
-    public String getPlayerName(){
+    public String getPlayerName() {
         return playerName;
     }
 
-    public void setPlayerName(String playerName){
+    public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
 
@@ -75,9 +75,10 @@ public class WelcomeScreen extends JPanel {
         JLabel decor = new CustomLabel("***");
         CustomButton submitName = new CustomButton("SUBMIT");
         TextfieldStateChange validation = new TextfieldStateChange(submitName);
-        
+
         //Global Variables
         playerTxt = new JTextField("DevFortress", 15) {
+
             @Override
             protected void paintComponent(Graphics g) {
                 ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
@@ -86,13 +87,13 @@ public class WelcomeScreen extends JPanel {
         };
         playerName = playerTxt.getText();
         doc = (PlainDocument) playerTxt.getDocument();
-        
+
         //
         doc.setDocumentFilter(new TextLengthDocFilter(15));
         playerTxt.addKeyListener(validation);
         submitName.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         submitName.addMouseListener(new GameController());
-        
+
         //look and feel
         playerTxt.setOpaque(false);
         playerTxt.setFont(new Font("Century Gothic", Font.BOLD, 32));
@@ -100,7 +101,7 @@ public class WelcomeScreen extends JPanel {
         playerTxt.setBorder(BorderFactory.createLineBorder(Colour.DARKBLUE, 2, true));
         welcome.setForeground(Colour.DARKBLUE);
         decor.setForeground(Colour.DARKBLUE);
-        
+
         //add components
         textHolder.add(playerTxt);
         content.add(welcome);
@@ -129,55 +130,56 @@ public class WelcomeScreen extends JPanel {
     }
 }
 
-   class TextLengthDocFilter extends DocumentFilter {
-      private int maxTextLength;
+class TextLengthDocFilter extends DocumentFilter {
 
-      public TextLengthDocFilter(int maxTextLength) {
-         this.maxTextLength = maxTextLength;
-      }
+    private int maxTextLength;
 
-      private boolean verifyText(String text) {
-         return text.length() <= maxTextLength;
-      }
+    public TextLengthDocFilter(int maxTextLength) {
+        this.maxTextLength = maxTextLength;
+    }
 
-      @Override
-      public void insertString(FilterBypass fb, int offset, String string,
-               AttributeSet attr) throws BadLocationException {
+    private boolean verifyText(String text) {
+        return text.length() <= maxTextLength;
+    }
 
-         Document doc = fb.getDocument();
-         String oldText = doc.getText(0, doc.getLength());
-         StringBuilder sb = new StringBuilder(oldText);
-         sb.insert(offset, string);
+    @Override
+    public void insertString(FilterBypass fb, int offset, String string,
+            AttributeSet attr) throws BadLocationException {
 
-         if (verifyText(sb.toString())) {
+        Document doc = fb.getDocument();
+        String oldText = doc.getText(0, doc.getLength());
+        StringBuilder sb = new StringBuilder(oldText);
+        sb.insert(offset, string);
+
+        if (verifyText(sb.toString())) {
             super.insertString(fb, offset, string, attr);
-         }
+        }
 
-      }
+    }
 
-      @Override
-      public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-               throws BadLocationException {
-         Document doc = fb.getDocument();
-         String oldText = doc.getText(0, doc.getLength());
-         StringBuilder sb = new StringBuilder(oldText);
+    @Override
+    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+            throws BadLocationException {
+        Document doc = fb.getDocument();
+        String oldText = doc.getText(0, doc.getLength());
+        StringBuilder sb = new StringBuilder(oldText);
 
-         sb.replace(offset, offset + length, text);
-         if (verifyText(sb.toString())) {
+        sb.replace(offset, offset + length, text);
+        if (verifyText(sb.toString())) {
             super.replace(fb, offset, length, text, attrs);
-         }
-      }
+        }
+    }
 
-      @Override
-      public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
-         Document doc = fb.getDocument();
-         String oldText = doc.getText(0, doc.getLength());
-         StringBuilder sb = new StringBuilder(oldText);
+    @Override
+    public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+        Document doc = fb.getDocument();
+        String oldText = doc.getText(0, doc.getLength());
+        StringBuilder sb = new StringBuilder(oldText);
 
-         sb.replace(offset, offset + length, "");
+        sb.replace(offset, offset + length, "");
 
-         if (verifyText(sb.toString())) {
-            super.remove(fb, offset, length);            
-         }
-      }
-   }
+        if (verifyText(sb.toString())) {
+            super.remove(fb, offset, length);
+        }
+    }
+}

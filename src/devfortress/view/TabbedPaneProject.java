@@ -28,7 +28,7 @@ import javax.swing.table.JTableHeader;
  *
  * @author PC
  */
-public class TabbedPaneProject extends JPanel implements ProjectInterface,Observer{
+public class TabbedPaneProject extends JPanel implements ProjectInterface, Observer {
 
     //initialize constant variables
     static private final float alpha = 0.8f;
@@ -41,7 +41,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface,Observ
     static private final int arcH = 10;
     static private final Color contentColor = Colour.LIGHTORANGE;
     private static volatile TabbedPaneProject instance = null;
-    
+
     public static TabbedPaneProject getInstance() {
         if (instance == null) {
             synchronized (TabbedPaneProject.class) {
@@ -52,7 +52,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface,Observ
         }
         return instance;
     }
-    
+
     //constructor
     public TabbedPaneProject() {
         setOpaque(false);
@@ -64,23 +64,23 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface,Observ
         setLayout(new BorderLayout());
 
         //------Create a JList of developers
-            //list
+        //list
         String projects[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
         DefaultListModel prjModel = new DefaultListModel();
         for (int i = 0; i < projects.length; i++) {
-            EnumMap<AreaName,FunctionalArea> prjFA= new EnumMap<>(AreaName.class);
+            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<>(AreaName.class);
             prjFA.put(AreaName.CODING, new FunctionalArea(AreaName.CODING, 10, 0, true));
             Project prj = new Project(30, 2, prjFA);
             prjModel.addElement(prj);
         }
         JList prjList = new JList();
         prjList.setModel(prjModel);
-            //buttons
+        //buttons
         java.util.List<CustomButton> btnList = new LinkedList<>();
         CustomButton btnAdd = new CustomButton("Add Project");
         btnList.add(btnAdd);
-            //add button(s) and list together
-        CustomList projectList = new CustomList(prjList, btnList);        
+        //add button(s) and list together
+        CustomList projectList = new CustomList(prjList, btnList);
         //-------Adjust look and feel
         btnAdd.setColour(Colour.DARKBLUE);
         projectList.setColor(Colour.DARKBLUE);
@@ -94,28 +94,28 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface,Observ
 
         //------Right Hand Side:
         //---Top:
-            //Create a container for contents on the right
+        //Create a container for contents on the right
         GlassPanel rightPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
-            //display developer name
+        //display developer name
         JLabel developerDetail = new JLabel("Project Details");
         //the "top" panel contain (1) avatar, and basic details about developer
         JPanel top = new JPanel();
         top.setOpaque(false);
-            //display cancel button
+        //display cancel button
         String picture = "images/cancel.png";
         Icon imgIcon = new ImageIcon(picture);
         JLabel imageIcon = new CustomLabel(imgIcon);
         imageIcon.setOpaque(false);
         imageIcon.setPreferredSize(new Dimension(50, 50));
         imageIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            //display basic details
+        //display basic details
         JPanel topR = new JPanel();
         JLabel prjName = new JLabel("Project Name");
         JLabel deadline = new JLabel("Deadline");
         JLabel cost = new JLabel("Cost");
         JLabel info1 = new JLabel("Info1");
         JLabel status = new JLabel("Status");
-            //adjust look and feel
+        //adjust look and feel
         imageIcon.setToolTipText("Cancel this project");
         topR.setBackground(contentColor);
         topR.setPreferredSize(new Dimension(220, 120));
@@ -130,7 +130,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface,Observ
         cost.setFont(font);
         developerDetail.setForeground(Colour.DARKBLUE);
         developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
-            //add components
+        //add components
         topR.add(prjName);
         topR.add(deadline);
         topR.add(info1);
@@ -143,22 +143,23 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface,Observ
         add(rightPanel, BorderLayout.CENTER);
 
         //---Bottom: contains a list of developers who belong to the project
-            //Create a table:
+        //Create a table:
         String data[][] = {{"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}};
         String col[] = {"Developer", "Skill"};
         JTable table = new JTable(data, col) {
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        
+
         //add buttons
         JPanel bottom = new JPanel();
         CustomButton btnAddDev = new CustomButton("Add Developer");
         CustomButton btnRemoveDev = new CustomButton("Remove Developer");
-        
-            //adjust look and feel:
+
+        //adjust look and feel:
         table.setFont(new Font("Century Gothic", Font.PLAIN, 15));
         table.setBorder(BorderFactory.createLineBorder(Colour.GREEN, 1));
         table.setRowHeight(25);
@@ -178,7 +179,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface,Observ
         btnAddDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnRemoveDev.setButtonSize(0, 0, 175, 35);
         btnRemoveDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-            //add components
+        //add components
         bottom.add(btnAddDev);
         bottom.add(btnRemoveDev);
         rightPanel.add(tableScroll, BorderLayout.NORTH);
@@ -198,34 +199,29 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface,Observ
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
     }
 
-     @Override
+    @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void addNewProjectListener(MouseListener l) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void cancelProjectListener(MouseListener l) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void addDevToProjectListener(MouseListener l) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void removeDevFromProjectListener(MouseListener l) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     //override the getPreferredSize method
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
-    }   
+    }
 }
