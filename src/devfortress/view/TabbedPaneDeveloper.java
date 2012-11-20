@@ -9,6 +9,7 @@ import devfortress.utilities.CustomList;
 import devfortress.utilities.CustomListRenderer;
 import devfortress.utilities.CustomButton;
 import devfortress.models.Developer;
+import devfortress.models.Project;
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.DeveloperInterface;
 import java.awt.*;
@@ -102,9 +103,6 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         developerList.setSelectionBackground(Colour.LIGHTORANGE);
         developerList.setSelectionForeground(Colour.REDORANGEDARK);
         developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-//        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-//        btnFeed.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-//        btnParty.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         JPanel bottom = new JPanel();
         btnFireDev = new CustomButton("Fire");
         btnFeedDev = new CustomButton("Feed");
@@ -120,12 +118,6 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         add(cl, BorderLayout.WEST);
 
         //------Right Hand Side:
-        //---Top:
-        //Create a container for contents on the right
-        //display developer name
-        //the "top" panel contain (1) avatar, and basic details about developer
-        //display avatar
-        //display basic details
         //adjust look and feel
         topR.setBackground(Colour.LIGHTORANGE);
         topR.setPreferredSize(new Dimension(220, 100));
@@ -171,11 +163,8 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         bottom.setBackground(Colour.LIGHTORANGE);
         bottom.setLayout(new FlowLayout());
         btnFireDev.setButtonSize(0, 0, 70, 35);
-//        btnFireDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnFeedDev.setButtonSize(0, 0, 70, 35);
-//        btnFeedDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnPartyDev.setButtonSize(0, 0, 70, 35);
-//        btnPartyDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         //add components
         bottom.add(btnFireDev);
         bottom.add(btnFeedDev);
@@ -288,6 +277,18 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         public void valueChanged(ListSelectionEvent e) {
             Developer dev = (Developer) developerList.getSelectedValue();
             setDevName(dev.getName());
+            String status = "<html>Status: " + (dev.isHappy() ? "☺" : "☹");
+            status += (dev.isDrunk() ? ",☻" : "");
+            status += (dev.isFed() ? ",☀" : ",☠");
+            status += "</html>";
+            setStatus(status);
+            Project p = dev.getWorkingProject();
+            if (p != null) {
+                setWorkingPrj(p.getName());
+            } else {
+                setWorkingPrj("Not working");
+            }
+            setMainSkill(dev.getMainSkill().toString());
         }
     }
 }

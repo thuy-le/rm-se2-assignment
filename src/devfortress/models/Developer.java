@@ -51,11 +51,11 @@ public class Developer {
         this.salary = 0;
         this.workingProject = null;
         this.workingArea = null;
+        this.happy = Utilities.randInt(2) == 1;
+        this.drunk = Utilities.randInt(2) == 1;
+        this.fed = Utilities.randInt(2) == 1;
         randomizeSkills();
         re_calculateDeveloperInfo();
-        System.out.println("Developer: " + name);
-        System.out.println("Main Skill: " + mainSkillInfo + " Level " + skills.get(mainSkillInfo).getLevel());
-        System.out.println("Salary: " + salary);
     }
 
     private void randomizeSkills() {

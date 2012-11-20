@@ -53,8 +53,6 @@ public class DevFortress extends JFrame implements WelcomeScreenInterface {
                 super.paintComponent(g);
                 if (background != null) {
                     g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), null);
-                } else {
-                    System.out.println("Background null");
                 }
             }
         };
@@ -76,8 +74,6 @@ public class DevFortress extends JFrame implements WelcomeScreenInterface {
             super.paintComponent(g);
             if (background != null) {
                 g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), null);
-            } else {
-                System.out.println("Background null");
             }
         }
     };

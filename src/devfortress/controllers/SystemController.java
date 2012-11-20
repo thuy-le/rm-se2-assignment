@@ -32,7 +32,6 @@ public final class SystemController implements Initilizable {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
-            System.out.println("Mouse Clicked");
         }
     }
 

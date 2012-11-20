@@ -92,6 +92,5 @@ public class AboutScreen extends JPanel {
 
     public void addBackListener(MouseListener l) {
         btnBack.addMouseListener(l);
-        System.out.println("Mouse Listener added");
     }
 }

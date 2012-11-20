@@ -73,8 +73,6 @@ public class WelcomeScreen extends JPanel {
         //
         doc.setDocumentFilter(new TextLengthDocFilter(15));
         playerTxt.addKeyListener(validation);
-//        submitName.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-//        submitName.addMouseListener(new WelcomeScreenController());
 
         //look and feel
         playerTxt.setOpaque(false);

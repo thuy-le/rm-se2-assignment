@@ -54,9 +54,9 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         String projects[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
         DefaultListModel prjModel = new DefaultListModel();
         for (int i = 0; i < projects.length; i++) {
-            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
-            prjFA.put(AreaName.CODING, new FunctionalArea(AreaName.CODING, 10, 0, true));
-            Project prj = new Project(30, 2, prjFA);
+//            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
+//            prjFA.put(AreaName.CODING, new FunctionalArea(AreaName.CODING, 10, 0, true));
+            Project prj = new Project(30, 2);
             prjModel.addElement(prj);
         }
         JList prjList = new JList();

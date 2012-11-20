@@ -4,11 +4,7 @@
  */
 package devfortress.controllers;
 
-import devfortress.exceptions.GameNotInitilizedException;
 import devfortress.models.GameEngine;
-import devfortress.utilities.CustomButton;
-import devfortress.utilities.CustomLabel;
-import devfortress.utilities.GlassPanel;
 import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -50,7 +46,6 @@ public class GameViewController {
         navPne.addNewGameListener(new NewGameListener());
         navPne.addSaveGameListener(new SaveGameListener());
         aboutScr.addBackListener(new BackAboutListener());
-        System.out.println("Init");
 
     }
 
@@ -58,7 +53,6 @@ public class GameViewController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("Submit");
             if (!welCm.getPlayerName().trim().equals("")) {
                 devFortress.remove(welCm);
                 devFortress.add(tabPne, BorderLayout.CENTER);
@@ -86,7 +80,6 @@ public class GameViewController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("About");
             devFortress.remove(tabPne);
             navPne.getToolbar().setVisible(false);
             infoPne.getInfoPanel().setVisible(false);
@@ -115,7 +108,6 @@ public class GameViewController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("Back clicked");
             devFortress.remove(aboutScr);
             devFortress.add(tabPne, BorderLayout.CENTER);
             navPne.getToolbar().setVisible(true);
