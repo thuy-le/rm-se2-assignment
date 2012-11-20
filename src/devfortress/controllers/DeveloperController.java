@@ -8,6 +8,7 @@ import devfortress.models.GameEngine;
 import devfortress.view.interfaces.DeveloperInterface;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,13 +32,19 @@ public class DeveloperController implements Initilizable {
         view.addHireDevListener(new HireDeveloperMouseListener());
         //Give all developers beer
         view.addPartyListener(new PartyMouseListener());
+        //Feed Selected Developer
+        view.addFeedSelectedDevListener(new FeedDeveloperListener());
+        //Fire selected Developer
+        view.addFireDevListener(new FireDeveloperListener());
+        //Give selected Developer beer
+        view.addGiveBeerListener(new GiveBeerToDevListener());
     }
 
     private class FeedAllMouseListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
+            JOptionPane.showMessageDialog(null, "Feed all");
         }
     }
 
@@ -45,7 +52,7 @@ public class DeveloperController implements Initilizable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
+            JOptionPane.showMessageDialog(null, "Hire new");
         }
     }
 
@@ -53,7 +60,31 @@ public class DeveloperController implements Initilizable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
+            JOptionPane.showMessageDialog(null, "Party");
+        }
+    }
+
+    private class FeedDeveloperListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            JOptionPane.showMessageDialog(null, "Feed");
+        }
+    }
+
+    private class FireDeveloperListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            JOptionPane.showMessageDialog(null, "Fire");
+        }
+    }
+
+    private class GiveBeerToDevListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            JOptionPane.showMessageDialog(null, "Drink beer");
         }
     }
 }

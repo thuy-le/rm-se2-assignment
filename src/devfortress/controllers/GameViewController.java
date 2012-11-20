@@ -23,19 +23,20 @@ public class GameViewController {
 
     private DevFortress devFortress;
     private WelcomeScreen welCm;
+    private TabbedPane tabPne;
     private NavigationPane navPne;
     private InfomationPane infoPne;
-    private TabbedPaneSystem sysPne;
+//    private TabbedPaneSystem tabPne;
     private AboutScreen aboutScr;
     private GameEngine model;
 
-    public GameViewController(DevFortress devFortress, WelcomeScreen welCm, NavigationPane navPne, InfomationPane infoPne, TabbedPaneSystem sysPne, AboutScreen aboutScr, GameEngine model) {
+    public GameViewController(DevFortress devFortress, WelcomeScreen welCm, NavigationPane navPne, InfomationPane infoPne, TabbedPane sysPne, AboutScreen aboutScr, GameEngine model) {
         this.devFortress = devFortress;
         this.welCm = welCm;
         this.aboutScr = aboutScr;
         this.navPne = navPne;
         this.infoPne = infoPne;
-        this.sysPne = sysPne;
+        this.tabPne = sysPne;
         this.model = model;
     }
 
@@ -60,10 +61,10 @@ public class GameViewController {
             System.out.println("Submit");
             if (!WelcomeScreen.getInstance().getPlayerName().trim().equals("")) {
                 devFortress.remove(welCm);
-                devFortress.add(TabbedPane.getInstance().getContainerTab(), BorderLayout.CENTER);
+                devFortress.add(tabPne, BorderLayout.CENTER);
                 navPne.getToolbar().setVisible(true);
                 infoPne.getInfoPanel().setVisible(true);
-                sysPne.setPlayerName(welCm.getPlayerName());
+                tabPne.getSysTab().setPlayerName(welCm.getPlayerName());
                 devFortress.repaint();
             }
         }
@@ -73,7 +74,7 @@ public class GameViewController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            devFortress.remove(TabbedPane.getInstance().getContainerTab());
+            devFortress.remove(tabPne);
             navPne.getToolbar().setVisible(false);
             infoPne.getInfoPanel().setVisible(false);
             devFortress.getContentPane().add(WelcomeScreen.getInstance());
@@ -86,7 +87,7 @@ public class GameViewController {
         @Override
         public void mouseClicked(MouseEvent e) {
             System.out.println("About");
-            devFortress.remove(TabbedPane.getInstance().getContainerTab());
+            devFortress.remove(tabPne);
             navPne.getToolbar().setVisible(false);
             infoPne.getInfoPanel().setVisible(false);
             devFortress.getContentPane().add(aboutScr);
@@ -116,7 +117,7 @@ public class GameViewController {
         public void mouseClicked(MouseEvent e) {
             System.out.println("Back clicked");
             devFortress.remove(aboutScr);
-            devFortress.add(TabbedPane.getInstance().getContainerTab(), BorderLayout.CENTER);
+            devFortress.add(tabPne, BorderLayout.CENTER);
             navPne.getToolbar().setVisible(true);
             infoPne.getInfoPanel().setVisible(true);
             devFortress.repaint();

@@ -4,14 +4,14 @@
  */
 package devfortress.view;
 
-import devfortress.controllers.TextfieldStateChange;
-import devfortress.controllers.GameViewController;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomButtonEvent;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.CustomLabel;
 import devfortress.utilities.Colour;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -186,5 +186,53 @@ class CustomJTextField extends JTextField {
     protected void paintComponent(Graphics g) {
         ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         super.paintComponent(g);
+    }
+}
+
+class TextfieldStateChange implements KeyListener {
+
+    private CustomButton button;
+
+    public TextfieldStateChange(CustomButton button) {
+        this.button = button;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getSource() instanceof JTextField) {
+            JTextField playerTxt = (JTextField) e.getSource();
+            WelcomeScreen.getInstance().setPlayerName(playerTxt.getText() + " ");
+            if (!playerTxt.getText().trim().equals("")) {
+                button.enableButton();
+            } else {
+                button.disableButton();
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getSource() instanceof JTextField) {
+            JTextField playerTxt = (JTextField) e.getSource();
+            WelcomeScreen.getInstance().setPlayerName(playerTxt.getText() + " ");
+            if (!playerTxt.getText().trim().equals("")) {
+                button.enableButton();
+            } else {
+                button.disableButton();
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getSource() instanceof JTextField) {
+            JTextField playerTxt = (JTextField) e.getSource();
+            WelcomeScreen.getInstance().setPlayerName(playerTxt.getText() + " ");
+            if (!playerTxt.getText().trim().equals("")) {
+                button.enableButton();
+            } else {
+                button.disableButton();
+            }
+        }
     }
 }

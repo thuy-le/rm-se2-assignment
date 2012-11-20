@@ -4,7 +4,6 @@
  */
 package devfortress.view;
 
-import devfortress.controllers.MyListEvent;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomList;
 import devfortress.utilities.CustomListRenderer;
@@ -20,6 +19,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -40,24 +41,13 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     //private variables
     private List<Developer> developers;
     private JList developerList;
-    private static volatile TabbedPaneDeveloper instance = null;
     private JLabel devName, mainSkill, workingPrj, status;
+    private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev;
     //constructor
 
     public TabbedPaneDeveloper() {
         setOpaque(false);
         init();
-    }
-
-    public static TabbedPaneDeveloper getInstance() {
-        if (instance == null) {
-            synchronized (TabbedPaneDeveloper.class) {
-                if (instance == null) {
-                    instance = new TabbedPaneDeveloper();
-                }
-            }
-        }
-        return instance;
     }
 
     private void init() {
@@ -78,9 +68,9 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         String data[][] = {{"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}};
         String col[] = {"Skill", "Level"};
         List<CustomButton> btnList = new LinkedList<>();
-        CustomButton btnHire = new CustomButton("Hire");
-        CustomButton btnFeed = new CustomButton("Feed");
-        CustomButton btnParty = new CustomButton("Party");
+        btnHire = new CustomButton("Hire");
+        btnFeed = new CustomButton("Feed");
+        btnParty = new CustomButton("Party");
         CustomList cl = new CustomList(developerList, btnList);
 
         JLabel developerDetail = new JLabel("Developer Details");
@@ -116,9 +106,9 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         btnFeed.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnParty.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         JPanel bottom = new JPanel();
-        CustomButton btnFireDev = new CustomButton("Fire");
-        CustomButton btnFeedDev = new CustomButton("Feed");
-        CustomButton btnPartyDev = new CustomButton("Party");
+        btnFireDev = new CustomButton("Fire");
+        btnFeedDev = new CustomButton("Feed");
+        btnPartyDev = new CustomButton("Party");
         JTable table = new JTable(data, col) {
 
             @Override
@@ -255,17 +245,44 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
 
     @Override
     public void addHireDevListener(MouseListener l) {
+        btnHire.addMouseListener(l);;
     }
 
     @Override
     public void addFeedAllDevListener(MouseListener l) {
+        btnFeed.addMouseListener(l);
     }
 
     @Override
     public void addPartyListener(MouseListener l) {
+        btnParty.addMouseListener(l);
+    }
+
+    @Override
+    public void addFeedSelectedDevListener(MouseListener l) {
+        btnFeedDev.addMouseListener(l);
+    }
+
+    @Override
+    public void addFireDevListener(MouseListener l) {
+        btnFireDev.addMouseListener(l);
+    }
+
+    @Override
+    public void addGiveBeerListener(MouseListener l) {
+        btnPartyDev.addMouseListener(l);
     }
 
     @Override
     public void update(Observable o, Object arg) {
+    }
+
+    private class MyListEvent implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            Developer dev = (Developer) developerList.getSelectedValue();
+            setDevName(dev.getName());
+        }
     }
 }

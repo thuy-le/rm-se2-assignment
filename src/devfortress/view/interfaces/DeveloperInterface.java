@@ -17,4 +17,10 @@ public interface DeveloperInterface {
     void addFeedAllDevListener(MouseListener l);
 
     void addPartyListener(MouseListener l);
+
+    void addFeedSelectedDevListener(MouseListener l);
+
+    void addGiveBeerListener(MouseListener l);
+
+    void addFireDevListener(MouseListener l);
 }

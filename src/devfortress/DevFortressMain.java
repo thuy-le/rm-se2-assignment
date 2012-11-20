@@ -9,6 +9,7 @@ import devfortress.view.AboutScreen;
 import devfortress.view.DevFortress;
 import devfortress.view.InfomationPane;
 import devfortress.view.NavigationPane;
+import devfortress.view.TabbedPane;
 import devfortress.view.TabbedPaneDeveloper;
 import devfortress.view.TabbedPaneProject;
 import devfortress.view.TabbedPaneSystem;
@@ -36,8 +37,9 @@ public class DevFortressMain {
         TabbedPaneSystem sysTab = new TabbedPaneSystem();
         TabbedPaneDeveloper devTab = new TabbedPaneDeveloper();
         TabbedPaneProject projTab = new TabbedPaneProject();
+        TabbedPane tabPne = new TabbedPane(devTab, projTab, sysTab);
         //Controllers
-        GameViewController gameController = new GameViewController(devFortress, welCm, nav, inf, sysTab, aboutScr, model);
+        GameViewController gameController = new GameViewController(devFortress, welCm, nav, inf, tabPne, aboutScr, model);
         DeveloperController devController = new DeveloperController(devTab, model);
         ProjectController projectController = new ProjectController(projTab, model);
         SystemController systemController = new SystemController(sysTab, model);
