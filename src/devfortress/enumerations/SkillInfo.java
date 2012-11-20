@@ -1,5 +1,7 @@
 package devfortress.enumerations;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Team Poseidon
@@ -45,10 +47,65 @@ public enum SkillInfo {
     CONFIG_MANAGEMENT("Config Management", SkillTypes.CONFIGURATION_MANAGEMENT);
     private String name;
     private SkillTypes type;
+    private static ArrayList<SkillInfo> techSkills = new ArrayList<>();
+    private static ArrayList<SkillInfo> metaSkills = new ArrayList<>();
+    private static ArrayList<SkillInfo> personalSkills = new ArrayList<>();
+    private static ArrayList<SkillInfo> configSkills = new ArrayList<>();
+    private static ArrayList<SkillInfo> specialSkills = new ArrayList<>();
 
     private SkillInfo(String name, SkillTypes type) {
         this.name = name;
         this.type = type;
+    }
+
+    private static void initializeArrayLists() {
+        if (techSkills.isEmpty() && metaSkills.isEmpty() && personalSkills.isEmpty() && configSkills.isEmpty() && specialSkills.isEmpty()) {
+            for (int i = 0; i < values().length; i++) {
+                SkillInfo skill = values()[i];
+                switch (values()[i].getType()) {
+                    case TECHNICAL:
+                        techSkills.add(skill);
+                        break;
+                    case META:
+                        metaSkills.add(skill);
+                        break;
+                    case PERSONAL:
+                        personalSkills.add(skill);
+                        break;
+                    case CONFIGURATION_MANAGEMENT:
+                        configSkills.add(skill);
+                        break;
+                }
+                specialSkills.add(FORTH);
+                specialSkills.add(HASKELL);
+                specialSkills.add(LISP);
+            }
+        }
+    }
+
+    public static ArrayList<SkillInfo> configSkills() {
+        initializeArrayLists();
+        return configSkills;
+    }
+
+    public static ArrayList<SkillInfo> metaSkills() {
+        initializeArrayLists();
+        return metaSkills;
+    }
+
+    public static ArrayList<SkillInfo> personalSkills() {
+        initializeArrayLists();
+        return personalSkills;
+    }
+
+    public static ArrayList<SkillInfo> specialSkills() {
+        initializeArrayLists();
+        return specialSkills;
+    }
+
+    public static ArrayList<SkillInfo> techSkills() {
+        initializeArrayLists();
+        return techSkills;
     }
 
     public String getName() {

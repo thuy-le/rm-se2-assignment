@@ -30,7 +30,7 @@ public class Developer {
 
     private String name;
     private Map<SkillInfo, Skill> skills;
-    private SkillInfo mainSkill;
+    private SkillInfo mainSkillInfo;
     private boolean happy, fed, drunk;
     private int salary;
     private Project workingProject;
@@ -44,14 +44,42 @@ public class Developer {
 //        this.workingProject = null;
 //        this.workingArea = null;
 //    }
-
     public Developer() {
         this.name = Utilities.getRandomName();
-                this.skills = new EnumMap<>(SkillInfo.class);
-        this.mainSkill = null;
+        this.skills = new EnumMap<>(SkillInfo.class);
+        this.mainSkillInfo = null;
         this.salary = 0;
         this.workingProject = null;
         this.workingArea = null;
+        randomizeSkills();
+        re_calculateDeveloperInfo();
+        System.out.println("Developer: " + name);
+        System.out.println("Main Skill: " + mainSkillInfo + " Level " + skills.get(mainSkillInfo).getLevel());
+        System.out.println("Salary: " + salary);
+    }
+
+    private void randomizeSkills() {
+        int numTechSkills = Utilities.randInt(2) + 1;
+        int numConfigSkills = Utilities.randInt(SkillInfo.configSkills().size() + 1);
+        int numMetaSkills = Utilities.randInt(SkillInfo.metaSkills().size() + 1);
+        int numPersonalSkills = Utilities.randInt(SkillInfo.personalSkills().size() + 1);
+        for (int i = 0; i < numTechSkills; i++) {
+            Skill skill = Utilities.getRandomSkill(SkillInfo.techSkills(), 4);
+            skills.put(skill.getSkillInfo(), skill);
+        }
+        for (int i = 0; i < numConfigSkills; i++) {
+            Skill skill = Utilities.getRandomSkill(SkillInfo.configSkills(), 4);
+            skills.put(skill.getSkillInfo(), skill);
+        }
+        for (int i = 0; i < numMetaSkills; i++) {
+            Skill skill = Utilities.getRandomSkill(SkillInfo.metaSkills(), 4);
+            skills.put(skill.getSkillInfo(), skill);
+        }
+        for (int i = 0; i < numPersonalSkills; i++) {
+            Skill skill = Utilities.getRandomSkill(SkillInfo.personalSkills(), 6);
+            skills.put(skill.getSkillInfo(), skill);
+        }
+
     }
 
     /* Getters */
@@ -72,7 +100,7 @@ public class Developer {
     }
 
     public SkillInfo getMainSkill() {
-        return mainSkill;
+        return mainSkillInfo;
     }
 
     public Project getWorkingProject() {
@@ -186,12 +214,12 @@ public class Developer {
             }
         }
         if (skillList.isEmpty()) {
-            mainSkill = null;
+            mainSkillInfo = null;
             return;
         }
         Collections.sort(skillList);
         // The collection is sorted in ascending order, therefore the highest level skill is the last one
-        mainSkill = skillList.getLast().getSkillInfo();
+        mainSkillInfo = skillList.getLast().getSkillInfo();
     }
 
     /**
@@ -200,11 +228,14 @@ public class Developer {
     private void calculateSalary() {
         int totalPoint = 0;
         for (SkillInfo key : skills.keySet()) {
-            totalPoint += skills.get(key).getLevel();
+            if (mainSkillInfo != null && key == mainSkillInfo) {
+                totalPoint += skills.get(key).getLevel() * 3;
+            } else if (SkillInfo.specialSkills().contains(key) || SkillInfo.configSkills().contains(key)) {
+                totalPoint += skills.get(key).getLevel() * 2;
+            } else {
+                totalPoint += skills.get(key).getLevel();
+            }
         }
-        if (mainSkill != null) {
-            totalPoint += skills.get(mainSkill).getLevel();
-        }
-        this.salary = totalPoint * 10;
+        this.salary = totalPoint * 20;
     }
 }

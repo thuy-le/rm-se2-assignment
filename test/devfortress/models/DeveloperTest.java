@@ -27,7 +27,7 @@ public class DeveloperTest {
     
     @Before
     public void setUp() {
-        testObject = new Developer("test developer");
+        testObject = new Developer();
     }
     
     @After

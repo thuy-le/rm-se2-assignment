@@ -1,5 +1,7 @@
 package devfortress.utilities;
 
+import devfortress.enumerations.SkillInfo;
+import devfortress.models.Skill;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -40,8 +42,23 @@ public class Utilities {
         return names;
     }
 
+    public static int randInt() {
+        return rand.nextInt();
+    }
+
+    public static int randInt(int lim) {
+        return rand.nextInt(lim);
+    }
+
     public static String getRandomName() {
         int index = rand.nextInt(getNameList().size());
         return getNameList().get(index);
+    }
+
+    public static Skill getRandomSkill(ArrayList<SkillInfo> skills, int maxLvl) {
+        int level = randInt(maxLvl) + 1;
+        int index = randInt(skills.size());
+        Skill skill = new Skill(level, skills.get(index));
+        return skill;
     }
 }
