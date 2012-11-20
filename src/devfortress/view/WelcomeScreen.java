@@ -31,7 +31,6 @@ public class WelcomeScreen extends JPanel {
     private String playerName;
     private JTextField playerTxt;
     private CustomButton submitName;
-    private static volatile WelcomeScreen instance = new WelcomeScreen();
 
     public WelcomeScreen() {
         this.x = 20;
@@ -44,10 +43,6 @@ public class WelcomeScreen extends JPanel {
         this.colour = Colour.YELLOW;
         setOpaque(false);
         init();
-    }
-
-    public static WelcomeScreen getInstance() {
-        return instance;
     }
 
     //Getters and Setters
@@ -119,6 +114,54 @@ public class WelcomeScreen extends JPanel {
     public void addSubmitNameListener(MouseListener l) {
         submitName.addMouseListener(l);
     }
+
+    private class TextfieldStateChange implements KeyListener {
+
+        private CustomButton button;
+
+        public TextfieldStateChange(CustomButton button) {
+            this.button = button;
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (e.getSource() instanceof JTextField) {
+                JTextField playerTxt = (JTextField) e.getSource();
+                setPlayerName(playerTxt.getText() + " ");
+                if (!playerTxt.getText().trim().equals("")) {
+                    button.enableButton();
+                } else {
+                    button.disableButton();
+                }
+            }
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getSource() instanceof JTextField) {
+                JTextField playerTxt = (JTextField) e.getSource();
+                setPlayerName(playerTxt.getText() + " ");
+                if (!playerTxt.getText().trim().equals("")) {
+                    button.enableButton();
+                } else {
+                    button.disableButton();
+                }
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getSource() instanceof JTextField) {
+                JTextField playerTxt = (JTextField) e.getSource();
+                setPlayerName(playerTxt.getText() + " ");
+                if (!playerTxt.getText().trim().equals("")) {
+                    button.enableButton();
+                } else {
+                    button.disableButton();
+                }
+            }
+        }
+    }
 }
 
 class TextLengthDocFilter extends DocumentFilter {
@@ -185,53 +228,5 @@ class CustomJTextField extends JTextField {
     protected void paintComponent(Graphics g) {
         ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         super.paintComponent(g);
-    }
-}
-
-class TextfieldStateChange implements KeyListener {
-
-    private CustomButton button;
-
-    public TextfieldStateChange(CustomButton button) {
-        this.button = button;
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if (e.getSource() instanceof JTextField) {
-            JTextField playerTxt = (JTextField) e.getSource();
-            WelcomeScreen.getInstance().setPlayerName(playerTxt.getText() + " ");
-            if (!playerTxt.getText().trim().equals("")) {
-                button.enableButton();
-            } else {
-                button.disableButton();
-            }
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getSource() instanceof JTextField) {
-            JTextField playerTxt = (JTextField) e.getSource();
-            WelcomeScreen.getInstance().setPlayerName(playerTxt.getText() + " ");
-            if (!playerTxt.getText().trim().equals("")) {
-                button.enableButton();
-            } else {
-                button.disableButton();
-            }
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getSource() instanceof JTextField) {
-            JTextField playerTxt = (JTextField) e.getSource();
-            WelcomeScreen.getInstance().setPlayerName(playerTxt.getText() + " ");
-            if (!playerTxt.getText().trim().equals("")) {
-                button.enableButton();
-            } else {
-                button.disableButton();
-            }
-        }
     }
 }

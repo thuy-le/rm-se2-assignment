@@ -59,7 +59,7 @@ public class GameViewController {
         @Override
         public void mouseClicked(MouseEvent e) {
             System.out.println("Submit");
-            if (!WelcomeScreen.getInstance().getPlayerName().trim().equals("")) {
+            if (!welCm.getPlayerName().trim().equals("")) {
                 devFortress.remove(welCm);
                 devFortress.add(tabPne, BorderLayout.CENTER);
                 navPne.getToolbar().setVisible(true);
@@ -77,7 +77,7 @@ public class GameViewController {
             devFortress.remove(tabPne);
             navPne.getToolbar().setVisible(false);
             infoPne.getInfoPanel().setVisible(false);
-            devFortress.getContentPane().add(WelcomeScreen.getInstance());
+            devFortress.getContentPane().add(welCm);
             devFortress.getContentPane().repaint();
         }
     }

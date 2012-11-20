@@ -20,21 +20,9 @@ import javax.swing.JLabel;
 public class InfomationPane {
 
     private GlassPanel infoPanel;
-    private static volatile InfomationPane instance = null;
 
     public InfomationPane() {
         init();
-    }
-
-    public static InfomationPane getInstance() {
-        if (instance == null) {
-            synchronized (InfomationPane.class) {
-                if (instance == null) {
-                    instance = new InfomationPane();
-                }
-            }
-        }
-        return instance;
     }
 
     public GlassPanel getInfoPanel() {

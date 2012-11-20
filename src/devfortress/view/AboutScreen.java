@@ -34,17 +34,6 @@ public class AboutScreen extends JPanel {
         setOpaque(false);
         init();
     }
-//
-//    public static AboutScreen getInstance() {
-//        if (instance == null) {
-//            synchronized (AboutScreen.class) {
-//                if (instance == null) {
-//                    instance = new AboutScreen();
-//                }
-//            }
-//        }
-//        return instance;
-//    }
 
     private void init() {
         //Local Variables

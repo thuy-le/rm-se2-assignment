@@ -243,8 +243,13 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     }
 
     @Override
+    public Developer getSelectedDeveloper() {
+        return (Developer) developerList.getSelectedValue();
+    }
+
+    @Override
     public void addHireDevListener(MouseListener l) {
-        btnHire.addMouseListener(l);;
+        btnHire.addMouseListener(l);
     }
 
     @Override

@@ -7,12 +7,13 @@ import devfortress.exceptions.*;
 import devfortress.utilities.ReadOnlyList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  *
  * @author Team Poseidon
  */
-public class GameEngine {
+public class GameEngine extends Observable {
 
     private int budget;
     private DevDate date;

@@ -19,7 +19,6 @@ import javax.swing.JToolBar;
 public class NavigationPane {
 
     private JToolBar toolbar;
-    private static volatile NavigationPane instance = new NavigationPane();
     private CustomLabel exitGame, newGame, aboutGame, saveGame;
 
     public NavigationPane() {
@@ -55,10 +54,6 @@ public class NavigationPane {
         toolbar.add(saveGame);
         toolbar.add(aboutGame);
         toolbar.add(exitGame);
-    }
-
-    public static NavigationPane getInstance() {
-        return instance;
     }
 
     public JToolBar getToolbar() {

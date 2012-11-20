@@ -19,9 +19,7 @@ public class DevFortress extends JFrame implements WelcomeScreenInterface {
     //declare variables
     private ImageIcon background;
     private JPanel contentPane;
-    private static volatile DevFortress instance = new DevFortress();
 
-    ;
     //constructor
     /** Quan's Constructor **/
     public DevFortress(WelcomeScreen welCm, NavigationPane navPne, InfomationPane infoPne) {
@@ -65,28 +63,6 @@ public class DevFortress extends JFrame implements WelcomeScreenInterface {
 
     }
 
-    public static DevFortress getInstance() {
-        return instance;
-    }
-
-//    public static void main(String agrs[]) {
-//        WelcomeScreen welCm = WelcomeScreen.getInstance();
-//        NavigationPane nav = NavigationPane.getInstance();
-//        InfomationPane inf = InfomationPane.getInstance();
-//        DevFortress df = new DevFortress(welCm, nav, inf);
-//        df.setLayout(new BorderLayout());
-//        df.getContentPane().add(WelcomeScreen.getInstance(), BorderLayout.CENTER);
-//        df.getContentPane().add(NavigationPane.getInstance().getToolbar(), BorderLayout.NORTH);
-//        NavigationPane.getInstance().getToolbar().setVisible(false);
-//        df.getContentPane().add(InfomationPane.getInstance().getInfoPanel(), BorderLayout.SOUTH);
-//        InfomationPane.getInstance().getInfoPanel().setVisible(false);
-//        df.setTitle("❤ DevFortress");
-//        df.setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        df.setResizable(false);
-//        df.pack();
-//        df.setLocationRelativeTo(null);
-//        df.setVisible(true);
-//    }
     //override the getPreferredSize method
     @Override
     public Dimension getPreferredSize() {

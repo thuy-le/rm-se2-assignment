@@ -14,15 +14,9 @@ import javax.swing.UIManager;
  */
 public class TabbedPane extends JTabbedPane {
 
-//    private JTabbedPane containerTab;
     private TabbedPaneDeveloper devTab;
     private TabbedPaneProject projTab;
     private TabbedPaneSystem sysTab;
-//    private static volatile TabbedPane instance = null;
-//
-//    private TabbedPane() {
-//        init();
-//    }
 
     public TabbedPaneDeveloper getDevTab() {
         return devTab;
@@ -40,8 +34,6 @@ public class TabbedPane extends JTabbedPane {
         this.devTab = devTab;
         this.projTab = projTab;
         this.sysTab = sysTab;
-        //initialize JTabbedPane
-//        containerTab = new JTabbedPane();
         this.setUI(new CustomTabbedPaneUI());
         this.setSize(750, 550);
         UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE);
@@ -50,21 +42,4 @@ public class TabbedPane extends JTabbedPane {
         this.add("Developer", devTab);
         this.add("Project", projTab);
     }
-//    public static TabbedPane getInstance() {
-//        if (instance == null) {
-//            synchronized (TabbedPaneDeveloper.class) {
-//                if (instance == null) {
-//                    instance = new TabbedPane();
-//                }
-//            }
-//        }
-//        return instance;
-//    }
-//    public JTabbedPane getContainerTab() {
-//        return containerTab;
-//    }
-//
-//    private void init() {
-//        //-------TABS-------
-//    }
 }

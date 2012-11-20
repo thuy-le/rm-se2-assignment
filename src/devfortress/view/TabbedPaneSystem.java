@@ -43,18 +43,6 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     private CustomButton btnHire, btnAdd;
     private JLabel budget, welcome;
     private String playerName;
-    private static volatile TabbedPaneSystem instance = null;
-
-    public static TabbedPaneSystem getInstance() {
-        if (instance == null) {
-            synchronized (TabbedPaneProject.class) {
-                if (instance == null) {
-                    instance = new TabbedPaneSystem();
-                }
-            }
-        }
-        return instance;
-    }
 
     //constructor
     public TabbedPaneSystem() {
@@ -70,7 +58,7 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         String devStrings[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
         DefaultListModel devModel = new DefaultListModel();
         String projects[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        DefaultListModel prjModel = new DefaultListModel();        
+        DefaultListModel prjModel = new DefaultListModel();
         //$$$$$-----Global variables
         playerName = "player name";
         budget = new JLabel("$25000000");
@@ -98,7 +86,7 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         }
         devList.setModel(devModel);
         for (int i = 0; i < projects.length; i++) {
-            EnumMap<AreaName,FunctionalArea> prjFA= new EnumMap<>(AreaName.class);
+            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<>(AreaName.class);
             prjFA.put(AreaName.CODING, new FunctionalArea(AreaName.CODING, 10, 0, true));
             Project prj = new Project(30, 2, prjFA);
             prjModel.addElement(prj);
@@ -128,11 +116,6 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         label.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         String welcomeStr = "<html>Hi, " + playerName + " ◕‿◕</html>";
         welcome.setText(welcomeStr);
-        /*
-         * ########## Add Listener ##########
-         */
-//        btnAdd.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-//        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         /*
          * ########## set border layout to the container ##########
          */

@@ -4,6 +4,7 @@
  */
 package devfortress.controllers;
 
+import devfortress.models.Developer;
 import devfortress.models.GameEngine;
 import devfortress.view.interfaces.DeveloperInterface;
 import java.awt.event.MouseAdapter;
@@ -76,7 +77,10 @@ public class DeveloperController implements Initilizable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            JOptionPane.showMessageDialog(null, "Fire");
+            Developer dev = view.getSelectedDeveloper();
+            if (dev != null) {
+                JOptionPane.showMessageDialog(null, "Fire  " + dev.getName());
+            }
         }
     }
 

@@ -38,18 +38,6 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
     static private final int arcW = 10;
     static private final int arcH = 10;
     static private final Color contentColor = Colour.LIGHTORANGE;
-    private static volatile TabbedPaneProject instance = null;
-
-    public static TabbedPaneProject getInstance() {
-        if (instance == null) {
-            synchronized (TabbedPaneProject.class) {
-                if (instance == null) {
-                    instance = new TabbedPaneProject();
-                }
-            }
-        }
-        return instance;
-    }
 
     //constructor
     public TabbedPaneProject() {
