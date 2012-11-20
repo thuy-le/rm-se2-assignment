@@ -55,7 +55,8 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         DefaultListModel devModel = new DefaultListModel();
         GlassPanel rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colour.LIGHTORANGE, 7, 7);
         for (int i = 0; i < devStrings.length; i++) {
-            Developer dev = new Developer(devStrings[i]);
+//            Developer dev = new Developer(devStrings[i]);
+            Developer dev = new Developer();
             devModel.addElement(dev);
         }
         developerList = new JList();

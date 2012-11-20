@@ -81,7 +81,8 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         JLabel label = new JLabel("  Your budget is:");
         //
         for (int i = 0; i < devStrings.length; i++) {
-            Developer dev = new Developer(devStrings[i]);
+//            Developer dev = new Developer(devStrings[i]);
+            Developer dev = new Developer();
             devModel.addElement(dev);
         }
         devList.setModel(devModel);

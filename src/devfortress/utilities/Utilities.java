@@ -7,10 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Random;
 
 /**
  *
@@ -18,13 +16,10 @@ import java.util.logging.Logger;
  */
 public class Utilities {
 
-    private static List<String> names = new ArrayList<String>();
+    private static List<String> names = new ArrayList<>();
+    private static Random rand = new Random(System.currentTimeMillis());
 
-    public static String getRandomName() {
-        return "";
-    }
-
-    public synchronized static List<String> getNameList() {
+    private synchronized static List<String> getNameList() {
         BufferedReader reader = null;
         if (names.isEmpty()) {
             try {
@@ -42,7 +37,11 @@ public class Utilities {
                 }
             }
         }
-        
-        return names;        
-    }   
+        return names;
+    }
+
+    public static String getRandomName() {
+        int index = rand.nextInt(getNameList().size());
+        return getNameList().get(index);
+    }
 }

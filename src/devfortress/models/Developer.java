@@ -5,6 +5,7 @@ import devfortress.exceptions.DeveloperBusyException;
 import devfortress.enumerations.SkillInfo;
 import devfortress.enumerations.SkillTypes;
 import devfortress.utilities.ReadOnlyMap;
+import devfortress.utilities.Utilities;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -35,16 +36,25 @@ public class Developer {
     private Project workingProject;
     private AreaName workingArea;
 
-    public Developer(String name) {
-        this.name = name;
-        this.skills = new EnumMap<SkillInfo, Skill>(SkillInfo.class);
+//    public Developer(String name) {
+//        this.name = name;
+//        this.skills = new EnumMap<>(SkillInfo.class);
+//        this.mainSkill = null;
+//        this.salary = 0;
+//        this.workingProject = null;
+//        this.workingArea = null;
+//    }
+
+    public Developer() {
+        this.name = Utilities.getRandomName();
+                this.skills = new EnumMap<>(SkillInfo.class);
         this.mainSkill = null;
         this.salary = 0;
         this.workingProject = null;
         this.workingArea = null;
     }
-    /* Getters */
 
+    /* Getters */
     public boolean isHappy() {
         return happy;
     }
