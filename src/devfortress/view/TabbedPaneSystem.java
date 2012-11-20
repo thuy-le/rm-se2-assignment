@@ -10,7 +10,6 @@ import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomList;
-import devfortress.utilities.CustomButtonEvent;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.SystemInterface;
@@ -132,8 +131,8 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         /*
          * ########## Add Listener ##########
          */
-        btnAdd.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnAdd.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         /*
          * ########## set border layout to the container ##########
          */

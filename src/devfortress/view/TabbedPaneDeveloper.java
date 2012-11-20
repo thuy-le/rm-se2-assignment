@@ -7,7 +7,6 @@ package devfortress.view;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomList;
 import devfortress.utilities.CustomListRenderer;
-import devfortress.utilities.CustomButtonEvent;
 import devfortress.utilities.CustomButton;
 import devfortress.models.Developer;
 import devfortress.utilities.Colour;
@@ -102,9 +101,9 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         developerList.setSelectionBackground(Colour.LIGHTORANGE);
         developerList.setSelectionForeground(Colour.REDORANGEDARK);
         developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-        btnFeed.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-        btnParty.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnHire.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnFeed.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnParty.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         JPanel bottom = new JPanel();
         btnFireDev = new CustomButton("Fire");
         btnFeedDev = new CustomButton("Feed");
@@ -171,11 +170,11 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         bottom.setBackground(Colour.LIGHTORANGE);
         bottom.setLayout(new FlowLayout());
         btnFireDev.setButtonSize(0, 0, 70, 35);
-        btnFireDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnFireDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnFeedDev.setButtonSize(0, 0, 70, 35);
-        btnFeedDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnFeedDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnPartyDev.setButtonSize(0, 0, 70, 35);
-        btnPartyDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnPartyDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         //add components
         bottom.add(btnFireDev);
         bottom.add(btnFeedDev);

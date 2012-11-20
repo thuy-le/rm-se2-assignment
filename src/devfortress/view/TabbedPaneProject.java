@@ -7,10 +7,8 @@ package devfortress.view;
 import devfortress.enumerations.AreaName;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomList;
-import devfortress.utilities.CustomButtonEvent;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.CustomLabel;
-import devfortress.models.Developer;
 import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
 import devfortress.utilities.Colour;
@@ -85,7 +83,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         btnAdd.setColour(Colour.DARKBLUE);
         projectList.setColor(Colour.DARKBLUE);
         btnAdd.setTextColour(Colour.LIGHTBLUE);
-        btnAdd.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnAdd.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         prjList.setSelectionBackground(Colour.LIGHTGREEN);
         prjList.setSelectionForeground(Colour.DARKBLUE);
         prjList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
@@ -176,9 +174,9 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         bottom.setBackground(contentColor);
         bottom.setLayout(new FlowLayout());
         btnAddDev.setButtonSize(0, 0, 175, 35);
-        btnAddDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnAddDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnRemoveDev.setButtonSize(0, 0, 175, 35);
-        btnRemoveDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnRemoveDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         //add components
         bottom.add(btnAddDev);
         bottom.add(btnRemoveDev);

@@ -4,7 +4,6 @@
  */
 package devfortress.view;
 
-import devfortress.controllers.GameViewController;
 import devfortress.utilities.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
@@ -72,7 +71,7 @@ public class AboutScreen extends JPanel {
 
         btnBack = new CustomButton("Back");
         //Global Variables        
-        btnBack.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        btnBack.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
 //        btnBack.addMouseListener(new GameViewController());
         welcome.setForeground(Colour.DARKBLUE);
         info.setFont(new Font("Century Gocthic", Font.PLAIN, 22));

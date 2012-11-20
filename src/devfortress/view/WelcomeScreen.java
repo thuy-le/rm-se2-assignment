@@ -5,7 +5,6 @@
 package devfortress.view;
 
 import devfortress.utilities.GlassPanel;
-import devfortress.utilities.CustomButtonEvent;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.CustomLabel;
 import devfortress.utilities.Colour;
@@ -79,7 +78,7 @@ public class WelcomeScreen extends JPanel {
         //
         doc.setDocumentFilter(new TextLengthDocFilter(15));
         playerTxt.addKeyListener(validation);
-        submitName.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
+//        submitName.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
 //        submitName.addMouseListener(new WelcomeScreenController());
 
         //look and feel
