@@ -181,12 +181,10 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     public void setPlayerName(String name) {
         String welcomeStr = "<html>Hi, " + name + " ◕‿◕</html>";
         welcome.setText(welcomeStr);
-        welcome.repaint();
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("Something");
         GameEngine model = (GameEngine) o;
         devModel.removeAllElements();
         prjModel.removeAllElements();
@@ -194,7 +192,7 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
             devModel.addElement(dev);
         }
         for (Project p : model.getProjects()) {
-            devModel.addElement(p);
+            prjModel.addElement(p);
         }
     }
 }

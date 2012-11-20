@@ -93,6 +93,5 @@ public class CustomList extends JPanel implements CustomListInterface {
 
     @Override
     public void viewItem(Object item) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

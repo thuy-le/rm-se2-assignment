@@ -53,7 +53,7 @@ public class Project {
     }
 
     public String getName() {
-        return "Project Name";
+        return mainRequirement.getName();
     }
 
     public SkillInfo getMainRequirement() {
@@ -126,6 +126,9 @@ public class Project {
     }
 
     private void generateRandomMarketEvents() {
+    }
+
+    private void determineMainRequirement() {
     }
 
     private void randomize() {
@@ -205,6 +208,7 @@ public class Project {
 
         }
         /*******/
+        mainRequirement = SkillInfo.values()[Utilities.randInt(SkillInfo.values().length)];
     }
 
     private FunctionalArea getRandomFunctionalArea(List<AreaName> areaNames, int functionPoints, boolean visible) {

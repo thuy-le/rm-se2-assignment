@@ -4,7 +4,6 @@ import devfortress.controllers.DeveloperController;
 import devfortress.controllers.GameViewController;
 import devfortress.controllers.ProjectController;
 import devfortress.controllers.SystemController;
-import devfortress.exceptions.GameAlreadyInitializedException;
 import devfortress.models.GameEngine;
 import devfortress.view.AboutScreen;
 import devfortress.view.DevFortress;
@@ -15,8 +14,6 @@ import devfortress.view.TabbedPaneDeveloper;
 import devfortress.view.TabbedPaneProject;
 import devfortress.view.TabbedPaneSystem;
 import devfortress.view.WelcomeScreen;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -51,15 +48,8 @@ public class DevFortressMain {
         devController.initilize();
         projectController.initilize();
         systemController.initilize();
-        try {
-            //Add observers to model
-            model.initialize("Thien QUan", 1000000);
-        } catch (GameAlreadyInitializedException ex) {
-        }
         model.addObserver(sysTab);
         model.addObserver(projTab);
         model.addObserver(devTab);
-        model.synchronizedlyNotifyAll();
-
     }
 }

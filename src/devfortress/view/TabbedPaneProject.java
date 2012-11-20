@@ -4,6 +4,10 @@
  */
 package devfortress.view;
 
+import devfortress.exceptions.InvalidDevDateException;
+import devfortress.models.DevDate;
+import devfortress.models.FunctionalArea;
+import devfortress.models.GameEngine;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomList;
 import devfortress.utilities.CustomButton;
@@ -17,7 +21,11 @@ import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -36,7 +44,11 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
     static private final int arcH = 10;
     static private final Color contentColor = Colour.LIGHTORANGE;
     private JList prjList;
+    private DefaultListModel prjModel;
+    private DefaultTableModel projTableModel;
     private CustomButton btnAdd, btnAddDev, btnRemoveDev;
+    private GlassPanel rightPanel;
+    private JLabel prjName, deadline, cost, info1, status;
     //constructor
 
     public TabbedPaneProject() {
@@ -50,14 +62,12 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
 
         //------Create a JList of developers
         //list
-        String projects[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        DefaultListModel prjModel = new DefaultListModel();
-        for (int i = 0; i < projects.length; i++) {
-            Project prj = new Project();
-            prjModel.addElement(prj);
-        }
+        prjModel = new DefaultListModel();
+        projTableModel = new DefaultTableModel(0, 2);
+
         prjList = new JList();
         prjList.setModel(prjModel);
+        prjList.addListSelectionListener(new MyListEvent());
         //buttons
         java.util.List<CustomButton> btnList = new LinkedList<CustomButton>();
         btnAdd = new CustomButton("Add Project");
@@ -77,7 +87,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         //------Right Hand Side:
         //---Top:
         //Create a container for contents on the right
-        GlassPanel rightPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
+        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
         //display developer name
         JLabel developerDetail = new JLabel("Project Details");
         //the "top" panel contain (1) avatar, and basic details about developer
@@ -92,11 +102,11 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         imageIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
         //display basic details
         JPanel topR = new JPanel();
-        JLabel prjName = new JLabel("Project Name");
-        JLabel deadline = new JLabel("Deadline");
-        JLabel cost = new JLabel("Cost");
-        JLabel info1 = new JLabel("Info1");
-        JLabel status = new JLabel("Status");
+        prjName = new JLabel("Project Name");
+        deadline = new JLabel("Deadline");
+        cost = new JLabel("Cost");
+        info1 = new JLabel("Info1");
+        status = new JLabel("Status");
         //adjust look and feel
         imageIcon.setToolTipText("Cancel this project");
         topR.setBackground(contentColor);
@@ -128,13 +138,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         //Create a table:
         String data[][] = {{"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}};
         String col[] = {"Developer", "Skill"};
-        JTable table = new JTable(data, col) {
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
+        JTable table = new CustomProjectTable(projTableModel, contentColor);
 
         //add buttons
         JPanel bottom = new JPanel();
@@ -142,19 +146,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         btnRemoveDev = new CustomButton("Remove Developer");
 
         //adjust look and feel:
-        table.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        table.setBorder(BorderFactory.createLineBorder(Colour.GREEN, 1));
-        table.setRowHeight(25);
-        JTableHeader header = table.getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(Colour.DARKGREEN, 1));
-        header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(Colour.DARKGREEN);
-        header.setForeground(Color.WHITE);
-        JScrollPane tableScroll = new JScrollPane(table);
-        tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(440, 180));
-        tableScroll.setBackground(Colour.DARKGREEN);
-        tableScroll.getViewport().setBackground(contentColor);
+
         bottom.setBackground(contentColor);
         bottom.setLayout(new FlowLayout());
         btnAddDev.setButtonSize(0, 0, 175, 35);
@@ -164,7 +156,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         //add components
         bottom.add(btnAddDev);
         bottom.add(btnRemoveDev);
-        rightPanel.add(tableScroll, BorderLayout.NORTH);
+        rightPanel.add(((CustomProjectTable) table).getTableScroll(), BorderLayout.NORTH);
         rightPanel.add(bottom, BorderLayout.SOUTH);
     }
 
@@ -208,5 +200,91 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
 
     @Override
     public void update(Observable o, Object arg) {
+        GameEngine model = (GameEngine) o;
+        prjModel.clear();
+        for (Project proj : model.getProjects()) {
+            prjModel.addElement(proj);
+        }
+        showProject((Project) prjList.getSelectedValue());
+    }
+
+    public void showProject(Project project) {
+        if (project == null) {
+            rightPanel.setVisible(false);
+        } else {
+            try {
+                rightPanel.setVisible(true);
+                //set projectname... blah blah blah
+                prjName = new JLabel(project.getName());
+                DevDate today = GameEngine.getInstance().getDate();
+                DevDate date = new DevDate(today.getYear(), today.getMonth(), today.getWeek());
+                for (int i = 0; i < project.getDuration(); i++) {
+                    date.nextMonth();
+                }
+                deadline.setText("Deadline: " + date.getWeek() + "/" + date.getMonth() + "/" + date.getYear());
+                cost.setText("Budget: " + project.getBudget());
+                info1.setText("Level: " + project.getLevel());
+                status.setText("Bonus: " + project.getBonus());
+                //table
+                for (int i = 0; i < projTableModel.getRowCount(); i++) {
+                    projTableModel.removeRow(i);
+                }
+                for (FunctionalArea fA : project.getAreas().values()) {
+                    Object[] rowData = {fA.getName().toString(), fA.getFunctionPoints()};
+                    projTableModel.addRow(rowData);
+                }
+                Object[] ids = {"Functional Area", "Function Points"};
+                projTableModel.setColumnIdentifiers(ids);
+            } catch (InvalidDevDateException ex) {
+            }
+        }
+    }
+
+    private class MyListEvent implements ListSelectionListener {
+
+        private int selectedIndex;
+
+        public MyListEvent() {
+            selectedIndex = prjList.getSelectedIndex();
+        }
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (selectedIndex != prjList.getSelectedIndex()) {
+                selectedIndex = prjList.getSelectedIndex();
+                showProject((Project) prjList.getSelectedValue());
+            }
+        }
+    }
+}
+
+class CustomProjectTable extends JTable {
+
+    private JScrollPane tableScroll;
+
+    public CustomProjectTable(TableModel dm, Color contentColor) {
+        super(dm);
+        setFont(new Font("Century Gothic", Font.PLAIN, 15));
+        setBorder(BorderFactory.createLineBorder(Colour.GREEN, 1));
+        setRowHeight(25);
+        JTableHeader header = getTableHeader();
+        header.setBorder(BorderFactory.createLineBorder(Colour.DARKGREEN, 1));
+        header.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        header.setBackground(Colour.DARKGREEN);
+        header.setForeground(Color.WHITE);
+        tableScroll = new JScrollPane(this);
+        tableScroll.setBorder(BorderFactory.createEmptyBorder());
+        tableScroll.setPreferredSize(new Dimension(440, 180));
+        tableScroll.setBackground(Colour.DARKGREEN);
+        tableScroll.getViewport().setBackground(contentColor);
+    }
+
+    public JScrollPane getTableScroll() {
+        return tableScroll;
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
     }
 }

@@ -16,6 +16,7 @@ import java.util.Observable;
  */
 public class GameEngine extends Observable {
 
+    private static final int DEFAULT_BUDGET = 10000;
     private int budget;
     private DevDate date;
     private List<Developer> developers, marketDevelopers;
@@ -49,7 +50,27 @@ public class GameEngine extends Observable {
             for (int i = 0; i < 7; i++) {
                 this.developers.add(new Developer());
             }
+            for (int i = 0; i < 7; i++) {
+                this.projects.add(new Project());
+            }
         }
+        setChanged();
+    }
+
+    public void initialize(String playerName) {
+        this.playerName = playerName;
+        this.budget = DEFAULT_BUDGET;
+        this.generateRandomMarketDevelopers();
+        this.generateRandomMarketProjects();
+        developers.clear();
+        projects.clear();
+        for (int i = 0; i < 7; i++) {
+            this.developers.add(new Developer());
+        }
+        for (int i = 0; i < 7; i++) {
+            this.projects.add(new Project());
+        }
+        setChanged();
     }
 
     /**
@@ -102,6 +123,7 @@ public class GameEngine extends Observable {
             marketDevelopers.remove(dev);
             budget -= cost;
         }
+        setChanged();
     }
 
     /**
@@ -116,6 +138,7 @@ public class GameEngine extends Observable {
     public void fireDeveloper(Developer dev) throws DeveloperBusyException {
         if (dev.isAvailable()) {
             developers.remove(dev);
+            setChanged();
         } else {
             throw new DeveloperBusyException();
         }
@@ -136,6 +159,7 @@ public class GameEngine extends Observable {
         if (budget >= cost) {
             budget -= cost;
             dev.feed();
+            setChanged();
         } else {
             throw new InsufficientBudgetException();
         }
@@ -156,6 +180,7 @@ public class GameEngine extends Observable {
         if (budget >= cost) {
             budget -= cost;
             dev.drink();
+            setChanged();
         } else {
             throw new InsufficientBudgetException();
         }
@@ -174,6 +199,7 @@ public class GameEngine extends Observable {
         if (budget >= cost) {
             dev.trainSkill(skill);
             budget -= cost;
+            setChanged();
         } else {
             throw new InsufficientBudgetException();
         }
@@ -199,6 +225,7 @@ public class GameEngine extends Observable {
         project.removeAllDevelopers();
         projects.remove(project);
         budget -= project.getBudget() / 4;
+        setChanged();
     }
 
     /**
@@ -210,6 +237,7 @@ public class GameEngine extends Observable {
         projects.add(project);
         marketProjects.remove(project);
         budget += project.getBudget() / 4;
+        setChanged();
     }
 
     /**
@@ -222,14 +250,17 @@ public class GameEngine extends Observable {
         project.removeAllDevelopers();
         projects.remove(project);
         pastProjects.add(project);
+        setChanged();
     }
 
     public void assignDeveloperToProject(Project pro, Developer dev, AreaName area) throws DeveloperBusyException, InvalidFunctionalAreaException {
         pro.addDeveloper(dev, area);
+        setChanged();
     }
 
     public void removeDeveloperFromProject(Developer dev, Project pro) {
         pro.removeDeveloper(dev);
+        setChanged();
     }
 
     /*
@@ -253,6 +284,7 @@ public class GameEngine extends Observable {
             generateRandomMarketDevelopers();
             generateRandomMarketProjects();
         }
+        setChanged();
     }
 
     /**
@@ -279,10 +311,6 @@ public class GameEngine extends Observable {
         }
     }
 
-    public void synchronizedlyNotifyAll() {
-        setChanged();
-        notifyObservers();
-    }
     /*
      * Private methods and functions
      */

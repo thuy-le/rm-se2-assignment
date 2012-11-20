@@ -4,11 +4,14 @@
  */
 package devfortress.controllers;
 
+import devfortress.exceptions.GameAlreadyInitializedException;
 import devfortress.models.GameEngine;
 import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -54,12 +57,20 @@ public class GameViewController {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (!welCm.getPlayerName().trim().equals("")) {
+//                try {
+                model.initialize(welCm.getPlayerName());
+//                } catch (GameAlreadyInitializedException ex) {
+//                    JOptionPane.showMessageDialog(null, "You're already in a game");
+//                }
                 devFortress.remove(welCm);
                 devFortress.add(tabPne, BorderLayout.CENTER);
                 navPne.getToolbar().setVisible(true);
                 infoPne.getInfoPanel().setVisible(true);
-                tabPne.getSysTab().setPlayerName(welCm.getPlayerName());
-                devFortress.repaint();
+                tabPne.getSysTab().setPlayerName(model.getPlayerName());
+                tabPne.getSysTab().setBudget(model.getBudget());
+                model.notifyObservers();
+//                devFortress.repaint();
+
             }
         }
     }
@@ -72,7 +83,7 @@ public class GameViewController {
             navPne.getToolbar().setVisible(false);
             infoPne.getInfoPanel().setVisible(false);
             devFortress.getContentPane().add(welCm);
-            devFortress.getContentPane().repaint();
+//            devFortress.getContentPane().repaint();
         }
     }
 
