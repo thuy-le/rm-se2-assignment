@@ -80,7 +80,7 @@ public class WelcomeScreen extends JPanel {
         playerTxt.setOpaque(false);
         playerTxt.setFont(new Font("Century Gothic", Font.BOLD, 32));
         playerTxt.setHorizontalAlignment(JTextField.CENTER);
-        playerTxt.setBorder(BorderFactory.createLineBorder(Colour.DARKBLUE, 2, true));
+        playerTxt.setBorder(BorderFactory.createLineBorder(Colour.DARKBLUE, 2));
         welcome.setForeground(Colour.DARKBLUE);
         decor.setForeground(Colour.DARKBLUE);
 

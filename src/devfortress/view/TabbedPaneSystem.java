@@ -68,8 +68,8 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         btnHire = new CustomButton("Hire Developer");
         btnAdd = new CustomButton("Add Project");
         //$$$$$-----Local variable for UI
-        List<CustomButton> listDevBtn = new LinkedList<>();
-        List<CustomButton> listPrjBtn = new LinkedList<>();
+        List<CustomButton> listDevBtn = new LinkedList<CustomButton>();
+        List<CustomButton> listPrjBtn = new LinkedList<CustomButton>();
         listDevBtn.add(btnHire);
         listPrjBtn.add(btnAdd);
         Font font = new Font("Century Gothic", Font.PLAIN, 16);
@@ -87,7 +87,7 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         }
         devList.setModel(devModel);
         for (int i = 0; i < projects.length; i++) {
-            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<>(AreaName.class);
+            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
             prjFA.put(AreaName.CODING, new FunctionalArea(AreaName.CODING, 10, 0, true));
             Project prj = new Project(30, 2, prjFA);
             prjModel.addElement(prj);

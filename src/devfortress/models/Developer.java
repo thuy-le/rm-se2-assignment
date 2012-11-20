@@ -46,7 +46,7 @@ public class Developer {
 //    }
     public Developer() {
         this.name = Utilities.getRandomName();
-        this.skills = new EnumMap<>(SkillInfo.class);
+        this.skills = new EnumMap<SkillInfo, Skill>(SkillInfo.class);
         this.mainSkillInfo = null;
         this.salary = 0;
         this.workingProject = null;
@@ -120,7 +120,7 @@ public class Developer {
     }
 
     public Map<SkillInfo, Skill> getSkills() {
-        return new ReadOnlyMap<>(skills);
+        return new ReadOnlyMap<SkillInfo, Skill>(skills);
     }
 
     /* Setters */
@@ -207,7 +207,7 @@ public class Developer {
     }
 
     private void determineMainSkill() {
-        LinkedList<Skill> skillList = new LinkedList<>();
+        LinkedList<Skill> skillList = new LinkedList<Skill>();
         for (SkillInfo key : skills.keySet()) {
             if (key.getType() == SkillTypes.TECHNICAL) {
                 skillList.add(skills.get(key));

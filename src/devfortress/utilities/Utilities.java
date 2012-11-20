@@ -3,10 +3,10 @@ package devfortress.utilities;
 import devfortress.enumerations.SkillInfo;
 import devfortress.models.Skill;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,14 +18,14 @@ import java.util.Random;
  */
 public class Utilities {
 
-    private static List<String> names = new ArrayList<>();
+    private static List<String> names = new ArrayList<String>();
     private static Random rand = new Random(System.currentTimeMillis());
 
     private synchronized static List<String> getNameList() {
         BufferedReader reader = null;
         if (names.isEmpty()) {
             try {
-                reader = Files.newBufferedReader(Paths.get("babies.txt"), Charset.forName("UTF-8"));
+                reader = new BufferedReader(new FileReader("babies.txt"));
                 String line = reader.readLine();
                 if (line != null) {
                     String babynames[] = line.split(",");

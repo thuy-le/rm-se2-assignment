@@ -25,10 +25,10 @@ public class GameEngine extends Observable {
 
     private GameEngine() {
         this.budget = 1000000;
-        this.developers = new LinkedList<>();
-        this.projects = new LinkedList<>();
-        this.marketProjects = new LinkedList<>();
-        this.marketDevelopers = new LinkedList<>();
+        this.developers = new LinkedList<Developer>();
+        this.projects = new LinkedList<Project>();
+        this.marketProjects = new LinkedList<Project>();
+        this.marketDevelopers = new LinkedList<Developer>();
         this.date = new DevDate();
         this.playerName = "";
         this.fileName = null;

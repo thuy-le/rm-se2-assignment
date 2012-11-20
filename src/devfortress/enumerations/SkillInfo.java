@@ -47,11 +47,11 @@ public enum SkillInfo {
     CONFIG_MANAGEMENT("Config Management", SkillTypes.CONFIGURATION_MANAGEMENT);
     private String name;
     private SkillTypes type;
-    private static ArrayList<SkillInfo> techSkills = new ArrayList<>();
-    private static ArrayList<SkillInfo> metaSkills = new ArrayList<>();
-    private static ArrayList<SkillInfo> personalSkills = new ArrayList<>();
-    private static ArrayList<SkillInfo> configSkills = new ArrayList<>();
-    private static ArrayList<SkillInfo> specialSkills = new ArrayList<>();
+    private static ArrayList<SkillInfo> techSkills = new ArrayList<SkillInfo>();
+    private static ArrayList<SkillInfo> metaSkills = new ArrayList<SkillInfo>();
+    private static ArrayList<SkillInfo> personalSkills = new ArrayList<SkillInfo>();
+    private static ArrayList<SkillInfo> configSkills = new ArrayList<SkillInfo>();
+    private static ArrayList<SkillInfo> specialSkills = new ArrayList<SkillInfo>();
 
     private SkillInfo(String name, SkillTypes type) {
         this.name = name;

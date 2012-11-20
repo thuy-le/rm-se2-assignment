@@ -67,7 +67,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         String picture = "images/i6.png";
         String data[][] = {{"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}};
         String col[] = {"Skill", "Level"};
-        List<CustomButton> btnList = new LinkedList<>();
+        List<CustomButton> btnList = new LinkedList<CustomButton>();
         btnHire = new CustomButton("Hire");
         btnFeed = new CustomButton("Feed");
         btnParty = new CustomButton("Party");
