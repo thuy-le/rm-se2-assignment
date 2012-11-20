@@ -43,6 +43,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     private JList developerList;
     private JLabel devName, mainSkill, workingPrj, status;
     private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev;
+    private GlassPanel rightPanel;
     //constructor
 
     public TabbedPaneDeveloper() {
@@ -54,7 +55,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         //local variables
         String devStrings[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
         DefaultListModel devModel = new DefaultListModel();
-        GlassPanel rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colour.LIGHTORANGE, 7, 7);
+        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colour.LIGHTORANGE, 7, 7);
         for (int i = 0; i < devStrings.length; i++) {
 //            Developer dev = new Developer(devStrings[i]);
             Developer dev = new Developer();
@@ -172,7 +173,6 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         rightPanel.add(tableScroll, BorderLayout.NORTH);
         rightPanel.add(bottom, BorderLayout.SOUTH);
 
-
     }
 
     //override the paint component method
@@ -268,20 +268,17 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-    }
-
-    private class MyListEvent implements ListSelectionListener {
-
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            Developer dev = (Developer) developerList.getSelectedValue();
+    public void showDeveloper(Developer dev) {
+        if (dev == null) {
+            rightPanel.setVisible(false);
+        } else {
+            rightPanel.setVisible(true);
             setDevName(dev.getName());
-            String status = "<html>Status: " + (dev.isHappy() ? "☺" : "☹");
-            status += (dev.isDrunk() ? ",☻" : "");
-            status += (dev.isFed() ? ",☀" : ",☠");
-            status += "</html>";
-            setStatus(status);
+            String s = "<html>Status: " + (dev.isHappy() ? "☺" : "☹");
+            s += (dev.isDrunk() ? ",☻" : "");
+            s += (dev.isFed() ? ",☀" : ",☠");
+            s += "</html>";
+            setStatus(s);
             Project p = dev.getWorkingProject();
             if (p != null) {
                 setWorkingPrj(p.getName());
@@ -289,6 +286,20 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
                 setWorkingPrj("Not working");
             }
             setMainSkill(dev.getMainSkill().toString());
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        showDeveloper((Developer) developerList.getSelectedValue());
+    }
+
+    private class MyListEvent implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            Developer dev = (Developer) developerList.getSelectedValue();
+            showDeveloper(dev);
         }
     }
 }

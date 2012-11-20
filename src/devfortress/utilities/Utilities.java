@@ -1,12 +1,12 @@
 package devfortress.utilities;
 
+import devfortress.enumerations.AreaName;
 import devfortress.enumerations.SkillInfo;
+import devfortress.models.FunctionalArea;
 import devfortress.models.Skill;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,4 +61,6 @@ public class Utilities {
         Skill skill = new Skill(level, skills.get(index));
         return skill;
     }
+
+
 }

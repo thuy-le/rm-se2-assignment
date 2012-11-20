@@ -4,18 +4,15 @@
  */
 package devfortress.view;
 
-import devfortress.enumerations.AreaName;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomList;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.CustomLabel;
-import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.ProjectInterface;
 import java.awt.*;
 import java.awt.event.MouseListener;
-import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
@@ -38,8 +35,10 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
     static private final int arcW = 10;
     static private final int arcH = 10;
     static private final Color contentColor = Colour.LIGHTORANGE;
-
+    private JList prjList;
+    private CustomButton btnAdd, btnAddDev, btnRemoveDev;
     //constructor
+
     public TabbedPaneProject() {
         setOpaque(false);
         init();
@@ -54,16 +53,14 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         String projects[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
         DefaultListModel prjModel = new DefaultListModel();
         for (int i = 0; i < projects.length; i++) {
-//            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
-//            prjFA.put(AreaName.CODING, new FunctionalArea(AreaName.CODING, 10, 0, true));
-            Project prj = new Project(30, 2);
+            Project prj = new Project();
             prjModel.addElement(prj);
         }
-        JList prjList = new JList();
+        prjList = new JList();
         prjList.setModel(prjModel);
         //buttons
         java.util.List<CustomButton> btnList = new LinkedList<CustomButton>();
-        CustomButton btnAdd = new CustomButton("Add Project");
+        btnAdd = new CustomButton("Add Project");
         btnList.add(btnAdd);
         //add button(s) and list together
         CustomList projectList = new CustomList(prjList, btnList);
@@ -71,7 +68,6 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         btnAdd.setColour(Colour.DARKBLUE);
         projectList.setColor(Colour.DARKBLUE);
         btnAdd.setTextColour(Colour.LIGHTBLUE);
-//        btnAdd.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         prjList.setSelectionBackground(Colour.LIGHTGREEN);
         prjList.setSelectionForeground(Colour.DARKBLUE);
         prjList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
@@ -142,8 +138,8 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
 
         //add buttons
         JPanel bottom = new JPanel();
-        CustomButton btnAddDev = new CustomButton("Add Developer");
-        CustomButton btnRemoveDev = new CustomButton("Remove Developer");
+        btnAddDev = new CustomButton("Add Developer");
+        btnRemoveDev = new CustomButton("Remove Developer");
 
         //adjust look and feel:
         table.setFont(new Font("Century Gothic", Font.PLAIN, 15));
@@ -186,11 +182,8 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-    }
-
-    @Override
     public void addNewProjectListener(MouseListener l) {
+        btnAdd.addMouseListener(l);
     }
 
     @Override
@@ -199,15 +192,21 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
 
     @Override
     public void addDevToProjectListener(MouseListener l) {
+        btnAddDev.addMouseListener(l);
     }
 
     @Override
     public void removeDevFromProjectListener(MouseListener l) {
+        btnRemoveDev.addMouseListener(l);
     }
 
     //override the getPreferredSize method
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
     }
 }

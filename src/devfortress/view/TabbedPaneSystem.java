@@ -88,8 +88,7 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         devList.setModel(devModel);
         for (int i = 0; i < projects.length; i++) {
             EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
-//            prjFA.put(AreaName.CODING, new FunctionalArea(AreaName.CODING, 10, 0, true));
-            Project prj = new Project(30, 2);
+            Project prj = new Project();
             prjModel.addElement(prj);
         }
         prjList.setModel(prjModel);
