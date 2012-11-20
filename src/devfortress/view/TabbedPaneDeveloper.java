@@ -107,7 +107,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         JPanel bottom = new JPanel();
         btnFireDev = new CustomButton("Fire");
         btnFeedDev = new CustomButton("Feed");
-        btnPartyDev = new CustomButton("Party");
+        btnPartyDev = new CustomButton("Drink");
         JTable table = new JTable(data, col) {
 
             @Override
