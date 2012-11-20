@@ -22,6 +22,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -44,13 +45,14 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     private JLabel devName, mainSkill, workingPrj, status;
     private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev;
     private GlassPanel rightPanel;
+    private JTable table;
     //constructor
 
     public TabbedPaneDeveloper() {
         setOpaque(false);
         init();
     }
-
+    
     private void init() {
         //local variables
         String devStrings[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
@@ -74,7 +76,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         btnFeed = new CustomButton("Feed");
         btnParty = new CustomButton("Party");
         CustomList cl = new CustomList(developerList, btnList);
-
+        
         JLabel developerDetail = new JLabel("Developer Details");
         JPanel top = new JPanel();
         JPanel topR = new JPanel();
@@ -108,13 +110,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         btnFireDev = new CustomButton("Fire");
         btnFeedDev = new CustomButton("Feed");
         btnPartyDev = new CustomButton("Drink");
-        JTable table = new JTable(data, col) {
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
+        table = new CustomTable(data, col);
         //-------Add component
         add(cl, BorderLayout.WEST);
 
@@ -148,19 +144,8 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         //add buttons
 
         //adjust look and feel:
-        table.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        table.setBorder(BorderFactory.createLineBorder(Colour.ORANGE, 1));
-        table.setRowHeight(25);
-        JTableHeader header = table.getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(Colour.ORANGE, 1));
-        header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(Colour.ORANGE);
-        header.setForeground(Color.WHITE);
-        JScrollPane tableScroll = new JScrollPane(table);
-        tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(440, 180));
-        tableScroll.setBackground(Colour.ORANGE);
-        tableScroll.getViewport().setBackground(Colour.ORANGE);
+
+        
         bottom.setBackground(Colour.LIGHTORANGE);
         bottom.setLayout(new FlowLayout());
         btnFireDev.setButtonSize(0, 0, 70, 35);
@@ -170,9 +155,9 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         bottom.add(btnFireDev);
         bottom.add(btnFeedDev);
         bottom.add(btnPartyDev);
-        rightPanel.add(tableScroll, BorderLayout.NORTH);
+        rightPanel.add(((CustomTable) table).getTableScroll(), BorderLayout.NORTH);
         rightPanel.add(bottom, BorderLayout.SOUTH);
-
+        
     }
 
     //override the paint component method
@@ -192,35 +177,35 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     public String getDevName() {
         return devName.getText();
     }
-
+    
     public void setDevName(String devName) {
         this.devName.setText(devName);
         this.devName.repaint();
-
+        
     }
-
+    
     public String getMainSkill() {
         return mainSkill.getText();
     }
-
+    
     public void setMainSkill(String mainSkill) {
         this.mainSkill.setText(mainSkill);
         this.mainSkill.repaint();
     }
-
+    
     public String getStatus() {
         return status.getText();
     }
-
+    
     public void setStatus(String status) {
         this.status.setText(status);
         this.status.repaint();
     }
-
+    
     public String getWorkingPrj() {
         return workingPrj.getText();
     }
-
+    
     public void setWorkingPrj(String workingPrj) {
         this.workingPrj.setText(workingPrj);
         this.workingPrj.repaint();
@@ -231,42 +216,42 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
     }
-
+    
     @Override
     public Developer getSelectedDeveloper() {
         return (Developer) developerList.getSelectedValue();
     }
-
+    
     @Override
     public void addHireDevListener(MouseListener l) {
         btnHire.addMouseListener(l);
     }
-
+    
     @Override
     public void addFeedAllDevListener(MouseListener l) {
         btnFeed.addMouseListener(l);
     }
-
+    
     @Override
     public void addPartyListener(MouseListener l) {
         btnParty.addMouseListener(l);
     }
-
+    
     @Override
     public void addFeedSelectedDevListener(MouseListener l) {
         btnFeedDev.addMouseListener(l);
     }
-
+    
     @Override
     public void addFireDevListener(MouseListener l) {
         btnFireDev.addMouseListener(l);
     }
-
+    
     @Override
     public void addGiveBeerListener(MouseListener l) {
         btnPartyDev.addMouseListener(l);
     }
-
+    
     @Override
     public void showDeveloper(Developer dev) {
         if (dev == null) {
@@ -288,18 +273,50 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
             setMainSkill(dev.getMainSkill().toString());
         }
     }
-
+    
     @Override
     public void update(Observable o, Object arg) {
         showDeveloper((Developer) developerList.getSelectedValue());
+        
     }
-
+    
     private class MyListEvent implements ListSelectionListener {
-
+        
         @Override
         public void valueChanged(ListSelectionEvent e) {
             Developer dev = (Developer) developerList.getSelectedValue();
             showDeveloper(dev);
         }
+    }
+}
+
+class CustomTable extends JTable {
+    
+    private JScrollPane tableScroll;
+    
+    public CustomTable(Object[][] rowData, Object[] columnNames) {
+        super(rowData, columnNames);
+        setFont(new Font("Century Gothic", Font.PLAIN, 15));
+        setBorder(BorderFactory.createLineBorder(Colour.ORANGE, 1));
+        setRowHeight(25);
+        JTableHeader header = getTableHeader();
+        header.setBorder(BorderFactory.createLineBorder(Colour.ORANGE, 1));
+        header.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        header.setBackground(Colour.ORANGE);
+        header.setForeground(Color.WHITE);
+        tableScroll = new JScrollPane(this);
+        tableScroll.setBorder(BorderFactory.createEmptyBorder());
+        tableScroll.setPreferredSize(new Dimension(440, 180));
+        tableScroll.setBackground(Colour.ORANGE);
+        tableScroll.getViewport().setBackground(Colour.ORANGE);
+    }
+    
+    public JScrollPane getTableScroll() {
+        return tableScroll;
+    }
+    
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
     }
 }

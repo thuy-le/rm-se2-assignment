@@ -4,9 +4,8 @@
  */
 package devfortress.view;
 
-import devfortress.enumerations.AreaName;
 import devfortress.models.Developer;
-import devfortress.models.FunctionalArea;
+import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomList;
@@ -17,7 +16,6 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.EnumMap;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -43,10 +41,13 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     private CustomButton btnHire, btnAdd;
     private JLabel budget, welcome;
     private String playerName;
+    private final DefaultListModel devModel, prjModel;
 
     //constructor
     public TabbedPaneSystem() {
         setOpaque(false);
+        devModel = new DefaultListModel();
+        prjModel = new DefaultListModel();
         init();
     }
 
@@ -55,10 +56,10 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
          * ########### initialize variables ##########
          */
         //$$$$$-----Local variables
-        String devStrings[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        DefaultListModel devModel = new DefaultListModel();
-        String projects[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        DefaultListModel prjModel = new DefaultListModel();
+//        String devStrings[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
+
+//        String projects[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
+
         //$$$$$-----Global variables
         playerName = "player name";
         budget = new JLabel("$25000000");
@@ -67,6 +68,7 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         prjList = new JList();
         btnHire = new CustomButton("Hire Developer");
         btnAdd = new CustomButton("Add Project");
+
         //$$$$$-----Local variable for UI
         List<CustomButton> listDevBtn = new LinkedList<CustomButton>();
         List<CustomButton> listPrjBtn = new LinkedList<CustomButton>();
@@ -80,17 +82,16 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         imageIcon.setPreferredSize(new Dimension(200, 200));
         JLabel label = new JLabel("  Your budget is:");
         //
-        for (int i = 0; i < devStrings.length; i++) {
-//            Developer dev = new Developer(devStrings[i]);
-            Developer dev = new Developer();
-            devModel.addElement(dev);
-        }
+//        for (int i = 0; i < devStrings.length; i++) {
+//            Developer dev = new Developer();
+//            devModel.addElement(dev);
+//        }
         devList.setModel(devModel);
-        for (int i = 0; i < projects.length; i++) {
-            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
-            Project prj = new Project();
-            prjModel.addElement(prj);
-        }
+//        for (int i = 0; i < projects.length; i++) {
+//            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
+//            Project prj = new Project();
+//            prjModel.addElement(prj);
+//        }
         prjList.setModel(prjModel);
         //add list and button(s) together
         CustomList developerList = new CustomList(devList, listDevBtn);
@@ -185,5 +186,15 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
 
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("Something");
+        GameEngine model = (GameEngine) o;
+        devModel.removeAllElements();
+        prjModel.removeAllElements();
+        for (Developer dev : model.getDevelopers()) {
+            devModel.addElement(dev);
+        }
+        for (Project p : model.getProjects()) {
+            devModel.addElement(p);
+        }
     }
 }

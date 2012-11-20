@@ -5,6 +5,7 @@ import devfortress.enumerations.Expenses;
 import devfortress.enumerations.SkillInfo;
 import devfortress.exceptions.*;
 import devfortress.utilities.ReadOnlyList;
+import devfortress.utilities.Utilities;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -37,12 +38,17 @@ public class GameEngine extends Observable {
     /**
      * This method should only be called once
      */
-    public static void initialize(String playerName, int budget) throws GameAlreadyInitializedException {
-        if (playerName.length() > 0) {
+    public void initialize(String playerName, int budget) throws GameAlreadyInitializedException {
+        if (this.playerName.length() > 0) {
             throw new GameAlreadyInitializedException();
         } else {
-            instance.playerName = playerName;
-            instance.budget = budget;
+            this.playerName = playerName;
+            this.budget = budget;
+            this.generateRandomMarketDevelopers();
+            this.generateRandomMarketProjects();
+            for (int i = 0; i < 7; i++) {
+                this.developers.add(new Developer());
+            }
         }
     }
 
@@ -272,21 +278,14 @@ public class GameEngine extends Observable {
         } else {
         }
     }
+
+    public void synchronizedlyNotifyAll() {
+        setChanged();
+        notifyObservers();
+    }
     /*
      * Private methods and functions
      */
-
-    private Developer getRandomDeveloper() {
-        return null;
-    }
-
-    private Event getRandomEvent() {
-        return null;
-    }
-
-    private Project getRandomProject() {
-        return null;
-    }
 
     //TODO: Check game end
     private void paySalary() {
@@ -296,14 +295,28 @@ public class GameEngine extends Observable {
     }
 
     private void generateRandomMarketDevelopers() {
+        int num = Utilities.randInt(6) + 5;
+        marketDevelopers.clear();
+        for (int i = 0; i < num; i++) {
+            marketDevelopers.add(new Developer());
+        }
     }
 
     private void generateRandomMarketProjects() {
+        int num = Utilities.randInt(6) + 5;
+        marketProjects.clear();
+        for (int i = 0; i < num; i++) {
+            marketProjects.add(new Project());
+        }
     }
 
+    //TODO: Generate a list of random events
     private void generateRandomEvents() {
     }
 
     private void allEventsTakeEffects() {
+        for (Project p : projects) {
+            p.proceedEvents();
+        }
     }
 }
