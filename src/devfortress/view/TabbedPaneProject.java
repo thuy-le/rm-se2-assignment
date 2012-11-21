@@ -41,6 +41,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
@@ -67,6 +68,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
     private CustomButton btnAdd, btnAddDev, btnRemoveDev;
     private GlassPanel rightPanel;
     private JLabel prjName, deadline, cost, info1, status;
+    private JTable table;
     //constructor
 
     public TabbedPaneProject() {
@@ -151,7 +153,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
 
         //---Bottom: contains a list of developers who belong to the project
         //Create a table:
-        JTable table = new CustomProjectTable(projTableModel, contentColor);
+        table = new CustomProjectTable(projTableModel, contentColor);
 
         //add buttons
         JPanel bottom = new JPanel();
@@ -219,7 +221,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         showProject((Project) prjList.getSelectedValue());
     }
 
-    public void showProject(Project project) {
+    public synchronized void showProject(Project project) {
         if (project == null) {
             rightPanel.setVisible(false);
         } else {
@@ -237,15 +239,19 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
                 info1.setText("Level: " + project.getLevel());
                 status.setText("Bonus: " + project.getBonus());
                 //table
-                for (int i = 0; i < projTableModel.getRowCount(); i++) {
-                    projTableModel.removeRow(i);
+                while (projTableModel.getRowCount() > 0) {
+                    projTableModel.removeRow(projTableModel.getRowCount() - 1);
                 }
+                int count = 1;
                 for (FunctionalArea fA : project.getAreas().values()) {
                     Object[] rowData = {fA.getName().toString(), fA.getFunctionPoints()};
                     projTableModel.addRow(rowData);
                 }
-                Object[] ids = {"Functional Area", "Function Points"};
+                Object[] ids = {"Functional Area", "Points"};
                 projTableModel.setColumnIdentifiers(ids);
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+                table.getColumnModel().getColumn(1).setMaxWidth(70);
+
             } catch (InvalidDevDateException ex) {
             }
         }

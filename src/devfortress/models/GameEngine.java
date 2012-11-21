@@ -43,18 +43,9 @@ public class GameEngine extends Observable {
         if (this.playerName.length() > 0) {
             throw new GameAlreadyInitializedException();
         } else {
-            this.playerName = playerName;
+            initialize(playerName);
             this.budget = budget;
-            this.generateRandomMarketDevelopers();
-            this.generateRandomMarketProjects();
-            for (int i = 0; i < 7; i++) {
-                this.developers.add(new Developer());
-            }
-            for (int i = 0; i < 7; i++) {
-                this.projects.add(new Project());
-            }
         }
-        setChanged();
     }
 
     public void initialize(String playerName) {
@@ -64,10 +55,10 @@ public class GameEngine extends Observable {
         this.generateRandomMarketProjects();
         developers.clear();
         projects.clear();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 20; i++) {
             this.developers.add(new Developer());
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 20; i++) {
             this.projects.add(new Project());
         }
         setChanged();
@@ -314,7 +305,6 @@ public class GameEngine extends Observable {
     /*
      * Private methods and functions
      */
-
     //TODO: Check game end
     private void paySalary() {
         /*

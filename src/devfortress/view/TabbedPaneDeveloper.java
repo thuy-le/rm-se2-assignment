@@ -62,7 +62,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     //private variables
     private JList developerList;
     private JLabel devName, mainSkill, workingPrj, status;
-    private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev;
+    private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev, btnTrain;
     private GlassPanel rightPanel;
     private JTable table;
     private DefaultTableModel skillModel;
@@ -120,6 +120,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         btnFireDev = new CustomButton("Fire");
         btnFeedDev = new CustomButton("Feed");
         btnPartyDev = new CustomButton("Drink");
+        btnTrain = new CustomButton("Train");
         table = new CustomTable(skillModel);
         //-------Add component
         add(cl, BorderLayout.WEST);
@@ -154,10 +155,13 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         btnFireDev.setButtonSize(0, 0, 70, 35);
         btnFeedDev.setButtonSize(0, 0, 70, 35);
         btnPartyDev.setButtonSize(0, 0, 70, 35);
+        btnTrain.setButtonSize(0, 0, 70, 35);
         //add components
         bottom.add(btnFireDev);
         bottom.add(btnFeedDev);
         bottom.add(btnPartyDev);
+        bottom.add(btnTrain);
+
         rightPanel.add(((CustomTable) table).getTableScroll(), BorderLayout.NORTH);
         rightPanel.add(bottom, BorderLayout.SOUTH);
 
@@ -255,7 +259,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     }
 
     @Override
-    public void showDeveloper(Developer dev) {
+    public synchronized void showDeveloper(Developer dev) {
         if (dev == null) {
             rightPanel.setVisible(false);
         } else {
@@ -273,16 +277,22 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
                 setWorkingPrj("Not working");
             }
             setMainSkill(dev.getMainSkill().toString());
-
-            for (int i = 0; i < skillModel.getRowCount(); i++) {
-                skillModel.removeRow(i);
+            //Table
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            table.getColumnModel().getColumn(0).setMinWidth(400);
+            table.getColumnModel().getColumn(1).setMaxWidth(20);
+            while (skillModel.getRowCount() > 0) {
+                skillModel.removeRow(skillModel.getRowCount() - 1);
             }
             for (Skill skill : dev.getSkills().values()) {
                 Object[] rowData = {skill.getSkillInfo().getName(), skill.getLevel()};
                 skillModel.addRow(rowData);
             }
+//            table.getColumnModel().getColumn(1).setPreferredWidth(27);
             Object[] ids = {"Skill", "Level"};
             skillModel.setColumnIdentifiers(ids);
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            table.getColumnModel().getColumn(1).setMaxWidth(50);
 
         }
     }

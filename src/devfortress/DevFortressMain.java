@@ -48,6 +48,7 @@ public class DevFortressMain {
         devController.initilize();
         projectController.initilize();
         systemController.initilize();
+        model.addObserver(inf);
         model.addObserver(sysTab);
         model.addObserver(projTab);
         model.addObserver(devTab);

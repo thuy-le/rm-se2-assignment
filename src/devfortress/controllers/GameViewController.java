@@ -40,6 +40,7 @@ public class GameViewController {
      * A temporary method to initialize the game and set up the controllers
      */
     public void initialize() {
+        infoPne.addWeekTurnListener(new NextWeekListener());
         welCm.addSubmitNameListener(new SubmitNameListener());
         navPne.addAboutGameListener(new AboutGameListener());
         navPne.addExitGameListener(new ExitGameListener());
@@ -49,7 +50,16 @@ public class GameViewController {
 
     }
 
+    private class NextWeekListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            model.nextWeek();
+            model.notifyObservers();
+        }
+    }
     //TODO: When submit, the game need to be reset before re-initialized
+
     private class SubmitNameListener extends MouseAdapter {
 
         @Override
@@ -79,7 +89,7 @@ public class GameViewController {
             devFortress.getContentPane().add(welCm);
         }
     }
-    
+
     //This is finished
     private class AboutGameListener extends MouseAdapter {
 
@@ -111,6 +121,7 @@ public class GameViewController {
         }
     }
     //This is finished
+
     private class BackAboutListener extends MouseAdapter {
 
         @Override
