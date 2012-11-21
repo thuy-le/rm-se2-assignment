@@ -4,14 +4,10 @@
  */
 package devfortress.utilities;
 
-import devfortress.enumerations.AreaName;
 import devfortress.models.Developer;
-import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
 import java.awt.Component;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

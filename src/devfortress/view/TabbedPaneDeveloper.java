@@ -14,13 +14,29 @@ import devfortress.models.Project;
 import devfortress.models.Skill;
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.DeveloperInterface;
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -35,6 +51,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
 
     //initialize constant variables
     static private final float alpha = 0.8f;
+    static private final String picture = "images/i6.png";
     static private final Color colour = Colour.ORANGE;
     static private final int x = 0;
     static private final int y = 5;
@@ -43,7 +60,6 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     static private final int arcW = 10;
     static private final int arcH = 10;
     //private variables
-    private List<Developer> developers;
     private JList developerList;
     private JLabel devName, mainSkill, workingPrj, status;
     private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev;
@@ -59,30 +75,20 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     }
 
     private void init() {
-        //local variables
-//        String devStrings[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
         devModel = new DefaultListModel();
         skillModel = new DefaultTableModel(1, 2);
         rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colour.LIGHTORANGE, 7, 7);
-//        for (int i = 0; i < devStrings.length; i++) {
-//            Developer dev = new Developer(devStrings[i]);
-//            Developer dev = new Developer();
-//            devModel.addElement(dev);
-//        }
         developerList = new JList();
         developerList.addListSelectionListener(new MyListEvent());
         developerList.setCellRenderer(new CustomListRenderer());
         developerList.setModel(devModel);
         //buttons
-        String picture = "images/i6.png";
-//        String data[][] = {{"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}};
-        String col[] = {"Skill", "Level"};
+
         List<CustomButton> btnList = new LinkedList<CustomButton>();
         btnHire = new CustomButton("Hire");
         btnFeed = new CustomButton("Feed");
         btnParty = new CustomButton("Party");
         CustomList cl = new CustomList(developerList, btnList);
-
         JLabel developerDetail = new JLabel("Developer Details");
         JPanel top = new JPanel();
         JPanel topR = new JPanel();
@@ -95,8 +101,6 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         Font font = new Font("Century Gothic", Font.BOLD, 17);
         setLayout(new BorderLayout());
         //------Create a JList of developers
-        //list
-        //buttons
         btnList.add(btnHire);
         btnList.add(btnFeed);
         btnList.add(btnParty);
@@ -143,15 +147,8 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         rightPanel.add(developerDetail, BorderLayout.NORTH);
         rightPanel.add(top, BorderLayout.CENTER);
         add(rightPanel, BorderLayout.CENTER);
-
         //---Bottom:
-        //Create a table:
-
-        //add buttons
-
         //adjust look and feel:
-
-
         bottom.setBackground(Colour.LIGHTORANGE);
         bottom.setLayout(new FlowLayout());
         btnFireDev.setButtonSize(0, 0, 70, 35);
@@ -170,7 +167,6 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        //g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         if (colour != null) {
             g2d.setColor(colour);

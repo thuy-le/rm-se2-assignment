@@ -15,12 +15,30 @@ import devfortress.utilities.CustomLabel;
 import devfortress.models.Project;
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.ProjectInterface;
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -83,9 +101,6 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         prjList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
         //-------Add component
         add(projectList, BorderLayout.WEST);
-
-        //------Right Hand Side:
-        //---Top:
         //Create a container for contents on the right
         rightPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
         //display developer name
@@ -136,8 +151,6 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
 
         //---Bottom: contains a list of developers who belong to the project
         //Create a table:
-        String data[][] = {{"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}, {"Developer 1", "Skill"}};
-        String col[] = {"Developer", "Skill"};
         JTable table = new CustomProjectTable(projTableModel, contentColor);
 
         //add buttons
@@ -150,9 +163,7 @@ public class TabbedPaneProject extends JPanel implements ProjectInterface, Obser
         bottom.setBackground(contentColor);
         bottom.setLayout(new FlowLayout());
         btnAddDev.setButtonSize(0, 0, 175, 35);
-//        btnAddDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         btnRemoveDev.setButtonSize(0, 0, 175, 35);
-//        btnRemoveDev.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
         //add components
         bottom.add(btnAddDev);
         bottom.add(btnRemoveDev);

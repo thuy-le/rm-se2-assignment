@@ -5,8 +5,12 @@
 package devfortress.view;
 
 import devfortress.view.interfaces.WelcomeScreenInterface;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -21,7 +25,6 @@ public class DevFortress extends JFrame implements WelcomeScreenInterface {
     private JPanel contentPane;
 
     //constructor
-    /** Quan's Constructor **/
     public DevFortress(WelcomeScreen welCm, NavigationPane navPne, InfomationPane infoPne) {
         //initialization
         background = new ImageIcon(strImagePath);
@@ -41,24 +44,6 @@ public class DevFortress extends JFrame implements WelcomeScreenInterface {
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    private DevFortress() {
-        //set background for JFrame;
-        background = new ImageIcon(strImagePath);
-        contentPane = new JPanel() {
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (background != null) {
-                    g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), null);
-                }
-            }
-        };
-        setContentPane(contentPane);
-        contentPane.setLayout(new BorderLayout()); //JFrame default config;
-
     }
 
     //override the getPreferredSize method

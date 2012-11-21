@@ -20,25 +20,22 @@ import javax.swing.JLabel;
 public class InfomationPane {
 
     private GlassPanel infoPanel;
+    private JLabel dateLabel, nextTurnBtn;
 
     public InfomationPane() {
-        init();
-    }
-
-    public GlassPanel getInfoPanel() {
-        return infoPanel;
-    }
-
-    private void init() {
-        JLabel dateLabel = new JLabel("16/11/2012");
-        JLabel nextTurn = new CustomLabel(new ImageIcon("images/right.png"));
+        dateLabel = new JLabel("16/11/2012");
+        nextTurnBtn = new CustomLabel(new ImageIcon("images/right.png"));
         infoPanel = new GlassPanel(0, 0, 795, 50, .85f, Colour.DARKBLUE, 10, 10);
         infoPanel.setLayout(new FlowLayout());
         dateLabel.setFont(new Font("Century Gothic", Font.BOLD, 27));
         dateLabel.setForeground(Colour.LIGHTBLUE);
-        nextTurn.setToolTipText("Go to the next turn");
-        nextTurn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        nextTurnBtn.setToolTipText("Go to the next turn");
+        nextTurnBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         infoPanel.add(dateLabel);
-        infoPanel.add(nextTurn);
+        infoPanel.add(nextTurnBtn);
+    }
+
+    public GlassPanel getInfoPanel() {
+        return infoPanel;
     }
 }

@@ -4,14 +4,11 @@
  */
 package devfortress.controllers;
 
-import devfortress.exceptions.GameAlreadyInitializedException;
 import devfortress.models.GameEngine;
 import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -52,16 +49,13 @@ public class GameViewController {
 
     }
 
+    //TODO: When submit, the game need to be reset before re-initialized
     private class SubmitNameListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
             if (!welCm.getPlayerName().trim().equals("")) {
-//                try {
                 model.initialize(welCm.getPlayerName());
-//                } catch (GameAlreadyInitializedException ex) {
-//                    JOptionPane.showMessageDialog(null, "You're already in a game");
-//                }
                 devFortress.remove(welCm);
                 devFortress.add(tabPne, BorderLayout.CENTER);
                 navPne.getToolbar().setVisible(true);
@@ -69,12 +63,12 @@ public class GameViewController {
                 tabPne.getSysTab().setPlayerName(model.getPlayerName());
                 tabPne.getSysTab().setBudget(model.getBudget());
                 model.notifyObservers();
-//                devFortress.repaint();
 
             }
         }
     }
 
+    //TODO: Need to save the current game
     private class NewGameListener extends MouseAdapter {
 
         @Override
@@ -83,10 +77,10 @@ public class GameViewController {
             navPne.getToolbar().setVisible(false);
             infoPne.getInfoPanel().setVisible(false);
             devFortress.getContentPane().add(welCm);
-//            devFortress.getContentPane().repaint();
         }
     }
-
+    
+    //This is finished
     private class AboutGameListener extends MouseAdapter {
 
         @Override
@@ -99,6 +93,7 @@ public class GameViewController {
         }
     }
 
+    //TODO: Should save the game first
     private class ExitGameListener extends MouseAdapter {
 
         @Override
@@ -107,6 +102,7 @@ public class GameViewController {
         }
     }
 
+    //TODO: implement save game
     private class SaveGameListener extends MouseAdapter {
 
         @Override
@@ -114,7 +110,7 @@ public class GameViewController {
             JOptionPane.showMessageDialog(null, "Save Game Not Implemented");
         }
     }
-
+    //This is finished
     private class BackAboutListener extends MouseAdapter {
 
         @Override
