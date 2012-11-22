@@ -27,13 +27,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TrainSkillDialog extends JDialog implements Observer {
 
-    private Developer developer = new Developer();
+    private Developer developer;
     private JTable skillTable;
     private DefaultTableModel skillModel;
     private SkillInfo infos[];
     private CustomButton btnTrain, btnClose;
+    private int selectedIndex;
 
-    public TrainSkillDialog() {
+    public TrainSkillDialog(Developer developer) {
+        this.developer = developer;
         setSize(800, 600);
         setLayout(new BorderLayout());
         developer = new Developer();
@@ -74,13 +76,15 @@ public class TrainSkillDialog extends JDialog implements Observer {
         setTitle(developer.getName() + " - Training");
     }
 
-    public TrainSkillDialog(Developer developer) {
-        this.developer = developer;
+    public Developer getDeveloper() {
+        return developer;
     }
 
-    public static void main(String[] args) {
-        TrainSkillDialog dialog = new TrainSkillDialog();
-        dialog.display();
+    public SkillInfo getSkillInfo() {
+        if (selectedIndex == -1) {
+            return null;
+        }
+        return infos[selectedIndex];
     }
 
     public void addTrainSkillListener(MouseListener l) {
@@ -117,7 +121,6 @@ public class TrainSkillDialog extends JDialog implements Observer {
     private class SelectionListener implements ListSelectionListener {
 
         private JTable table;
-        private int selectedIndex;
 
         SelectionListener(JTable table) {
             this.table = table;
