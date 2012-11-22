@@ -28,20 +28,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -322,36 +318,5 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
                 showDeveloper((Developer) developerList.getSelectedValue());
             }
         }
-    }
-}
-
-class CustomTable extends JTable {
-
-    private JScrollPane tableScroll;
-
-    public CustomTable(TableModel dm) {
-        super(dm);
-        setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        setBorder(BorderFactory.createLineBorder(Colour.ORANGE, 1));
-        setRowHeight(25);
-        JTableHeader header = getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(Colour.ORANGE, 1));
-        header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(Colour.ORANGE);
-        header.setForeground(Color.WHITE);
-        tableScroll = new JScrollPane(this);
-        tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(440, 180));
-        tableScroll.setBackground(Colour.ORANGE);
-        tableScroll.getViewport().setBackground(Colour.ORANGE);
-    }
-
-    public JScrollPane getTableScroll() {
-        return tableScroll;
-    }
-
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return false;
     }
 }
