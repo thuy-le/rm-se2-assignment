@@ -27,5 +27,7 @@ public interface DeveloperInterface {
 
     void addFireDevListener(MouseListener l);
 
+    void addTrainDeveloperListener(MouseListener l);
+
     void showDeveloper(Developer dev);
 }

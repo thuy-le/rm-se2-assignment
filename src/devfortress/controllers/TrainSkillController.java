@@ -36,6 +36,7 @@ public class TrainSkillController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            model.deleteObserver(view);
             view.dispose();
         }
     }
@@ -46,12 +47,16 @@ public class TrainSkillController {
         public void mouseClicked(MouseEvent e) {
             Developer dev = view.getDeveloper();
             SkillInfo skillInfo = view.getSkillInfo();
-            try {
-                model.trainDeveloper(dev, skillInfo);
-            } catch (InsufficientBudgetException ex) {
-                JOptionPane.showMessageDialog(view, ex.getMessage());
+            int index = view.getSelectedIndex();
+            if (skillInfo != null) {
+                try {
+                    model.trainDeveloper(dev, skillInfo);
+                } catch (InsufficientBudgetException ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage());
+                }
             }
             model.notifyObservers();
+            view.setSelectedIndex(index);
         }
     }
 }

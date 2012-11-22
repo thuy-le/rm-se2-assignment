@@ -235,6 +235,11 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     }
 
     @Override
+    public void addTrainDeveloperListener(MouseListener l) {
+        btnTrain.addMouseListener(l);
+    }
+
+    @Override
     public void addPartyListener(MouseListener l) {
         btnParty.addMouseListener(l);
     }

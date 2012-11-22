@@ -51,6 +51,8 @@ public class DeveloperController {
         view.addGiveBeerListener(new GiveBeerToDevListener());
         //close hirePane
         availableDev.addCloseHirePaneEvent(new CloseHirePaneListener());
+        //train developer
+        view.addTrainDeveloperListener(new TrainSkillListener());
     }
 
     private class FeedAllMouseListener extends MouseAdapter {
@@ -61,7 +63,21 @@ public class DeveloperController {
         }
     }
 
+    private class TrainSkillListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            TrainSkillDialog dialog = new TrainSkillDialog(view.getSelectedDeveloper());
+            TrainSkillController trainSkillController = new TrainSkillController(dialog, model);
+            trainSkillController.initialize();
+            model.addObserver(dialog);
+            model.notifyObservers();
+            dialog.display();
+        }
+    }
+
     private class HireDeveloperMouseListener extends MouseAdapter {
+
         @Override
         public void mouseClicked(MouseEvent e) {
             //JOptionPane.showMessageDialog(null, "Hire new");
@@ -69,11 +85,12 @@ public class DeveloperController {
             info.getInfoPanel().setVisible(false);
             navPane.getToolbar().setVisible(false);
             devFortress.add(availableDev);
-            devFortress.repaint();
+//            devFortress.repaint();
         }
     }
-    
+
     private class CloseHirePaneListener extends MouseAdapter {
+
         @Override
         public void mouseClicked(MouseEvent e) {
             //JOptionPane.showMessageDialog(null, "Hire new");

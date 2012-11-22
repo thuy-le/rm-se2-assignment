@@ -182,13 +182,18 @@ public class GameEngine extends Observable {
      * <code>{@link Developer}</code>.
      *
      * @param dev
-     * @param skill the skill that need to be learn or upgrade
+     * @param skillInfo the skill that need to be learn or upgrade
      * @throws InsufficientBudgetException
      */
-    public void trainDeveloper(Developer dev, SkillInfo skill) throws InsufficientBudgetException {
-        int cost = dev.getSkills().get(skill).getNextLevelCost();
+    public void trainDeveloper(Developer dev, SkillInfo skillInfo) throws InsufficientBudgetException {
+        Skill skill = dev.getSkills().get(skillInfo);
+        if (skill == null) {
+            skill = new Skill(skillInfo);
+            dev.addSkill(skill);
+        }
+        int cost = skill.getNextLevelCost();
         if (budget >= cost) {
-            dev.trainSkill(skill);
+            dev.trainSkill(skillInfo);
             budget -= cost;
             setChanged();
         } else {

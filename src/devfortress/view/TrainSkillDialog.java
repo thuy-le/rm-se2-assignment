@@ -38,29 +38,9 @@ public class TrainSkillDialog extends JDialog implements Observer {
         this.developer = developer;
         setSize(800, 600);
         setLayout(new BorderLayout());
-        developer = new Developer();
         skillModel = new DefaultTableModel(0, 3);
         skillTable = new CustomTable(skillModel);
         infos = SkillInfo.values();
-        Object[][] objs = new Object[infos.length][2];
-        for (int i = 0; i < objs.length; i++) {
-            SkillInfo info = infos[i];
-            String name = infos[i].getName();
-            Skill skill = developer.getSkills().get(infos[i]);
-            if (skill == null) {
-                Object[] os = {info.getType(), name, 0};
-                skillModel.addRow(os);
-            } else {
-                Object[] os = {info.getType(), name, skill.getLevel()};
-                skillModel.addRow(os);
-            }
-        }
-        Object[] ids = {"Type", "Skill Name", "Level"};
-        skillModel.setColumnIdentifiers(ids);
-        skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-        skillTable.getColumnModel().getColumn(0).setMaxWidth(200);
-        skillTable.getColumnModel().getColumn(0).setMinWidth(200);
-        skillTable.getColumnModel().getColumn(2).setMaxWidth(80);
         add(((CustomTable) skillTable).getTableScroll(), BorderLayout.CENTER);
         SelectionListener selectionListener = new SelectionListener(skillTable);
         skillTable.getSelectionModel().addListSelectionListener(selectionListener);
@@ -72,8 +52,9 @@ public class TrainSkillDialog extends JDialog implements Observer {
         bottom.add(btnClose);
         add(bottom, BorderLayout.SOUTH);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle(developer.getName() + " - Training");
+        update(null, null);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
 
     public Developer getDeveloper() {
@@ -95,6 +76,14 @@ public class TrainSkillDialog extends JDialog implements Observer {
         btnClose.addMouseListener(l);
     }
 
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
+    public void setSelectedIndex(int index) {
+        selectedIndex = index;
+    }
+
     public void display() {
         setModal(true);
         setModalityType(ModalityType.APPLICATION_MODAL);
@@ -103,6 +92,13 @@ public class TrainSkillDialog extends JDialog implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        while (skillModel.getRowCount() > 0) {
+            try {
+                skillModel.removeRow(0);
+            } catch (Exception ex) {
+                System.out.println(skillModel.getRowCount());
+            }
+        }
         Object[][] objs = new Object[infos.length][2];
         for (int i = 0; i < objs.length; i++) {
             SkillInfo info = infos[i];
@@ -116,6 +112,12 @@ public class TrainSkillDialog extends JDialog implements Observer {
                 skillModel.addRow(os);
             }
         }
+        Object[] ids = {"Type", "Skill Name", "Level"};
+        skillModel.setColumnIdentifiers(ids);
+        skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        skillTable.getColumnModel().getColumn(0).setMaxWidth(200);
+        skillTable.getColumnModel().getColumn(0).setMinWidth(200);
+        skillTable.getColumnModel().getColumn(2).setMaxWidth(80);
     }
 
     private class SelectionListener implements ListSelectionListener {
@@ -131,7 +133,6 @@ public class TrainSkillDialog extends JDialog implements Observer {
         public void valueChanged(ListSelectionEvent e) {
             int current = table.getSelectedRow();
             if (selectedIndex != current && e.getSource() == table.getSelectionModel() && table.getRowSelectionAllowed()) {
-                System.out.println(infos[current]);
                 selectedIndex = current;
 
             }
