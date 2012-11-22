@@ -177,7 +177,6 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     @Override
     public void update(Observable o, Object arg) {
         GameEngine model = (GameEngine) o;
-        System.out.println("Set " + model.getBudget());
         budget.setText(model.getBudget() + "");
         devModel.removeAllElements();
         prjModel.removeAllElements();

@@ -21,10 +21,6 @@ public class DevDate {
             this.month = month;
             this.week = week;
         } else {
-            System.out.println("Year: " + year);
-            System.out.println("Month: " + month);
-            System.out.println("Week: " + week);
-
             throw new InvalidDevDateException();
         }
     }

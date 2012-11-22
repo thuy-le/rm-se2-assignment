@@ -93,11 +93,7 @@ public class TrainSkillDialog extends JDialog implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         while (skillModel.getRowCount() > 0) {
-            try {
                 skillModel.removeRow(0);
-            } catch (Exception ex) {
-                System.out.println(skillModel.getRowCount());
-            }
         }
         Object[][] objs = new Object[infos.length][2];
         for (int i = 0; i < objs.length; i++) {
@@ -134,7 +130,6 @@ public class TrainSkillDialog extends JDialog implements Observer {
             int current = table.getSelectedRow();
             if (selectedIndex != current && e.getSource() == table.getSelectionModel() && table.getRowSelectionAllowed()) {
                 selectedIndex = current;
-
             }
         }
     }

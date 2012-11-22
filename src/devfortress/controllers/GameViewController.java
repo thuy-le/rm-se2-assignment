@@ -62,7 +62,6 @@ public class GameViewController {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
             model.notifyObservers();
-            System.out.println("Remain: " + model.getBudget());
         }
     }
     //TODO: When submit, the game need to be reset before re-initialized

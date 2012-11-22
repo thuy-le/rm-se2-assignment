@@ -102,7 +102,6 @@ public class DeveloperController {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                System.out.println("Close");
                 view.setSelectedDeveloper(index);
             }
 

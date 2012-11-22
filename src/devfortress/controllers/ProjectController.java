@@ -34,7 +34,6 @@ public class ProjectController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("Add project");
         }
     }
 
@@ -42,7 +41,6 @@ public class ProjectController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("Cancel");
         }
     }
 
@@ -50,7 +48,6 @@ public class ProjectController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("Add dev");
         }
     }
 
@@ -58,7 +55,6 @@ public class ProjectController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("Remove Project");
         }
     }
 }
