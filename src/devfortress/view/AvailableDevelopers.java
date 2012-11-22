@@ -75,7 +75,7 @@ public class AvailableDevelopers extends JPanel {
         String picture = "images/i6.png";
         String data[][] = {{"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}};
         String col[] = {"Skill", "Level"};
-        java.util.List<CustomButton> btnList = new LinkedList<>();
+        java.util.List<CustomButton> btnList = new LinkedList<CustomButton>();
         CustomList cl = new CustomList(developerList, btnList);
         JLabel developerDetail = new JLabel("Developer Details");
         JPanel top = new JPanel();
@@ -173,6 +173,7 @@ public class AvailableDevelopers extends JPanel {
     }
 
     private class MyListEvent implements ListSelectionListener {
+
         @Override
         public void valueChanged(ListSelectionEvent e) {
             Developer dev = (Developer) developerList.getSelectedValue();
