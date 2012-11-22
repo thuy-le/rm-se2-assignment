@@ -26,14 +26,14 @@ public class DevFortressMain {
         AboutScreen aboutScr = new AboutScreen();
         AvailableDevelopers availableDev = new AvailableDevelopers();
         //Views
-        DevFortress devFortress = new DevFortress(welCm, nav, inf);
-        TabbedPaneSystem sysTab = new TabbedPaneSystem();
+        DevFortress devFortress = new DevFortress(welCm, nav, inf);        
         TabbedPaneDeveloper devTab = new TabbedPaneDeveloper();
+        TabbedPaneSystem sysTab = new TabbedPaneSystem(devTab);
         TabbedPaneProject projTab = new TabbedPaneProject();
         TabbedPane tabPne = new TabbedPane(devTab, projTab, sysTab);
         //Controllers
         GameViewController gameController = new GameViewController(devFortress, welCm, nav, inf, tabPne, aboutScr, model);
-        DeveloperController devController = new DeveloperController(devTab, model, availableDev, nav, inf, tabPne, devFortress);
+        DeveloperController devController = new DeveloperController(devTab, model, availableDev, nav, inf, tabPne, devFortress, sysTab);
         ProjectController projectController = new ProjectController(projTab, model);
         SystemController systemController = new SystemController(sysTab, model);
         //Controllers register views with listeners
@@ -45,5 +45,6 @@ public class DevFortressMain {
         model.addObserver(sysTab);
         model.addObserver(projTab);
         model.addObserver(devTab);
+        model.addObserver(availableDev);
     }
 }

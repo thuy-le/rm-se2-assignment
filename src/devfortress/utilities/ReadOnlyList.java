@@ -118,7 +118,8 @@ public class ReadOnlyList<E> implements List<E> {
 
     @Override
     public boolean add(E e) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        list.add(e);
+        return true;
     }
 
     @Override

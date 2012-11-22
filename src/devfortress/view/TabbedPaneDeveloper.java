@@ -35,6 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -183,7 +184,15 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     public void setDevName(String devName) {
         this.devName.setText(devName);
         this.devName.repaint();
-
+    }
+    
+    public void setDevModel(DefaultListModel model){
+        this.devModel = model;
+    }
+    
+    @Override
+    public DefaultListModel getDevModel(){
+        return this.devModel;
     }
 
     public String getMainSkill() {
@@ -316,7 +325,6 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
             devModel.addElement(dev);
         }
         showDeveloper((Developer) developerList.getSelectedValue());
-
     }
 
     private class MyListEvent implements ListSelectionListener {

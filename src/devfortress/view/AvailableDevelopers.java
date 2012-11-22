@@ -6,30 +6,47 @@ package devfortress.view;
 
 import devfortress.utilities.MyScrollbarUI;
 import devfortress.models.Developer;
+import devfortress.models.GameEngine;
+import devfortress.models.Project;
+import devfortress.models.Skill;
 import devfortress.utilities.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 /**
  *
  * @author PC
  */
-public class AvailableDevelopers extends JPanel {
+public class AvailableDevelopers extends JPanel implements Observer {
 
+    private static Color panelColor = Colour.LIGHTORANGE;
+    private static Color listColor = Colour.DARKBLUE;
+    private static Color btnColour = Colour.DARKBLUE;
+    private static Color btnOnMouseColour = Colour.DARKBLUE2;
+    private static Color btnTextColour = Colour.LIGHTBLUE;    
+    private static Color tableColour = Colour.ORANGE;    
     private int x, y, width, height, arcH, arcW;
     private float alpha;
     private Color colour;
     private String playerName;
-    private CustomButton submitName;
     //private variables
     private JList developerList;
     private JLabel devName, mainSkill, workingPrj, status;
     private CustomButton btnHire, closeButton;
+    private GlassPanel rightPanel;
+    private JTable table;
+    private DefaultTableModel skillModel;
+    private DefaultListModel devModel;
+    private Developer devToHire;
+    GameEngine model;
 
     public AvailableDevelopers() {
         this.x = 5;
@@ -53,57 +70,44 @@ public class AvailableDevelopers extends JPanel {
         this.playerName = playerName;
     }
 
+    public Developer getDevToHire() {
+        return devToHire;
+    }
+
+    public void setDevToHire(Developer devToHire) {
+        this.devToHire = devToHire;
+    }
+    
     private void init() {
         setLayout(new BorderLayout());
         //global variables
+        devModel = new DefaultListModel();
+        skillModel = new DefaultTableModel(1, 2);
+        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, panelColor, 7, 7);
         developerList = new JList();
-        devName = new JLabel("Developer Name");
-        mainSkill = new JLabel("Main Skill (Level)");
-        workingPrj = new JLabel("Working Project");
-        status = new JLabel("Status");
-        btnHire = new CustomButton("Hire Developer");
-
-        //local variables
-        Color panelColor = Colour.LIGHTBLUE2.brighter();
-        Color listColor = Colour.BROWN;
-        Color btnColour = Colour.DARKGREEN.darker();
-        Color btnOnMouseColour = Colour.DARKGREEN;
-        Color btnTextColour = Colour.LIGHTGREEN;
-        String devStrings[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        DefaultListModel devModel = new DefaultListModel();
-        GlassPanel rightPanel = new GlassPanel(25, 25, 480, 380, 1f, panelColor, 7, 7);
-        String picture = "images/i6.png";
-        String data[][] = {{"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}, {"Skill 1", "Level 7"}};
-        String col[] = {"Skill", "Level"};
+        developerList.addListSelectionListener(new AvailableDevelopers.MyListEvent());
+        developerList.setCellRenderer(new CustomListRenderer());
+        developerList.setModel(devModel);
         java.util.List<CustomButton> btnList = new LinkedList<CustomButton>();
+        btnHire = new CustomButton("Hire Developer");
         CustomList cl = new CustomList(developerList, btnList);
         JLabel developerDetail = new JLabel("Developer Details");
         JPanel top = new JPanel();
         JPanel topR = new JPanel();
+        devName = new JLabel("Developer Name");
+        mainSkill = new JLabel("Main Skill (Level)");
+        workingPrj = new JLabel("Working Project");
+        status = new JLabel("Status");
+        table = new CustomTable(skillModel);
+        String picture = "images/i6.png";
         JPanel bottom = new JPanel();
         Icon imgIcon = new ImageIcon(picture);
         JLabel imageIcon = new JLabel(imgIcon);
         Font font = new Font("Century Gothic", Font.BOLD, 17);
-        JTable table = new JTable(data, col) {
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
         GlassPanel hireDevHeader = new GlassPanel(800, 70);
         GlassPanel hireDevBottom = new GlassPanel(800, 70);
         closeButton = new CustomButton("Close");
-        JLabel title = new CustomLabel("Available Developers");
-
-        for (int i = 0; i < devStrings.length; i++) {
-            Developer dev = new Developer();
-            devModel.addElement(dev);
-        }
-
-        developerList.addListSelectionListener(new AvailableDevelopers.MyListEvent());
-        developerList.setCellRenderer(new CustomListRenderer());
-        developerList.setModel(devModel);
+        JLabel title = new CustomLabel("Available Developers");        
 
         //------Create a JList of developers
         //list
@@ -131,23 +135,23 @@ public class AvailableDevelopers extends JPanel {
         developerDetail.setForeground(listColor);
         developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
         table.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        table.setBorder(BorderFactory.createLineBorder(listColor, 1));
+        table.setBorder(BorderFactory.createLineBorder(tableColour, 1));
         table.setRowHeight(25);
         JTableHeader header = table.getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(listColor, 1));
+        header.setBorder(BorderFactory.createLineBorder(tableColour, 1));
         header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(listColor);
+        header.setBackground(tableColour);
         header.setForeground(Color.WHITE);
         JScrollPane tableScroll = new JScrollPane(table);
         tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(440, 180));
+        tableScroll.setPreferredSize(new Dimension(440, 215));
         tableScroll.setBackground(listColor);
-        tableScroll.getViewport().setBackground(listColor);
+        tableScroll.getViewport().setBackground(tableColour);
         bottom.setBackground(panelColor);
         bottom.setLayout(new FlowLayout());
-        closeButton.setColour(Colour.BROWN);
-        closeButton.setOnMouseColor(Colour.BROWN.brighter());
-        title.setForeground(Colour.BROWN);
+        closeButton.setColour(btnColour);
+        closeButton.setOnMouseColor(btnColour.brighter());
+        title.setForeground(Colour.DARKBLUE);
         //add components
         top.add(imageIcon);
         topR.add(devName);
@@ -171,15 +175,77 @@ public class AvailableDevelopers extends JPanel {
     public void addCloseHirePaneEvent(MouseListener l) {
         closeButton.addMouseListener(l);
     }
+    
+    public void addHireDeveloperEvent(MouseListener l){
+        btnHire.addMouseListener(l);
+    }
 
     private class MyListEvent implements ListSelectionListener {
 
+        private int selectedIndex;
+
+        public MyListEvent() {
+            selectedIndex = developerList.getSelectedIndex();
+        }
+
         @Override
         public void valueChanged(ListSelectionEvent e) {
-            Developer dev = (Developer) developerList.getSelectedValue();
-            setDevName(dev.getName());
+            if (selectedIndex != developerList.getSelectedIndex()) {
+                selectedIndex = developerList.getSelectedIndex();
+                showDeveloper((Developer) developerList.getSelectedValue());
+                setDevToHire((Developer)developerList.getSelectedValue());
+            }
         }
     }
+
+    public synchronized void showDeveloper(Developer dev) {
+        if (dev == null) {
+            rightPanel.setVisible(false);
+        } else {
+            rightPanel.setVisible(true);
+            setDevName(dev.getName());
+            String s = "<html>Status: " + (dev.isHappy() ? "☺" : "☹");
+            s += (dev.isDrunk() ? ",☻" : "");
+            s += (dev.isFed() ? ",☀" : ",☠");
+            s += "</html>";
+            setStatus(s);
+            Project p = dev.getWorkingProject();
+            if (p != null) {
+                setWorkingPrj(p.getName());
+            } else {
+                setWorkingPrj("Not working");
+            }
+            setMainSkill(dev.getMainSkill().toString());
+            //Table
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            table.getColumnModel().getColumn(0).setMinWidth(400);
+            table.getColumnModel().getColumn(1).setMaxWidth(20);
+            while (skillModel.getRowCount() > 0) {
+                skillModel.removeRow(skillModel.getRowCount() - 1);
+            }
+            for (Skill skill : dev.getSkills().values()) {
+                Object[] rowData = {skill.getSkillInfo().getName(), skill.getLevel()};
+                skillModel.addRow(rowData);
+            }
+//            table.getColumnModel().getColumn(1).setPreferredWidth(27);
+            Object[] ids = {"Skill", "Level"};
+            skillModel.setColumnIdentifiers(ids);
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            table.getColumnModel().getColumn(1).setMaxWidth(50);
+
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        model = (GameEngine) o;
+        devModel.clear();
+        for (Developer dev : model.getMarketDevelopers()) {
+            devModel.addElement(dev);
+        }
+        showDeveloper((Developer) developerList.getSelectedValue());
+    }
+    
 
     //Getter and Setter
     public String getDevName() {
@@ -190,6 +256,10 @@ public class AvailableDevelopers extends JPanel {
         this.devName.setText(devName);
         this.devName.repaint();
 
+    }
+    
+    public DefaultListModel getDevModel(){
+        return this.devModel;
     }
 
     public String getMainSkill() {

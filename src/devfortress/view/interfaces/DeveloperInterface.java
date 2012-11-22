@@ -6,6 +6,7 @@ package devfortress.view.interfaces;
 
 import devfortress.models.Developer;
 import java.awt.event.MouseListener;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -16,6 +17,8 @@ public interface DeveloperInterface {
     Developer getSelectedDeveloper();
 
     int getSelectedIndex();
+    
+    DefaultListModel getDevModel();
 
     void setSelectedDeveloper(int index);
 

@@ -98,7 +98,7 @@ public class GameEngine extends Observable {
     public List<Developer> getDevelopers() {
         return new ReadOnlyList<Developer>(developers);
     }
-
+    
     public List<Developer> getMarketDevelopers() {
         return new ReadOnlyList<Developer>(marketDevelopers);
     }

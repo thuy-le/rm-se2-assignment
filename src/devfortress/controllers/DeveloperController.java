@@ -8,15 +8,15 @@ import devfortress.exceptions.DeveloperBusyException;
 import devfortress.exceptions.InsufficientBudgetException;
 import devfortress.models.Developer;
 import devfortress.models.GameEngine;
+import devfortress.utilities.ReadOnlyList;
 import devfortress.view.*;
 import devfortress.view.interfaces.DeveloperInterface;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,8 +32,9 @@ public class DeveloperController {
     private InfomationPane info;
     private TabbedPane tabPne;
     private DevFortress devFortress;
+    private TabbedPaneSystem tabSystem;
 
-    public DeveloperController(DeveloperInterface view, GameEngine model, AvailableDevelopers availableDev, NavigationPane navPane, InfomationPane info, TabbedPane tabPne, DevFortress devFortress) {
+    public DeveloperController(DeveloperInterface view, GameEngine model, AvailableDevelopers availableDev, NavigationPane navPane, InfomationPane info, TabbedPane tabPne, DevFortress devFortress, TabbedPaneSystem tabSystem) {
         this.view = view;
         this.model = model;
         this.availableDev = availableDev;
@@ -41,6 +42,7 @@ public class DeveloperController {
         this.info = info;
         this.tabPne = tabPne;
         this.devFortress = devFortress;
+        this.tabSystem = tabSystem;
     }
 
     public void initilize() {
@@ -58,6 +60,8 @@ public class DeveloperController {
         view.addGiveBeerListener(new GiveBeerToDevListener());
         //close hirePane
         availableDev.addCloseHirePaneEvent(new CloseHirePaneListener());
+        //hre dev
+        availableDev.addHireDeveloperEvent(new HireDeveloperListener());
         //train developer
         view.addTrainDeveloperListener(new TrainSkillListener());
     }
@@ -77,6 +81,30 @@ public class DeveloperController {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
+    }
+    
+    private class HireDeveloperListener extends MouseAdapter{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            Developer dev = (Developer) availableDev.getDevToHire();
+            if(dev != null){
+                JOptionPane.showMessageDialog(null, dev.getName() + " is hired");
+                model.hireDeveloper(dev);
+                view.getDevModel().addElement(dev);
+                tabSystem.getDevModel().addElement(dev);
+                availableDev.getDevModel().removeElement(dev);
+                devFortress.remove(availableDev);
+                info.getInfoPanel().setVisible(true);
+                navPane.getToolbar().setVisible(true);
+                devFortress.add(tabPne);
+                devFortress.repaint();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "You need to choose 1 developer to hire");
+            }
+        }
+        
     }
 
     private class TrainSkillListener extends MouseAdapter {

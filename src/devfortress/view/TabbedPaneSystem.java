@@ -27,6 +27,8 @@ import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -49,12 +51,14 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     private CustomButton btnHire, btnAdd;
     private JLabel budget, welcome;
     private final DefaultListModel devModel, prjModel;
+    private TabbedPaneDeveloper tabDev;
 
     //constructor
-    public TabbedPaneSystem() {
+    public TabbedPaneSystem(TabbedPaneDeveloper tabDev) {
         setOpaque(false);
         devModel = new DefaultListModel();
         prjModel = new DefaultListModel();
+        this.tabDev = tabDev;
         init();
     }
 
@@ -122,6 +126,8 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         gp3.add(imageIcon);
         gp3.add(label);
         gp3.add(budget);
+        
+        devList.addListSelectionListener(new MyListEvent());
     }
 
     //override the paint component method
@@ -162,6 +168,10 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     public void addProjectListListener(MouseListener l) {
         prjList.addMouseListener(l);
     }
+    
+    public DefaultListModel getDevModel(){
+        return devModel;
+    }
 
     @Override
     public void setBudget(long budget) {
@@ -188,6 +198,26 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         }
         String welcomeStr = "<html>Hi, " + model.getPlayerName() + " ◕‿◕</html>";
         welcome.setText(welcomeStr);
+        
 
+    }
+    
+    private class MyListEvent implements ListSelectionListener {
+
+        private int selectedIndex;
+
+        public MyListEvent() {
+            selectedIndex = devList.getSelectedIndex();
+        }
+        
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (selectedIndex != devList.getSelectedIndex()) {
+                selectedIndex = devList.getSelectedIndex();
+                JTabbedPane tp = (JTabbedPane) getParent();
+                tp.setSelectedIndex(1);
+                tabDev.showDeveloper((Developer)devList.getSelectedValue());
+            }
+        }
     }
 }

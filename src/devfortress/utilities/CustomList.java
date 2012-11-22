@@ -68,12 +68,15 @@ public class CustomList extends JPanel implements CustomListInterface {
         jList.setOpaque(false);
         jList.setCellRenderer(new CustomListRenderer());
         jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        scrollPane.getViewport().setOpaque(false);
         scrollPane.setPreferredSize(new Dimension(width - 30, height - 80));
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         GlassPanel marginTop = new GlassPanel(0, 0, width, 10, 0f, null, 0, 0);
         topPanel.add(marginTop, BorderLayout.NORTH);
         topPanel.add(scrollPane, BorderLayout.CENTER);
+        scrollPane.getViewport().setOpaque(true);
+        scrollPane.setOpaque(false);
+        scrollPane.setBackground(Color.WHITE);  
+        scrollPane.getViewport().setBackground(Color.WHITE);  
         //add components
         add(topPanel, BorderLayout.NORTH);
         add(bottomPanel, BorderLayout.CENTER);

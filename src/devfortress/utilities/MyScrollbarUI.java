@@ -22,8 +22,8 @@ public class MyScrollbarUI extends MetalScrollBarUI {
     };
 
     MyScrollbarUI() {
-        imageThumb = FauxImage.create(22, 20, Colour.BROWN.darker());
-        imageTrack = FauxImage.create(28, 32, Colour.LIGHTBLUE);
+        imageThumb = Toolkit.getDefaultToolkit().createImage("images/sbThump.png");
+        imageTrack = FauxImage.create(42, 42, Colour.LIGHTBLUE);
     }
 
     @Override
