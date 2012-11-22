@@ -48,7 +48,6 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     private JList devList, prjList;
     private CustomButton btnHire, btnAdd;
     private JLabel budget, welcome;
-    private String playerName;
     private final DefaultListModel devModel, prjModel;
 
     //constructor
@@ -64,7 +63,6 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
          * ########### initialize variables ##########
          */
         //$$$$$-----Global variables
-        playerName = "player name";
         budget = new JLabel("$25000000");
         welcome = new JLabel();
         devList = new JList();
@@ -108,8 +106,8 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         welcome.setForeground(Colour.DARKBLUE);
         budget.setFont(new Font("Century Gothic", Font.BOLD, 20));
         label.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-        String welcomeStr = "<html>Hi, " + playerName + " ◕‿◕</html>";
-        welcome.setText(welcomeStr);
+//        String welcomeStr = "<html>Hi, ◕‿◕</html>";
+//        welcome.setText(welcomeStr);
         /*
          * ########## set border layout to the container ##########
          */
@@ -179,6 +177,8 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     @Override
     public void update(Observable o, Object arg) {
         GameEngine model = (GameEngine) o;
+        System.out.println("Set " + model.getBudget());
+        budget.setText(model.getBudget() + "");
         devModel.removeAllElements();
         prjModel.removeAllElements();
         for (Developer dev : model.getDevelopers()) {
@@ -187,5 +187,8 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         for (Project p : model.getProjects()) {
             prjModel.addElement(p);
         }
+        String welcomeStr = "<html>Hi, " + model.getPlayerName() + " ◕‿◕</html>";
+        welcome.setText(welcomeStr);
+
     }
 }

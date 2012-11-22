@@ -15,6 +15,10 @@ public interface DeveloperInterface {
 
     Developer getSelectedDeveloper();
 
+    int getSelectedIndex();
+
+    void setSelectedDeveloper(int index);
+
     void addHireDevListener(MouseListener l);
 
     void addFeedAllDevListener(MouseListener l);

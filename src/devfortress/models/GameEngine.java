@@ -24,6 +24,7 @@ public class GameEngine extends Observable {
     private static GameEngine instance = new GameEngine();
     private String playerName, fileName;
     private int numPCs;
+    private boolean ended;
 
     private GameEngine() {
         this.budget = 1000000;
@@ -34,6 +35,7 @@ public class GameEngine extends Observable {
         this.date = new DevDate();
         this.playerName = "";
         this.fileName = null;
+        this.ended = false;
     }
 
     /**
@@ -55,10 +57,10 @@ public class GameEngine extends Observable {
         this.generateRandomMarketProjects();
         developers.clear();
         projects.clear();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 7; i++) {
             this.developers.add(new Developer());
         }
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 7; i++) {
             this.projects.add(new Project());
         }
         setChanged();
@@ -262,25 +264,29 @@ public class GameEngine extends Observable {
     /*
      * System
      */
-    public void nextWeek() {
+    public void nextWeek() throws GameOverException {
         /*
          * Time changes
          */
-        date.nextWeek();
-        generateRandomEvents();
-        allEventsTakeEffects();
-        /*
-         * Calculate other factors
-         */
-        if (date.getWeek() == 1) {
+        if (!ended) {
+            date.nextWeek();
+            generateRandomEvents();
+            allEventsTakeEffects();
             /*
-             * Projects, Developers, Events...
+             * Calculate other factors
              */
-            paySalary();
-            generateRandomMarketDevelopers();
-            generateRandomMarketProjects();
+            if (date.getWeek() == 1) {
+                /*
+                 * Projects, Developers, Events...
+                 */
+                paySalary();
+                generateRandomMarketDevelopers();
+                generateRandomMarketProjects();
+            }
+            setChanged();
+        } else {
+            throw new GameOverException();
         }
-        setChanged();
     }
 
     /**
@@ -311,10 +317,19 @@ public class GameEngine extends Observable {
      * Private methods and functions
      */
     //TODO: Check game end
-    private void paySalary() {
+    private void paySalary() throws GameOverException {
         /*
          * $$$ Check game end
          */
+        for (Developer dev : developers) {
+            budget -= dev.getSalary();
+            if (budget <= 0) {
+                budget = 0;
+                ended = true;
+                setChanged();
+                throw new GameOverException();
+            }
+        }
     }
 
     private void generateRandomMarketDevelopers() {

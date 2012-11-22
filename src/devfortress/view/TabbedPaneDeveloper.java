@@ -220,6 +220,16 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     }
 
     @Override
+    public int getSelectedIndex() {
+        return developerList.getSelectedIndex();
+    }
+
+    @Override
+    public void setSelectedDeveloper(int index) {
+        developerList.setSelectedIndex(index);
+    }
+
+    @Override
     public Developer getSelectedDeveloper() {
         return (Developer) developerList.getSelectedValue();
     }
@@ -260,7 +270,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     }
 
     @Override
-    public synchronized void showDeveloper(Developer dev) {
+    public void showDeveloper(Developer dev) {
         if (dev == null) {
             rightPanel.setVisible(false);
         } else {
@@ -306,6 +316,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
             devModel.addElement(dev);
         }
         showDeveloper((Developer) developerList.getSelectedValue());
+
     }
 
     private class MyListEvent implements ListSelectionListener {

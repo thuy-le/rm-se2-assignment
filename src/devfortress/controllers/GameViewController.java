@@ -4,6 +4,7 @@
  */
 package devfortress.controllers;
 
+import devfortress.exceptions.GameOverException;
 import devfortress.models.GameEngine;
 import devfortress.view.*;
 import java.awt.BorderLayout;
@@ -54,8 +55,14 @@ public class GameViewController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            model.nextWeek();
+            try {
+                model.nextWeek();
+            } catch (GameOverException ex) {
+                model.notifyObservers();
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
             model.notifyObservers();
+            System.out.println("Remain: " + model.getBudget());
         }
     }
     //TODO: When submit, the game need to be reset before re-initialized

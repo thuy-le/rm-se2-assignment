@@ -4,12 +4,19 @@
  */
 package devfortress.controllers;
 
+import devfortress.exceptions.DeveloperBusyException;
+import devfortress.exceptions.InsufficientBudgetException;
 import devfortress.models.Developer;
 import devfortress.models.GameEngine;
 import devfortress.view.*;
 import devfortress.view.interfaces.DeveloperInterface;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -59,20 +66,65 @@ public class DeveloperController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            JOptionPane.showMessageDialog(null, "Feed all");
+            List<Developer> devs = model.getDevelopers();
+            try {
+                for (Developer dev : devs) {
+                    model.feedDeveloper(dev);
+                }
+                model.notifyObservers();
+                JOptionPane.showMessageDialog(null, "All developers are full");
+            } catch (InsufficientBudgetException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
     }
 
     private class TrainSkillListener extends MouseAdapter {
 
+        private int index;
+
         @Override
         public void mouseClicked(MouseEvent e) {
+            index = view.getSelectedIndex();
             TrainSkillDialog dialog = new TrainSkillDialog(view.getSelectedDeveloper());
+            dialog.addWindowListener(new TrainSkillWindowsListener());
             TrainSkillController trainSkillController = new TrainSkillController(dialog, model);
             trainSkillController.initialize();
             model.addObserver(dialog);
-            model.notifyObservers();
             dialog.display();
+        }
+
+        private class TrainSkillWindowsListener implements WindowListener {
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                System.out.println("Close");
+                view.setSelectedDeveloper(index);
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
         }
     }
 
@@ -106,7 +158,16 @@ public class DeveloperController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            JOptionPane.showMessageDialog(null, "Party");
+            List<Developer> devs = model.getDevelopers();
+            try {
+                for (Developer dev : devs) {
+                    model.giveDeveloperBeer(dev);
+                }
+                model.notifyObservers();
+                JOptionPane.showMessageDialog(null, "All developers are now happy! Yey!");
+            } catch (InsufficientBudgetException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
     }
 
@@ -115,8 +176,16 @@ public class DeveloperController {
         @Override
         public void mouseClicked(MouseEvent e) {
             Developer dev = view.getSelectedDeveloper();
+            int index = view.getSelectedIndex();
             if (dev != null) {
-                JOptionPane.showMessageDialog(null, "Feed");
+                try {
+                    model.feedDeveloper(dev);
+                    model.notifyObservers();
+                    view.setSelectedDeveloper(index);
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is now full");
+                } catch (InsufficientBudgetException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You have to select a developer");
             }
@@ -129,7 +198,13 @@ public class DeveloperController {
         public void mouseClicked(MouseEvent e) {
             Developer dev = view.getSelectedDeveloper();
             if (dev != null) {
-                JOptionPane.showMessageDialog(null, "Fire  " + dev.getName());
+                try {
+                    model.fireDeveloper(dev);
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is fired");
+                    model.notifyObservers();
+                } catch (DeveloperBusyException ex) {
+                    JOptionPane.showMessageDialog(null, dev.getName() + ex.getMessage());
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You have to select a developer");
             }
@@ -141,8 +216,16 @@ public class DeveloperController {
         @Override
         public void mouseClicked(MouseEvent e) {
             Developer dev = view.getSelectedDeveloper();
+            int index = view.getSelectedIndex();
             if (dev != null) {
-                JOptionPane.showMessageDialog(null, "Drink beer");
+                try {
+                    model.giveDeveloperBeer(dev);
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is now very happy");
+                    model.notifyObservers();
+                    view.setSelectedDeveloper(index);
+                } catch (InsufficientBudgetException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You have to select a developer");
             }
