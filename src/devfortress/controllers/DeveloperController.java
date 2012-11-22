@@ -49,6 +49,8 @@ public class DeveloperController {
         view.addFireDevListener(new FireDeveloperListener());
         //Give selected Developer beer
         view.addGiveBeerListener(new GiveBeerToDevListener());
+        //close hirePane
+        availableDev.addCloseHirePaneEvent(new CloseHirePaneListener());
     }
 
     private class FeedAllMouseListener extends MouseAdapter {

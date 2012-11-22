@@ -25,13 +25,11 @@ public class AvailableDevelopers extends JPanel {
     private float alpha;
     private Color colour;
     private String playerName;
-    private JTextField playerTxt;
     private CustomButton submitName;
     //private variables
-    private java.util.List<Developer> developers;
     private JList developerList;
     private JLabel devName, mainSkill, workingPrj, status;
-    private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev, closeButton;
+    private CustomButton btnHire, closeButton;
 
     public AvailableDevelopers() {
         this.x = 5;
@@ -63,12 +61,7 @@ public class AvailableDevelopers extends JPanel {
         mainSkill = new JLabel("Main Skill (Level)");
         workingPrj = new JLabel("Working Project");
         status = new JLabel("Status");
-        btnHire = new CustomButton("Hire");
-        btnFeed = new CustomButton("Feed");
-        btnParty = new CustomButton("Party");
-        btnFireDev = new CustomButton("Fire");
-        btnFeedDev = new CustomButton("Feed");
-        btnPartyDev = new CustomButton("Party");
+        btnHire = new CustomButton("Hire Developer");
 
         //local variables
         Color panelColor = Colour.LIGHTBLUE2.brighter();
@@ -116,23 +109,13 @@ public class AvailableDevelopers extends JPanel {
         //list
         //buttons
         btnList.add(btnHire);
-        btnList.add(btnFeed);
-        btnList.add(btnParty);
         //add button(s) and list together
         //-------Adjust look and feel
-        btnHire.setButtonSize(0, 0, 55, 35);
-        btnFeed.setButtonSize(0, 0, 55, 35);
-        btnParty.setButtonSize(0, 0, 55, 35);
+        btnHire.setButtonSize(0, 0, 150, 35);
         cl.setColor(listColor);
         btnHire.setTextColour(btnTextColour);
-        btnFeed.setTextColour(btnTextColour);
-        btnParty.setTextColour(btnTextColour);
         btnHire.setColour(btnColour);
         btnHire.setOnMouseColor(btnOnMouseColour);
-        btnFeed.setColour(btnColour);
-        btnFeed.setOnMouseColor(btnOnMouseColour);
-        btnParty.setColour(btnColour);
-        btnParty.setOnMouseColor(btnOnMouseColour);
         developerList.setSelectionBackground(Colour.LIGHTORANGE);
         developerList.setSelectionForeground(Colour.REDORANGEDARK);
         developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
@@ -162,18 +145,6 @@ public class AvailableDevelopers extends JPanel {
         tableScroll.getViewport().setBackground(listColor);
         bottom.setBackground(panelColor);
         bottom.setLayout(new FlowLayout());
-        btnFireDev.setButtonSize(0, 0, 70, 35);
-        btnFeedDev.setButtonSize(0, 0, 70, 35);
-        btnPartyDev.setButtonSize(0, 0, 70, 35);
-        btnFireDev.setTextColour(btnTextColour);
-        btnFeedDev.setTextColour(btnTextColour);
-        btnFeedDev.setTextColour(btnTextColour);
-        btnFireDev.setColour(btnColour);
-        btnFireDev.setOnMouseColor(btnOnMouseColour);
-        btnFeedDev.setColour(btnColour);
-        btnFeedDev.setOnMouseColor(btnOnMouseColour);
-        btnPartyDev.setColour(btnColour);
-        btnPartyDev.setOnMouseColor(btnOnMouseColour);
         closeButton.setColour(Colour.BROWN);
         closeButton.setOnMouseColor(Colour.BROWN.brighter());
         title.setForeground(Colour.BROWN);
@@ -184,9 +155,6 @@ public class AvailableDevelopers extends JPanel {
         topR.add(workingPrj);
         topR.add(status);
         top.add(topR);
-        bottom.add(btnFireDev);
-        bottom.add(btnFeedDev);
-        bottom.add(btnPartyDev);
         rightPanel.add(developerDetail, BorderLayout.NORTH);
         rightPanel.add(top, BorderLayout.CENTER);
         rightPanel.add(tableScroll, BorderLayout.NORTH);
@@ -265,9 +233,5 @@ public class AvailableDevelopers extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
-    }
-
-    public void addSubmitNameListener(MouseListener l) {
-        submitName.addMouseListener(l);
     }
 }
