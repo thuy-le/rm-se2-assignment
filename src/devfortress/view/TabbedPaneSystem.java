@@ -172,6 +172,10 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     public DefaultListModel getDevModel(){
         return devModel;
     }
+    
+    public JList getDevlist(){
+        return devList;
+    }
 
     @Override
     public void setBudget(long budget) {

@@ -315,6 +315,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
             table.getColumnModel().getColumn(1).setMaxWidth(50);
 
         }
+        developerList.setSelectedValue(dev, true);
     }
 
     @Override
