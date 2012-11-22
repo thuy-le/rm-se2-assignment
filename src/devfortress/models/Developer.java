@@ -36,14 +36,6 @@ public class Developer {
     private Project workingProject;
     private AreaName workingArea;
 
-//    public Developer(String name) {
-//        this.name = name;
-//        this.skills = new EnumMap<>(SkillInfo.class);
-//        this.mainSkill = null;
-//        this.salary = 0;
-//        this.workingProject = null;
-//        this.workingArea = null;
-//    }
     public Developer() {
         this.name = Utilities.getRandomName();
         this.skills = new EnumMap<SkillInfo, Skill>(SkillInfo.class);
@@ -51,11 +43,11 @@ public class Developer {
         this.salary = 0;
         this.workingProject = null;
         this.workingArea = null;
+        this.happy = Utilities.randInt(2) == 1;
+        this.drunk = Utilities.randInt(2) == 1;
+        this.fed = Utilities.randInt(2) == 1;
         randomizeSkills();
         re_calculateDeveloperInfo();
-        System.out.println("Developer: " + name);
-        System.out.println("Main Skill: " + mainSkillInfo + " Level " + skills.get(mainSkillInfo).getLevel());
-        System.out.println("Salary: " + salary);
     }
 
     private void randomizeSkills() {

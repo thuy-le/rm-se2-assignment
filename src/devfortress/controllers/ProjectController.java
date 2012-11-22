@@ -13,56 +13,52 @@ import java.awt.event.MouseEvent;
  *
  * @author Michael
  */
-public class ProjectController implements Initilizable{
-    
+public class ProjectController {
+
     private ProjectInterface view;
     private GameEngine model;
 
     public ProjectController(ProjectInterface view, GameEngine model) {
         this.view = view;
-        this.model = model;    
+        this.model = model;
     }
-    
-    
 
-    @Override
     public void initilize() {
-        view.addNewProjectListener(new AddDevToProjectListener());
+        view.addNewProjectListener(new AddProjectListener());
         view.addDevToProjectListener(new AddDevToProjectListener());
         view.cancelProjectListener(new CancelProjectListener());
         view.removeDevFromProjectListener(new RemoveDevFromProjectListener());
     }
-    
-    private class AddProjectListener extends MouseAdapter{
+
+    private class AddProjectListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
-        }        
-    }
-    
-    private class CancelProjectListener extends MouseAdapter{
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
-        }       
-    }
-    
-    private class AddDevToProjectListener extends MouseAdapter{
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
+            System.out.println("Add project");
         }
     }
-    
-    private class RemoveDevFromProjectListener extends MouseAdapter{
+
+    private class CancelProjectListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
+            System.out.println("Cancel");
         }
     }
-    
+
+    private class AddDevToProjectListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println("Add dev");
+        }
+    }
+
+    private class RemoveDevFromProjectListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println("Remove Project");
+        }
+    }
 }

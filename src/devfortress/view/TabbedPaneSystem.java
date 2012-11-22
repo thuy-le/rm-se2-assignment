@@ -4,20 +4,26 @@
  */
 package devfortress.view;
 
-import devfortress.enumerations.AreaName;
 import devfortress.models.Developer;
-import devfortress.models.FunctionalArea;
+import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.utilities.GlassPanel;
 import devfortress.utilities.CustomList;
 import devfortress.utilities.CustomButton;
 import devfortress.utilities.Colour;
 import devfortress.view.interfaces.SystemInterface;
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.EnumMap;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -43,10 +49,13 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     private CustomButton btnHire, btnAdd;
     private JLabel budget, welcome;
     private String playerName;
+    private final DefaultListModel devModel, prjModel;
 
     //constructor
     public TabbedPaneSystem() {
         setOpaque(false);
+        devModel = new DefaultListModel();
+        prjModel = new DefaultListModel();
         init();
     }
 
@@ -54,11 +63,6 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         /*
          * ########### initialize variables ##########
          */
-        //$$$$$-----Local variables
-        String devStrings[] = {"Developer 1", "Developer 2", "Developer 3", "Developer 4", "Developer 5", "Developer 6", "Developer 7", "Developer 8", "Developer 9", "Developer 10", "Developer 11", "Developer 12", "Developer 13", "Developer 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        DefaultListModel devModel = new DefaultListModel();
-        String projects[] = {"Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6", "Project 7", "Project 8", "Project 9", "Project 10", "Project 11", "Project 12", "Project 13", "Project 14", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "a", "b", "c", "e"};
-        DefaultListModel prjModel = new DefaultListModel();
         //$$$$$-----Global variables
         playerName = "player name";
         budget = new JLabel("$25000000");
@@ -67,6 +71,7 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         prjList = new JList();
         btnHire = new CustomButton("Hire Developer");
         btnAdd = new CustomButton("Add Project");
+
         //$$$$$-----Local variable for UI
         List<CustomButton> listDevBtn = new LinkedList<CustomButton>();
         List<CustomButton> listPrjBtn = new LinkedList<CustomButton>();
@@ -79,19 +84,7 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
         JLabel imageIcon = new JLabel(imgIcon);
         imageIcon.setPreferredSize(new Dimension(200, 200));
         JLabel label = new JLabel("  Your budget is:");
-        //
-        for (int i = 0; i < devStrings.length; i++) {
-//            Developer dev = new Developer(devStrings[i]);
-            Developer dev = new Developer();
-            devModel.addElement(dev);
-        }
         devList.setModel(devModel);
-        for (int i = 0; i < projects.length; i++) {
-            EnumMap<AreaName, FunctionalArea> prjFA = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
-            prjFA.put(AreaName.CODING, new FunctionalArea(AreaName.CODING, 10, 0, true));
-            Project prj = new Project(30, 2, prjFA);
-            prjModel.addElement(prj);
-        }
         prjList.setModel(prjModel);
         //add list and button(s) together
         CustomList developerList = new CustomList(devList, listDevBtn);
@@ -181,10 +174,18 @@ public class TabbedPaneSystem extends JPanel implements SystemInterface, Observe
     public void setPlayerName(String name) {
         String welcomeStr = "<html>Hi, " + name + " ◕‿◕</html>";
         welcome.setText(welcomeStr);
-        welcome.repaint();
     }
 
     @Override
     public void update(Observable o, Object arg) {
+        GameEngine model = (GameEngine) o;
+        devModel.removeAllElements();
+        prjModel.removeAllElements();
+        for (Developer dev : model.getDevelopers()) {
+            devModel.addElement(dev);
+        }
+        for (Project p : model.getProjects()) {
+            prjModel.addElement(p);
+        }
     }
 }

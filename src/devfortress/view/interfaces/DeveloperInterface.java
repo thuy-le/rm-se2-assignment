@@ -12,7 +12,7 @@ import java.awt.event.MouseListener;
  * @author PC
  */
 public interface DeveloperInterface {
-    
+
     Developer getSelectedDeveloper();
 
     void addHireDevListener(MouseListener l);
@@ -26,4 +26,6 @@ public interface DeveloperInterface {
     void addGiveBeerListener(MouseListener l);
 
     void addFireDevListener(MouseListener l);
+
+    void showDeveloper(Developer dev);
 }

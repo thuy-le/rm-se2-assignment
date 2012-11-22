@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Team Poseidon
  */
-public class DeveloperController implements Initilizable {
+public class DeveloperController {
 
     private DeveloperInterface view;
     private GameEngine model;
@@ -36,7 +36,6 @@ public class DeveloperController implements Initilizable {
         this.devFortress = devFortress;
     }
 
-    @Override
     public void initilize() {
         //Feed all developers
         view.addFeedAllDevListener(new FeedAllMouseListener());
@@ -96,7 +95,12 @@ public class DeveloperController implements Initilizable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            JOptionPane.showMessageDialog(null, "Feed");
+            Developer dev = view.getSelectedDeveloper();
+            if (dev != null) {
+                JOptionPane.showMessageDialog(null, "Feed");
+            } else {
+                JOptionPane.showMessageDialog(null, "You have to select a developer");
+            }
         }
     }
 
@@ -107,6 +111,8 @@ public class DeveloperController implements Initilizable {
             Developer dev = view.getSelectedDeveloper();
             if (dev != null) {
                 JOptionPane.showMessageDialog(null, "Fire  " + dev.getName());
+            } else {
+                JOptionPane.showMessageDialog(null, "You have to select a developer");
             }
         }
     }
@@ -115,7 +121,12 @@ public class DeveloperController implements Initilizable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            JOptionPane.showMessageDialog(null, "Drink beer");
+            Developer dev = view.getSelectedDeveloper();
+            if (dev != null) {
+                JOptionPane.showMessageDialog(null, "Drink beer");
+            } else {
+                JOptionPane.showMessageDialog(null, "You have to select a developer");
+            }
         }
     }
 }

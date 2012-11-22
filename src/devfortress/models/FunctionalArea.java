@@ -61,6 +61,10 @@ public class FunctionalArea {
         completed = completed ? completed : functionPoints - reducedPoints < completedPoints;
     }
 
+    public void reducePoints(int points) {
+        reducedPoints += points;
+    }
+
     /* Assume that developer is free. This function is called by Project */
     public boolean addDeveloper(Developer dev) {
         if (dev.isAvailable()) {

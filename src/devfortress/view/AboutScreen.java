@@ -4,8 +4,18 @@
  */
 package devfortress.view;
 
-import devfortress.utilities.*;
-import java.awt.*;
+import devfortress.utilities.Colour;
+import devfortress.utilities.CustomButton;
+import devfortress.utilities.CustomLabel;
+import devfortress.utilities.GlassPanel;
+import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -46,7 +56,7 @@ public class AboutScreen extends JPanel {
                 + "<br/> "
                 + "To Bao Thien Quan "
                 + "<br/> "
-                + "Nguyen Vinh Thanh "
+                + "Tang Vinh Thanh "
                 + "<br/> "
                 + "Le Huynh Ngoc Thuy"
                 + "</center></html>") {
@@ -60,8 +70,6 @@ public class AboutScreen extends JPanel {
 
         btnBack = new CustomButton("Back");
         //Global Variables        
-//        btnBack.addMouseListener(new CustomButtonEvent(Colour.DARKBLUE, Colour.DARKBLUE2));
-//        btnBack.addMouseListener(new GameViewController());
         welcome.setForeground(Colour.DARKBLUE);
         info.setFont(new Font("Century Gocthic", Font.PLAIN, 22));
         //add components
@@ -92,6 +100,5 @@ public class AboutScreen extends JPanel {
 
     public void addBackListener(MouseListener l) {
         btnBack.addMouseListener(l);
-        System.out.println("Mouse Listener added");
     }
 }

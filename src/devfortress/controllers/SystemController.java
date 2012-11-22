@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
  *
  * @author Team Poseidon
  */
-public final class SystemController implements Initilizable {
+public final class SystemController {
 
     private SystemInterface view;
     private GameEngine model;
@@ -19,7 +19,6 @@ public final class SystemController implements Initilizable {
         this.model = model;
     }
 
-    @Override
     public void initilize() {
         view.addBtnAddProjectListener(new ButtonAddProjectMouseListener());
         view.addBtnHireDevListener(new ButtonHireMouseListener());
@@ -32,7 +31,6 @@ public final class SystemController implements Initilizable {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
-            System.out.println("Mouse Clicked");
         }
     }
 

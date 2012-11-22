@@ -16,21 +16,23 @@ public class DevDate {
     private int year, month, week;
 
     public DevDate(int year, int month, int week) throws InvalidDevDateException {
-        if (year >= 0
-                && month >= 1 && month <= 12
-                && week >= 1 && week <= 4) {
+        if (year >= 0 && month >= 1 && month <= 12 && week >= 1 && week <= 4) {
             this.year = year;
             this.month = month;
             this.week = week;
         } else {
+            System.out.println("Year: " + year);
+            System.out.println("Month: " + month);
+            System.out.println("Week: " + week);
+
             throw new InvalidDevDateException();
         }
     }
 
     public DevDate() {
         this.year = 0;
-        this.month = 0;
-        this.week = 0;
+        this.month = 1;
+        this.week = 1;
     }
 
     public int getMonth() {
@@ -50,12 +52,20 @@ public class DevDate {
             week++;
         } else {
             week = 1;
-            if (month < 12) {
-                month++;
-            } else {
-                month = 1;
-                year++;
-            }
+            nextMonth();
         }
+    }
+
+    public void nextMonth() {
+        if (month < 12) {
+            month++;
+        } else {
+            month = 1;
+            nextYear();
+        }
+    }
+
+    public void nextYear() {
+        year++;
     }
 }
