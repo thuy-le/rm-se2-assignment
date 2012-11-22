@@ -64,6 +64,8 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     private JTable table;
     private DefaultTableModel skillModel;
     private DefaultListModel devModel;
+    private JLabel isHappy;
+    private JLabel isDrunk;
     //constructor
 
     public TabbedPaneDeveloper() {
@@ -72,6 +74,8 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
     }
 
     private void init() {
+        isHappy = new JLabel("");
+        isDrunk = new JLabel("");
         devModel = new DefaultListModel();
         skillModel = new DefaultTableModel(1, 2);
         rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colour.LIGHTORANGE, 7, 7);
@@ -80,7 +84,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         developerList.setCellRenderer(new CustomListRenderer());
         developerList.setModel(devModel);
         //buttons
-
+        JPanel statusPanel = new JPanel(new GridLayout(1,3));
         List<CustomButton> btnList = new LinkedList<CustomButton>();
         btnHire = new CustomButton("Hire");
         btnFeed = new CustomButton("Feed");
@@ -133,14 +137,19 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         mainSkill.setFont(font);
         workingPrj.setFont(font);
         status.setFont(font);
+        status.setPreferredSize(new Dimension(100,30));
         developerDetail.setForeground(Colour.DARKBLUE);
         developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
+        statusPanel.setBackground(Colour.LIGHTORANGE);
         //add components
+        statusPanel.add(status);
+        statusPanel.add(isHappy);
+        statusPanel.add(isDrunk);
         top.add(imageIcon);
         topR.add(devName);
         topR.add(mainSkill);
         topR.add(workingPrj);
-        topR.add(status);
+        topR.add(statusPanel);
         top.add(topR);
         rightPanel.add(developerDetail, BorderLayout.NORTH);
         rightPanel.add(top, BorderLayout.CENTER);
@@ -285,11 +294,20 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
         } else {
             rightPanel.setVisible(true);
             setDevName(dev.getName());
-            String s = "<html>Status: " + (dev.isHappy() ? "☺" : "☹");
-            s += (dev.isDrunk() ? ",☻" : "");
-            s += (dev.isFed() ? ",☀" : ",☠");
-            s += "</html>";
-            setStatus(s);
+            if(dev.isHappy()){
+                isHappy.setIcon(new ImageIcon("images/happy.png"));
+                isHappy.repaint();
+            }
+            else{
+                isHappy.setIcon(new ImageIcon("images/unhappy.png"));
+                isHappy.repaint();
+            }
+            if(dev.isDrunk()){
+                isDrunk.setIcon(new ImageIcon("images/drunk.png"));
+            }
+            else{
+                isDrunk.setIcon(new ImageIcon("images/notDrunk.png"));
+            }
             Project p = dev.getWorkingProject();
             if (p != null) {
                 setWorkingPrj(p.getName());
