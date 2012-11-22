@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
+
 /**
  *
  * @author PC
@@ -53,6 +54,16 @@ public class CustomButton extends JPanel {
 
     public void setColour(Color colour) {
         this.colour = colour;
+        repaint();
+    }
+
+    public Color getOnMouseColor() {
+        return onMouseColor;
+    }
+
+    public void setOnMouseColor(Color onMouseColor) {
+        addMouseListener(new CustomButtonEvent(colour, onMouseColor));
+        this.onMouseColor = onMouseColor;
         repaint();
     }
 
@@ -127,15 +138,14 @@ public class CustomButton extends JPanel {
         return new Dimension(width, height);
     }
 }
-
 class CustomButtonEvent extends MouseAdapter {
 
-    private Color newColour;
-    private Color oldColour;
+    private Color colour;
+    private Color onMouseColour;
 
     public CustomButtonEvent(Color oldColour, Color newColour) {;
-        this.newColour = newColour;
-        this.oldColour = oldColour;
+        this.colour = newColour;
+        this.onMouseColour = oldColour;
     }
 
     @Override
@@ -144,7 +154,7 @@ class CustomButtonEvent extends MouseAdapter {
         if (e.getSource() instanceof CustomButton) {
             CustomButton cb = (CustomButton) e.getSource();
             if (cb.isActive()) {
-                cb.setColour(newColour);
+                cb.setColour(colour);
                 cb.repaint();
             }
         }
@@ -156,7 +166,7 @@ class CustomButtonEvent extends MouseAdapter {
         if (e.getSource() instanceof CustomButton) {
             CustomButton cb = (CustomButton) e.getSource();
             if (cb.isActive()) {
-                cb.setColour(oldColour);
+                cb.setColour(onMouseColour);
                 cb.repaint();
             }
         }
@@ -168,7 +178,7 @@ class CustomButtonEvent extends MouseAdapter {
         if (e.getSource() instanceof CustomButton) {
             CustomButton cb = (CustomButton) e.getSource();
             if (cb.isActive()) {
-                cb.setColour(oldColour);
+                cb.setColour(onMouseColour);
                 cb.repaint();
             }
         }

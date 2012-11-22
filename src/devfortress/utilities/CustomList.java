@@ -51,6 +51,8 @@ public class CustomList extends JPanel implements CustomListInterface {
         removeAll();
         GlassPanel topPanel = new GlassPanel(x, y, width - 20, height - 55, alpha, color, arcW, arcH);
         JScrollPane scrollPane = new JScrollPane(jList);
+        JScrollBar sb = scrollPane.getVerticalScrollBar();
+        sb.setUI(new MyScrollbarUI());
         GlassPanel bottomPanel = new GlassPanel(x, 0, width - 20, 80, 0f, null, 0, 0);
         bottomPanel.setLayout(new FlowLayout());
         for (CustomButton customButton : buttons) {

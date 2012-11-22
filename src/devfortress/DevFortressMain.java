@@ -5,15 +5,7 @@ import devfortress.controllers.GameViewController;
 import devfortress.controllers.ProjectController;
 import devfortress.controllers.SystemController;
 import devfortress.models.GameEngine;
-import devfortress.view.AboutScreen;
-import devfortress.view.DevFortress;
-import devfortress.view.InfomationPane;
-import devfortress.view.NavigationPane;
-import devfortress.view.TabbedPane;
-import devfortress.view.TabbedPaneDeveloper;
-import devfortress.view.TabbedPaneProject;
-import devfortress.view.TabbedPaneSystem;
-import devfortress.view.WelcomeScreen;
+import devfortress.view.*;
 
 /**
  *
@@ -32,6 +24,7 @@ public class DevFortressMain {
         NavigationPane nav = new NavigationPane();
         InfomationPane inf = new InfomationPane();
         AboutScreen aboutScr = new AboutScreen();
+        AvailableDevelopers availableDev = new AvailableDevelopers();
         //Views
         DevFortress devFortress = new DevFortress(welCm, nav, inf);
         TabbedPaneSystem sysTab = new TabbedPaneSystem();
@@ -40,7 +33,7 @@ public class DevFortressMain {
         TabbedPane tabPne = new TabbedPane(devTab, projTab, sysTab);
         //Controllers
         GameViewController gameController = new GameViewController(devFortress, welCm, nav, inf, tabPne, aboutScr, model);
-        DeveloperController devController = new DeveloperController(devTab, model);
+        DeveloperController devController = new DeveloperController(devTab, model, availableDev, nav, inf, tabPne, devFortress);
         ProjectController projectController = new ProjectController(projTab, model);
         SystemController systemController = new SystemController(sysTab, model);
         //Controllers register views with listeners

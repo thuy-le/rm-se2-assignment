@@ -6,6 +6,7 @@ package devfortress.controllers;
 
 import devfortress.models.Developer;
 import devfortress.models.GameEngine;
+import devfortress.view.*;
 import devfortress.view.interfaces.DeveloperInterface;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,10 +20,20 @@ public class DeveloperController implements Initilizable {
 
     private DeveloperInterface view;
     private GameEngine model;
+    private AvailableDevelopers availableDev;
+    private NavigationPane navPane;
+    private InfomationPane info;
+    private TabbedPane tabPne;
+    private DevFortress devFortress;
 
-    public DeveloperController(DeveloperInterface view, GameEngine model) {
+    public DeveloperController(DeveloperInterface view, GameEngine model, AvailableDevelopers availableDev, NavigationPane navPane, InfomationPane info, TabbedPane tabPne, DevFortress devFortress) {
         this.view = view;
         this.model = model;
+        this.availableDev = availableDev;
+        this.navPane = navPane;
+        this.info = info;
+        this.tabPne = tabPne;
+        this.devFortress = devFortress;
     }
 
     @Override
@@ -50,10 +61,26 @@ public class DeveloperController implements Initilizable {
     }
 
     private class HireDeveloperMouseListener extends MouseAdapter {
-
         @Override
         public void mouseClicked(MouseEvent e) {
-            JOptionPane.showMessageDialog(null, "Hire new");
+            //JOptionPane.showMessageDialog(null, "Hire new");
+            devFortress.remove(tabPne);
+            info.getInfoPanel().setVisible(false);
+            navPane.getToolbar().setVisible(false);
+            devFortress.add(availableDev);
+            devFortress.repaint();
+        }
+    }
+    
+    private class CloseHirePaneListener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            //JOptionPane.showMessageDialog(null, "Hire new");
+            devFortress.remove(availableDev);
+            info.getInfoPanel().setVisible(true);
+            navPane.getToolbar().setVisible(true);
+            devFortress.add(tabPne);
+            devFortress.repaint();
         }
     }
 
