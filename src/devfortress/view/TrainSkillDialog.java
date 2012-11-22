@@ -9,10 +9,14 @@ import devfortress.models.Developer;
 import devfortress.models.Skill;
 import devfortress.utilities.CustomButton;
 import java.awt.BorderLayout;
+import java.awt.Dialog.ModalityType;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -21,12 +25,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Team Poseidon
  */
-public class TrainSkillDialog extends JFrame implements Observer {
+public class TrainSkillDialog extends JDialog implements Observer {
 
     private Developer developer = new Developer();
     private JTable skillTable;
     private DefaultTableModel skillModel;
     private SkillInfo infos[];
+    private CustomButton btnTrain, btnClose;
 
     public TrainSkillDialog() {
         setSize(800, 600);
@@ -37,18 +42,15 @@ public class TrainSkillDialog extends JFrame implements Observer {
         infos = SkillInfo.values();
         Object[][] objs = new Object[infos.length][2];
         for (int i = 0; i < objs.length; i++) {
-            try {
-                SkillInfo info = infos[i];
-                String name = infos[i].getName();
-                Skill skill = developer.getSkills().get(infos[i]);
-                if (skill == null) {
-                    Object[] os = {infos[i].getType(), infos[i].getName(), 0};
-                    skillModel.addRow(os);
-                } else {
-                    Object[] os = {infos[i].getType(), infos[i].getName(), skill.getLevel()};
-                    skillModel.addRow(os);
-                }
-            } catch (Exception ex) {
+            SkillInfo info = infos[i];
+            String name = infos[i].getName();
+            Skill skill = developer.getSkills().get(infos[i]);
+            if (skill == null) {
+                Object[] os = {info.getType(), name, 0};
+                skillModel.addRow(os);
+            } else {
+                Object[] os = {info.getType(), name, skill.getLevel()};
+                skillModel.addRow(os);
             }
         }
         Object[] ids = {"Type", "Skill Name", "Level"};
@@ -60,6 +62,13 @@ public class TrainSkillDialog extends JFrame implements Observer {
         add(((CustomTable) skillTable).getTableScroll(), BorderLayout.CENTER);
         SelectionListener selectionListener = new SelectionListener(skillTable);
         skillTable.getSelectionModel().addListSelectionListener(selectionListener);
+        skillTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JPanel bottom = new JPanel();
+        btnTrain = new CustomButton("Train");
+        btnClose = new CustomButton("Close");
+        bottom.add(btnTrain);
+        bottom.add(btnClose);
+        add(bottom, BorderLayout.SOUTH);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle(developer.getName() + " - Training");
@@ -74,14 +83,35 @@ public class TrainSkillDialog extends JFrame implements Observer {
         dialog.display();
     }
 
+    public void addTrainSkillListener(MouseListener l) {
+        btnTrain.addMouseListener(l);
+    }
+
+    public void addCloseListener(MouseListener l) {
+        btnClose.addMouseListener(l);
+    }
+
     public void display() {
-//        setModal(true);
-//        setModalityType(ModalityType.APPLICATION_MODAL);
+        setModal(true);
+        setModalityType(ModalityType.APPLICATION_MODAL);
         setVisible(true);
     }
 
     @Override
     public void update(Observable o, Object arg) {
+        Object[][] objs = new Object[infos.length][2];
+        for (int i = 0; i < objs.length; i++) {
+            SkillInfo info = infos[i];
+            String name = infos[i].getName();
+            Skill skill = developer.getSkills().get(infos[i]);
+            if (skill == null) {
+                Object[] os = {info.getType(), name, 0};
+                skillModel.addRow(os);
+            } else {
+                Object[] os = {info.getType(), name, skill.getLevel()};
+                skillModel.addRow(os);
+            }
+        }
     }
 
     private class SelectionListener implements ListSelectionListener {
@@ -99,13 +129,8 @@ public class TrainSkillDialog extends JFrame implements Observer {
             int current = table.getSelectedRow();
             if (selectedIndex != current && e.getSource() == table.getSelectionModel() && table.getRowSelectionAllowed()) {
                 System.out.println(infos[current]);
-                System.out.println("---------");
                 selectedIndex = current;
-            } else if (e.getSource() == table.getColumnModel().getSelectionModel() && table.getColumnSelectionAllowed()) {
-                int first = e.getFirstIndex();
-                int last = e.getLastIndex();
-            }
-            if (e.getValueIsAdjusting()) {
+
             }
         }
     }
