@@ -57,6 +57,7 @@ public class GameEngine extends Observable {
         this.generateRandomMarketProjects();
         developers.clear();
         projects.clear();
+        date.reset();
         for (int i = 0; i < 7; i++) {
             this.developers.add(new Developer());
         }
@@ -105,7 +106,7 @@ public class GameEngine extends Observable {
 
     /**
      * Hire a
-     * <code>{@link Developer}</code> and purchare a new PC if needed.
+     * <code>{@link Developer}</code> and purchase a new PC if needed.
      *
      * @param dev new
      * <code>{@link Developer}</code> to hire.

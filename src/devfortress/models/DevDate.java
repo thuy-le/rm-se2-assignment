@@ -52,6 +52,12 @@ public class DevDate {
         }
     }
 
+    public void reset() {
+        this.year = 0;
+        this.month = 1;
+        this.week = 1;
+    }
+
     public void nextMonth() {
         if (month < 12) {
             month++;

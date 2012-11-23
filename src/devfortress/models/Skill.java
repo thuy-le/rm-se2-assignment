@@ -19,7 +19,7 @@ public class Skill implements Comparable<Skill> {
     }
 
     public Skill(SkillInfo skill) {
-        this.level = 1;
+        this.level = 0;
         this.skillInfo = skill;
         nextLevelCost = calculateNextLevelCost();
     }
