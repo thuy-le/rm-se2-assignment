@@ -302,7 +302,7 @@ public class TabbedPaneDeveloper extends JPanel implements DeveloperInterface, O
                 isHappy.setIcon(new ImageIcon("images/unhappy.png"));
                 isHappy.repaint();
             }
-            if(dev.isDrunk()){
+            if(dev.isFed()){
                 isDrunk.setIcon(new ImageIcon("images/drunk.png"));
             }
             else{

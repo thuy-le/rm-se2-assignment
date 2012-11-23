@@ -98,7 +98,7 @@ public class GameEngine extends Observable {
     public List<Developer> getDevelopers() {
         return new ReadOnlyList<Developer>(developers);
     }
-    
+
     public List<Developer> getMarketDevelopers() {
         return new ReadOnlyList<Developer>(marketDevelopers);
     }
@@ -270,6 +270,9 @@ public class GameEngine extends Observable {
          */
         if (!ended) {
             date.nextWeek();
+            for (Developer dev : developers) {
+                dev.getTired();
+            }
             generateRandomEvents();
             allEventsTakeEffects();
             /*
