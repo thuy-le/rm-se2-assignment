@@ -1,7 +1,7 @@
 package devfortress.models;
 
 import devfortress.enumerations.AreaName;
-import devfortress.exceptions.DeveloperBusyException;
+import devfortress.models.exceptions.DeveloperBusyException;
 import devfortress.enumerations.SkillInfo;
 import devfortress.enumerations.SkillTypes;
 import devfortress.utilities.ReadOnlyMap;

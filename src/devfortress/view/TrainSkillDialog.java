@@ -4,10 +4,11 @@
  */
 package devfortress.view;
 
+import devfortress.view.components.CustomTable;
 import devfortress.enumerations.SkillInfo;
 import devfortress.models.Developer;
 import devfortress.models.Skill;
-import devfortress.utilities.CustomButton;
+import devfortress.view.components.CustomButton;
 import java.awt.BorderLayout;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.MouseListener;

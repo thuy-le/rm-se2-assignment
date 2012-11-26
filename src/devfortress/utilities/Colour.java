@@ -10,7 +10,7 @@ import java.awt.Color;
  *
  * @author PC
  */
-public class Colour {
+public abstract class Colour {
 
     public final static Color MATENGA = new Color(184, 250, 228);
     public final static Color ORANGE = new Color(253,187,82);

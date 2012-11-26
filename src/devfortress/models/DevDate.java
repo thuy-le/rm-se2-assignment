@@ -1,6 +1,6 @@
 package devfortress.models;
 
-import devfortress.exceptions.InvalidDevDateException;
+import devfortress.models.exceptions.InvalidDevDateException;
 
 /**
  * Development date is used in the game. It different to the normal date.

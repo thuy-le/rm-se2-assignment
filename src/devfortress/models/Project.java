@@ -2,8 +2,8 @@ package devfortress.models;
 
 import devfortress.enumerations.AreaName;
 import devfortress.enumerations.SkillInfo;
-import devfortress.exceptions.DeveloperBusyException;
-import devfortress.exceptions.InvalidFunctionalAreaException;
+import devfortress.models.exceptions.DeveloperBusyException;
+import devfortress.models.exceptions.InvalidFunctionalAreaException;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.ReadOnlyMap;
 import devfortress.utilities.Utilities;

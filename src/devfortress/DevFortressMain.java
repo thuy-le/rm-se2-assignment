@@ -1,9 +1,9 @@
 package devfortress;
 
-import devfortress.controllers.DeveloperController;
-import devfortress.controllers.GameViewController;
-import devfortress.controllers.ProjectController;
-import devfortress.controllers.SystemController;
+import devfortress.controllers.DeveloperTabController;
+import devfortress.controllers.MainFrameController;
+import devfortress.controllers.ProjectTabController;
+import devfortress.controllers.SystemTabController;
 import devfortress.models.GameEngine;
 import devfortress.view.*;
 
@@ -20,22 +20,22 @@ public class DevFortressMain {
         //Model
         GameEngine model = GameEngine.getInstance();
         //GUI Components
-        WelcomeScreen welCm = new WelcomeScreen();
-        NavigationPane nav = new NavigationPane();
-        InfomationPane inf = new InfomationPane();
-        AboutScreen aboutScr = new AboutScreen();
-        AvailableDevelopers availableDev = new AvailableDevelopers();
+        WelcomePanel welCm = new WelcomePanel();
+        NavigationToolBar nav = new NavigationToolBar();
+        InfomationPanel inf = new InfomationPanel();
+        AboutScreenPanel aboutScr = new AboutScreenPanel();
+        HireDeveloperPanel availableDev = new HireDeveloperPanel();
         //Views
-        DevFortress devFortress = new DevFortress(welCm, nav, inf);        
-        TabbedPaneDeveloper devTab = new TabbedPaneDeveloper();
-        TabbedPaneSystem sysTab = new TabbedPaneSystem(devTab);
-        TabbedPaneProject projTab = new TabbedPaneProject();
-        TabbedPane tabPne = new TabbedPane(devTab, projTab, sysTab);
+        DevFortressMainFrame devFortress = new DevFortressMainFrame(welCm, nav, inf);        
+        DeveloperTabPanel devTab = new DeveloperTabPanel();
+        SystemTabPanel sysTab = new SystemTabPanel(devTab);
+        ProjectTabPanel projTab = new ProjectTabPanel();
+        DevFortressTabbedPane tabPne = new DevFortressTabbedPane(devTab, projTab, sysTab);
         //Controllers
-        GameViewController gameController = new GameViewController(devFortress, welCm, nav, inf, tabPne, aboutScr, model);
-        DeveloperController devController = new DeveloperController(devTab, model, availableDev, nav, inf, tabPne, devFortress, sysTab);
-        ProjectController projectController = new ProjectController(projTab, model);
-        SystemController systemController = new SystemController(sysTab, model);
+        MainFrameController gameController = new MainFrameController(devFortress, welCm, nav, inf, tabPne, aboutScr, model);
+        DeveloperTabController devController = new DeveloperTabController(devTab, model, availableDev, nav, inf, tabPne, devFortress, sysTab);
+        ProjectTabController projectController = new ProjectTabController(projTab, model);
+        SystemTabController systemController = new SystemTabController(sysTab, model);
         //Controllers register views with listeners
         gameController.initialize();
         devController.initilize();

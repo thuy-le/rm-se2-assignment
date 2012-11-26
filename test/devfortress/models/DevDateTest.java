@@ -1,6 +1,6 @@
 package devfortress.models;
 
-import devfortress.exceptions.InvalidDevDateException;
+import devfortress.models.exceptions.InvalidDevDateException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
