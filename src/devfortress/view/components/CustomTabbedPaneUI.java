@@ -1,6 +1,6 @@
 package devfortress.view.components;
 
-import devfortress.utilities.Colour;
+import devfortress.utilities.Colors;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
@@ -56,30 +56,30 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
             if (tabIndex == 0) {
                 g2D.setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, .7f));
-                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.LIGHTRED, 0, y + 15 + h / 2, Colour.LIGHTRED2);
+                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.LIGHTRED, 0, y + 15 + h / 2, Colors.LIGHTRED2);
                 g2D.setPaint(gradientShadowTmp);
             } else if (tabIndex == 1) {
                 g2D.setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, .7f));
-                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.LIGHTORANGE, 0, y + 15 + h / 2, Colour.ORANGE);
+                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.LIGHTORANGE, 0, y + 15 + h / 2, Colors.ORANGE);
                 g2D.setPaint(gradientShadowTmp);
             } else {
                 g2D.setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, .7f));
-                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.LIGHTGREEN, 0, y + 15 + h / 2, Colour.YOUNGGREEN);
+                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.LIGHTGREEN, 0, y + 15 + h / 2, Colors.YOUNGGREEN);
                 g2D.setPaint(gradientShadowTmp);
             }
         } else {
             if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
                 g2D.setColor(deSelectColor);
-                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.DARKBLUE2, 0, y + h / 2, Colour.DARKBLUE2);
+                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.DARKBLUE2, 0, y + h / 2, Colors.DARKBLUE2);
                 g2D.setPaint(gradientShadowTmp);
             } else {
                 if (tabIndex == 1) {
-                    GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.ORANGE, 0, y + 15 + h / 2, Colour.ORANGE);
+                    GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.ORANGE, 0, y + 15 + h / 2, Colors.ORANGE);
                     g2D.setPaint(gradientShadowTmp);
                 } else {
-                    GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colour.DARKBLUE, 0, y + 15 + h / 2, Colour.LIGHTBLUE6);
+                    GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.DARKBLUE, 0, y + 15 + h / 2, Colors.LIGHTBLUE6);
                     g2D.setPaint(gradientShadowTmp);
                 }
             }
@@ -104,9 +104,9 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
             int mnemIndex = tabPane.getDisplayedMnemonicIndexAt(tabIndex);
             if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
                 if (tabPane.getSelectedIndex() != tabIndex) {
-                    g.setColor(Colour.LIGHTBLUE);
+                    g.setColor(Colors.LIGHTBLUE);
                 } else {
-                    g.setColor(Colour.DARKGREY);
+                    g.setColor(Colors.DARKGREY);
                 }
                 BasicGraphicsUtils.drawStringUnderlineCharAt(g, title, mnemIndex, textRect.x - 15, textRect.y + metrics.getAscent());
             } else {

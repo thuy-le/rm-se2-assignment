@@ -8,7 +8,7 @@ import devfortress.models.DevDate;
 import devfortress.models.GameEngine;
 import devfortress.view.components.GlassPanel;
 import devfortress.view.components.CustomLabel;
-import devfortress.utilities.Colour;
+import devfortress.utilities.Colors;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -30,12 +30,12 @@ public class InfomationPanel extends GlassPanel implements Observer {
     private JLabel dateLbl, nextTurnBtn;
 
     public InfomationPanel() {
-        super(0, 0, 795, 50, .85f, Colour.DARKBLUE, 10, 10);
+        super(0, 0, 795, 50, .85f, Colors.DARKBLUE, 10, 10);
         setLayout(new FlowLayout());
         dateLbl = new JLabel();
         nextTurnBtn = new CustomLabel(new ImageIcon(ICON_PATH), NEXT_WEEK_TOOLTIP_TEXT);
         dateLbl.setFont(new Font(FONT, Font.BOLD, 27));
-        dateLbl.setForeground(Colour.LIGHTBLUE);
+        dateLbl.setForeground(Colors.LIGHTBLUE);
         nextTurnBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(dateLbl);
         add(nextTurnBtn);

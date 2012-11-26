@@ -10,8 +10,8 @@ import devfortress.models.Project;
 import devfortress.view.components.GlassPanel;
 import devfortress.view.components.CustomListPanel;
 import devfortress.view.components.CustomButton;
-import devfortress.utilities.Colour;
-import devfortress.view.interfaces.SystemInterface;
+import devfortress.utilities.Colors;
+import devfortress.view.interfaces.SystemTabView;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -34,12 +34,12 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author PC
  */
-public class SystemTabPanel extends JPanel implements SystemInterface, Observer {
+public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
 
     //initialize constant variables
     static private final String picture = "images/i5.png";
     static private final float alpha = 0.8f;
-    static private final Color colour = Colour.MIDDLERED;
+    static private final Color colour = Colors.MIDDLERED;
     static private final int x = 0;
     static private final int y = 5;
     static private final int width = 793;
@@ -82,7 +82,7 @@ public class SystemTabPanel extends JPanel implements SystemInterface, Observer 
         Font font = new Font("Century Gothic", Font.PLAIN, 16);
         Icon imgIcon = new ImageIcon(picture);
         GlassPanel marginTop = new GlassPanel(0, 0, 250, 15, 0f, null, 0, 0);
-        GlassPanel gp3 = new GlassPanel(15, 15, 250, 390, .9f, Colour.YELLOW, 15, 15);
+        GlassPanel gp3 = new GlassPanel(15, 15, 250, 390, .9f, Colors.YELLOW, 15, 15);
         JLabel imageIcon = new JLabel(imgIcon);
         imageIcon.setPreferredSize(new Dimension(200, 200));
         JLabel label = new JLabel("  Your budget is:");
@@ -94,20 +94,20 @@ public class SystemTabPanel extends JPanel implements SystemInterface, Observer 
         /*
          * ########## Adjust look and feel ##########
          */
-        developerList.setColor(Colour.DARKBLUE);
+        developerList.setColor(Colors.DARKBLUE);
         devList.setFont(font);
-        devList.setSelectionBackground(Colour.LIGHTRED);
-        devList.setSelectionForeground(Colour.DARKPINK);
-        btnHire.setColour(Colour.DARKBLUE);
-        btnHire.setTextColour(Colour.LIGHTBLUE);
-        projectList.setColor(Colour.DARKBLUE);
+        devList.setSelectionBackground(Colors.LIGHTRED);
+        devList.setSelectionForeground(Colors.DARKPINK);
+        btnHire.setColour(Colors.DARKBLUE);
+        btnHire.setTextColour(Colors.LIGHTBLUE);
+        projectList.setColor(Colors.DARKBLUE);
         prjList.setFont(font);
-        prjList.setSelectionBackground(Colour.LIGHTRED);
-        prjList.setSelectionForeground(Colour.DARKPINK);
-        btnAdd.setColour(Colour.DARKBLUE);
-        btnAdd.setTextColour(Colour.LIGHTBLUE);
+        prjList.setSelectionBackground(Colors.LIGHTRED);
+        prjList.setSelectionForeground(Colors.DARKPINK);
+        btnAdd.setColour(Colors.DARKBLUE);
+        btnAdd.setTextColour(Colors.LIGHTBLUE);
         welcome.setFont(new Font("Century Gothic", Font.BOLD, 17));
-        welcome.setForeground(Colour.DARKBLUE);
+        welcome.setForeground(Colors.DARKBLUE);
         budget.setFont(new Font("Century Gothic", Font.BOLD, 20));
         label.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 //        String welcomeStr = "<html>Hi, ◕‿◕</html>";

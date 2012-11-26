@@ -12,7 +12,7 @@ import javax.swing.DefaultListModel;
  *
  * @author PC
  */
-public interface DeveloperInterface {
+public interface DevTabView {
 
     Developer getSelectedDeveloper();
 

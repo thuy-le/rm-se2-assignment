@@ -10,14 +10,23 @@ import devfortress.view.components.CustomListRenderer;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.GlassPanel;
 import devfortress.view.components.CustomTable;
-import devfortress.view.components.MyScrollbarUI;
 import devfortress.models.Developer;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.models.Skill;
-import devfortress.utilities.*;
-import java.awt.*;
+import devfortress.utilities.Colors;
+import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
+import java.util.List;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
@@ -33,38 +42,124 @@ import javax.swing.table.JTableHeader;
  */
 public class HireDeveloperPanel extends JPanel implements Observer {
 
-    private static Color panelColor = Colour.LIGHTORANGE;
-    private static Color listColor = Colour.DARKBLUE;
-    private static Color btnColour = Colour.DARKBLUE;
-    private static Color btnOnMouseColour = Colour.DARKBLUE2;
-    private static Color btnTextColour = Colour.LIGHTBLUE;    
-    private static Color tableColour = Colour.ORANGE;    
-    private int x, y, width, height, arcH, arcW;
-    private float alpha;
-    private Color colour;
+    private static final Color PNL_COLOR = Colors.LIGHTORANGE;
+    private static final Color LIST_COLOR = Colors.DARKBLUE;
+    private static final Color BTN_COLOR = Colors.DARKBLUE;
+    private static final Color BTN_ON_MOUSE_COLOR = Colors.DARKBLUE2;
+    private static final Color BTN_TEXT_COLOR = Colors.LIGHTBLUE;
+    private static final Color TABLE_COLOR = Colors.ORANGE;
+    private static final int X = 5;
+    private static final int Y = 5;
+    private static final int PNL_WIDTH = 785;
+    private static final int PNL_HEIGHT = 555;
+    private static final int ARCH = 20;
+    private static final int ARCW = 20;
+    private static final float alpha = .7f;
+    private static final Color colour = Colors.MATENGA;
     private String playerName;
     //private variables
     private JList developerList;
-    private JLabel devName, mainSkill, workingPrj, status;
-    private CustomButton btnHire, closeButton;
+    private JLabel devNameLbl, mainSkillLbl, workingPrj, status;
+    private CustomButton hireBtn, closeBtn;
     private GlassPanel rightPanel;
-    private JTable table;
-    private DefaultTableModel skillModel;
-    private DefaultListModel devModel;
+    private JTable skillTable;
+    private DefaultTableModel skillTableModel;
+    private DefaultListModel devListModel;
     private Developer devToHire;
-    GameEngine model;
+    private GameEngine model;
 
     public HireDeveloperPanel() {
-        this.x = 5;
-        this.y = 5;
-        this.width = 785;
-        this.height = 555;
-        this.arcW = 20;
-        this.arcH = 20;
-        this.alpha = .7f;
-        this.colour = Colour.MATENGA;
         setOpaque(false);
-        init();
+        setLayout(new BorderLayout());
+        // Initialize variables
+        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, PNL_COLOR, 7, 7);
+        devListModel = new DefaultListModel();
+        skillTableModel = new DefaultTableModel(1, 2);
+        devNameLbl = new JLabel("Developer Name");
+        mainSkillLbl = new JLabel("Main Skill (Level)");
+        workingPrj = new JLabel("Working Project");
+        status = new JLabel("Status");
+        developerList = new JList();
+        skillTable = new CustomTable(skillTableModel);
+        hireBtn = new CustomButton("Hire Developer");
+        closeBtn = new CustomButton("Close");
+
+        GlassPanel hireDevHeader = new GlassPanel(800, 70);
+        GlassPanel hireDevBottom = new GlassPanel(800, 70);
+        List<CustomButton> btnList = new LinkedList<CustomButton>();
+        CustomListPanel cl = new CustomListPanel(developerList, btnList);
+        JLabel developerDetail = new JLabel("Developer Details");
+        JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
+        JPanel top = new JPanel();
+        JPanel topR = new JPanel();
+        JPanel bottom = new JPanel();
+        Font font = new Font("Century Gothic", Font.BOLD, 17);
+        JLabel title = new CustomLabel("Available Developers");
+
+        developerList.addListSelectionListener(new HireDeveloperListEvent());
+        developerList.setCellRenderer(new CustomListRenderer());
+        developerList.setModel(devListModel);
+
+        //------Create a JList of developers
+        //list
+        //buttons
+        btnList.add(hireBtn);
+        //add button(s) and list together
+        //-------Adjust look and feel
+        hireBtn.setButtonSize(0, 0, 150, 35);
+        cl.setColor(LIST_COLOR);
+        hireBtn.setTextColour(BTN_TEXT_COLOR);
+        hireBtn.setColour(BTN_COLOR);
+        hireBtn.setOnMouseColor(BTN_ON_MOUSE_COLOR);
+        developerList.setSelectionBackground(Colors.LIGHTORANGE);
+        developerList.setSelectionForeground(Colors.REDORANGEDARK);
+        developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+        topR.setBackground(PNL_COLOR);
+        topR.setPreferredSize(new Dimension(220, 100));
+        topR.setLayout(new GridLayout(4, 1));
+        top.setBackground(PNL_COLOR);
+        top.setLayout(new GridLayout(1, 2));
+        devNameLbl.setFont(font);
+        mainSkillLbl.setFont(font);
+        workingPrj.setFont(font);
+        status.setFont(font);
+        developerDetail.setForeground(LIST_COLOR);
+        developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
+        skillTable.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+        skillTable.setBorder(BorderFactory.createLineBorder(TABLE_COLOR, 1));
+        skillTable.setRowHeight(25);
+        JTableHeader header = skillTable.getTableHeader();
+        header.setBorder(BorderFactory.createLineBorder(TABLE_COLOR, 1));
+        header.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        header.setBackground(TABLE_COLOR);
+        header.setForeground(Color.WHITE);
+        JScrollPane tableScroll = new JScrollPane(skillTable);
+        tableScroll.setBorder(BorderFactory.createEmptyBorder());
+        tableScroll.setPreferredSize(new Dimension(440, 215));
+        tableScroll.setBackground(LIST_COLOR);
+        tableScroll.getViewport().setBackground(TABLE_COLOR);
+        bottom.setBackground(PNL_COLOR);
+        bottom.setLayout(new FlowLayout());
+        closeBtn.setColour(BTN_COLOR);
+        closeBtn.setOnMouseColor(BTN_COLOR.brighter());
+        title.setForeground(Colors.DARKBLUE);
+        //add components
+        top.add(imageIcon);
+        topR.add(devNameLbl);
+        topR.add(mainSkillLbl);
+        topR.add(workingPrj);
+        topR.add(status);
+        top.add(topR);
+        rightPanel.add(developerDetail, BorderLayout.NORTH);
+        rightPanel.add(top, BorderLayout.CENTER);
+        rightPanel.add(tableScroll, BorderLayout.NORTH);
+        rightPanel.add(bottom, BorderLayout.SOUTH);
+        hireDevHeader.add(title);
+        hireDevBottom.add(closeBtn);
+        add(hireDevHeader, BorderLayout.NORTH);
+        add(cl, BorderLayout.WEST);
+        add(rightPanel, BorderLayout.CENTER);
+        add(hireDevBottom, BorderLayout.SOUTH);
     }
 
     //Getters and Setters
@@ -83,114 +178,20 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     public void setDevToHire(Developer devToHire) {
         this.devToHire = devToHire;
     }
-    
-    private void init() {
-        setLayout(new BorderLayout());
-        //global variables
-        devModel = new DefaultListModel();
-        skillModel = new DefaultTableModel(1, 2);
-        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, panelColor, 7, 7);
-        developerList = new JList();
-        developerList.addListSelectionListener(new HireDeveloperPanel.MyListEvent());
-        developerList.setCellRenderer(new CustomListRenderer());
-        developerList.setModel(devModel);
-        java.util.List<CustomButton> btnList = new LinkedList<CustomButton>();
-        btnHire = new CustomButton("Hire Developer");
-        CustomListPanel cl = new CustomListPanel(developerList, btnList);
-        JLabel developerDetail = new JLabel("Developer Details");
-        JPanel top = new JPanel();
-        JPanel topR = new JPanel();
-        devName = new JLabel("Developer Name");
-        mainSkill = new JLabel("Main Skill (Level)");
-        workingPrj = new JLabel("Working Project");
-        status = new JLabel("Status");
-        table = new CustomTable(skillModel);
-        String picture = "images/i6.png";
-        JPanel bottom = new JPanel();
-        Icon imgIcon = new ImageIcon(picture);
-        JLabel imageIcon = new JLabel(imgIcon);
-        Font font = new Font("Century Gothic", Font.BOLD, 17);
-        GlassPanel hireDevHeader = new GlassPanel(800, 70);
-        GlassPanel hireDevBottom = new GlassPanel(800, 70);
-        closeButton = new CustomButton("Close");
-        JLabel title = new CustomLabel("Available Developers");        
-
-        //------Create a JList of developers
-        //list
-        //buttons
-        btnList.add(btnHire);
-        //add button(s) and list together
-        //-------Adjust look and feel
-        btnHire.setButtonSize(0, 0, 150, 35);
-        cl.setColor(listColor);
-        btnHire.setTextColour(btnTextColour);
-        btnHire.setColour(btnColour);
-        btnHire.setOnMouseColor(btnOnMouseColour);
-        developerList.setSelectionBackground(Colour.LIGHTORANGE);
-        developerList.setSelectionForeground(Colour.REDORANGEDARK);
-        developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-        topR.setBackground(panelColor);
-        topR.setPreferredSize(new Dimension(220, 100));
-        topR.setLayout(new GridLayout(4, 1));
-        top.setBackground(panelColor);
-        top.setLayout(new GridLayout(1, 2));
-        devName.setFont(font);
-        mainSkill.setFont(font);
-        workingPrj.setFont(font);
-        status.setFont(font);
-        developerDetail.setForeground(listColor);
-        developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
-        table.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        table.setBorder(BorderFactory.createLineBorder(tableColour, 1));
-        table.setRowHeight(25);
-        JTableHeader header = table.getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(tableColour, 1));
-        header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(tableColour);
-        header.setForeground(Color.WHITE);
-        JScrollPane tableScroll = new JScrollPane(table);
-        tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(440, 215));
-        tableScroll.setBackground(listColor);
-        tableScroll.getViewport().setBackground(tableColour);
-        bottom.setBackground(panelColor);
-        bottom.setLayout(new FlowLayout());
-        closeButton.setColour(btnColour);
-        closeButton.setOnMouseColor(btnColour.brighter());
-        title.setForeground(Colour.DARKBLUE);
-        //add components
-        top.add(imageIcon);
-        topR.add(devName);
-        topR.add(mainSkill);
-        topR.add(workingPrj);
-        topR.add(status);
-        top.add(topR);
-        rightPanel.add(developerDetail, BorderLayout.NORTH);
-        rightPanel.add(top, BorderLayout.CENTER);
-        rightPanel.add(tableScroll, BorderLayout.NORTH);
-        rightPanel.add(bottom, BorderLayout.SOUTH);
-        hireDevHeader.add(title);
-        hireDevBottom.add(closeButton);
-        add(hireDevHeader, BorderLayout.NORTH);
-        add(cl, BorderLayout.WEST);
-        add(rightPanel, BorderLayout.CENTER);
-        add(hireDevBottom, BorderLayout.SOUTH);
-        //add event
-    }
 
     public void addCloseHirePaneEvent(MouseListener l) {
-        closeButton.addMouseListener(l);
-    }
-    
-    public void addHireDeveloperEvent(MouseListener l){
-        btnHire.addMouseListener(l);
+        closeBtn.addMouseListener(l);
     }
 
-    private class MyListEvent implements ListSelectionListener {
+    public void addHireDeveloperEvent(MouseListener l) {
+        hireBtn.addMouseListener(l);
+    }
+
+    private class HireDeveloperListEvent implements ListSelectionListener {
 
         private int selectedIndex;
 
-        public MyListEvent() {
+        public HireDeveloperListEvent() {
             selectedIndex = developerList.getSelectedIndex();
         }
 
@@ -199,7 +200,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             if (selectedIndex != developerList.getSelectedIndex()) {
                 selectedIndex = developerList.getSelectedIndex();
                 showDeveloper((Developer) developerList.getSelectedValue());
-                setDevToHire((Developer)developerList.getSelectedValue());
+                setDevToHire((Developer) developerList.getSelectedValue());
             }
         }
     }
@@ -223,21 +224,21 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             }
             setMainSkill(dev.getMainSkill().toString());
             //Table
-            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            table.getColumnModel().getColumn(0).setMinWidth(400);
-            table.getColumnModel().getColumn(1).setMaxWidth(20);
-            while (skillModel.getRowCount() > 0) {
-                skillModel.removeRow(skillModel.getRowCount() - 1);
+            skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            skillTable.getColumnModel().getColumn(0).setMinWidth(400);
+            skillTable.getColumnModel().getColumn(1).setMaxWidth(20);
+            while (skillTableModel.getRowCount() > 0) {
+                skillTableModel.removeRow(skillTableModel.getRowCount() - 1);
             }
             for (Skill skill : dev.getSkills().values()) {
                 Object[] rowData = {skill.getSkillInfo().getName(), skill.getLevel()};
-                skillModel.addRow(rowData);
+                skillTableModel.addRow(rowData);
             }
 //            table.getColumnModel().getColumn(1).setPreferredWidth(27);
             Object[] ids = {"Skill", "Level"};
-            skillModel.setColumnIdentifiers(ids);
-            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            table.getColumnModel().getColumn(1).setMaxWidth(50);
+            skillTableModel.setColumnIdentifiers(ids);
+            skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            skillTable.getColumnModel().getColumn(1).setMaxWidth(50);
 
         }
     }
@@ -245,36 +246,35 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         model = (GameEngine) o;
-        devModel.clear();
+        devListModel.clear();
         for (Developer dev : model.getMarketDevelopers()) {
-            devModel.addElement(dev);
+            devListModel.addElement(dev);
         }
         showDeveloper((Developer) developerList.getSelectedValue());
     }
-    
 
     //Getter and Setter
     public String getDevName() {
-        return devName.getText();
+        return devNameLbl.getText();
     }
 
     public void setDevName(String devName) {
-        this.devName.setText(devName);
-        this.devName.repaint();
+        this.devNameLbl.setText(devName);
+        this.devNameLbl.repaint();
 
     }
-    
-    public DefaultListModel getDevModel(){
-        return this.devModel;
+
+    public DefaultListModel getDevModel() {
+        return this.devListModel;
     }
 
     public String getMainSkill() {
-        return mainSkill.getText();
+        return mainSkillLbl.getText();
     }
 
     public void setMainSkill(String mainSkill) {
-        this.mainSkill.setText(mainSkill);
-        this.mainSkill.repaint();
+        this.mainSkillLbl.setText(mainSkill);
+        this.mainSkillLbl.repaint();
     }
 
     public String getStatus() {
@@ -304,11 +304,11 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         if (colour != null) {
             g2d.setColor(colour);
         }
-        g2d.fillRoundRect(x, y, width, height, arcW, arcH);
+        g2d.fillRoundRect(X, Y, PNL_WIDTH, PNL_HEIGHT, ARCW, ARCH);
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(width, height);
+        return new Dimension(PNL_WIDTH, PNL_HEIGHT);
     }
 }

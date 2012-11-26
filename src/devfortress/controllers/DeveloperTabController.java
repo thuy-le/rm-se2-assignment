@@ -9,7 +9,7 @@ import devfortress.models.exceptions.InsufficientBudgetException;
 import devfortress.models.Developer;
 import devfortress.models.GameEngine;
 import devfortress.view.*;
-import devfortress.view.interfaces.DeveloperInterface;
+import devfortress.view.interfaces.DevTabView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class DeveloperTabController {
 
-    private DeveloperInterface developerTab;
+    private DevTabView developerTab;
     private GameEngine model;
     private HireDeveloperPanel hireDevPnl;
     private NavigationToolBar navBar;
@@ -32,7 +32,7 @@ public class DeveloperTabController {
     private DevFortressMainFrame devFortress;
     private SystemTabPanel tabSystem;
 
-    public DeveloperTabController(DeveloperInterface view, GameEngine model, HireDeveloperPanel availableDev, NavigationToolBar navPane, InfomationPanel info, DevFortressTabbedPane tabPne, DevFortressMainFrame devFortress, SystemTabPanel tabSystem) {
+    public DeveloperTabController(DevTabView view, GameEngine model, HireDeveloperPanel availableDev, NavigationToolBar navPane, InfomationPanel info, DevFortressTabbedPane tabPne, DevFortressMainFrame devFortress, SystemTabPanel tabSystem) {
         this.developerTab = view;
         this.model = model;
         this.hireDevPnl = availableDev;
@@ -243,9 +243,9 @@ public class DeveloperTabController {
             if (dev != null) {
                 try {
                     model.giveDeveloperBeer(dev);
-                    JOptionPane.showMessageDialog(null, dev.getName() + " is now very happy");
                     model.notifyObservers();
                     developerTab.setSelectedDeveloper(index);
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is now very happy");
                 } catch (InsufficientBudgetException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }

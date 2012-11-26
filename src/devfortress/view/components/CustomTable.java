@@ -4,7 +4,7 @@
  */
 package devfortress.view.components;
 
-import devfortress.utilities.Colour;
+import devfortress.utilities.Colors;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,18 +25,18 @@ public class CustomTable extends JTable {
     public CustomTable(TableModel dm) {
         super(dm);
         setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        setBorder(BorderFactory.createLineBorder(Colour.ORANGE, 1));
+        setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
         setRowHeight(25);
         JTableHeader header = getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(Colour.ORANGE, 1));
+        header.setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
         header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(Colour.ORANGE);
+        header.setBackground(Colors.ORANGE);
         header.setForeground(Color.WHITE);
         tableScroll = new JScrollPane(this);
         tableScroll.setBorder(BorderFactory.createEmptyBorder());
         tableScroll.setPreferredSize(new Dimension(440, 180));
-        tableScroll.setBackground(Colour.ORANGE);
-        tableScroll.getViewport().setBackground(Colour.ORANGE);
+        tableScroll.setBackground(Colors.ORANGE);
+        tableScroll.getViewport().setBackground(Colors.ORANGE);
     }
 
     public JScrollPane getTableScroll() {

@@ -4,8 +4,7 @@
  */
 package devfortress.view.components;
 
-import devfortress.utilities.Colour;
-import devfortress.view.interfaces.CustomListInterface;
+import devfortress.utilities.Colors;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,32 +20,24 @@ import javax.swing.*;
  *
  * @author PC
  */
-public class CustomListPanel extends JPanel implements CustomListInterface {
+public class CustomListPanel extends JPanel {
 
     //declare static variables:
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private int arcW;
-    private int arcH;
-    private float alpha;
+    private static final int X = 10;
+    private static final int Y = 15;
+    private static final int PNL_WIDTH = 272;
+    private static final int PNL_HEIGHT = 410;
+    private static final int ARCW = 7;
+    private static final int ARCH = 7;
+    private static final float ALPHA = .9f;
     private Color color;
     private JList jList;
     private List<CustomButton> buttons;
 
     public CustomListPanel(JList jList, List<CustomButton> buttons) {
-        x = 10;
-        y = 15;
-        width = 272;
-        height = 410;
-        arcW = 7;
-        arcH = 7;
-        alpha = .9f;
-        this.color = Colour.LIGHTBLUE;
+        this.color = Colors.LIGHTBLUE;
         this.jList = jList;
         this.buttons = buttons;
-        //
         setLayout(new BorderLayout());
         init();
         setOpaque(false);
@@ -54,11 +45,11 @@ public class CustomListPanel extends JPanel implements CustomListInterface {
 
     private void init() {
         removeAll();
-        GlassPanel topPanel = new GlassPanel(x, y, width - 20, height - 55, alpha, color, arcW, arcH);
+        GlassPanel topPanel = new GlassPanel(X, Y, PNL_WIDTH - 20, PNL_HEIGHT - 55, ALPHA, color, ARCW, ARCH);
         JScrollPane scrollPane = new JScrollPane(jList);
         JScrollBar sb = scrollPane.getVerticalScrollBar();
         sb.setUI(new MyScrollbarUI());
-        GlassPanel bottomPanel = new GlassPanel(x, 0, width - 20, 80, 0f, null, 0, 0);
+        GlassPanel bottomPanel = new GlassPanel(X, 0, PNL_WIDTH - 20, 80, 0f, null, 0, 0);
         bottomPanel.setLayout(new FlowLayout());
         for (CustomButton customButton : buttons) {
             bottomPanel.add(customButton);
@@ -67,9 +58,9 @@ public class CustomListPanel extends JPanel implements CustomListInterface {
         jList.setOpaque(false);
         jList.setCellRenderer(new CustomListRenderer());
         jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        scrollPane.setPreferredSize(new Dimension(width - 30, height - 80));
+        scrollPane.setPreferredSize(new Dimension(PNL_WIDTH - 30, PNL_HEIGHT - 80));
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        GlassPanel marginTop = new GlassPanel(0, 0, width, 10, 0f, null, 0, 0);
+        GlassPanel marginTop = new GlassPanel(0, 0, PNL_WIDTH, 10, 0f, null, 0, 0);
         topPanel.add(marginTop, BorderLayout.NORTH);
         topPanel.add(scrollPane, BorderLayout.CENTER);
         scrollPane.getViewport().setOpaque(true);
@@ -92,16 +83,12 @@ public class CustomListPanel extends JPanel implements CustomListInterface {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(width, height);
+        return new Dimension(PNL_WIDTH, PNL_HEIGHT);
     }
 
     public void setColor(Color color) {
         this.color = color;
         repaint();
         init();
-    }
-
-    @Override
-    public void viewItem(Object item) {
     }
 }

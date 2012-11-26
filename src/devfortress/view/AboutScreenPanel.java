@@ -4,7 +4,7 @@
  */
 package devfortress.view;
 
-import devfortress.utilities.Colour;
+import devfortress.utilities.Colors;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
 import devfortress.view.components.GlassPanel;
@@ -40,7 +40,7 @@ public class AboutScreenPanel extends JPanel {
         this.arcW = 20;
         this.arcH = 20;
         this.alpha = .7f;
-        this.colour = Colour.YELLOW;
+        this.colour = Colors.YELLOW;
         setOpaque(false);
         init();
     }
@@ -70,7 +70,7 @@ public class AboutScreenPanel extends JPanel {
 
         btnBack = new CustomButton("Back");
         //Global Variables        
-        welcome.setForeground(Colour.DARKBLUE);
+        welcome.setForeground(Colors.DARKBLUE);
         info.setFont(new Font("Century Gocthic", Font.PLAIN, 22));
         //add components
         infoWrapper.add(info);

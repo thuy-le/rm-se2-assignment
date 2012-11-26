@@ -4,7 +4,7 @@
  */
 package devfortress.view.components;
 
-import devfortress.utilities.Colour;
+import devfortress.utilities.Colors;
 import java.awt.AlphaComposite;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -42,9 +42,9 @@ public class CustomLabel extends JLabel {
     public JToolTip createToolTip() {
         JToolTip tooltip = super.createToolTip();
         tooltip.setFont(new Font(FONT, Font.BOLD, TOOL_TIP_FONT_SIZE));
-        tooltip.setForeground(Colour.DARKBLUE);
-        tooltip.setBorder(BorderFactory.createLineBorder(Colour.DARKBLUE, BORDER));
-        tooltip.setBackground(Colour.LIGHTBLUE);
+        tooltip.setForeground(Colors.DARKBLUE);
+        tooltip.setBorder(BorderFactory.createLineBorder(Colors.DARKBLUE, BORDER));
+        tooltip.setBackground(Colors.LIGHTBLUE);
         return tooltip;
     }
 

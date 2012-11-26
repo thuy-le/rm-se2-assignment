@@ -4,7 +4,7 @@
  */
 package devfortress.view;
 
-import devfortress.view.interfaces.WelcomeScreenInterface;
+import devfortress.view.interfaces.WelcomePanelView;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  *
  * @author PC
  */
-public class DevFortressMainFrame extends JFrame implements WelcomeScreenInterface {
+public class DevFortressMainFrame extends JFrame implements WelcomePanelView {
 
     //declare constant variables
     public static final String strImagePath = "images/b7.jpg";

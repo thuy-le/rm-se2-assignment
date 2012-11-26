@@ -1,7 +1,7 @@
 package devfortress.controllers;
 
 import devfortress.models.GameEngine;
-import devfortress.view.interfaces.SystemInterface;
+import devfortress.view.interfaces.SystemTabView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -11,10 +11,10 @@ import java.awt.event.MouseEvent;
  */
 public final class SystemTabController {
 
-    private SystemInterface view;
+    private SystemTabView view;
     private GameEngine model;
 
-    public SystemTabController(SystemInterface view, GameEngine model) {
+    public SystemTabController(SystemTabView view, GameEngine model) {
         this.view = view;
         this.model = model;
     }

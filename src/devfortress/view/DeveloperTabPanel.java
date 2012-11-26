@@ -13,8 +13,8 @@ import devfortress.models.Developer;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.models.Skill;
-import devfortress.utilities.Colour;
-import devfortress.view.interfaces.DeveloperInterface;
+import devfortress.utilities.Colors;
+import devfortress.view.interfaces.DevTabView;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -45,12 +45,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author PC
  */
-public class DeveloperTabPanel extends JPanel implements DeveloperInterface, Observer {
+public class DeveloperTabPanel extends JPanel implements DevTabView, Observer {
 
     //initialize constant variables
     static private final float alpha = 0.8f;
     static private final String picture = "images/i6.png";
-    static private final Color colour = Colour.ORANGE;
+    static private final Color colour = Colors.ORANGE;
     static private final int x = 0;
     static private final int y = 5;
     static private final int width = 793;
@@ -79,7 +79,7 @@ public class DeveloperTabPanel extends JPanel implements DeveloperInterface, Obs
         isDrunk = new JLabel("");
         devModel = new DefaultListModel();
         skillModel = new DefaultTableModel(1, 2);
-        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colour.LIGHTORANGE, 7, 7);
+        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.LIGHTORANGE, 7, 7);
         developerList = new JList();
         developerList.addListSelectionListener(new MyListEvent());
         developerList.setCellRenderer(new CustomListRenderer());
@@ -111,12 +111,12 @@ public class DeveloperTabPanel extends JPanel implements DeveloperInterface, Obs
         btnHire.setButtonSize(0, 0, 55, 35);
         btnFeed.setButtonSize(0, 0, 55, 35);
         btnParty.setButtonSize(0, 0, 55, 35);
-        cl.setColor(Colour.DARKBLUE);
-        btnHire.setTextColour(Colour.LIGHTBLUE);
-        btnFeed.setTextColour(Colour.LIGHTBLUE);
-        btnParty.setTextColour(Colour.LIGHTBLUE);
-        developerList.setSelectionBackground(Colour.LIGHTORANGE);
-        developerList.setSelectionForeground(Colour.REDORANGEDARK);
+        cl.setColor(Colors.DARKBLUE);
+        btnHire.setTextColour(Colors.LIGHTBLUE);
+        btnFeed.setTextColour(Colors.LIGHTBLUE);
+        btnParty.setTextColour(Colors.LIGHTBLUE);
+        developerList.setSelectionBackground(Colors.LIGHTORANGE);
+        developerList.setSelectionForeground(Colors.REDORANGEDARK);
         developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
         JPanel bottom = new JPanel();
         btnFireDev = new CustomButton("Fire");
@@ -129,19 +129,19 @@ public class DeveloperTabPanel extends JPanel implements DeveloperInterface, Obs
 
         //------Right Hand Side:
         //adjust look and feel
-        topR.setBackground(Colour.LIGHTORANGE);
+        topR.setBackground(Colors.LIGHTORANGE);
         topR.setPreferredSize(new Dimension(220, 100));
         topR.setLayout(new GridLayout(4, 1));
-        top.setBackground(Colour.LIGHTORANGE);
+        top.setBackground(Colors.LIGHTORANGE);
         top.setLayout(new GridLayout(1, 2));
         devName.setFont(font);
         mainSkill.setFont(font);
         workingPrj.setFont(font);
         status.setFont(font);
         status.setPreferredSize(new Dimension(100,30));
-        developerDetail.setForeground(Colour.DARKBLUE);
+        developerDetail.setForeground(Colors.DARKBLUE);
         developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
-        statusPanel.setBackground(Colour.LIGHTORANGE);
+        statusPanel.setBackground(Colors.LIGHTORANGE);
         //add components
         statusPanel.add(status);
         statusPanel.add(isHappy);
@@ -157,7 +157,7 @@ public class DeveloperTabPanel extends JPanel implements DeveloperInterface, Obs
         add(rightPanel, BorderLayout.CENTER);
         //---Bottom:
         //adjust look and feel:
-        bottom.setBackground(Colour.LIGHTORANGE);
+        bottom.setBackground(Colors.LIGHTORANGE);
         bottom.setLayout(new FlowLayout());
         btnFireDev.setButtonSize(0, 0, 70, 35);
         btnFeedDev.setButtonSize(0, 0, 70, 35);

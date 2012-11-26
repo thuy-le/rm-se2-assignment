@@ -12,7 +12,7 @@ import java.awt.event.MouseListener;
  *
  * @author PC
  */
-public interface ProjectInterface {
+public interface ProjectTabView {
     void addNewProjectListener(MouseListener l);
     void cancelProjectListener(MouseListener l);
     void addDevToProjectListener(MouseListener l);

@@ -4,7 +4,7 @@
  */
 package devfortress.view.components;
 
-import devfortress.utilities.Colour;
+import devfortress.utilities.Colors;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -47,10 +47,10 @@ public class CustomButton extends JPanel {
         this.y = 0;
         this.width = BTN_WIDTH;
         this.height = BTN_HEIGHT;
-        this.colour = Colour.DARKBLUE;
+        this.colour = Colors.DARKBLUE;
         this.text = text;
-        this.textColour = Colour.LIGHTBLUE;
-        this.onMouseColor = Colour.DARKBLUE2;
+        this.textColour = Colors.LIGHTBLUE;
+        this.onMouseColor = Colors.DARKBLUE2;
         this.setOpaque(false);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.isActive = true;
@@ -114,7 +114,7 @@ public class CustomButton extends JPanel {
             if (isActive) {
                 g2d.setColor(colour);
             } else {
-                g2d.setColor(Colour.MIDDLEGREY);
+                g2d.setColor(Colors.MIDDLEGREY);
             }
         }
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
@@ -122,7 +122,7 @@ public class CustomButton extends JPanel {
         if (isActive) {
             g.setColor(textColour);
         } else {
-            g.setColor(Colour.LIGHTGREY);
+            g.setColor(Colors.LIGHTGREY);
         }
         FontMetrics fm = g.getFontMetrics();
         int fx = (width - fm.stringWidth(text)) / 2;

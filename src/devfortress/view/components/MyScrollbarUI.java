@@ -4,7 +4,7 @@
  */
 package devfortress.view.components;
 
-import devfortress.utilities.Colour;
+import devfortress.utilities.Colors;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.JButton;
@@ -24,7 +24,7 @@ public class MyScrollbarUI extends MetalScrollBarUI {
 
     MyScrollbarUI() {
         imageThumb = Toolkit.getDefaultToolkit().createImage("images/sbThump.png");
-        imageTrack = FauxImage.create(42, 42, Colour.LIGHTBLUE);
+        imageTrack = FauxImage.create(42, 42, Colors.LIGHTBLUE);
     }
 
     @Override

@@ -7,7 +7,7 @@ package devfortress.view;
 import devfortress.view.components.GlassPanel;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
-import devfortress.utilities.Colour;
+import devfortress.utilities.Colors;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -48,7 +48,7 @@ public class WelcomePanel extends JPanel {
         this.arcW = 20;
         this.arcH = 20;
         this.alpha = .7f;
-        this.colour = Colour.YELLOW;
+        this.colour = Colors.YELLOW;
         setOpaque(false);
         init();
     }
@@ -86,9 +86,9 @@ public class WelcomePanel extends JPanel {
         playerTxt.setOpaque(false);
         playerTxt.setFont(new Font("Century Gothic", Font.BOLD, 32));
         playerTxt.setHorizontalAlignment(JTextField.CENTER);
-        playerTxt.setBorder(BorderFactory.createLineBorder(Colour.DARKBLUE, 2));
-        welcome.setForeground(Colour.DARKBLUE);
-        decor.setForeground(Colour.DARKBLUE);
+        playerTxt.setBorder(BorderFactory.createLineBorder(Colors.DARKBLUE, 2));
+        welcome.setForeground(Colors.DARKBLUE);
+        decor.setForeground(Colors.DARKBLUE);
 
         //add components
         textHolder.add(playerTxt);

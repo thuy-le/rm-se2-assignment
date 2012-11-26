@@ -5,7 +5,7 @@
 package devfortress.view;
 
 import devfortress.view.components.CustomLabel;
-import devfortress.utilities.Colour;
+import devfortress.utilities.Colors;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
@@ -62,7 +62,7 @@ public class NavigationToolBar extends JToolBar {
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setPaint(new GradientPaint(0, 0, Colour.DARKBLUE2, 0, getHeight(), Colour.DARKBLUE));
+        g2.setPaint(new GradientPaint(0, 0, Colors.DARKBLUE2, 0, getHeight(), Colors.DARKBLUE));
         g2.fillRect(0, 0, getWidth(), 55);
         g2.dispose();
     }

@@ -5,7 +5,7 @@
 package devfortress.controllers;
 
 import devfortress.models.GameEngine;
-import devfortress.view.interfaces.ProjectInterface;
+import devfortress.view.interfaces.ProjectTabView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,10 +15,10 @@ import java.awt.event.MouseEvent;
  */
 public class ProjectTabController {
 
-    private ProjectInterface view;
+    private ProjectTabView view;
     private GameEngine model;
 
-    public ProjectTabController(ProjectInterface view, GameEngine model) {
+    public ProjectTabController(ProjectTabView view, GameEngine model) {
         this.view = view;
         this.model = model;
     }

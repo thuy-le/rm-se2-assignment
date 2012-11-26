@@ -13,8 +13,8 @@ import devfortress.view.components.CustomListPanel;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
 import devfortress.models.Project;
-import devfortress.utilities.Colour;
-import devfortress.view.interfaces.ProjectInterface;
+import devfortress.utilities.Colors;
+import devfortress.view.interfaces.ProjectTabView;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -48,18 +48,18 @@ import javax.swing.table.TableModel;
  *
  * @author PC
  */
-public class ProjectTabPanel extends JPanel implements ProjectInterface, Observer {
+public class ProjectTabPanel extends JPanel implements ProjectTabView, Observer {
 
     //initialize constant variables
     static private final float alpha = 0.8f;
-    static private final Color colour = Colour.YOUNGGREEN;
+    static private final Color colour = Colors.YOUNGGREEN;
     static private final int x = 0;
     static private final int y = 5;
     static private final int width = 793;
     static private final int height = 418;
     static private final int arcW = 10;
     static private final int arcH = 10;
-    static private final Color contentColor = Colour.LIGHTORANGE;
+    static private final Color contentColor = Colors.LIGHTORANGE;
     private JList prjList;
     private DefaultListModel prjModel;
     private DefaultTableModel projTableModel;
@@ -93,11 +93,11 @@ public class ProjectTabPanel extends JPanel implements ProjectInterface, Observe
         //add button(s) and list together
         CustomListPanel projectList = new CustomListPanel(prjList, btnList);
         //-------Adjust look and feel
-        btnAdd.setColour(Colour.DARKBLUE);
-        projectList.setColor(Colour.DARKBLUE);
-        btnAdd.setTextColour(Colour.LIGHTBLUE);
-        prjList.setSelectionBackground(Colour.LIGHTGREEN);
-        prjList.setSelectionForeground(Colour.DARKBLUE);
+        btnAdd.setColour(Colors.DARKBLUE);
+        projectList.setColor(Colors.DARKBLUE);
+        btnAdd.setTextColour(Colors.LIGHTBLUE);
+        prjList.setSelectionBackground(Colors.LIGHTGREEN);
+        prjList.setSelectionForeground(Colors.DARKBLUE);
         prjList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
         //-------Add component
         add(projectList, BorderLayout.WEST);
@@ -132,7 +132,7 @@ public class ProjectTabPanel extends JPanel implements ProjectInterface, Observe
         info1.setFont(font);
         status.setFont(font);
         cost.setFont(font);
-        developerDetail.setForeground(Colour.DARKBLUE);
+        developerDetail.setForeground(Colors.DARKBLUE);
         developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
         //add components
         topR.add(prjName);
@@ -277,17 +277,17 @@ class CustomProjectTable extends JTable {
     public CustomProjectTable(TableModel dm, Color contentColor) {
         super(dm);
         setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        setBorder(BorderFactory.createLineBorder(Colour.GREEN, 1));
+        setBorder(BorderFactory.createLineBorder(Colors.GREEN, 1));
         setRowHeight(25);
         JTableHeader header = getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(Colour.DARKGREEN, 1));
+        header.setBorder(BorderFactory.createLineBorder(Colors.DARKGREEN, 1));
         header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(Colour.DARKGREEN);
+        header.setBackground(Colors.DARKGREEN);
         header.setForeground(Color.WHITE);
         tableScroll = new JScrollPane(this);
         tableScroll.setBorder(BorderFactory.createEmptyBorder());
         tableScroll.setPreferredSize(new Dimension(440, 180));
-        tableScroll.setBackground(Colour.DARKGREEN);
+        tableScroll.setBackground(Colors.DARKGREEN);
         tableScroll.getViewport().setBackground(contentColor);
     }
 

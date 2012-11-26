@@ -6,8 +6,7 @@ package devfortress.view.interfaces;
 
 /**
  *
- * @author PC
+ * @author Team Poseidon
  */
-public interface CustomListInterface {
-    public void viewItem(Object item);
+public interface WelcomePanelView {
 }
