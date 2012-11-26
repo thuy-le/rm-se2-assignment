@@ -18,16 +18,14 @@ import javax.swing.JPanel;
  */
 public class DevFortressMainFrame extends JFrame implements WelcomePanelView {
 
-    //declare constant variables
-    public static final String strImagePath = "images/b7.jpg";
-    //declare variables
+    public static final String BG_IMAGE_PATH = "images/b7.jpg";
     private ImageIcon background;
     private JPanel contentPane;
 
     //constructor
     public DevFortressMainFrame(WelcomePanel welCm, NavigationToolBar navBar, InfomationPanel infoPnl) {
         //initialization
-        background = new ImageIcon(strImagePath);
+        background = new ImageIcon(BG_IMAGE_PATH);
         contentPane = new CustomJPanel();
         //Content Pane default config;
         contentPane.setLayout(new BorderLayout());

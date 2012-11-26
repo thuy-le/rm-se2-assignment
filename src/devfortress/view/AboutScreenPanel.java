@@ -26,22 +26,23 @@ import javax.swing.JPanel;
  */
 public class AboutScreenPanel extends JPanel {
 
-    private int x, y, width, height, arcH, arcW;
-    private float alpha;
-    private Color colour;
+    private static final int x = 20;
+    private static final int y = 25;
+    private static final int width = 755;
+    private static final int height = 520;
+    private static final int arcH = 20;
+    private static final int arcW = 20;
+    private static final float alpha = .7f;
+    private static final Color colour = Colors.YELLOW;
+    private static final String INFO = "<html><center>Pham Ngoc Thach<br/>"
+            + "To Bao Thien Quan<br/>"
+            + "Tang Vinh Thanh<br/>"
+            + "Le Huynh Ngoc Thuy</center></html>";
     private CustomButton btnBack;
-//    private static volatile AboutScreen instance = null;
 
     public AboutScreenPanel() {
-        this.x = 20;
-        this.y = 25;
-        this.width = 755;
-        this.height = 520;
-        this.arcW = 20;
-        this.arcH = 20;
-        this.alpha = .7f;
-        this.colour = Colors.YELLOW;
         setOpaque(false);
+        btnBack = new CustomButton("Back");
         init();
     }
 
@@ -51,15 +52,7 @@ public class AboutScreenPanel extends JPanel {
         GlassPanel content = new GlassPanel(500, 500);
         JLabel welcome = new CustomLabel("<html>DevFortress v1.0</html>");
         GlassPanel infoWrapper = new GlassPanel(500, 200);
-        JLabel info = new JLabel("<html><center>"
-                + "Pham Ngoc Thach "
-                + "<br/> "
-                + "To Bao Thien Quan "
-                + "<br/> "
-                + "Tang Vinh Thanh "
-                + "<br/> "
-                + "Le Huynh Ngoc Thuy"
-                + "</center></html>") {
+        JLabel info = new JLabel(INFO) {
 
             @Override
             protected void paintComponent(Graphics g) {
@@ -67,12 +60,8 @@ public class AboutScreenPanel extends JPanel {
                 super.paintComponent(g);
             }
         };
-
-        btnBack = new CustomButton("Back");
-        //Global Variables        
         welcome.setForeground(Colors.DARKBLUE);
         info.setFont(new Font("Century Gocthic", Font.PLAIN, 22));
-        //add components
         infoWrapper.add(info);
         content.add(welcome);
         content.add(infoWrapper);

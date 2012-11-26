@@ -37,6 +37,12 @@ public class CustomTable extends JTable {
         tableScroll.setPreferredSize(new Dimension(440, 180));
         tableScroll.setBackground(Colors.ORANGE);
         tableScroll.getViewport().setBackground(Colors.ORANGE);
+
+        JTableHeader skillTableHeader = getTableHeader();
+        skillTableHeader.setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
+        skillTableHeader.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        skillTableHeader.setBackground(Colors.ORANGE);
+        skillTableHeader.setForeground(Color.WHITE);
     }
 
     public JScrollPane getTableScroll() {

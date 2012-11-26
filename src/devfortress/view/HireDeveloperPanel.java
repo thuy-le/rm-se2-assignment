@@ -69,8 +69,6 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     private GameEngine model;
 
     public HireDeveloperPanel() {
-        setOpaque(false);
-        setLayout(new BorderLayout());
         // Initialize variables
         rightPanel = new GlassPanel(25, 25, 480, 380, 1f, PNL_COLOR, 7, 7);
         devListModel = new DefaultListModel();
@@ -83,86 +81,86 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         skillTable = new CustomTable(skillTableModel);
         hireBtn = new CustomButton("Hire Developer");
         closeBtn = new CustomButton("Close");
+        init();
+    }
 
+    private void init() {
+        setOpaque(false);
+        setLayout(new BorderLayout());
+        //Local variables
         GlassPanel hireDevHeader = new GlassPanel(800, 70);
         GlassPanel hireDevBottom = new GlassPanel(800, 70);
         List<CustomButton> btnList = new LinkedList<CustomButton>();
-        CustomListPanel cl = new CustomListPanel(developerList, btnList);
+        CustomListPanel devListPanel = new CustomListPanel(developerList, btnList);
         JLabel developerDetail = new JLabel("Developer Details");
         JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
-        JPanel top = new JPanel();
-        JPanel topR = new JPanel();
+        JPanel topPnl = new JPanel();
+        JPanel topRightPnl = new JPanel();
         JPanel bottom = new JPanel();
         Font font = new Font("Century Gothic", Font.BOLD, 17);
         JLabel title = new CustomLabel("Available Developers");
+        JTableHeader skillTableHeader = skillTable.getTableHeader();
 
         developerList.addListSelectionListener(new HireDeveloperListEvent());
         developerList.setCellRenderer(new CustomListRenderer());
         developerList.setModel(devListModel);
 
-        //------Create a JList of developers
-        //list
-        //buttons
-        btnList.add(hireBtn);
-        //add button(s) and list together
         //-------Adjust look and feel
-        hireBtn.setButtonSize(0, 0, 150, 35);
-        cl.setColor(LIST_COLOR);
-        hireBtn.setTextColour(BTN_TEXT_COLOR);
-        hireBtn.setColour(BTN_COLOR);
-        hireBtn.setOnMouseColor(BTN_ON_MOUSE_COLOR);
         developerList.setSelectionBackground(Colors.LIGHTORANGE);
         developerList.setSelectionForeground(Colors.REDORANGEDARK);
         developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-        topR.setBackground(PNL_COLOR);
-        topR.setPreferredSize(new Dimension(220, 100));
-        topR.setLayout(new GridLayout(4, 1));
-        top.setBackground(PNL_COLOR);
-        top.setLayout(new GridLayout(1, 2));
+        hireBtn.setButtonSize(0, 0, 150, 35);
+        hireBtn.setTextColour(BTN_TEXT_COLOR);
+        hireBtn.setColour(BTN_COLOR);
+        hireBtn.setOnMouseColor(BTN_ON_MOUSE_COLOR);
+        skillTable.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+        skillTable.setBorder(BorderFactory.createLineBorder(TABLE_COLOR, 1));
+        skillTable.setRowHeight(25);
         devNameLbl.setFont(font);
         mainSkillLbl.setFont(font);
         workingPrj.setFont(font);
         status.setFont(font);
-        developerDetail.setForeground(LIST_COLOR);
-        developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
-        skillTable.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        skillTable.setBorder(BorderFactory.createLineBorder(TABLE_COLOR, 1));
-        skillTable.setRowHeight(25);
-        JTableHeader header = skillTable.getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(TABLE_COLOR, 1));
-        header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(TABLE_COLOR);
-        header.setForeground(Color.WHITE);
-        JScrollPane tableScroll = new JScrollPane(skillTable);
-        tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(440, 215));
-        tableScroll.setBackground(LIST_COLOR);
-        tableScroll.getViewport().setBackground(TABLE_COLOR);
-        bottom.setBackground(PNL_COLOR);
-        bottom.setLayout(new FlowLayout());
         closeBtn.setColour(BTN_COLOR);
         closeBtn.setOnMouseColor(BTN_COLOR.brighter());
+        rightPanel.add(developerDetail, BorderLayout.NORTH);
+        rightPanel.add(topPnl, BorderLayout.CENTER);
+        rightPanel.add(((CustomTable) skillTable).getTableScroll(), BorderLayout.NORTH);
+        rightPanel.add(bottom, BorderLayout.SOUTH);
+
+        topPnl.setBackground(PNL_COLOR);
+        topPnl.setLayout(new GridLayout(1, 2));
+
+        topRightPnl.setBackground(PNL_COLOR);
+        topRightPnl.setPreferredSize(new Dimension(220, 100));
+        topRightPnl.setLayout(new GridLayout(4, 1));
+
+        devListPanel.setColor(LIST_COLOR);
+        developerDetail.setForeground(LIST_COLOR);
+        developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
+
+
+
+        bottom.setBackground(PNL_COLOR);
+        bottom.setLayout(new FlowLayout());
         title.setForeground(Colors.DARKBLUE);
         //add components
-        top.add(imageIcon);
-        topR.add(devNameLbl);
-        topR.add(mainSkillLbl);
-        topR.add(workingPrj);
-        topR.add(status);
-        top.add(topR);
-        rightPanel.add(developerDetail, BorderLayout.NORTH);
-        rightPanel.add(top, BorderLayout.CENTER);
-        rightPanel.add(tableScroll, BorderLayout.NORTH);
-        rightPanel.add(bottom, BorderLayout.SOUTH);
+        topPnl.add(imageIcon);
+        topPnl.add(topRightPnl);
+        topRightPnl.add(devNameLbl);
+        topRightPnl.add(mainSkillLbl);
+        topRightPnl.add(workingPrj);
+        topRightPnl.add(status);
+
         hireDevHeader.add(title);
         hireDevBottom.add(closeBtn);
+        btnList.add(hireBtn);
         add(hireDevHeader, BorderLayout.NORTH);
-        add(cl, BorderLayout.WEST);
+        add(devListPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.CENTER);
         add(hireDevBottom, BorderLayout.SOUTH);
     }
-
     //Getters and Setters
+
     public String getPlayerName() {
         return playerName;
     }
