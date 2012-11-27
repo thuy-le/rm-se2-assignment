@@ -110,6 +110,13 @@ public class Project {
         }
     }
 
+    /* Advance to next week */
+    public void progress() {
+        for (FunctionalArea areas : functionalAreas.values()) {
+            areas.progress();
+        }
+    }
+
     public void removeAllEvents() {
         events.clear();
     }

@@ -33,6 +33,7 @@ public class Developer {
     private SkillInfo mainSkillInfo;
     private boolean happy, fed, drunk;
     private int salary;
+    private int lastWeekFunctionPoints;
     private Project workingProject;
     private AreaName workingArea;
 
@@ -46,6 +47,7 @@ public class Developer {
         this.happy = Utilities.randInt(2) == 1;
         this.drunk = Utilities.randInt(2) == 1;
         this.fed = Utilities.randInt(2) == 1;
+        this.lastWeekFunctionPoints = 0;
         randomizeSkills();
         re_calculateDeveloperInfo();
     }
@@ -191,8 +193,55 @@ public class Developer {
         workingArea = null;
     }
 
+    public int getLastWeekFunctionPoints() {
+        return lastWeekFunctionPoints;
+    }
 
+    public int getCalculateLastWeekFunctionPoints() {
+        if (workingProject == null) {
+            lastWeekFunctionPoints = 0;
+        } else {
+            int tech = skills.get(mainSkillInfo).getLevel();
+            int design = getSkillLevel(SkillInfo.DESIGN);
+            int algorithm = getSkillLevel(SkillInfo.ALGORITHMS);
+            int analysis = getSkillLevel(SkillInfo.ANALYSIS);
+            int teamPlayer = getSkillLevel(SkillInfo.TEAM_PLAYER);
+            int config = getSkillLevel(SkillInfo.CONFIG_MANAGEMENT);
+            int numMem = workingProject.getDevelopers().size();
+            SkillInfo proMainSkill = workingProject.getMainRequirement();
+            if (mainSkillInfo != proMainSkill) {
+                int lisp = skills.get(SkillInfo.LISP).getLevel();
+                int haskell = skills.get(SkillInfo.HASKELL).getLevel();
+                int forth = skills.get(SkillInfo.FORTH).getLevel();
+                if (lisp * haskell * forth != 0) {
+                    int temp = lisp > haskell ? lisp : haskell;
+                    tech = temp > forth ? temp : forth;
+                } else {
+                    for (Skill skill : skills.values()) {
+                        if (tech > skill.getLevel()) {
+                            tech = skill.getLevel();
+                        }
+                    }
+                }
+            }
+            lastWeekFunctionPoints = (tech + 2 * design + tech * algorithm + 3 * analysis + (teamPlayer * numMem) / (12 - config)) * (fed ? 1 : 0);
+            if (lastWeekFunctionPoints > 1) {
+                lastWeekFunctionPoints = 1;
+            }
+        }
+        return lastWeekFunctionPoints;
+    }
+
+    public int getSkillLevel(SkillInfo info) {
+        int result = 0;
+        try {
+            result = skills.get(info).getLevel();
+        } catch (Exception ex) {
+        }
+        return result;
+    }
     /* Private methods */
+
     private void re_calculateDeveloperInfo() {
         determineMainSkill();
         calculateSalary();
