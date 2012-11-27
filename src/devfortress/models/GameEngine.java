@@ -63,9 +63,6 @@ public class GameEngine extends Observable {
         projects.clear();
         date.reset();
         for (int i = 0; i < 7; i++) {
-            this.developers.add(new Developer());
-        }
-        for (int i = 0; i < 7; i++) {
             this.projects.add(new Project());
         }
         setChanged();
@@ -128,6 +125,9 @@ public class GameEngine extends Observable {
         if (developers.add(dev)) {
             marketDevelopers.remove(dev);
             budget -= cost;
+            if (cost > 0) {
+                numPCs++;
+            }
         }
         setChanged();
     }
@@ -288,6 +288,7 @@ public class GameEngine extends Observable {
             }
             generateRandomEvents();
             allEventsTakeEffects();
+            allProjectProgress();
             /*
              * Calculate other factors
              */
@@ -366,11 +367,24 @@ public class GameEngine extends Observable {
 
     //TODO: Generate a list of random events
     private void generateRandomEvents() {
+        for (Project p : projects) {
+            List<Developer> devs = p.getDevelopers();
+            for (Developer dev : devs) {
+//                p.addEvent(new Event(null, p));
+            }
+
+        }
     }
 
     private void allEventsTakeEffects() {
         for (Project p : projects) {
             p.proceedEvents();
+        }
+    }
+
+    private void allProjectProgress() {
+        for (Project p : projects) {
+            p.progress();
         }
     }
 }

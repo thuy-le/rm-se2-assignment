@@ -197,6 +197,10 @@ public class Developer {
         return lastWeekFunctionPoints;
     }
 
+    public void setLastWeekFunctionPoints(int lastWeekFunctionPoints) {
+        this.lastWeekFunctionPoints = lastWeekFunctionPoints < 1 ? 1 : lastWeekFunctionPoints;
+    }
+
     public int getCalculateLastWeekFunctionPoints() {
         if (workingProject == null) {
             lastWeekFunctionPoints = 0;
