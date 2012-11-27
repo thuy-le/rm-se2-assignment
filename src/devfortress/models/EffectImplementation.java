@@ -6,4 +6,5 @@ package devfortress.models;
  */
 public interface EffectImplementation {
     void takeEffect(Project project);
+    String getDescription();
 }

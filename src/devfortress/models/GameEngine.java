@@ -31,7 +31,7 @@ public class GameEngine extends Observable {
     private boolean ended;
 
     private GameEngine() {
-        this.budget = 1000000;
+        this.budget = 10000;
         this.developers = new LinkedList<Developer>();
         this.projects = new LinkedList<Project>();
         this.marketProjects = new LinkedList<Project>();
@@ -97,6 +97,14 @@ public class GameEngine extends Observable {
         return numPCs;
     }
 
+    public List<Event> getEvents() {
+        List<Event> list = new LinkedList<Event>();
+        for (Project project : projects) {
+            list.addAll(project.getEvents());
+        }
+        return new ReadOnlyList<Event>(list);
+    }
+
     /*
      * Manage Developers
      */
@@ -149,7 +157,7 @@ public class GameEngine extends Observable {
      *
      * @param dev
      * @throws InsufficientBudgetException Cannot feed the developer if the
-     * budget is too short
+     * budget is insufficient
      * @see Expenses
      */
     public void feedDeveloper(Developer dev) throws InsufficientBudgetException {

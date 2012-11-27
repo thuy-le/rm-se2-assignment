@@ -91,6 +91,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         GlassPanel hireDevHeader = new GlassPanel(800, 70);
         GlassPanel hireDevBottom = new GlassPanel(800, 70);
         List<CustomButton> btnList = new LinkedList<CustomButton>();
+        btnList.add(hireBtn);
         CustomListPanel devListPanel = new CustomListPanel(developerList, btnList);
         JLabel developerDetail = new JLabel("Developer Details");
         JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
@@ -99,7 +100,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         JPanel bottom = new JPanel();
         Font font = new Font("Century Gothic", Font.BOLD, 17);
         JLabel title = new CustomLabel("Available Developers");
-        JTableHeader skillTableHeader = skillTable.getTableHeader();
+//        JTableHeader skillTableHeader = skillTable.getTableHeader();
 
         developerList.addListSelectionListener(new HireDeveloperListEvent());
         developerList.setCellRenderer(new CustomListRenderer());
@@ -153,7 +154,6 @@ public class HireDeveloperPanel extends JPanel implements Observer {
 
         hireDevHeader.add(title);
         hireDevBottom.add(closeBtn);
-        btnList.add(hireBtn);
         add(hireDevHeader, BorderLayout.NORTH);
         add(devListPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.CENTER);
