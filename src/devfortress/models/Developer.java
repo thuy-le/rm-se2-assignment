@@ -38,7 +38,7 @@ public class Developer {
     private Project workingProject;
     private AreaName workingArea;
 
-    public Developer() throws IOException {
+    public Developer() {
         this.name = Utilities.getRandomName();
         this.skills = new EnumMap<SkillInfo, Skill>(SkillInfo.class);
         this.mainSkillInfo = null;

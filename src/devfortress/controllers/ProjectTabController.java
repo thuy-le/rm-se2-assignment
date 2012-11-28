@@ -34,6 +34,7 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            System.out.println("Clikced");
         }
     }
 

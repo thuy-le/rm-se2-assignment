@@ -32,7 +32,7 @@ public class Utilities {
                     names.addAll(Arrays.asList(babynames));
                 }
             } catch (IOException ex) {
-                
+                ex.printStackTrace();
             } finally {
                 if (reader != null) {
                     try {
