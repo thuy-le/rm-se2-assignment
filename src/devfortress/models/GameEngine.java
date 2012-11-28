@@ -10,6 +10,7 @@ import devfortress.enumerations.Expenses;
 import devfortress.enumerations.SkillInfo;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.Utilities;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -45,7 +46,7 @@ public class GameEngine extends Observable {
     /**
      * This method should only be called once
      */
-    public void initialize(String playerName, int budget) throws GameAlreadyInitializedException {
+    public void initialize(String playerName, int budget) throws GameAlreadyInitializedException, IOException {
         if (this.playerName.length() > 0) {
             throw new GameAlreadyInitializedException();
         } else {
@@ -54,7 +55,7 @@ public class GameEngine extends Observable {
         }
     }
 
-    public void initialize(String playerName) {
+    public void initialize(String playerName) throws IOException {
         this.playerName = playerName;
         this.budget = DEFAULT_BUDGET;
         this.generateRandomMarketDevelopers();
@@ -62,9 +63,6 @@ public class GameEngine extends Observable {
         developers.clear();
         projects.clear();
         date.reset();
-        for (int i = 0; i < 7; i++) {
-            this.developers.add(new Developer());
-        }
         for (int i = 0; i < 7; i++) {
             this.projects.add(new Project());
         }
@@ -128,6 +126,9 @@ public class GameEngine extends Observable {
         if (developers.add(dev)) {
             marketDevelopers.remove(dev);
             budget -= cost;
+            if (cost > 0) {
+                numPCs++;
+            }
         }
         setChanged();
     }
@@ -277,7 +278,7 @@ public class GameEngine extends Observable {
     /*
      * System
      */
-    public void nextWeek() throws GameOverException {
+    public void nextWeek() throws GameOverException, IOException {
         /*
          * Time changes
          */
@@ -288,6 +289,7 @@ public class GameEngine extends Observable {
             }
             generateRandomEvents();
             allEventsTakeEffects();
+            allProjectProgress();
             /*
              * Calculate other factors
              */
@@ -348,7 +350,7 @@ public class GameEngine extends Observable {
         }
     }
 
-    private void generateRandomMarketDevelopers() {
+    private void generateRandomMarketDevelopers() throws IOException {
         int num = Utilities.randInt(6) + 5;
         marketDevelopers.clear();
         for (int i = 0; i < num; i++) {
@@ -366,11 +368,24 @@ public class GameEngine extends Observable {
 
     //TODO: Generate a list of random events
     private void generateRandomEvents() {
+        for (Project p : projects) {
+            List<Developer> devs = p.getDevelopers();
+            for (Developer dev : devs) {
+//                p.addEvent(new Event(null, p));
+            }
+
+        }
     }
 
     private void allEventsTakeEffects() {
         for (Project p : projects) {
             p.proceedEvents();
+        }
+    }
+
+    private void allProjectProgress() {
+        for (Project p : projects) {
+            p.progress();
         }
     }
 }

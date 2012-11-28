@@ -58,7 +58,7 @@ public class FunctionalArea {
     /* Function called every week. Called by project */
     public void progress() {
         for (Developer dev : developers) {
-            int points = 0;
+            int points = dev.getLastWeekFunctionPoints();
             completedPoints += points;
             completed = completed ? completed : functionPoints - reducedPoints < completedPoints;
         }

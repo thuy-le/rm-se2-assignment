@@ -6,6 +6,7 @@ import devfortress.enumerations.SkillInfo;
 import devfortress.enumerations.SkillTypes;
 import devfortress.utilities.ReadOnlyMap;
 import devfortress.utilities.Utilities;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -37,7 +38,7 @@ public class Developer {
     private Project workingProject;
     private AreaName workingArea;
 
-    public Developer() {
+    public Developer() throws IOException {
         this.name = Utilities.getRandomName();
         this.skills = new EnumMap<SkillInfo, Skill>(SkillInfo.class);
         this.mainSkillInfo = null;
@@ -195,6 +196,10 @@ public class Developer {
 
     public int getLastWeekFunctionPoints() {
         return lastWeekFunctionPoints;
+    }
+
+    public void setLastWeekFunctionPoints(int lastWeekFunctionPoints) {
+        this.lastWeekFunctionPoints = lastWeekFunctionPoints < 1 ? 1 : lastWeekFunctionPoints;
     }
 
     public int getCalculateLastWeekFunctionPoints() {

@@ -32,10 +32,13 @@ public class Utilities {
                     names.addAll(Arrays.asList(babynames));
                 }
             } catch (IOException ex) {
+                
             } finally {
-                try {
-                    reader.close();
-                } catch (IOException ex) {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException ex) {
+                    }
                 }
             }
         }
@@ -61,6 +64,4 @@ public class Utilities {
         Skill skill = new Skill(level, skills.get(index));
         return skill;
     }
-
-
 }

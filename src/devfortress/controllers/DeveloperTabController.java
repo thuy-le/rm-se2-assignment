@@ -87,7 +87,7 @@ public class DeveloperTabController {
         public void mouseClicked(MouseEvent e) {
             Developer dev = (Developer) hireDevPnl.getDevToHire();
             if (dev != null) {
-                JOptionPane.showMessageDialog(null, dev.getName() + " is hired");
+                int numPCs = model.getNumPCs();
                 model.hireDeveloper(dev);
                 developerTab.getDevModel().addElement(dev);
                 tabSystem.getDevModel().addElement(dev);
@@ -96,7 +96,12 @@ public class DeveloperTabController {
                 infoPnl.setVisible(true);
                 navBar.setVisible(true);
                 devFortress.add(tabPne);
-                devFortress.repaint();
+                model.notifyObservers();
+                if (model.getNumPCs() > numPCs) {
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is hired\n1 PC more is purchased");
+                } else {
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is hired");
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You need to choose 1 developer to hire");
             }
