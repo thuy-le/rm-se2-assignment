@@ -12,6 +12,8 @@ public enum EffectNames {
     NEW_TECH(5, "Remove 50 function points from project"),
     SOLUTION_NOT_SCALE(5, "Add 10 function points to 1 area"),
     HACKED(1, "Developers does not produce any function points this week"),
+    BACKUP_FAILED(5, "Add 25 function points to 1 area"),
+    HOLIDAY(10, "1 developer produces only 1 function point this week. Everyone is happy"),
     FEATURE_CUT(5, "One functional area is removed from project"),
     BONUS(1, "Additional money is given at the end of turn"),
     TEAM_BUILDING(5, "Each developer only produce 5 function points. All developers are happy"),
