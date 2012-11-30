@@ -282,7 +282,6 @@ public class GameEngine extends Observable {
          * Time changes
          */
         if (!ended) {
-            date.nextWeek();
             for (Developer dev : developers) {
                 dev.getTired();
             }
@@ -292,7 +291,7 @@ public class GameEngine extends Observable {
             /*
              * Calculate other factors
              */
-            if (date.getWeek() == 1) {
+            if (date.getWeek() == 4) {
                 /*
                  * Projects, Developers, Events...
                  */
@@ -300,6 +299,7 @@ public class GameEngine extends Observable {
                 generateRandomMarketDevelopers();
                 generateRandomMarketProjects();
             }
+            date.nextWeek();
             setChanged();
         } else {
             throw new GameOverException();

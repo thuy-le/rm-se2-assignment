@@ -6,16 +6,15 @@ package devfortress.models;
  */
 public class Event {
 
-    private String description;
-    private EffectImplementor implementor;
+    private Effect implementor;
     private Project project;
 
-    public Event(EffectImplementor implementor, Project project) {
+    public Event(Effect implementor, Project project) {
         this.implementor = implementor;
         this.project = project;
     }
 
-    public EffectImplementor getImplementor() {
+    public Effect getImplementor() {
         return implementor;
     }
 

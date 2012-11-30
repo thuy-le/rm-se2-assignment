@@ -20,7 +20,7 @@ public enum EffectNames {
     REDUNDANCIES(5, "One developer is removed from team. All developers are unhappy"),
     IDIOTIC_MARKETING(10, "Additional requirement was added. Additional 10 function points was added to 1 area. 1 developer is unhappy"),
     INTERN(10, "Additional 5 function points was completed by student interns. One developer is happy"),
-    NOTHING(50, "Nothing happened");
+    NOTHING(17, "Nothing happened");
     private int chance;
     private String description;
 

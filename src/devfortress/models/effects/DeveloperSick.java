@@ -5,7 +5,7 @@
 package devfortress.models.effects;
 
 import devfortress.models.Developer;
-import devfortress.models.EffectImplementor;
+import devfortress.models.Effect;
 import devfortress.models.Project;
 import devfortress.utilities.Utilities;
 import java.util.List;
@@ -14,14 +14,7 @@ import java.util.List;
  *
  * @author Team Poseidon
  */
-public class DeveloperSickEffect implements EffectImplementor {
-
-    private String description;
-
-    @Override
-    public String getEventDescription() {
-        return description == null ? "" : description;
-    }
+public class DeveloperSick extends Effect {
 
     @Override
     public void takeEffect(Project project) {
