@@ -4,6 +4,7 @@ import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.utilities.Colors;
 import devfortress.view.components.CustomButton;
+import devfortress.view.components.CustomTable;
 import devfortress.view.components.GlassPanel;
 import java.awt.BorderLayout;
 import java.util.Observable;
@@ -38,7 +39,12 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectsPanel = new GlassPanel(0, 0, 800, 600, 1f, Colors.GREEN, 7, 7);
         acceptProjectBtn = new CustomButton("Accept Project");
         projectListModel = new DefaultListModel();
-        functionalTable = new 
+        functionalTableModel = new DefaultTableModel(1, 2);
+        projectList = new JList();
+        functionalTable = new CustomTable(functionalTableModel);
+        projectNameLbl = new JLabel("Project Name");
+        mainSkillLbl = new JLabel("Skill ABC");
+        model = GameEngine.getInstance();
         init();
     }
 
