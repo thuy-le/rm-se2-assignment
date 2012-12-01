@@ -10,6 +10,9 @@ import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -59,6 +62,8 @@ public class MainFrameController {
             } catch (GameOverException ex) {
                 model.notifyObservers();
                 JOptionPane.showMessageDialog(null, ex.getMessage());
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
             model.notifyObservers();
         }
@@ -70,7 +75,11 @@ public class MainFrameController {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (!welCm.getPlayerName().trim().equals("")) {
-                model.initialize(welCm.getPlayerName());
+                try {
+                    model.initialize(welCm.getPlayerName());
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
                 mainFrame.remove(welCm);
                 mainFrame.add(tabPne, BorderLayout.CENTER);
                 navBar.setVisible(true);

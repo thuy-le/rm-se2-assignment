@@ -13,11 +13,9 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 
 /**
- *
- * @author PC
+ * A custom JPanel which could be transparent.
+ * @author Team Poseidon
  */
-
-//Create a class which could be transparent
 public class GlassPanel extends JPanel {
     //declare variables
     public int x;
