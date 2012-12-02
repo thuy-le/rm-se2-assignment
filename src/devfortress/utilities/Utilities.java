@@ -53,7 +53,7 @@ public class Utilities {
     }
 
     public static String getRandomName() {
-        if (getNameList().isEmpty()) {
+        if (!getNameList().isEmpty()) {
             int index = rand.nextInt(getNameList().size());
             return getNameList().get(index);
         } else {
