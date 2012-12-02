@@ -4,12 +4,13 @@
  */
 package devfortress.controllers;
 
-import devfortress.models.exceptions.DeveloperBusyException;
-import devfortress.models.exceptions.InsufficientBudgetException;
 import devfortress.models.Developer;
 import devfortress.models.GameEngine;
+import devfortress.models.exceptions.DeveloperBusyException;
+import devfortress.models.exceptions.InsufficientBudgetException;
 import devfortress.view.*;
 import devfortress.view.interfaces.DevTabView;
+import devfortress.view.interfaces.SystemTabView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -30,7 +31,7 @@ public class DeveloperTabController {
     private InfomationPanel infoPnl;
     private DevFortressTabbedPane tabPne;
     private DevFortressMainFrame devFortress;
-    private SystemTabPanel tabSystem;
+    private SystemTabView tabSystem;
 
     public DeveloperTabController(DevTabView view, GameEngine model, HireDeveloperPanel availableDev, NavigationToolBar navPane, InfomationPanel info, DevFortressTabbedPane tabPne, DevFortressMainFrame devFortress, SystemTabPanel tabSystem) {
         this.developerTab = view;
@@ -90,12 +91,7 @@ public class DeveloperTabController {
                 int numPCs = model.getNumPCs();
                 model.hireDeveloper(dev);
                 developerTab.getDevModel().addElement(dev);
-                //tabSystem.getDevModel().addElement(dev);
                 hireDevPnl.getDevModel().removeElement(dev);
-                devFortress.remove(hireDevPnl);
-                infoPnl.setVisible(true);
-                navBar.setVisible(true);
-                devFortress.add(tabPne);
                 model.notifyObservers();
                 if (model.getNumPCs() > numPCs) {
                     JOptionPane.showMessageDialog(null, dev.getName() + " is hired\n1 PC more is purchased");

@@ -15,4 +15,10 @@ public interface SystemTabView {
     void setPlayerName(String name);
 
     void setBudget(long budget);
+    
+    void setCurrentPage(int currentPage);
+    
+    int getPage();
+    
+    void refresh();
 }

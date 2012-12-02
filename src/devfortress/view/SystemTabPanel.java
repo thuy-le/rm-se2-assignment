@@ -13,11 +13,10 @@ import devfortress.view.components.CustomLabel;
 import devfortress.view.components.Slot;
 import devfortress.view.interfaces.SystemTabView;
 import java.awt.*;
-import java.util.Iterator;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.*;
 import java.util.List;
-import java.util.LinkedList;
-import java.util.Observable;
-import java.util.Observer;
 import javax.swing.*;
 
 /**
@@ -40,47 +39,84 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
     private JLabel budget, welcome;
     private JPanel subContainer;
     private JPanel leftNav;
-    private ReadOnlyList<Developer> developers;
-    private List<Slot> slots;
+    private List<Developer> developers;
+    private LinkedList<Slot> slots;
+    private LinkedList<LinkedList<Slot>> subSlots;
+    private int numPCs = 0;
     private int page = 0;
+    private int currentPage = 0;
+    private CustomLabel upArrow;
+    private CustomLabel downArrow;
     //constructor
 
     public SystemTabPanel(DeveloperTabPanel tabDev) {
         setOpaque(false);
         init();
     }
-    
-    private void createSeats(){
+
+    private void createSeats() {
+        int slotCount = 0;
         subContainer.removeAll();
+        slots.clear();
+        subSlots.clear();
         subContainer.setLayout(new GridLayout(2, 3));
-        if (developers != null) {
-            for (int i = 0; i < developers.size(); i++) {
-                Slot slot = new Slot();
-                slot.setDevName(developers.get(i).getName());
-                slot.setWorking(true);
-                slots.add(slot);
-            }
-            for (Slot slot : slots) {
-                subContainer.add(slot);
-            }
-            System.out.println("Pages: " + page);
+        //creating slots
+        for (int i = 0; i < developers.size(); i++) {
+            Slot slot = new Slot();
+            slot.setDevName(developers.get(i).getName());
+            slot.setWorking(true);
+            slots.add(slot);
         }
-        if(slots.size()>0) {
+        int pcs = numPCs - developers.size();
+        for (int i = 0; i < pcs; i++) {
+            Slot slot = new Slot();
+            slot.setWorking(false);
+            slots.add(slot);
+        }
+        //count number of pages
+        if (slots.size() > 0) {
+            page = (int) Math.ceil((double) slots.size() / 6);
+        }
+        if (page > 1) {
             leftNav.setVisible(true);
-        }
-        else{
+        } else {
             leftNav.setVisible(false);
         }
+        //divide slots into sub slots
+        for (int j = 0; j < page; j++) {
+            LinkedList<Slot> sl = new LinkedList<Slot>();
+            for (int i = 0; i < 6 && i < slots.size(); i++) {
+                try {
+                    sl.add(slots.get(slotCount++));
+                } catch (Exception ex) {
+                }
+            }
+            subSlots.add(sl);
+        }
+        if (subSlots != null) {
+            LinkedList<Slot> sl = new LinkedList<Slot>();
+            try {
+                sl = subSlots.get(currentPage);
+                for (int j = 0; j < sl.size(); j++) {
+                    subContainer.add(sl.get(j));
+                }
+            } catch (Exception ex) {
+            }
+
+            System.out.println("Pages: " + page);
+        }
+
     }
 
     private void init() {
         slots = new LinkedList<Slot>();
+        subSlots = new LinkedList<LinkedList<Slot>>();
         /*
          * ########### initialize variables ##########
          */
         //$$$$$-----Global variables
-        subContainer = new GlassPanel(550,400);
-        leftNav = new GlassPanel(50,500);
+        subContainer = new GlassPanel(550, 400);
+        leftNav = new GlassPanel(50, 500);
         budget = new JLabel("$25000000");
         welcome = new JLabel();
 
@@ -91,10 +127,10 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
         JLabel imageIcon = new JLabel(imgIcon);
         imageIcon.setPreferredSize(new Dimension(200, 200));
         JLabel label = new JLabel("  Your budget is:");
-        JLabel arrowUp = new CustomLabel("");
-        JLabel arrowDown = new CustomLabel("");
-        arrowUp.setIcon(new ImageIcon("images/arrowUp.png"));
-        arrowDown.setIcon(new ImageIcon("images/arrowDown.png"));
+        upArrow = new CustomLabel("");
+        downArrow = new CustomLabel("");
+        upArrow.setIcon(new ImageIcon("images/arrowUp.png"));
+        downArrow.setIcon(new ImageIcon("images/arrowDown.png"));
         /*
          * ########## Adjust look and feel ##########
          */
@@ -108,9 +144,8 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
         setLayout(new BorderLayout());
         gp3.setLayout(new FlowLayout());
         //-------Add components together
-        leftNav.add(arrowUp, BorderLayout.NORTH);
-        //leftNav.add(new GlassPanel(0, 200), BorderLayout.CENTER);
-        leftNav.add(arrowDown, BorderLayout.SOUTH);
+        leftNav.add(upArrow, BorderLayout.NORTH);
+        leftNav.add(downArrow, BorderLayout.SOUTH);
         add(leftNav, BorderLayout.WEST);
         add(subContainer, BorderLayout.CENTER);
         add(gp3, BorderLayout.EAST);
@@ -119,7 +154,11 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
         gp3.add(imageIcon);
         gp3.add(label);
         gp3.add(budget);
-        
+
+        //
+        setUpArrowListener();
+        setDownArrowListener();
+
     }
 
     //override the paint component method
@@ -151,14 +190,98 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
         String welcomeStr = "<html>Hi, " + name + " ◕‿◕</html>";
         welcome.setText(welcomeStr);
     }
+    
+    public void setCurrentPage(int currentPage){
+        this.currentPage = currentPage;
+    }
+    
+    public int getPage(){
+        return page;
+    }
 
     @Override
     public void update(Observable o, Object arg) {
         GameEngine model = (GameEngine) o;
-        developers = (ReadOnlyList) model.getDevelopers();
+        developers = model.getDevelopers();
+        numPCs = model.getNumPCs();
         createSeats();
         budget.setText(model.getBudget() + "");
         String welcomeStr = "<html>Hi, " + model.getPlayerName() + " ◕‿◕</html>";
         welcome.setText(welcomeStr);
+    }
+
+    public void setUpArrowListener() {
+        upArrow.addMouseListener(new UpArrowNavigator());
+    }
+
+    public void setDownArrowListener() {
+        downArrow.addMouseListener(new DownArrowNavigator());
+    }
+
+    @Override
+    public void refresh() {
+        repaint();
+    }
+
+    private class UpArrowNavigator extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (page > 0 && currentPage > 0) {
+                currentPage--;
+                createSeats();
+                subContainer.repaint();
+            }
+        }
+        
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            if (page > 0 && currentPage > 0) {
+                upArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                upArrow.setIcon(new ImageIcon("images/arrowUpOnMouse.png"));
+                upArrow.repaint();
+            }
+            else{
+                upArrow.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            upArrow.setIcon(new ImageIcon("images/arrowUp.png"));
+            upArrow.repaint();
+        }
+    }
+
+    private class DownArrowNavigator extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (page > 0 && currentPage < page-1) {
+                currentPage++;
+                createSeats();
+                subContainer.repaint();
+            }
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            if (page > 0 && currentPage < page-1) {
+                downArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                downArrow.setIcon(new ImageIcon("images/arrowDownOnMouse.png"));
+                downArrow.repaint();
+            }
+            else{
+                downArrow.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            downArrow.setIcon(new ImageIcon("images/arrowDown.png"));
+            downArrow.repaint();
+        }
+        
     }
 }

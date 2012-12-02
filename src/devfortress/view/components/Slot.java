@@ -24,6 +24,7 @@ public class Slot extends JPanel {
     private static int height = 150;
     private static int x = 0;
     private static int y = 0;
+    private static Color colour = Colors.DARKBLUE;
     private String devName;
     private boolean isWorking;
     private BufferedImage avatar;
@@ -73,7 +74,7 @@ public class Slot extends JPanel {
             } catch (IOException e) {
             }
             g.setFont(new Font("Century Gothic", Font.BOLD, 17));
-            g.setColor(Colors.YELLOW);
+            g.setColor(colour);
             int stringLen = (int) g.getFontMetrics().getStringBounds(devName, g).getWidth();
             g.drawString(devName, width / 2 - stringLen / 2, y + height + 20);
         }
