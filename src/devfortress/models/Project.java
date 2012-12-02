@@ -12,6 +12,7 @@ import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -102,7 +103,12 @@ public class Project {
     }
 
     public void removeFunctionalArea(AreaName area) {
+        Set<Developer> devs = functionalAreas.get(area).getDevelopers();
+        for (Developer dev : devs) {
+            removeDeveloper(dev);
+        }
         functionalAreas.remove(area);
+
     }
 
     public void reduceFunctionalPoints(AreaName area, int points) {
@@ -223,23 +229,16 @@ public class Project {
             int numKnown = numAreas - numUnknown;
             int i = 0;
             for (; i < numKnown; i++) {
-                FunctionalArea functionalArea = getRandomFunctionalArea(areaNames, pointsHolder[i], true);
+                FunctionalArea functionalArea = Utilities.getRandomFunctionalArea(areaNames, pointsHolder[i], true);
                 functionalAreas.put(functionalArea.getName(), functionalArea);
             }
             for (; i < numUnknown; i++) {
-                FunctionalArea functionalArea = getRandomFunctionalArea(areaNames, pointsHolder[i], false);
+                FunctionalArea functionalArea = Utilities.getRandomFunctionalArea(areaNames, pointsHolder[i], false);
                 functionalAreas.put(functionalArea.getName(), functionalArea);
             }
 
         }
         /*******/
         mainRequirement = SkillInfo.values()[Utilities.randInt(SkillInfo.values().length)];
-    }
-
-    private FunctionalArea getRandomFunctionalArea(List<AreaName> areaNames, int functionPoints, boolean visible) {
-        int index = Utilities.randInt(areaNames.size());
-        FunctionalArea fA = new FunctionalArea(areaNames.get(index), functionPoints, 0, visible);
-        areaNames.remove(areaNames.get(index));
-        return fA;
     }
 }
