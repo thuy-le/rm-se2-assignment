@@ -33,8 +33,12 @@ public class IdioticMarketing extends Effect {
         FunctionalArea area = Utilities.getRandomFunctionalArea(areas, points, true);
         if (area != null) {
             project.addFunctionalArea(area);
+            //Get a random functional area
+            FunctionalArea fArea = pAreas.get(Utilities.randInt(pAreas.size()));
+            //Add 10 function points
+            fArea.addFunctionPoints(10);
             // Set descripttion
-            description = "Requirement \"" + area.getName().toString() + "\" is added to the project";
+            description = "Requirement \"" + area.getName().toString() + "\" is added to the project. Area \"" + fArea.getName() + "\" is added with 10 more function points";
         } else {
             description = "";
         }
