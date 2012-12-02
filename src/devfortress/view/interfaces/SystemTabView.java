@@ -4,8 +4,6 @@
  */
 package devfortress.view.interfaces;
 
-import java.awt.event.MouseListener;
-
 /**
  *
  * @author PC

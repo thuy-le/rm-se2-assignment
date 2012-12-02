@@ -22,7 +22,7 @@ public class MyScrollbarUI extends MetalScrollBarUI {
         }
     };
 
-    MyScrollbarUI() {
+    public MyScrollbarUI() {
         imageThumb = Toolkit.getDefaultToolkit().createImage("images/sbThump.png");
         imageTrack = FauxImage.create(42, 42, Colors.LIGHTBLUE);
     }

@@ -286,7 +286,7 @@ public class GameEngine extends Observable {
                 dev.getTired();
             }
             generateRandomEvents();
-            allEventsTakeEffects();
+//            allEventsTakeEffects();
             allProjectProgress();
             /*
              * Calculate other factors
@@ -367,12 +367,21 @@ public class GameEngine extends Observable {
 
     //TODO: Generate a list of random events
     private void generateRandomEvents() {
-        for (Project p : projects) {
-            List<Developer> devs = p.getDevelopers();
-            for (Developer dev : devs) {
-//                p.addEvent(new Event(null, p));
-            }
+        try {
+            EffectFactory fact = EffectFactory.getInstance();
+            for (Project p : projects) {
+                List<Developer> devs = p.getDevelopers();
+//            for (Developer dev : devs) {
+                for (int i = 0; i < 5; i++) {
+                    Event event = new Event(fact.getRandomEffect(this), p);
+                    p.addEvent(event);
 
+                }
+//            }
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

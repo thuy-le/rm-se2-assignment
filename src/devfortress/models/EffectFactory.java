@@ -9,20 +9,23 @@ import java.util.List;
  * Because the EventFactory does not vary, there will be no AbstractEventFactory
  * Future changes can be easily made for a fully developed AbstractFactory
  * design pattern if needed
+ *
  * @author Team Poseidon
  */
 public class EffectFactory {
 
-    private static EffectFactory instance = new EffectFactory();
+    private static EffectFactory instance;
     private Effect[] effects;
     private int[] chances;
 
     private EffectFactory() {
         effects = new Effect[EffectNames.values().length];
         chances = new int[100];
+        int counter = 0;
         for (int i = 0; i < EffectNames.values().length; i++) {
             for (int j = 0; j < EffectNames.values()[i].getChance(); j++) {
-                chances[10 * i + j] = i;
+                chances[counter] = i;
+                counter++;
             }
         }
         for (int k = 0; k < 2; k++) {
@@ -51,13 +54,19 @@ public class EffectFactory {
     }
 
     public static EffectFactory getInstance() {
+        if (instance == null) {
+            instance = new EffectFactory();
+        }
         return instance;
+
     }
 
     public Effect getRandomEffect(GameEngine model) {
         int index = Utilities.randInt(100);
         Effect effect = effects[chances[index]];
-        effect.setEngine(model);
+        if (effect != null) {
+            effect.setEngine(model);
+        }
         switch (EffectNames.values()[chances[index]]) {
             case BONUS:
                 if (model.getDate().getWeek() != 4) {

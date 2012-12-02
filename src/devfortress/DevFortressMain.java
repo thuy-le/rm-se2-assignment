@@ -30,7 +30,8 @@ public class DevFortressMain {
         DeveloperTabPanel devTab = new DeveloperTabPanel();
         SystemTabPanel sysTab = new SystemTabPanel(devTab);
         ProjectTabPanel projTab = new ProjectTabPanel();
-        DevFortressTabbedPane tabPne = new DevFortressTabbedPane(devTab, projTab, sysTab);
+        EventTabPanel eventTab = new EventTabPanel();
+        DevFortressTabbedPane tabPne = new DevFortressTabbedPane(devTab, projTab, sysTab, eventTab);
         //Controllers
         MainFrameController gameController = new MainFrameController(devFortress, welCm, nav, inf, tabPne, aboutScr, model);
         DeveloperTabController devController = new DeveloperTabController(devTab, model, availableDev, nav, inf, tabPne, devFortress, sysTab);
@@ -46,5 +47,6 @@ public class DevFortressMain {
         model.addObserver(projTab);
         model.addObserver(devTab);
         model.addObserver(availableDev);
+        model.addObserver(eventTab);
     }
 }

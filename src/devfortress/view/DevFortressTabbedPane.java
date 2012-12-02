@@ -17,9 +17,11 @@ public class DevFortressTabbedPane extends JTabbedPane {
     private static final String DEV_TAB_TITLE = "Developer";
     private static final String SYS_TAB_TITLE = "System";
     private static final String PROJ_TAB_TITLE = "Project";
+    private static final String EVENT_TAB_TITLE = "Event";
     private DeveloperTabPanel devTab;
     private ProjectTabPanel projTab;
     private SystemTabPanel sysTab;
+    private EventTabPanel eventTab;
 
     public DeveloperTabPanel getDeveveloperTab() {
         return devTab;
@@ -32,11 +34,16 @@ public class DevFortressTabbedPane extends JTabbedPane {
     public SystemTabPanel getSystemTab() {
         return sysTab;
     }
+    
+    public EventTabPanel getEventTab() {
+        return eventTab;
+    }
 
-    public DevFortressTabbedPane(DeveloperTabPanel devTab, ProjectTabPanel projTab, SystemTabPanel sysTab) {
+    public DevFortressTabbedPane(DeveloperTabPanel devTab, ProjectTabPanel projTab, SystemTabPanel sysTab, EventTabPanel eventTab) {
         this.devTab = devTab;
         this.projTab = projTab;
         this.sysTab = sysTab;
+        this.eventTab = eventTab;
         this.setUI(new CustomTabbedPaneUI());
         this.setSize(750, 550);
         UIManager.put("TabbedPane.contentOpaque", Boolean.FALSE);
@@ -44,5 +51,6 @@ public class DevFortressTabbedPane extends JTabbedPane {
         this.add(SYS_TAB_TITLE, sysTab);
         this.add(DEV_TAB_TITLE, devTab);
         this.add(PROJ_TAB_TITLE, projTab);
+        this.add(EVENT_TAB_TITLE, eventTab);
     }
 }

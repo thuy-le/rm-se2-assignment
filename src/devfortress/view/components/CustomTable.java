@@ -5,10 +5,9 @@
 package devfortress.view.components;
 
 import devfortress.utilities.Colors;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import javax.swing.BorderFactory;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
@@ -37,6 +36,8 @@ public class CustomTable extends JTable {
         tableScroll.setPreferredSize(new Dimension(440, 180));
         tableScroll.setBackground(Colors.ORANGE);
         tableScroll.getViewport().setBackground(Colors.ORANGE);
+        JScrollBar sb = tableScroll.getVerticalScrollBar();
+        sb.setUI(new MyScrollbarUI());
 
         JTableHeader skillTableHeader = getTableHeader();
         skillTableHeader.setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
@@ -53,4 +54,12 @@ public class CustomTable extends JTable {
     public boolean isCellEditable(int row, int column) {
         return false;
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        super.paintComponent(g);
+    }
+    
+    
 }
