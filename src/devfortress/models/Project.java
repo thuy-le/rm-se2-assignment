@@ -12,6 +12,7 @@ import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -19,10 +20,12 @@ import java.util.Map;
  */
 public class Project {
 
-    private int duration, level, budget, bonus;
+    private int duration, level, budget, bonus, timeLeft;
+    private boolean finished;
     private Map<AreaName, FunctionalArea> functionalAreas;
     private SkillInfo mainRequirement;
     private List<Event> events;
+    private List<Developer> developers;
     private LinkedList<AreaName> areaNames;
 
     public Project() {
@@ -30,7 +33,9 @@ public class Project {
         this.level = 1;
         this.functionalAreas = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
         this.events = new LinkedList<Event>();
+        this.developers = new LinkedList<Developer>();
         this.areaNames = new LinkedList<AreaName>(Arrays.asList(AreaName.values()));
+        this.finished = false;
         randomize();
         calculateBudget();
     }
@@ -60,16 +65,20 @@ public class Project {
         return mainRequirement;
     }
 
+    public boolean isFinished() {
+        return finished;
+    }
+
     public Map<AreaName, FunctionalArea> getAreas() {
         return new ReadOnlyMap<AreaName, FunctionalArea>(functionalAreas);
     }
 
     public List<Developer> getDevelopers() {
-        List<Developer> devs = new LinkedList<Developer>();
-        for (FunctionalArea area : functionalAreas.values()) {
-            devs.addAll(area.getDevelopers());
-        }
-        return new ReadOnlyList<Developer>(devs);
+//        List<Developer> devs = new LinkedList<Developer>();
+//        for (FunctionalArea area : functionalAreas.values()) {
+//            devs.addAll(area.getDevelopers());
+//        }
+        return new ReadOnlyList<Developer>(developers);
     }
 
     public List<Event> getEvents() {
@@ -83,16 +92,23 @@ public class Project {
             throw new InvalidFunctionalAreaException("\"" + area + "\" is not in the project's requirements");
         }
         dev.acceptProject(this, area);
+        developers.add(dev);
     }
 
     /* Developers can be removed after each turn */
     public void removeDeveloper(Developer dev) {
         functionalAreas.get(dev.getWorkingArea()).removeDeveloper(dev);
         dev.leaveProject();
+        developers.remove(dev);
     }
 
     public void removeFunctionalArea(AreaName area) {
+        Set<Developer> devs = functionalAreas.get(area).getDevelopers();
+        for (Developer dev : devs) {
+            removeDeveloper(dev);
+        }
         functionalAreas.remove(area);
+
     }
 
     public void reduceFunctionalPoints(AreaName area, int points) {
@@ -111,9 +127,16 @@ public class Project {
     }
 
     /* Advance to next week */
-    public void progress() {
+    public void progress(DevDate date) {
+        finished = true;
         for (FunctionalArea areas : functionalAreas.values()) {
             areas.progress();
+            if (finished == true && !areas.isCompleted()) {
+                finished = false;
+            }
+        }
+        if (date.getWeek() == 4 && timeLeft != 0) {
+            timeLeft -= 1;
         }
     }
 
@@ -132,10 +155,10 @@ public class Project {
         bonus = 0;
     }
 
-    private void generateRandomMarketEvents() {
-    }
-
-    private void determineMainRequirement() {
+    public void enableBonus() {
+        if (bonus == 0 && finished) {
+            bonus = (int) (((float) timeLeft) / ((float) duration) * budget);
+        }
     }
 
     private void randomize() {
@@ -173,6 +196,7 @@ public class Project {
                 duration = Utilities.randInt(24) + 1;
                 break;
         }
+        timeLeft = duration;
         totalPoints = duration * pointsPerMonth;
         pointsHolder = new int[numAreas];
         {
@@ -205,11 +229,11 @@ public class Project {
             int numKnown = numAreas - numUnknown;
             int i = 0;
             for (; i < numKnown; i++) {
-                FunctionalArea functionalArea = getRandomFunctionalArea(areaNames, pointsHolder[i], true);
+                FunctionalArea functionalArea = Utilities.getRandomFunctionalArea(areaNames, pointsHolder[i], true);
                 functionalAreas.put(functionalArea.getName(), functionalArea);
             }
             for (; i < numUnknown; i++) {
-                FunctionalArea functionalArea = getRandomFunctionalArea(areaNames, pointsHolder[i], false);
+                FunctionalArea functionalArea = Utilities.getRandomFunctionalArea(areaNames, pointsHolder[i], false);
                 functionalAreas.put(functionalArea.getName(), functionalArea);
             }
 
@@ -218,10 +242,7 @@ public class Project {
         mainRequirement = SkillInfo.values()[Utilities.randInt(SkillInfo.values().length)];
     }
 
-    private FunctionalArea getRandomFunctionalArea(List<AreaName> areaNames, int functionPoints, boolean visible) {
-        int index = Utilities.randInt(areaNames.size());
-        FunctionalArea fA = new FunctionalArea(areaNames.get(index), functionPoints, 0, visible);
-        areaNames.remove(areaNames.get(index));
-        return fA;
+    public void addFunctionalArea(FunctionalArea area) {
+        functionalAreas.put(area.getName(), area);
     }
 }

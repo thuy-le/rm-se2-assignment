@@ -26,6 +26,6 @@ public class DeveloperSick extends Effect {
         int fPoints = fOut / 2;
         dev.setLastWeekFunctionPoints(fPoints);
         //Set description
-        description = dev.getName() + " is sick and only produce " + fPoints + " this week";
+        description = dev.getName() + " is sick and only produces " + fPoints + " this week";
     }
 }

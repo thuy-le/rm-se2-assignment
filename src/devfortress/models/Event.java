@@ -19,10 +19,16 @@ public class Event {
     }
 
     public String getDescription() {
-        return implementor.getEventDescription();
+        if (implementor != null) {
+            return implementor.getEventDescription();
+        } else {
+            return "";
+        }
     }
 
     public void takeEffect() {
-        implementor.takeEffect(project);
+        if (implementor != null) {
+            implementor.takeEffect(project);
+        }
     }
 }
