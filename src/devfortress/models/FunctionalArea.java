@@ -69,6 +69,11 @@ public class FunctionalArea {
         }
     }
 
+    public void progress(int points) {
+        completedPoints += points;
+        completed = completed ? completed : functionPoints - reducedPoints < completedPoints;
+    }
+
     public void reducePoints(int points) {
         reducedPoints += points;
     }

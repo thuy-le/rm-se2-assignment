@@ -22,6 +22,9 @@ public class Holiday extends Effect {
         Developer dev = devs.get(Utilities.randInt(devs.size()));
         //Calculate effect
         dev.setLastWeekFunctionPoints(1);
+        for (Developer d : devs) {
+            d.setHappy(true);
+        }
         //Set description
         description = "Holiday! Yey! Everyone is happy. However, " + dev.getName() + " only produces " + 1 + " this week.";
     }
