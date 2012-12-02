@@ -31,7 +31,7 @@ public class AddProjectPanel extends JPanel implements Observer {
 
     //static variables
     //components
-    private GlassPanel projectsPanel;
+    private GlassPanel projectPanel;
     private CustomButton acceptProjectBtn, closeBtn;
     private JTable functionalTable;
     private JList projectList;
@@ -45,7 +45,7 @@ public class AddProjectPanel extends JPanel implements Observer {
      * Constructor of the class.
      */
     public AddProjectPanel() {
-        projectsPanel = new GlassPanel(0, 0, 800, 600, 1f, Colors.GREEN, 7, 7);
+        projectPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.GREEN, 7, 7);
         acceptProjectBtn = new CustomButton("Accept Project");
         closeBtn = new CustomButton("Close");
         projectListModel = new DefaultListModel();
@@ -79,20 +79,31 @@ public class AddProjectPanel extends JPanel implements Observer {
         acceptProjectBtn.setTextColour(Colors.LIGHTBLUE);
         acceptProjectBtn.setColour(Colors.DARKBLUE);
         acceptProjectBtn.setOnMouseColor(Colors.DARKBLUE2);
-
+        acceptProjectBtn.setButtonSize(0, 0, 150, 35);
+        closeBtn.setTextColour(Colors.LIGHTBLUE);
+        closeBtn.setColour(Colors.DARKBLUE);
+        closeBtn.setOnMouseColor(Colors.DARKBLUE2);
 
         headerPanel.add(title);
         bottomPanel.add(acceptProjectBtn);
         bottomPanel.add(closeBtn);
 
+        projectPanel.setLayout(new BorderLayout());
+        projectPanel.add(projectPanelTitle, BorderLayout.NORTH);
+        projectPanel.add(new JPanel(), BorderLayout.CENTER);
+        projectPanel.add(acceptProjectBtn, BorderLayout.SOUTH);
+        projectPanel.add(closeBtn, BorderLayout.SOUTH);
+
+
+
         setOpaque(false);
         setLayout(new BorderLayout());
 
-        projectsPanel.setLayout(new BorderLayout());
+        projectPanel.setLayout(new BorderLayout());
 
         add(headerPanel, BorderLayout.NORTH);
         add(projectListPanel, BorderLayout.WEST);
-        add(projectsPanel, BorderLayout.CENTER);
+        add(projectPanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
     }
 

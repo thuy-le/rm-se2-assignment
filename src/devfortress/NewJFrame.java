@@ -2,6 +2,7 @@ package devfortress;
 
 import devfortress.view.AddProjectPanel;
 import devfortress.view.HireDeveloperPanel;
+import devfortress.view.ProjectTabPanel;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,6 +23,7 @@ public class NewJFrame extends JFrame {
 
     private void setTestPanel() {
         testPanel = new AddProjectPanel();
+//        testPanel = new ProjectTabPanel();
     }
 
 
