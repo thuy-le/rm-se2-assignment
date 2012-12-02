@@ -24,7 +24,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * The view of adding (accepting) project function of the game.
+ * The view of adding (accepting) new projects function of the game.
  * @author Team Poseidon
  */
 public class AddProjectPanel extends JPanel implements Observer {
