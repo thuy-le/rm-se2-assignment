@@ -384,7 +384,7 @@ public class GameEngine extends Observable {
 
     private void allProjectProgress() {
         for (Project p : projects) {
-            p.progress();
+            p.progress(date);
         }
     }
 }

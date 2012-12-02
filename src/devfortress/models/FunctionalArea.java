@@ -54,6 +54,11 @@ public class FunctionalArea {
     public boolean isCompleted() {
         return completed || functionPoints - reducedPoints < completedPoints;
     }
+    //Function called by event effects
+
+    public void addFunctionPoints(int points) {
+        this.functionPoints += points;
+    }
 
     /* Function called every week. Called by project */
     public void progress() {

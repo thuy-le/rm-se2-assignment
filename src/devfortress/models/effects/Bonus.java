@@ -15,5 +15,11 @@ public class Bonus extends Effect {
 
     @Override
     public void takeEffect(Project project) {
+        project.enableBonus();
+        if (project.getBonus() == 0) {
+            description = "";
+        } else {
+            description = "Project " + project.getName() + " has been given $" + project.getBonus() + " bonus for early completion";
+        }
     }
 }
