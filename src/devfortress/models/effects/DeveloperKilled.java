@@ -11,8 +11,6 @@ import devfortress.models.Project;
 import devfortress.models.exceptions.DeveloperBusyException;
 import devfortress.utilities.Utilities;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -44,7 +42,7 @@ public class DeveloperKilled extends Effect {
         project.removeDeveloper(victimDev);
         //The two developers are removed from the company
         try {
-            GameEngine engine = GameEngine.getInstance();
+            engine = GameEngine.getInstance();
             engine.fireDeveloper(killerDev);
             engine.fireDeveloper(victimDev);
         } catch (DeveloperBusyException ex) {

@@ -7,10 +7,19 @@ package devfortress.models;
 public abstract class Effect {
 
     protected String description;
+    protected GameEngine engine;
+
+    public Effect() {
+        description = "";
+    }
+
+    public void setEngine(GameEngine engine) {
+        this.engine = engine;
+    }
 
     public abstract void takeEffect(Project project);
 
     public String getEventDescription() {
-        return description == null ? "" : description;
+        return description;
     }
 }

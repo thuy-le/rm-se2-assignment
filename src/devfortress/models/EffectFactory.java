@@ -57,6 +57,7 @@ public class EffectFactory {
     public Effect getRandomEffect(GameEngine model) {
         int index = Utilities.randInt(100);
         Effect effect = effects[chances[index]];
+        effect.setEngine(model);
         switch (EffectNames.values()[chances[index]]) {
             case BONUS:
                 if (model.getDate().getWeek() != 4) {
