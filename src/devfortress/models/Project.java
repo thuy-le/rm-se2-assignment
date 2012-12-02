@@ -241,4 +241,8 @@ public class Project {
         /*******/
         mainRequirement = SkillInfo.values()[Utilities.randInt(SkillInfo.values().length)];
     }
+
+    public void addFunctionalArea(FunctionalArea area) {
+        functionalAreas.put(area.getName(), area);
+    }
 }
