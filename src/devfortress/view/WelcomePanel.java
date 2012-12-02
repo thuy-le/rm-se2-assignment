@@ -8,6 +8,7 @@ import devfortress.view.components.GlassPanel;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
 import devfortress.utilities.Colors;
+import devfortress.view.components.CustomPanelUI;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,13 +17,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.plaf.PanelUI;
 import javax.swing.text.*;
 import javax.swing.text.DocumentFilter.FilterBypass;
 
@@ -31,7 +28,7 @@ import javax.swing.text.DocumentFilter.FilterBypass;
  *
  * @author PC
  */
-public class WelcomePanel extends JPanel {
+public class WelcomePanel{
 
     private int x, y, width, height, arcH, arcW;
     private float alpha;
@@ -39,6 +36,7 @@ public class WelcomePanel extends JPanel {
     private String playerName;
     private JTextField playerTxt;
     private CustomButton submitName;
+    private JPanel container;
 
     public WelcomePanel() {
         this.x = 20;
@@ -49,7 +47,6 @@ public class WelcomePanel extends JPanel {
         this.arcH = 20;
         this.alpha = .7f;
         this.colour = Colors.YELLOW;
-        setOpaque(false);
         init();
     }
 
@@ -61,8 +58,13 @@ public class WelcomePanel extends JPanel {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
+    
+    public JPanel getContainer(){
+        return container;
+    }
 
     private void init() {
+        container = new GlassPanel(x, y, width, height, alpha, colour, arcW, arcH);
         //Local Variables
         GlassPanel marginTop = new GlassPanel(800, 100);
         GlassPanel content = new GlassPanel(500, 400);
@@ -95,26 +97,10 @@ public class WelcomePanel extends JPanel {
         content.add(welcome);
         content.add(decor);
         content.add(textHolder);
-        add(marginTop, BorderLayout.NORTH);
+        container.add(marginTop, BorderLayout.NORTH);
         content.add(submitName);
-        add(content, BorderLayout.CENTER);
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        if (colour != null) {
-            g2d.setColor(colour);
-        }
-        g2d.fillRoundRect(x, y, width, height, arcW, arcH);
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(width, height);
+        container.add(content, BorderLayout.CENTER);
+        
     }
 
     public void addSubmitNameListener(MouseListener l) {
@@ -235,3 +221,4 @@ class CustomJTextField extends JTextField {
         super.paintComponent(g);
     }
 }
+

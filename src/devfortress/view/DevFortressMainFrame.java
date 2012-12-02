@@ -8,6 +8,7 @@ import devfortress.view.interfaces.WelcomePanelView;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,10 +29,16 @@ public class DevFortressMainFrame extends JFrame implements WelcomePanelView {
         background = new ImageIcon(BG_IMAGE_PATH);
         contentPane = new CustomJPanel();
         //Content Pane default config;
+        setContentPane(contentPane);
+        //GroupLayout layout = new GroupLayout(getContentPane());
+        //this.getContentPane().setLayout(layout);
+//        layout.setHorizontalGroup(layout.createSequentialGroup()
+//                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                .addComponent(navBar))
+//                );
         contentPane.setLayout(new BorderLayout());
         setLayout(new BorderLayout());
-        setContentPane(contentPane);
-        getContentPane().add(welCm, BorderLayout.CENTER);
+        getContentPane().add(welCm.getContainer(), BorderLayout.CENTER);
         getContentPane().add(navBar, BorderLayout.NORTH);
         getContentPane().add(infoPnl, BorderLayout.SOUTH);
         infoPnl.setVisible(false);

@@ -20,10 +20,10 @@ public final class SystemTabController {
     }
 
     public void initilize() {
-        view.addBtnAddProjectListener(new ButtonAddProjectMouseListener());
-        view.addBtnHireDevListener(new ButtonHireMouseListener());
-        view.addDevListListener(new DeveloperListMouseListener());
-        view.addProjectListListener(new ProjectListMouseListener());
+//        view.addBtnAddProjectListener(new ButtonAddProjectMouseListener());
+//        view.addBtnHireDevListener(new ButtonHireMouseListener());
+//        view.addDevListListener(new DeveloperListMouseListener());
+//        view.addProjectListListener(new ProjectListMouseListener());
     }
 
     private class ButtonAddProjectMouseListener extends MouseAdapter {

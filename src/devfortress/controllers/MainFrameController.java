@@ -71,7 +71,7 @@ public class MainFrameController {
         public void mouseClicked(MouseEvent e) {
             if (!welCm.getPlayerName().trim().equals("")) {
                 model.initialize(welCm.getPlayerName());
-                mainFrame.remove(welCm);
+                mainFrame.remove(welCm.getContainer());
                 mainFrame.add(tabPne, BorderLayout.CENTER);
                 navBar.setVisible(true);
                 infoPnl.setVisible(true);
@@ -91,7 +91,7 @@ public class MainFrameController {
             mainFrame.remove(tabPne);
             navBar.setVisible(false);
             infoPnl.setVisible(false);
-            mainFrame.getContentPane().add(welCm);
+            mainFrame.getContentPane().add(welCm.getContainer());
         }
     }
 

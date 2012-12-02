@@ -90,7 +90,7 @@ public class DeveloperTabController {
                 int numPCs = model.getNumPCs();
                 model.hireDeveloper(dev);
                 developerTab.getDevModel().addElement(dev);
-                tabSystem.getDevModel().addElement(dev);
+                //tabSystem.getDevModel().addElement(dev);
                 hireDevPnl.getDevModel().removeElement(dev);
                 devFortress.remove(hireDevPnl);
                 infoPnl.setVisible(true);

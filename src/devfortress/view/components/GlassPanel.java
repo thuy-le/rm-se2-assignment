@@ -10,6 +10,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
@@ -50,6 +53,7 @@ public class GlassPanel extends JPanel {
         this.arcW = arcW;
         this.arcH = arcH;
         setOpaque(false);
+        addContainerListener(new GlassPanelEvent());
     }
     //override paintComponent method
     @Override
@@ -66,6 +70,22 @@ public class GlassPanel extends JPanel {
     @Override
     public Dimension getPreferredSize(){
         return new Dimension(width, height);
+    }
+    
+    private class GlassPanelEvent implements ContainerListener{
+
+        @Override
+        public void componentAdded(ContainerEvent e) {
+            if(e.getChild() instanceof JComponent){
+               JComponent source = (JComponent) e.getContainer();
+               JComponent comp = (JComponent)e.getChild();             }
+        }
+
+        @Override
+        public void componentRemoved(ContainerEvent e) {
+            //System.out.println("Component removed");
+        }
+        
     }
 }
 

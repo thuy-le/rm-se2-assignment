@@ -9,6 +9,7 @@ import devfortress.utilities.Colors;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
 
