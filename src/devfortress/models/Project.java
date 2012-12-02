@@ -74,10 +74,6 @@ public class Project {
     }
 
     public List<Developer> getDevelopers() {
-//        List<Developer> devs = new LinkedList<Developer>();
-//        for (FunctionalArea area : functionalAreas.values()) {
-//            devs.addAll(area.getDevelopers());
-//        }
         return new ReadOnlyList<Developer>(developers);
     }
 
