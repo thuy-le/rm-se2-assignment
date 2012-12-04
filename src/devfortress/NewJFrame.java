@@ -23,6 +23,7 @@ public class NewJFrame extends JFrame {
 
     private void setTestPanel() {
         testPanel = new AddProjectPanel();
+//        testPanel = new HireDeveloperPanel();
 //        testPanel = new ProjectTabPanel();
     }
 
@@ -33,5 +34,6 @@ public class NewJFrame extends JFrame {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setAlwaysOnTop(true);
     }
 }
