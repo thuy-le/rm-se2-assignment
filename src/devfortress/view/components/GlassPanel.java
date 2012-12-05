@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package devfortress.view.components;
 
 import java.awt.AlphaComposite;
@@ -26,7 +22,11 @@ public class GlassPanel extends JPanel {
     public Color colour;
     public int arcW;
     public int arcH;
-    //constructor
+    /**
+     * Simple constructor of <code>GlassPanel</code>.
+     * @param width width of the panel
+     * @param height height of the panel
+     */
     public GlassPanel(final int width, final int height){
         this.x = 0;
         this.y = 0;
@@ -38,6 +38,17 @@ public class GlassPanel extends JPanel {
         this.arcH = 0;
         setOpaque(false);
     }
+    /**
+     * Constructor of <code>GlassPanel</code>.
+     * @param x position of the panel on x axis
+     * @param y position of the panel on y axis
+     * @param width width of the panel
+     * @param height height of the panel
+     * @param alpha opacity rate of the background
+     * @param colour background color of the panel
+     * @param arcW the horizontal diameter of the arc at the four corners
+     * @param arcH the vertical diameter of the arc at the four corners
+     */
     public GlassPanel(final int x, final int y, final int width, final int height, final float alpha, final Color colour, final int arcW, final int arcH){
         this.x = x;
         this.y = y;
