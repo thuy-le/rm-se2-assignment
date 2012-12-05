@@ -26,7 +26,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,6 +36,7 @@ public class AddProjectPanel extends JPanel implements Observer {
 
     //static variables
     private static final Color PANEL_COLOR = Colors.LIGHTGREEN;
+    private static final Color LIST_COLOR = Colors.DARKBLUE;
     private static final Color color = Colors.MATENGA;
     private static final int X = 5;
     private static final int Y = 5;
@@ -48,7 +48,7 @@ public class AddProjectPanel extends JPanel implements Observer {
     //components
     private GlassPanel projectPanel;
     private CustomButton acceptProjectBtn, closeBtn;
-    private JTable functionalTable;
+    private CustomTable functionalTable;
     private JList projectList;
     private JLabel projectNameLbl, mainSkillLbl, budgetLbl, deadlineLbl;
     private DefaultTableModel functionalTableModel;
@@ -80,7 +80,6 @@ public class AddProjectPanel extends JPanel implements Observer {
         setLayout(new BorderLayout());
         // variable for decoration:
         GlassPanel headerPanel = new GlassPanel(800, 70);
-//        GlassPanel bottomPanel = new GlassPanel(800, 70);
         CustomListPanel projectListPanel = new CustomListPanel(projectList, new LinkedList<CustomButton>());
         JLabel projectPanelTitle = new JLabel("Project details");
         JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
@@ -92,17 +91,17 @@ public class AddProjectPanel extends JPanel implements Observer {
         // panels inside projectPanel:
         JPanel projectInfoPanel = new JPanel();
         JPanel projectDetailsPanel = new JPanel();
+        JPanel projectCenterPanel = new JPanel();
         JPanel projectBottomPanel = new JPanel();
 
         // Add model for projectList:
         projectList.setModel(projectListModel);
         projectList.setCellRenderer(new CustomListRenderer());
-//        projectList.addListSelectionListener(new ListSelectionHandler());
 
         // UI programming:
         // Project list:
         projectList.setSelectionBackground(Colors.LIGHTORANGE);
-        projectList.setSelectionForeground(Colors.REDORANGEDARK);
+        projectList.setSelectionForeground(LIST_COLOR);
         projectList.setFont(mediumFont);
         // Accept Project Button:
         acceptProjectBtn.setButtonSize(0, 0, 150, 35);
@@ -119,6 +118,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         functionalTable.setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
         functionalTable.setRowHeight(25);
         // Set Font for labels:
+        projectPanelTitle.setForeground(LIST_COLOR);
         projectPanelTitle.setFont(bigFont);
         projectNameLbl.setFont(bigFont2);
         mainSkillLbl.setFont(bigFont2);
@@ -133,22 +133,23 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectDetailsPanel.add(mainSkillLbl);
         projectDetailsPanel.add(budgetLbl);
         projectDetailsPanel.add(deadlineLbl);
+        projectCenterPanel.setLayout(new BorderLayout());
+        projectCenterPanel.add(projectInfoPanel, BorderLayout.NORTH);
+        projectCenterPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
         projectBottomPanel.add(acceptProjectBtn);
         projectBottomPanel.add(closeBtn);
         projectInfoPanel.setBackground(PANEL_COLOR);
         projectDetailsPanel.setBackground(PANEL_COLOR);
+        projectCenterPanel.setBackground(PANEL_COLOR);
         projectBottomPanel.setBackground(PANEL_COLOR);
         // Add components to projectPanel:
-//        projectPanel.setLayout(new BorderLayout());
+        projectPanel.setLayout(new BorderLayout());
         projectPanel.add(projectPanelTitle, BorderLayout.NORTH);
-        projectPanel.add(projectInfoPanel, BorderLayout.CENTER);
-        projectPanel.add(((CustomTable) functionalTable).getTableScroll(), BorderLayout.NORTH);
+        projectPanel.add(projectCenterPanel, BorderLayout.CENTER);
         projectPanel.add(projectBottomPanel, BorderLayout.SOUTH);
 
 
         headerPanel.add(title);
-//        bottomPanel.add(acceptProjectBtn);
-//        bottomPanel.add(closeBtn);
 
         add(headerPanel, BorderLayout.NORTH);
         add(projectListPanel, BorderLayout.WEST);
