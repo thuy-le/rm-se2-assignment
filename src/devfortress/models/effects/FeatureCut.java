@@ -26,6 +26,10 @@ public class FeatureCut extends Effect {
                 areas.remove(area);
             }
         }
+        if (areas.isEmpty()) {
+            description = "";
+            return;
+        }
         FunctionalArea area = areas.get(Utilities.randInt(areas.size()));
         project.removeFunctionalArea(area.getName());
         //Set description

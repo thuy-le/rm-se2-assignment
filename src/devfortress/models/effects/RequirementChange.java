@@ -20,6 +20,10 @@ public class RequirementChange extends Effect {
     @Override
     public void takeEffect(Project project) {
         List<FunctionalArea> areas = new LinkedList<FunctionalArea>(project.getAreas().values());
+        if (areas.isEmpty()) {
+            description = "";
+            return;
+        }
         for (FunctionalArea area : areas) {
             if (area.isCompleted()) {
                 areas.remove(area);
@@ -27,6 +31,6 @@ public class RequirementChange extends Effect {
         }
         FunctionalArea area = areas.get(Utilities.randInt(areas.size()));
         area.addFunctionPoints(25);
-          description = "Requirement changed. Area \"" + area.getName().toString() + "\" is added with 25 function points";
+        description = "Requirement changed. Area \"" + area.getName().toString() + "\" is added with 25 function points";
     }
 }

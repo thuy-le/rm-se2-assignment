@@ -25,6 +25,10 @@ public class NewTechnology extends Effect {
                 areas.remove(area);
             }
         }
+        if (areas.isEmpty()) {
+            description = "";
+            return;
+        }
         int reducePoints = 50;
         description = "New technology is available. ";
         while (reducePoints > 0) {

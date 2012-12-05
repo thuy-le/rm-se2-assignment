@@ -27,6 +27,11 @@ public class IdioticMarketing extends Effect {
         for (FunctionalArea area : pAreas) {
             areas.remove(area.getName());
         }
+        if (areas.isEmpty()) {
+            description = "";
+            return;
+        }
+
         int points = pAreas.get(Utilities.randInt(pAreas.size())).getFunctionPoints();
         points = (int) (((double) points) * (1 + Math.random() / 10));
         //Generate a random functional area

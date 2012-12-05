@@ -19,6 +19,11 @@ public class Holiday extends Effect {
     @Override
     public void takeEffect(Project project) {
         List<Developer> devs = project.getDevelopers();
+        if (devs.isEmpty()) {
+            description = "";
+            return;
+        }
+
         Developer dev = devs.get(Utilities.randInt(devs.size()));
         //Calculate effect
         dev.setLastWeekFunctionPoints(1);

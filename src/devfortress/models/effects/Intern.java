@@ -22,6 +22,11 @@ public class Intern extends Effect {
     public void takeEffect(Project project) {
         if (!project.isFinished()) {
             List<Developer> devs = project.getDevelopers();
+            if (devs.isEmpty()) {
+                description = "";
+                return;
+            }
+
             // 1 developer became happy
             Developer dev = devs.get(Utilities.randInt(devs.size()));
             dev.setHappy(true);

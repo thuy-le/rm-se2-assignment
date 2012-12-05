@@ -20,6 +20,10 @@ public class Redundancies extends Effect {
     @Override
     public void takeEffect(Project project) {
         List<Developer> devs = new LinkedList<Developer>(project.getDevelopers());
+        if (devs.isEmpty()) {
+            description = "";
+            return;
+        }
         Developer dev = devs.get(Utilities.randInt(devs.size()));
         project.removeDeveloper(dev);
         devs.remove(dev);

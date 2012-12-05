@@ -20,6 +20,10 @@ public class SolutionNotScale extends Effect {
     @Override
     public void takeEffect(Project project) {
         List<FunctionalArea> areas = new LinkedList<FunctionalArea>(project.getAreas().values());
+        if (areas.isEmpty()) {
+            description = "";
+            return;
+        }
         for (FunctionalArea area : areas) {
             if (area.isCompleted()) {
                 areas.remove(area);

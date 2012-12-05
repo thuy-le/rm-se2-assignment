@@ -19,6 +19,13 @@ public class DeveloperSick extends Effect {
     @Override
     public void takeEffect(Project project) {
         List<Developer> devs = project.getDevelopers();
+        if (devs.isEmpty()) {
+            return;
+        }
+        if (devs.isEmpty()) {
+            description = "";
+            return;
+        }
         //Who s sick
         Developer dev = devs.get(Utilities.randInt(devs.size()));
         //Calculate effect

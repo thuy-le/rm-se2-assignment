@@ -20,6 +20,9 @@ public class BackUpFailed extends Effect {
     public void takeEffect(Project project) {
         //Random one area
         ArrayList<FunctionalArea> areas = new ArrayList<FunctionalArea>(project.getAreas().values());
+        if (areas.isEmpty()) {
+            return;
+        }
         int index = Utilities.randInt(areas.size());
         FunctionalArea area = areas.get(index);
         //Add 25 function points
