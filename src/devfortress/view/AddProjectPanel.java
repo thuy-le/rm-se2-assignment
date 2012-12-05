@@ -18,6 +18,7 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
@@ -80,7 +81,10 @@ public class AddProjectPanel extends JPanel implements Observer {
         setLayout(new BorderLayout());
         // variable for decoration:
         GlassPanel headerPanel = new GlassPanel(800, 70);
-        CustomListPanel projectListPanel = new CustomListPanel(projectList, new LinkedList<CustomButton>());
+        GlassPanel bottomPanel = new GlassPanel(800, 70);
+        List<CustomButton> btnList = new LinkedList<CustomButton>();
+        btnList.add(acceptProjectBtn);
+        CustomListPanel projectListPanel = new CustomListPanel(projectList, btnList);
         JLabel projectPanelTitle = new JLabel("Project details");
         JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
         Font bigFont = new Font("Century Gothic", Font.BOLD, 22);
@@ -134,10 +138,8 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectDetailsPanel.add(budgetLbl);
         projectDetailsPanel.add(deadlineLbl);
         projectCenterPanel.setLayout(new BorderLayout());
-        projectCenterPanel.add(projectInfoPanel, BorderLayout.NORTH);
-        projectCenterPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
-        projectBottomPanel.add(acceptProjectBtn);
-        projectBottomPanel.add(closeBtn);
+        projectCenterPanel.add(projectInfoPanel, BorderLayout.CENTER);
+        projectCenterPanel.add(functionalTable.getTableScroll(), BorderLayout.SOUTH);
         projectInfoPanel.setBackground(PANEL_COLOR);
         projectDetailsPanel.setBackground(PANEL_COLOR);
         projectCenterPanel.setBackground(PANEL_COLOR);
@@ -148,13 +150,13 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectPanel.add(projectCenterPanel, BorderLayout.CENTER);
         projectPanel.add(projectBottomPanel, BorderLayout.SOUTH);
 
-
         headerPanel.add(title);
+        bottomPanel.add(closeBtn);
 
         add(headerPanel, BorderLayout.NORTH);
         add(projectListPanel, BorderLayout.WEST);
         add(projectPanel, BorderLayout.CENTER);
-//        add(bottomPanel, BorderLayout.SOUTH);
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 
     @Override
