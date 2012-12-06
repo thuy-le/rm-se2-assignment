@@ -1,6 +1,7 @@
 package devfortress.view;
 
 import devfortress.models.DevDate;
+import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.models.exceptions.InvalidDevDateException;
@@ -32,6 +33,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -99,7 +101,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         // panels inside projectPanel:
         JPanel projectInfoPanel = new JPanel();
         JPanel projectDetailsPanel = new JPanel();
-        JPanel projectCenterPanel = new JPanel();
+        JPanel projectCenterPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 0, 0);
         JPanel projectBottomPanel = new JPanel();
 
         // Add model for projectList:
@@ -142,7 +144,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectDetailsPanel.add(mainSkillLbl);
         projectDetailsPanel.add(budgetLbl);
         projectDetailsPanel.add(deadlineLbl);
-        projectCenterPanel.setLayout(new BorderLayout());
+//        projectCenterPanel.setLayout(new BorderLayout());
         projectCenterPanel.add(projectInfoPanel, BorderLayout.CENTER);
         projectCenterPanel.add(functionalTable.getTableScroll(), BorderLayout.SOUTH);
         projectInfoPanel.setBackground(PANEL_COLOR);
@@ -150,7 +152,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectCenterPanel.setBackground(PANEL_COLOR);
         projectBottomPanel.setBackground(PANEL_COLOR);
         // Add components to projectPanel:
-        projectPanel.setLayout(new BorderLayout());
+//        projectPanel.setLayout(new BorderLayout());
         projectPanel.add(projectPanelTitle, BorderLayout.NORTH);
         projectPanel.add(projectCenterPanel, BorderLayout.CENTER);
         projectPanel.add(projectBottomPanel, BorderLayout.SOUTH);
@@ -185,11 +187,22 @@ public class AddProjectPanel extends JPanel implements Observer {
             deadline = GameEngine.getInstance().getDate().addMonths(project.getDuration());
         } catch (InvalidDevDateException ex) {
         }
+        
         projectPanel.setVisible(true);
         projectNameLbl.setText(project.getName());
         mainSkillLbl.setText("Skill: " + project.getMainRequirement().getName());
         budgetLbl.setText("Budget: " + project.getBudget());
         deadlineLbl.setText("Deadline: " + deadline.getWeek() + "/" + deadline.getMonth() + "/" + deadline.getYear());
+        
+        functionalTableModel.setColumnIdentifiers(new String[]{"Functional Area", "Function Point"});
+        while (functionalTableModel.getColumnCount() > 0) {
+            functionalTableModel.removeRow(functionalTableModel.getColumnCount() - 1);
+        }
+        for (FunctionalArea area : project.getAreas().values()) {
+            functionalTableModel.addRow(new Object[]{area.getName(), area.getFunctionPoints()});
+        }
+        functionalTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        functionalTable.getColumnModel().getColumn(1).setMaxWidth(80);
     }
 
     @Override

@@ -239,7 +239,6 @@ public class ProjectTabPanel extends JPanel implements ProjectTabView, Observer 
                 while (projTableModel.getRowCount() > 0) {
                     projTableModel.removeRow(projTableModel.getRowCount() - 1);
                 }
-                int count = 1;
                 for (FunctionalArea fA : project.getAreas().values()) {
                     Object[] rowData = {fA.getName().toString(), fA.getFunctionPoints()};
                     projTableModel.addRow(rowData);
