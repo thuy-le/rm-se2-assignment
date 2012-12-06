@@ -8,10 +8,8 @@ import devfortress.models.Developer;
 import devfortress.models.GameEngine;
 import devfortress.view.components.GlassPanel;
 import devfortress.utilities.Colors;
-import devfortress.utilities.ReadOnlyList;
 import devfortress.view.components.CustomLabel;
 import devfortress.view.components.Slot;
-import devfortress.view.interfaces.SystemTabView;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,7 +21,7 @@ import javax.swing.*;
  *
  * @author PC
  */
-public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
+public class SystemTabPanel extends JPanel implements Observer {
 
     //initialize constant variables
     static private final String picture = "images/i5.png";
@@ -180,22 +178,20 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
         return new Dimension(width, height);
     }
 
-    @Override
     public void setBudget(long budget) {
         this.budget.setText("$" + budget);
     }
 
-    @Override
     public void setPlayerName(String name) {
         String welcomeStr = "<html>Hi, " + name + " ◕‿◕</html>";
         welcome.setText(welcomeStr);
     }
-    
-    public void setCurrentPage(int currentPage){
+
+    public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
-    
-    public int getPage(){
+
+    public int getPage() {
         return page;
     }
 
@@ -218,7 +214,6 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
         downArrow.addMouseListener(new DownArrowNavigator());
     }
 
-    @Override
     public void refresh() {
         repaint();
     }
@@ -233,15 +228,14 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
                 subContainer.repaint();
             }
         }
-        
+
         @Override
         public void mouseEntered(MouseEvent e) {
             if (page > 0 && currentPage > 0) {
                 upArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 upArrow.setIcon(new ImageIcon("images/arrowUpOnMouse.png"));
                 upArrow.repaint();
-            }
-            else{
+            } else {
                 upArrow.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         }
@@ -257,7 +251,7 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (page > 0 && currentPage < page-1) {
+            if (page > 0 && currentPage < page - 1) {
                 currentPage++;
                 createSeats();
                 subContainer.repaint();
@@ -267,12 +261,11 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            if (page > 0 && currentPage < page-1) {
+            if (page > 0 && currentPage < page - 1) {
                 downArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 downArrow.setIcon(new ImageIcon("images/arrowDownOnMouse.png"));
                 downArrow.repaint();
-            }
-            else{
+            } else {
                 downArrow.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         }
@@ -282,6 +275,5 @@ public class SystemTabPanel extends JPanel implements SystemTabView, Observer {
             downArrow.setIcon(new ImageIcon("images/arrowDown.png"));
             downArrow.repaint();
         }
-        
     }
 }

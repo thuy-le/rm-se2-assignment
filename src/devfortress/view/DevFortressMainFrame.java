@@ -4,11 +4,9 @@
  */
 package devfortress.view;
 
-import devfortress.view.interfaces.WelcomePanelView;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,7 +15,7 @@ import javax.swing.JPanel;
  *
  * @author PC
  */
-public class DevFortressMainFrame extends JFrame implements WelcomePanelView {
+public class DevFortressMainFrame extends JFrame {
 
     public static final String BG_IMAGE_PATH = "images/b7.jpg";
     private ImageIcon background;

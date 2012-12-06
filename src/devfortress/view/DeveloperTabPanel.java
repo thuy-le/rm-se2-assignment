@@ -14,7 +14,6 @@ import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.models.Skill;
 import devfortress.utilities.Colors;
-import devfortress.view.interfaces.DevTabView;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -36,7 +35,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -45,7 +43,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author PC
  */
-public class DeveloperTabPanel extends JPanel implements DevTabView, Observer {
+public class DeveloperTabPanel extends JPanel implements Observer {
 
     //initialize constant variables
     static private final float alpha = 0.8f;
@@ -85,7 +83,7 @@ public class DeveloperTabPanel extends JPanel implements DevTabView, Observer {
         developerList.setCellRenderer(new CustomListRenderer());
         developerList.setModel(devModel);
         //buttons
-        JPanel statusPanel = new JPanel(new GridLayout(1,3));
+        JPanel statusPanel = new JPanel(new GridLayout(1, 3));
         List<CustomButton> btnList = new LinkedList<CustomButton>();
         btnHire = new CustomButton("Hire");
         btnFeed = new CustomButton("Feed");
@@ -138,7 +136,7 @@ public class DeveloperTabPanel extends JPanel implements DevTabView, Observer {
         mainSkill.setFont(font);
         workingPrj.setFont(font);
         status.setFont(font);
-        status.setPreferredSize(new Dimension(100,30));
+        status.setPreferredSize(new Dimension(100, 30));
         developerDetail.setForeground(Colors.DARKBLUE);
         developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
         statusPanel.setBackground(Colors.LIGHTORANGE);
@@ -195,13 +193,12 @@ public class DeveloperTabPanel extends JPanel implements DevTabView, Observer {
         this.devName.setText(devName);
         this.devName.repaint();
     }
-    
-    public void setDevModel(DefaultListModel model){
+
+    public void setDevModel(DefaultListModel model) {
         this.devModel = model;
     }
-    
-    @Override
-    public DefaultListModel getDevModel(){
+
+    public DefaultListModel getDevModel() {
         return this.devModel;
     }
 
@@ -238,75 +235,62 @@ public class DeveloperTabPanel extends JPanel implements DevTabView, Observer {
         return new Dimension(width, height);
     }
 
-    @Override
     public int getSelectedIndex() {
         return developerList.getSelectedIndex();
     }
 
-    @Override
     public void setSelectedDeveloper(int index) {
         developerList.setSelectedIndex(index);
     }
 
-    @Override
     public Developer getSelectedDeveloper() {
         return (Developer) developerList.getSelectedValue();
     }
 
-    @Override
     public void addHireDevListener(MouseListener l) {
         btnHire.addMouseListener(l);
     }
 
-    @Override
     public void addFeedAllDevListener(MouseListener l) {
         btnFeed.addMouseListener(l);
     }
 
-    @Override
     public void addTrainDeveloperListener(MouseListener l) {
         btnTrain.addMouseListener(l);
     }
 
-    @Override
     public void addPartyListener(MouseListener l) {
         btnParty.addMouseListener(l);
     }
 
-    @Override
     public void addFeedSelectedDevListener(MouseListener l) {
         btnFeedDev.addMouseListener(l);
     }
 
-    @Override
     public void addFireDevListener(MouseListener l) {
         btnFireDev.addMouseListener(l);
     }
 
-    @Override
     public void addGiveBeerListener(MouseListener l) {
         btnPartyDev.addMouseListener(l);
     }
 
-    @Override
     public void showDeveloper(Developer dev) {
         if (dev == null) {
             rightPanel.setVisible(false);
         } else {
             rightPanel.setVisible(true);
             setDevName(dev.getName());
-            if(dev.isHappy()){
+            if (dev.isHappy()) {
                 isHappy.setIcon(new ImageIcon("images/happy.png"));
                 isHappy.repaint();
-            }
-            else{
+            } else {
                 isHappy.setIcon(new ImageIcon("images/unhappy.png"));
                 isHappy.repaint();
             }
-            if(dev.isFed()){
+            if (dev.isFed()) {
                 isDrunk.setIcon(new ImageIcon("images/drunk.png"));
-            }
-            else{
+            } else {
                 isDrunk.setIcon(new ImageIcon("images/notDrunk.png"));
             }
             Project p = dev.getWorkingProject();

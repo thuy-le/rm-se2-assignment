@@ -8,14 +8,9 @@ import devfortress.models.exceptions.InvalidDevDateException;
 import devfortress.models.DevDate;
 import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
-import devfortress.view.components.GlassPanel;
-import devfortress.view.components.CustomListPanel;
-import devfortress.view.components.CustomButton;
-import devfortress.view.components.CustomLabel;
 import devfortress.models.Project;
 import devfortress.utilities.Colors;
 import devfortress.view.components.*;
-import devfortress.view.interfaces.ProjectTabView;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -42,7 +37,7 @@ import javax.swing.table.TableModel;
  *
  * @author PC
  */
-public class ProjectTabPanel extends JPanel implements ProjectTabView, Observer {
+public class ProjectTabPanel extends JPanel implements Observer {
 
     //initialize constant variables
     static private final float alpha = 0.8f;
@@ -175,21 +170,17 @@ public class ProjectTabPanel extends JPanel implements ProjectTabView, Observer 
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
     }
 
-    @Override
     public void addNewProjectListener(MouseListener l) {
         btnAdd.addMouseListener(l);
     }
 
-    @Override
     public void cancelProjectListener(MouseListener l) {
     }
 
-    @Override
     public void addDevToProjectListener(MouseListener l) {
         btnAddDev.addMouseListener(l);
     }
 
-    @Override
     public void removeDevFromProjectListener(MouseListener l) {
         btnRemoveDev.addMouseListener(l);
     }

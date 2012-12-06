@@ -9,8 +9,6 @@ import devfortress.models.GameEngine;
 import devfortress.models.exceptions.DeveloperBusyException;
 import devfortress.models.exceptions.InsufficientBudgetException;
 import devfortress.view.*;
-import devfortress.view.interfaces.DevTabView;
-import devfortress.view.interfaces.SystemTabView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -24,16 +22,16 @@ import javax.swing.JOptionPane;
  */
 public class DeveloperTabController {
 
-    private DevTabView developerTab;
+    private DeveloperTabPanel developerTab;
     private GameEngine model;
     private HireDeveloperPanel hireDevPnl;
     private NavigationToolBar navBar;
     private InfomationPanel infoPnl;
     private DevFortressTabbedPane tabPne;
     private DevFortressMainFrame devFortress;
-    private SystemTabView tabSystem;
+    private SystemTabPanel tabSystem;
 
-    public DeveloperTabController(DevTabView view, GameEngine model, HireDeveloperPanel availableDev, NavigationToolBar navPane, InfomationPanel info, DevFortressTabbedPane tabPne, DevFortressMainFrame devFortress, SystemTabPanel tabSystem) {
+    public DeveloperTabController(DeveloperTabPanel view, GameEngine model, HireDeveloperPanel availableDev, NavigationToolBar navPane, InfomationPanel info, DevFortressTabbedPane tabPne, DevFortressMainFrame devFortress, SystemTabPanel tabSystem) {
         this.developerTab = view;
         this.model = model;
         this.hireDevPnl = availableDev;
