@@ -1,7 +1,9 @@
 package devfortress.view;
 
+import devfortress.models.DevDate;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
+import devfortress.models.exceptions.InvalidDevDateException;
 import devfortress.utilities.Colors;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
@@ -12,6 +14,7 @@ import devfortress.view.components.GlassPanel;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,6 +24,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -41,8 +46,8 @@ public class AddProjectPanel extends JPanel implements Observer {
     private static final Color color = Colors.MATENGA;
     private static final int X = 5;
     private static final int Y = 5;
-    private static final int PNL_WIDTH = 785;
-    private static final int PNL_HEIGHT = 555;
+    private static final int PANEL_WIDTH = 785;
+    private static final int PANEL_HEIGHT = 555;
     private static final int ARCH = 20;
     private static final int ARCW = 20;
     private static final float alpha = .7f;
@@ -61,7 +66,7 @@ public class AddProjectPanel extends JPanel implements Observer {
      * Constructor of the class.
      */
     public AddProjectPanel() {
-        projectPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 7, 7);
+        projectPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 0, 0);
         acceptProjectBtn = new CustomButton("Accept Project");
         closeBtn = new CustomButton("Close");
         projectListModel = new DefaultListModel();
@@ -72,7 +77,6 @@ public class AddProjectPanel extends JPanel implements Observer {
         mainSkillLbl = new JLabel("Skill ABC");
         budgetLbl = new JLabel("$100000?");
         deadlineLbl = new JLabel("1/1/1");
-        model = GameEngine.getInstance();
         init();
     }
 
@@ -122,6 +126,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         functionalTable.setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
         functionalTable.setRowHeight(25);
         // Set Font for labels:
+        title.setForeground(LIST_COLOR);
         projectPanelTitle.setForeground(LIST_COLOR);
         projectPanelTitle.setFont(bigFont);
         projectNameLbl.setFont(bigFont2);
@@ -161,7 +166,30 @@ public class AddProjectPanel extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        model = (GameEngine) o;
+        projectListModel.clear();
+        for (Project project : model.getMarketProjects()) {
+            projectListModel.addElement(project);
+        }
+        showProject((Project) projectList.getSelectedValue());
+    }
+
+    public synchronized void showProject(Project project) {
+        if (project == null) {
+            projectPanel.setVisible(false);
+            return;
+        }
+        // if (project != null)
+        DevDate deadline = null;
+        try {
+            deadline = GameEngine.getInstance().getDate().addMonths(project.getDuration());
+        } catch (InvalidDevDateException ex) {
+        }
+        projectPanel.setVisible(true);
+        projectNameLbl.setText(project.getName());
+        mainSkillLbl.setText("Skill: " + project.getMainRequirement().getName());
+        budgetLbl.setText("Budget: " + project.getBudget());
+        deadlineLbl.setText("Deadline: " + deadline.getWeek() + "/" + deadline.getMonth() + "/" + deadline.getYear());
     }
 
     @Override
@@ -171,6 +199,11 @@ public class AddProjectPanel extends JPanel implements Observer {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2d.setColor(color);
-        g2d.fillRoundRect(X, Y, PNL_WIDTH, PNL_HEIGHT, ARCW, ARCH);
+        g2d.fillRoundRect(X, Y, PANEL_WIDTH, PANEL_HEIGHT, ARCW, ARCH);
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
     }
 }

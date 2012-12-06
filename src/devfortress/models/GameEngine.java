@@ -217,17 +217,24 @@ public class GameEngine extends Observable {
         }
     }
 
-    /*
-     * Manage Projects
+    // Manage Projects
+    /**
+     * @return a list of current working projects
      */
     public List<Project> getProjects() {
         return new ReadOnlyList<Project>(projects);
     }
 
+    /**
+     * @return a list of new projects avalable to accept
+     */
     public List<Project> getMarketProjects() {
         return new ReadOnlyList<Project>(marketProjects);
     }
 
+    /**
+     * @return a list of past projects which the player had finished in the game 
+     */
     public List<Project> getPastProjects() {
         return new ReadOnlyList<Project>(pastProjects);
     }

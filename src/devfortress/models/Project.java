@@ -19,6 +19,7 @@ import java.util.Map;
  */
 public class Project {
 
+    private DevDate acceptedDate;
     private int duration, level, budget, bonus;
     private Map<AreaName, FunctionalArea> functionalAreas;
     private SkillInfo mainRequirement;
@@ -26,6 +27,7 @@ public class Project {
     private LinkedList<AreaName> areaNames;
 
     public Project() {
+        acceptedDate = null;
         this.duration = 1;
         this.level = 1;
         this.functionalAreas = new EnumMap<AreaName, FunctionalArea>(AreaName.class);
@@ -35,7 +37,16 @@ public class Project {
         calculateBudget();
     }
 
+    /* Setter */
+    public void setAcceptedDate(DevDate acceptedDate) {
+        this.acceptedDate = acceptedDate;
+    }
+
     /* Getters */
+    public DevDate getAcceptedDate() {
+        return acceptedDate;
+    }
+
     public int getBonus() {
         return bonus;
     }
@@ -76,7 +87,12 @@ public class Project {
         return new ReadOnlyList<Event>(events);
     }
 
-    /* Developers are added when project is created */
+    /**
+     * Developers are added when project is created
+     * @param dev
+     * @param area
+     * @exception InvalidFunctionalAreaException if the area is not exist in the project
+     */
     public void addDeveloper(Developer dev, AreaName area) throws DeveloperBusyException, InvalidFunctionalAreaException {
         FunctionalArea fArea = functionalAreas.get(area);
         if (fArea == null) {
@@ -85,7 +101,10 @@ public class Project {
         dev.acceptProject(this, area);
     }
 
-    /* Developers can be removed after each turn */
+    /**
+     * Developers can be removed after each turn
+     * @param dev
+     */
     public void removeDeveloper(Developer dev) {
         functionalAreas.get(dev.getWorkingArea()).removeDeveloper(dev);
         dev.leaveProject();
@@ -103,14 +122,18 @@ public class Project {
         events.add(event);
     }
 
-    /* Loop through all events and call take effect from each events */
+    /**
+     * Loop through all events and call take effect from each events 
+     */
     public void proceedEvents() {
         for (Event event : events) {
             event.takeEffect();
         }
     }
 
-    /* Advance to next week */
+    /**
+     * Advance to next week
+     */
     public void progress() {
         for (FunctionalArea areas : functionalAreas.values()) {
             areas.progress();
