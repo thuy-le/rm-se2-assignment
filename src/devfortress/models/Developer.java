@@ -6,6 +6,7 @@ import devfortress.enumerations.SkillInfo;
 import devfortress.enumerations.SkillTypes;
 import devfortress.utilities.ReadOnlyMap;
 import devfortress.utilities.Utilities;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedList;

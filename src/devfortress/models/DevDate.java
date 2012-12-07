@@ -70,4 +70,24 @@ public class DevDate {
     public void nextYear() {
         year++;
     }
+    
+    /**
+     * Used to calculate the deadline of the project.
+     * @param month 
+     * @return new <code>DevDate</code> base on the current <code>DevDate</code>
+     * object and the additional months
+     * @exception InvalidDevDateException if the month is negative
+     */
+    public DevDate addMonths(int month) throws InvalidDevDateException {
+        if (month < 0) {
+            throw new InvalidDevDateException();
+        }
+        int newMonth = this.month + month;
+        int newYear = this.year;
+        while(newMonth > 12) {
+            newYear++;
+            newMonth -= 12;
+        }
+        return new DevDate(newYear, newMonth, this.week);
+    }
 }

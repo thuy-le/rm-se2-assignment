@@ -10,6 +10,7 @@ import devfortress.enumerations.Expenses;
 import devfortress.enumerations.SkillInfo;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.Utilities;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -45,7 +46,7 @@ public class GameEngine extends Observable {
     /**
      * This method should only be called once
      */
-    public void initialize(String playerName, int budget) throws GameAlreadyInitializedException {
+    public void initialize(String playerName, int budget) throws GameAlreadyInitializedException, IOException {
         if (this.playerName.length() > 0) {
             throw new GameAlreadyInitializedException();
         } else {
@@ -54,7 +55,7 @@ public class GameEngine extends Observable {
         }
     }
 
-    public void initialize(String playerName) {
+    public void initialize(String playerName) throws IOException {
         this.playerName = playerName;
         this.budget = DEFAULT_BUDGET;
         this.generateRandomMarketDevelopers();
@@ -216,17 +217,24 @@ public class GameEngine extends Observable {
         }
     }
 
-    /*
-     * Manage Projects
+    // Manage Projects
+    /**
+     * @return a list of current working projects
      */
     public List<Project> getProjects() {
         return new ReadOnlyList<Project>(projects);
     }
 
+    /**
+     * @return a list of new projects avalable to accept
+     */
     public List<Project> getMarketProjects() {
         return new ReadOnlyList<Project>(marketProjects);
     }
 
+    /**
+     * @return a list of past projects which the player had finished in the game 
+     */
     public List<Project> getPastProjects() {
         return new ReadOnlyList<Project>(pastProjects);
     }
@@ -277,11 +285,12 @@ public class GameEngine extends Observable {
     /*
      * System
      */
-    public void nextWeek() throws GameOverException {
+    public void nextWeek() throws GameOverException, IOException {
         /*
          * Time changes
          */
         if (!ended) {
+            date.nextWeek();
             for (Developer dev : developers) {
                 dev.getTired();
             }
@@ -299,7 +308,7 @@ public class GameEngine extends Observable {
                 generateRandomMarketDevelopers();
                 generateRandomMarketProjects();
             }
-            date.nextWeek();
+			date.nextWeek();
             setChanged();
         } else {
             throw new GameOverException();
@@ -349,7 +358,7 @@ public class GameEngine extends Observable {
         }
     }
 
-    private void generateRandomMarketDevelopers() {
+    private void generateRandomMarketDevelopers() throws IOException {
         int num = Utilities.randInt(6) + 5;
         marketDevelopers.clear();
         for (int i = 0; i < num; i++) {
@@ -377,12 +386,10 @@ public class GameEngine extends Observable {
                     p.addEvent(event);
 
                 }
-//            }
-
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
     }
 
     private void allEventsTakeEffects() {
