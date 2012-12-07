@@ -23,8 +23,7 @@ import javax.swing.JPanel;
 public class AddDeveloperToProject extends JFrame {
 
     private Project project;
-    private CustomListPanel availDevsListPanel, addedDevsListPanel;
-    private List<Developer> availableDevs, addedDevs;
+    private List<Developer> availableDevs;
     private CustomButton addDevBtn, removeDevBtn, applyBtn, closeBtn;
 
     public AddDeveloperToProject(Project project) {
@@ -38,10 +37,8 @@ public class AddDeveloperToProject extends JFrame {
 //        addedDevs = project.getDevelopers();
 
         //mock up data
-        addedDevs = new LinkedList<Developer>();
         for (int i = 0; i < 10; i++) {
             availableDevs.add(new Developer());
-            addedDevs.add(new Developer());
         }
         //end mockup
         addDevBtn = new CustomButton("Add");
@@ -54,11 +51,7 @@ public class AddDeveloperToProject extends JFrame {
         addedBtns.add(addDevBtn);
         LinkedList<CustomButton> removeBtns = new LinkedList<CustomButton>();
         removeBtns.add(removeDevBtn);
-        availDevsListPanel = new CustomListPanel(avaiList, addedBtns);
-        addedDevsListPanel = new CustomListPanel(addedList, removeBtns);
         JPanel centerPanel = new JPanel(new GridLayout(1, 2));
-        centerPanel.add(availDevsListPanel);
-        centerPanel.add(addedDevsListPanel);
         add(centerPanel, BorderLayout.CENTER);
     }
 
