@@ -26,18 +26,22 @@ public class Utilities {
         if (names.isEmpty()) {
             try {
                 reader = new BufferedReader(new FileReader("babies.txt"));
+                String line = reader.readLine();
                 if (reader != null) {
                     String line = reader.readLine();
                     if (line != null) {
                         String babynames[] = line.split(",");
                         names.addAll(Arrays.asList(babynames));
                     }
-                }
+				}
             } catch (IOException ex) {
+                ex.printStackTrace();
             } finally {
-                try {
-                    reader.close();
-                } catch (IOException ex) {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException ex) {
+                    }
                 }
             }
         }
@@ -53,19 +57,19 @@ public class Utilities {
     }
 
     public static String getRandomName() {
-        if (!getNameList().isEmpty()) {
-            int index = rand.nextInt(getNameList().size());
-            return getNameList().get(index);
-        } else {
-            return "";
-        }
-    }
-
-    public static FunctionalArea getRandomFunctionalArea(List<AreaName> areaNames, int functionPoints, boolean visible) {
-        int index = Utilities.randInt(areaNames.size());
-        FunctionalArea fA = new FunctionalArea(areaNames.get(index), functionPoints, 0, visible);
-        areaNames.remove(areaNames.get(index));
-        return fA;
+-        if (!getNameList().isEmpty()) {
+-            int index = rand.nextInt(getNameList().size());
+-            return getNameList().get(index);
+-        } else {
+-            return "";
+-        }
+-    }
+-
+-    public static FunctionalArea getRandomFunctionalArea(List<AreaName> areaNames, int functionPoints, boolean visible) {
+-        int index = Utilities.randInt(areaNames.size());
+-        FunctionalArea fA = new FunctionalArea(areaNames.get(index), functionPoints, 0, visible);
+-        areaNames.remove(areaNames.get(index));
+-        return fA;
     }
 
     public static Skill getRandomSkill(ArrayList<SkillInfo> skills, int maxLvl) {

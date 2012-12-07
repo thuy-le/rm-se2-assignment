@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package devfortress.view.components;
 
 import java.awt.AlphaComposite;
@@ -16,11 +12,9 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
- *
- * @author PC
+ * A custom JPanel which could be transparent.
+ * @author Team Poseidon
  */
-
-//Create a class which could be transparent
 public class GlassPanel extends JPanel {
     //declare variables
     public int x;
@@ -31,7 +25,11 @@ public class GlassPanel extends JPanel {
     public Color colour;
     public int arcW;
     public int arcH;
-    //constructor
+    /**
+     * Simple constructor of <code>GlassPanel</code>.
+     * @param width width of the panel
+     * @param height height of the panel
+     */
     public GlassPanel(final int width, final int height){
         this.x = 0;
         this.y = 0;
@@ -43,6 +41,17 @@ public class GlassPanel extends JPanel {
         this.arcH = 0;
         setOpaque(false);
     }
+    /**
+     * Constructor of <code>GlassPanel</code>.
+     * @param x position of the panel on x axis
+     * @param y position of the panel on y axis
+     * @param width width of the panel
+     * @param height height of the panel
+     * @param alpha opacity rate of the background
+     * @param colour background color of the panel
+     * @param arcW the horizontal diameter of the arc at the four corners
+     * @param arcH the vertical diameter of the arc at the four corners
+     */
     public GlassPanel(final int x, final int y, final int width, final int height, final float alpha, final Color colour, final int arcW, final int arcH){
         this.x = x;
         this.y = y;
@@ -53,7 +62,7 @@ public class GlassPanel extends JPanel {
         this.arcW = arcW;
         this.arcH = arcH;
         setOpaque(false);
-        addContainerListener(new GlassPanelEvent());
+		addContainerListener(new GlassPanelEvent());
     }
     //override paintComponent method
     @Override
@@ -71,14 +80,15 @@ public class GlassPanel extends JPanel {
     public Dimension getPreferredSize(){
         return new Dimension(width, height);
     }
-    
-    private class GlassPanelEvent implements ContainerListener{
+
+    private class GlassPanelEvent implements ContainerListener {
 
         @Override
         public void componentAdded(ContainerEvent e) {
             if(e.getChild() instanceof JComponent){
                JComponent source = (JComponent) e.getContainer();
-               JComponent comp = (JComponent)e.getChild();             }
+               JComponent comp = (JComponent)e.getChild();
+			}
         }
 
         @Override
@@ -88,4 +98,3 @@ public class GlassPanel extends JPanel {
         
     }
 }
-

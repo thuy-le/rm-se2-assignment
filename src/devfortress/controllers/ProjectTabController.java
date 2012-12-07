@@ -1,11 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package devfortress.controllers;
 
 import devfortress.models.GameEngine;
-import devfortress.view.ProjectTabPanel;
+import devfortress.view.AddProjectPanel;
+import devfortress.view.interfaces.ProjectTabView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,12 +12,14 @@ import java.awt.event.MouseEvent;
  */
 public class ProjectTabController {
 
-    private ProjectTabPanel view;
+    private ProjectTabView view;
+    private AddProjectPanel addProjectPanel;
     private GameEngine model;
 
-    public ProjectTabController(ProjectTabPanel view, GameEngine model) {
+    public ProjectTabController(ProjectTabView view, GameEngine model) {
         this.view = view;
         this.model = model;
+        addProjectPanel = null;
     }
 
     public void initilize() {
@@ -34,6 +33,7 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            System.out.println("Clikced");
         }
     }
 

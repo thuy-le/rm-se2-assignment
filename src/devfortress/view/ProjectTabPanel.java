@@ -209,12 +209,14 @@ public class ProjectTabPanel extends JPanel implements Observer {
                 rightPanel.setVisible(true);
                 //set projectname... blah blah blah
                 prjName = new JLabel(project.getName());
-                DevDate today = GameEngine.getInstance().getDate();
-                DevDate date = new DevDate(today.getYear(), today.getMonth(), today.getWeek());
-                for (int i = 0; i < project.getDuration(); i++) {
-                    date.nextMonth();
+                DevDate acceptedDate = null;
+                if (project.getAcceptedDate() == null) {
+                    project.setAcceptedDate(GameEngine.getInstance().getDate());
                 }
-                deadline.setText("Deadline: " + date.getWeek() + "/" + date.getMonth() + "/" + date.getYear());
+                acceptedDate = project.getAcceptedDate();
+                DevDate deadlineDate = acceptedDate.addMonths(project.getDuration());
+                
+                deadline.setText("Deadline: " + deadlineDate.getWeek() + "/" + deadlineDate.getMonth() + "/" + deadlineDate.getYear());
                 cost.setText("Budget: " + project.getBudget());
                 info1.setText("Level: " + project.getLevel());
                 status.setText("Bonus: " + project.getBonus());
@@ -222,7 +224,6 @@ public class ProjectTabPanel extends JPanel implements Observer {
                 while (projTableModel.getRowCount() > 0) {
                     projTableModel.removeRow(projTableModel.getRowCount() - 1);
                 }
-                int count = 1;
                 for (FunctionalArea fA : project.getAreas().values()) {
                     Object[] rowData = {fA.getName().toString(), fA.getFunctionPoints()};
                     projTableModel.addRow(rowData);
