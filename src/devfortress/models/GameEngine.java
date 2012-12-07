@@ -55,7 +55,7 @@ public class GameEngine extends Observable {
         }
     }
 
-    public void initialize(String playerName) throws IOException {
+    public void initialize(String playerName) {
         this.playerName = playerName;
         this.budget = DEFAULT_BUDGET;
         this.generateRandomMarketDevelopers();
@@ -285,7 +285,7 @@ public class GameEngine extends Observable {
     /*
      * System
      */
-    public void nextWeek() throws GameOverException, IOException {
+    public void nextWeek() throws GameOverException {
         /*
          * Time changes
          */
@@ -308,7 +308,7 @@ public class GameEngine extends Observable {
                 generateRandomMarketDevelopers();
                 generateRandomMarketProjects();
             }
-			date.nextWeek();
+            date.nextWeek();
             setChanged();
         } else {
             throw new GameOverException();
@@ -358,7 +358,7 @@ public class GameEngine extends Observable {
         }
     }
 
-    private void generateRandomMarketDevelopers() throws IOException {
+    private void generateRandomMarketDevelopers() {
         int num = Utilities.randInt(6) + 5;
         marketDevelopers.clear();
         for (int i = 0; i < num; i++) {
@@ -380,16 +380,16 @@ public class GameEngine extends Observable {
             EffectFactory fact = EffectFactory.getInstance();
             for (Project p : projects) {
                 List<Developer> devs = p.getDevelopers();
-//            for (Developer dev : devs) {
+//                for (Developer dev : devs) {
                 for (int i = 0; i < 5; i++) {
                     Event event = new Event(fact.getRandomEffect(this), p);
                     p.addEvent(event);
-
                 }
+//                }
             }
-		catch (Exception ex) {
-			ex.printStackTrace();
-		}
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void allEventsTakeEffects() {
