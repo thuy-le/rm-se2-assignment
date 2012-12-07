@@ -7,7 +7,6 @@ package devfortress.view;
 import devfortress.models.Developer;
 import devfortress.models.Project;
 import devfortress.view.components.CustomButton;
-import devfortress.view.components.CustomListPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.LinkedList;

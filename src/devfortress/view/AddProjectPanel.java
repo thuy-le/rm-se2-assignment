@@ -25,11 +25,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -187,13 +186,13 @@ public class AddProjectPanel extends JPanel implements Observer {
             deadline = GameEngine.getInstance().getDate().addMonths(project.getDuration());
         } catch (InvalidDevDateException ex) {
         }
-        
+
         projectPanel.setVisible(true);
         projectNameLbl.setText(project.getName());
         mainSkillLbl.setText("Skill: " + project.getMainRequirement().getName());
         budgetLbl.setText("Budget: " + project.getBudget());
         deadlineLbl.setText("Deadline: " + deadline.getWeek() + "/" + deadline.getMonth() + "/" + deadline.getYear());
-        
+
         functionalTableModel.setColumnIdentifiers(new String[]{"Functional Area", "Function Point"});
         while (functionalTableModel.getColumnCount() > 0) {
             functionalTableModel.removeRow(functionalTableModel.getColumnCount() - 1);
@@ -218,5 +217,14 @@ public class AddProjectPanel extends JPanel implements Observer {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
+    }
+
+    public static void main(String[] a) {
+        JFrame frame = new JFrame();
+        frame.add(new AddProjectPanel());
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
