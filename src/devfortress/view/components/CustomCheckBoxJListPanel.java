@@ -41,10 +41,10 @@ import javax.swing.event.ListSelectionListener;
  */
 public class CustomCheckBoxJListPanel<T> extends JPanel {
 
-    private static final int X = 10;
+    private static final int X = 0;
     private static final int Y = 15;
     private static final int PNL_WIDTH = 272;
-    private static final int PNL_HEIGHT = 410;
+    private static final int PNL_HEIGHT = 520;
     private static final int ARCW = 7;
     private static final int ARCH = 7;
     private static final float ALPHA = .9f;
@@ -58,7 +58,6 @@ public class CustomCheckBoxJListPanel<T> extends JPanel {
         this.listModel = new DefaultListModel();
         this.jList = new JList(listModel);
         this.manager = new CheckListManager(jList);
-        setOpaque(false);
         init();
     }
 
@@ -90,7 +89,7 @@ public class CustomCheckBoxJListPanel<T> extends JPanel {
         scrollPane.getViewport().setBackground(Color.WHITE);
         //add components
         add(topPanel);
-//        scrollPane.getViewport().add(jList);
+        scrollPane.getViewport().add(jList);
     }
 
     public DefaultListModel getListModel() {
@@ -113,7 +112,7 @@ public class CustomCheckBoxJListPanel<T> extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        //super.paintComponent(g);
+        super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
@@ -127,7 +126,7 @@ public class CustomCheckBoxJListPanel<T> extends JPanel {
     public void setColor(Color color) {
         this.color = color;
         repaint();
-//        init();
+        init();
     }
 
     private class CheckListManager extends MouseAdapter implements ListSelectionListener, ActionListener {

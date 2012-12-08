@@ -7,6 +7,7 @@ package devfortress.view;
 import devfortress.models.Developer;
 import devfortress.models.Project;
 import devfortress.utilities.Colors;
+import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomCheckBoxJListPanel;
 import devfortress.view.components.GlassPanel;
 import java.awt.BorderLayout;
@@ -23,7 +24,7 @@ public class AddDeveloperToProject extends JFrame {
 
     private Project project;
     private CustomCheckBoxJListPanel devsJListPanel;
-//    private 
+    private CustomButton applyBtn, cancelBtn;
     private List<Developer> availableDevs;
 //    private CustomButton addDevBtn, removeDevBtn, applyBtn, closeBtn;
 
@@ -33,9 +34,10 @@ public class AddDeveloperToProject extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-        GlassPanel infoGPanel = new GlassPanel(10, 15, 480, 380, 1f, Colors.DARKBLUE, 7, 7);
-        GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.DARKBLUE, 7, 7);
-        devsJListPanel = new CustomCheckBoxJListPanel(Colors.DARKBLUE);
+        GlassPanel infoGPanel = new GlassPanel(10, 20, 480, 450, 1f, Colors.LIGHTBLUE2, 7, 7);
+        GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.LIGHTBLUE3, 7, 7);
+        GlassPanel sysPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.LIGHTBLUE3, 7, 7);
+        devsJListPanel = new CustomCheckBoxJListPanel(Colors.LIGHTBLUE2);
         DefaultListModel devsListModel = devsJListPanel.getListModel();
         availableDevs = new LinkedList<Developer>();
 //        addedDevs = project.getDevelopers();
@@ -51,6 +53,7 @@ public class AddDeveloperToProject extends JFrame {
         add(devsJListPanel, BorderLayout.WEST);
         add(infoGPanel, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
+        add(sysPanel, BorderLayout.NORTH);
         //end mockup
         //        addDevBtn = new CustomButton("Add");
         //        removeDevBtn = new CustomButton("Remove");
