@@ -78,6 +78,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         devModel = new DefaultListModel();
         skillModel = new DefaultTableModel(1, 2);
         rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.LIGHTORANGE, 7, 7);
+        //------Create a JList of developers
         developerList = new JList();
         developerList.addListSelectionListener(new MyListEvent());
         developerList.setCellRenderer(new CustomListRenderer());
@@ -88,7 +89,6 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         btnHire = new CustomButton("Hire");
         btnFeed = new CustomButton("Feed");
         btnParty = new CustomButton("Party");
-        CustomListPanel cl = new CustomListPanel(developerList, btnList);
         JLabel developerDetail = new JLabel("Developer Details");
         JPanel top = new JPanel();
         JPanel topR = new JPanel();
@@ -100,11 +100,11 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         JLabel imageIcon = new JLabel(imgIcon);
         Font font = new Font("Century Gothic", Font.BOLD, 17);
         setLayout(new BorderLayout());
-        //------Create a JList of developers
         btnList.add(btnHire);
         btnList.add(btnFeed);
         btnList.add(btnParty);
         //add button(s) and list together
+        CustomListPanel cl = new CustomListPanel(developerList, btnList);
         //-------Adjust look and feel
         btnHire.setButtonSize(0, 0, 55, 35);
         btnFeed.setButtonSize(0, 0, 55, 35);

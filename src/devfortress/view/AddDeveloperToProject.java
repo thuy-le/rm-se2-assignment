@@ -6,28 +6,14 @@ package devfortress.view;
 
 import devfortress.models.Developer;
 import devfortress.models.Project;
+import devfortress.utilities.Colors;
 import devfortress.view.components.CustomCheckBoxJListPanel;
+import devfortress.view.components.GlassPanel;
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.DefaultListSelectionModel;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -37,7 +23,6 @@ public class AddDeveloperToProject extends JFrame {
 
     private Project project;
     private CustomCheckBoxJListPanel devsJListPanel;
-    private JPanel infoPanel;
 //    private 
     private List<Developer> availableDevs;
 //    private CustomButton addDevBtn, removeDevBtn, applyBtn, closeBtn;
@@ -45,10 +30,12 @@ public class AddDeveloperToProject extends JFrame {
     public AddDeveloperToProject(Project project) {
         this.project = project;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(793, 500);
+        setSize(800, 600);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-        devsJListPanel = new CustomCheckBoxJListPanel();
+        GlassPanel infoGPanel = new GlassPanel(10, 15, 480, 380, 1f, Colors.DARKBLUE, 7, 7);
+        GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.DARKBLUE, 7, 7);
+        devsJListPanel = new CustomCheckBoxJListPanel(Colors.DARKBLUE);
         DefaultListModel devsListModel = devsJListPanel.getListModel();
         availableDevs = new LinkedList<Developer>();
 //        addedDevs = project.getDevelopers();
@@ -62,6 +49,8 @@ public class AddDeveloperToProject extends JFrame {
             devsListModel.addElement(dev);
         }
         add(devsJListPanel, BorderLayout.WEST);
+        add(infoGPanel, BorderLayout.CENTER);
+        add(btnPanel, BorderLayout.SOUTH);
         //end mockup
         //        addDevBtn = new CustomButton("Add");
         //        removeDevBtn = new CustomButton("Remove");

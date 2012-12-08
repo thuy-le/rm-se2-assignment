@@ -58,6 +58,15 @@ public class CustomCheckBoxJListPanel<T> extends JPanel {
         this.listModel = new DefaultListModel();
         this.jList = new JList(listModel);
         this.manager = new CheckListManager(jList);
+        setOpaque(false);
+        init();
+    }
+
+    public CustomCheckBoxJListPanel(Color color) {
+        this.color = color;
+        this.listModel = new DefaultListModel();
+        this.jList = new JList(listModel);
+        this.manager = new CheckListManager(jList);
         init();
     }
 
