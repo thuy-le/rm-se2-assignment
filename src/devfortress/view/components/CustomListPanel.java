@@ -89,6 +89,6 @@ public class CustomListPanel extends JPanel {
     public void setColor(Color color) {
         this.color = color;
         repaint();
-        init();
+//        init();
     }
 }

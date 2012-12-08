@@ -192,7 +192,6 @@ public class AddProjectPanel extends JPanel implements Observer {
         mainSkillLbl.setText("Skill: " + project.getMainRequirement().getName());
         budgetLbl.setText("Budget: " + project.getBudget());
         deadlineLbl.setText("Deadline: " + deadline.getWeek() + "/" + deadline.getMonth() + "/" + deadline.getYear());
-
         functionalTableModel.setColumnIdentifiers(new String[]{"Functional Area", "Function Point"});
         while (functionalTableModel.getColumnCount() > 0) {
             functionalTableModel.removeRow(functionalTableModel.getColumnCount() - 1);

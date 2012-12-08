@@ -284,4 +284,9 @@ public class Developer {
         }
         this.salary = totalPoint * 20;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
