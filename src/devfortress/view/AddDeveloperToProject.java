@@ -12,26 +12,20 @@ import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomCheckBoxJListPanel;
 import devfortress.view.components.GlassPanel;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author Team Poseidon
  */
-public class AddDeveloperToProject extends JFrame implements Observer, KeyListener {
+public class AddDeveloperToProject extends JFrame implements KeyListener {
 
     private Project project;
     private CustomCheckBoxJListPanel<Developer> devsJListPanel;
@@ -39,7 +33,7 @@ public class AddDeveloperToProject extends JFrame implements Observer, KeyListen
     private JLabel budgetLbl;
 //    private CustomButton addDevBtn, removeDevBtn, applyBtn, closeBtn;
 
-    public AddDeveloperToProject(Project project) {
+    public AddDeveloperToProject(GameEngine model, Project project) {
         this.project = project;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(790, 600);
@@ -54,9 +48,9 @@ public class AddDeveloperToProject extends JFrame implements Observer, KeyListen
         GlassPanel sysPanel = new GlassPanel(15, 0, 745, 30, 1f, Colors.LIGHTBLUE3, 7, 7);
         devsJListPanel = new CustomCheckBoxJListPanel<Developer>(Colors.LIGHTBLUE2);
         DefaultListModel devsListModel = devsJListPanel.getListModel();
-//        addedDevs = project.getDevelopers();
-
         //mock up data
+        //TODO: replace with free developers
+
         devsListModel.clear();
         for (int i = 0; i < 30; i++) {
             devsListModel.addElement(new Developer());
@@ -81,12 +75,6 @@ public class AddDeveloperToProject extends JFrame implements Observer, KeyListen
         btnPanel.add(btn1);
         btnPanel.add(btn2);
         devsJListPanel.addJListKeyListener(this);
-        //end mockup
-        //        addDevBtn = new CustomButton("Add");
-        //        removeDevBtn = new CustomButton("Remove");
-        //        applyBtn = new CustomButton("Apply");
-        //        closeBtn = new CustomButton("Cancel");
-
     }
 
     private void update() {
@@ -98,13 +86,8 @@ public class AddDeveloperToProject extends JFrame implements Observer, KeyListen
         budgetLbl.setText("Total Salary: " + totalSalary);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        update();
-    }
-
     public static void main(String[] args) {
-        JFrame frame = new AddDeveloperToProject(new Project());
+        JFrame frame = new AddDeveloperToProject(null, new Project());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
