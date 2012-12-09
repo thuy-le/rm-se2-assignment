@@ -79,6 +79,13 @@ public class CustomButton extends JPanel {
         repaint();
     }
 
+    /**
+     * Set position and size of the button.
+     * @param x
+     * @param y
+     * @param width
+     * @param height 
+     */
     public void setButtonSize(final int x, final int y, final int width, final int height) {
         this.x = x;
         this.y = y;

@@ -149,7 +149,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
         bottom.setBackground(contentColor);
         bottom.setLayout(new FlowLayout());
         btnAddDev.setButtonSize(0, 0, 175, 35);
-        btnRemoveDev.setButtonSize(0, 0, 175, 35);
+        btnRemoveDev.setButtonSize(0, 0, 185, 35);
         //add components
         bottom.add(btnAddDev);
         bottom.add(btnRemoveDev);
@@ -172,10 +172,10 @@ public class ProjectTabPanel extends JPanel implements Observer {
 
     public void addNewProjectListener(MouseListener l) {
         btnAdd.addMouseListener(l);
-        System.out.println("Add new project");
     }
 
     public void cancelProjectListener(MouseListener l) {
+        
     }
 
     public void addDevToProjectListener(MouseListener l) {

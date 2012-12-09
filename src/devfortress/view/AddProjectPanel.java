@@ -21,6 +21,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -60,7 +61,7 @@ public class AddProjectPanel extends JPanel implements Observer {
     private JLabel projectNameLbl, mainSkillLbl, budgetLbl, deadlineLbl;
     private DefaultTableModel functionalTableModel;
     private DefaultListModel projectListModel;
-    private Project newProject;
+    private Project acceptedProject;
     private GameEngine model;
 
     /**
@@ -158,6 +159,18 @@ public class AddProjectPanel extends JPanel implements Observer {
         add(projectListPanel, BorderLayout.WEST);
         add(projectPanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
+    }
+    
+    public Project getAcceptedProject() {
+        return acceptedProject;
+    }
+    
+    public void addAcceptProjectEvent(MouseListener l) {
+        acceptProjectBtn.addMouseListener(l);
+    }
+    
+    public void addCloseEvent(MouseListener l) {
+        closeBtn.addMouseListener(l);
     }
 
     @Override

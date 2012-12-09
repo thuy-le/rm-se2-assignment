@@ -25,22 +25,23 @@ public class DevFortressMain {
         InfomationPanel inf = new InfomationPanel();
         AboutScreenPanel aboutScr = new AboutScreenPanel();
         HireDeveloperPanel availableDev = new HireDeveloperPanel();
+        AddProjectPanel availableProject = new AddProjectPanel();
         //Views
-        DevFortressMainFrame devFortress = new DevFortressMainFrame(welCm, nav, inf);        
+        DevFortressMainFrame mainFrame = new DevFortressMainFrame(welCm, nav, inf);
         DeveloperTabPanel devTab = new DeveloperTabPanel();
         SystemTabPanel sysTab = new SystemTabPanel(devTab);
         ProjectTabPanel projTab = new ProjectTabPanel();
         EventTabPanel eventTab = new EventTabPanel();
         DevFortressTabbedPane tabPne = new DevFortressTabbedPane(devTab, projTab, sysTab, eventTab);
         //Controllers
-        MainFrameController gameController = new MainFrameController(devFortress, welCm, nav, inf, tabPne, aboutScr, model);
-        DeveloperTabController devController = new DeveloperTabController(devTab, model, availableDev, nav, inf, tabPne, devFortress, sysTab);
-        ProjectTabController projectController = new ProjectTabController(projTab, model);
+        MainFrameController gameController = new MainFrameController(mainFrame, welCm, nav, inf, tabPne, aboutScr, model);
+        DeveloperTabController devController = new DeveloperTabController(devTab, model, availableDev, nav, inf, tabPne, mainFrame, sysTab);
+        ProjectTabController projectController = new ProjectTabController(projTab, model, availableProject, mainFrame, tabPne, nav, inf);
         SystemTabController systemController = new SystemTabController(sysTab, model);
         //Controllers register views with listeners
         gameController.initialize();
-        devController.initilize();
-        projectController.initilize();
+        devController.initialize();
+        projectController.initialize();
         systemController.initilize();
         model.addObserver(inf);
         model.addObserver(sysTab);

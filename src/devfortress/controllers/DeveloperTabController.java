@@ -24,21 +24,21 @@ public class DeveloperTabController {
     private NavigationToolBar navBar;
     private InfomationPanel infoPnl;
     private DevFortressTabbedPane tabPne;
-    private DevFortressMainFrame devFortress;
+    private DevFortressMainFrame mainFrame;
     private SystemTabPanel tabSystem;
 
-    public DeveloperTabController(DeveloperTabPanel view, GameEngine model, HireDeveloperPanel availableDev, NavigationToolBar navPane, InfomationPanel info, DevFortressTabbedPane tabPne, DevFortressMainFrame devFortress, SystemTabPanel tabSystem) {
+    public DeveloperTabController(DeveloperTabPanel view, GameEngine model, HireDeveloperPanel availableDev, NavigationToolBar navPane, InfomationPanel info, DevFortressTabbedPane tabPne, DevFortressMainFrame mainFrame, SystemTabPanel tabSystem) {
         this.developerTab = view;
         this.model = model;
         this.hireDevPnl = availableDev;
         this.navBar = navPane;
         this.infoPnl = info;
         this.tabPne = tabPne;
-        this.devFortress = devFortress;
+        this.mainFrame = mainFrame;
         this.tabSystem = tabSystem;
     }
 
-    public void initilize() {
+    public void initialize() {
         //Feed all developers
         developerTab.addFeedAllDevListener(new FeedAllMouseListener());
         //Open new windown, choose developer to add
@@ -151,10 +151,10 @@ public class DeveloperTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             //JOptionPane.showMessageDialog(null, "Hire new");
-            devFortress.remove(tabPne);
+            mainFrame.remove(tabPne);
             infoPnl.setVisible(false);
             navBar.setVisible(false);
-            devFortress.add(hireDevPnl);
+            mainFrame.add(hireDevPnl);
 //            devFortress.repaint();
         }
     }
@@ -164,11 +164,11 @@ public class DeveloperTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             //JOptionPane.showMessageDialog(null, "Hire new");
-            devFortress.remove(hireDevPnl);
+            mainFrame.remove(hireDevPnl);
             infoPnl.setVisible(true);
             navBar.setVisible(true);
-            devFortress.add(tabPne);
-            devFortress.repaint();
+            mainFrame.add(tabPne);
+            mainFrame.repaint();
         }
     }
 

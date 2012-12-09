@@ -1,7 +1,12 @@
 package devfortress.controllers;
 
 import devfortress.models.GameEngine;
+import devfortress.models.Project;
 import devfortress.view.AddProjectPanel;
+import devfortress.view.DevFortressMainFrame;
+import devfortress.view.DevFortressTabbedPane;
+import devfortress.view.InfomationPanel;
+import devfortress.view.NavigationToolBar;
 import devfortress.view.ProjectTabPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,28 +17,46 @@ import java.awt.event.MouseEvent;
  */
 public class ProjectTabController {
 
-    private ProjectTabPanel view;
+    private ProjectTabPanel projectTab;
+    private DevFortressTabbedPane tabbedPane;
     private AddProjectPanel addProjectPanel;
+    private DevFortressMainFrame mainFrame;
+    private NavigationToolBar navBar;
+    private InfomationPanel infoPanel;
     private GameEngine model;
 
-    public ProjectTabController(ProjectTabPanel view, GameEngine model) {
-        this.view = view;
+    public ProjectTabController(ProjectTabPanel projectTab, GameEngine model,
+            AddProjectPanel addProjectPanel, DevFortressMainFrame mainFrame,
+            DevFortressTabbedPane tabbedPane,
+            NavigationToolBar navBar, InfomationPanel infoPanel) {
+        this.projectTab = projectTab;
         this.model = model;
-        addProjectPanel = null;
+        this.addProjectPanel = addProjectPanel;
+        this.mainFrame = mainFrame;
+        this.tabbedPane = tabbedPane;
+        this.navBar = navBar;
+        this.infoPanel = infoPanel;
     }
 
-    public void initilize() {
-        view.addNewProjectListener(new AddProjectListener());
-        view.addDevToProjectListener(new AddDevToProjectListener());
-        view.cancelProjectListener(new CancelProjectListener());
-        view.removeDevFromProjectListener(new RemoveDevFromProjectListener());
+    public void initialize() {
+        projectTab.addNewProjectListener(new AddProjectBtnListener());
+        projectTab.addDevToProjectListener(new AddDevToProjectListener());
+        projectTab.cancelProjectListener(new CancelProjectListener());
+        projectTab.removeDevFromProjectListener(new RemoveDevFromProjectListener());
+
+        addProjectPanel.addAcceptProjectEvent(new AcceptProjectListener());
+        addProjectPanel.addCloseEvent(new CloseAddProjectPanelListener());
     }
 
-    private class AddProjectListener extends MouseAdapter {
+    private class AddProjectBtnListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("Clikced");
+            mainFrame.remove(tabbedPane);
+            navBar.setVisible(false);
+            infoPanel.setVisible(false);
+            mainFrame.add(addProjectPanel);
+            mainFrame.repaint();
         }
     }
 
@@ -55,6 +78,26 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+        }
+    }
+
+    private class AcceptProjectListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            
+        }
+    }
+
+    private class CloseAddProjectPanelListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            mainFrame.remove(addProjectPanel);
+            infoPanel.setVisible(true);
+            navBar.setVisible(true);
+            mainFrame.add(tabbedPane);
+            mainFrame.repaint();
         }
     }
 }
