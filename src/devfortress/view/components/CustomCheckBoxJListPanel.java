@@ -43,7 +43,7 @@ import javax.swing.event.ListSelectionListener;
 public class CustomCheckBoxJListPanel<T> extends JPanel {
 
     private static final int X = 0;
-    private static final int Y = 15;
+    private static final int Y = 5;
     private static final int PNL_WIDTH = 272;
     private static final int PNL_HEIGHT = 520;
     private static final int ARCW = 7;
@@ -72,7 +72,7 @@ public class CustomCheckBoxJListPanel<T> extends JPanel {
 
     private void init() {
         removeAll();
-        GlassPanel topPanel = new GlassPanel(X, Y, PNL_WIDTH - 20, PNL_HEIGHT - 55, ALPHA, color, ARCW, ARCH);
+        GlassPanel listPanel = new GlassPanel(X, Y, PNL_WIDTH - 20, PNL_HEIGHT - 65, ALPHA, color, ARCW, ARCH);
         JScrollPane scrollPane = new JScrollPane(jList);
         JScrollBar sb = scrollPane.getVerticalScrollBar();
         sb.setUI(new MyScrollbarUI());
@@ -81,16 +81,17 @@ public class CustomCheckBoxJListPanel<T> extends JPanel {
         jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setPreferredSize(new Dimension(PNL_WIDTH - 30, PNL_HEIGHT - 80));
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        GlassPanel marginTop = new GlassPanel(0, 0, PNL_WIDTH, 10, 0f, null, 0, 0);
-        topPanel.add(marginTop, BorderLayout.NORTH);
-        topPanel.add(scrollPane, BorderLayout.CENTER);
+        GlassPanel marginTop = new GlassPanel(0, 0, PNL_WIDTH, 0, 0f, null, 0, 0);
+        listPanel.add(marginTop, BorderLayout.NORTH);
+        listPanel.add(scrollPane, BorderLayout.CENTER);
         scrollPane.getViewport().setOpaque(true);
         scrollPane.setOpaque(false);
         scrollPane.setBackground(Color.WHITE);
         scrollPane.getViewport().setBackground(Color.WHITE);
         //add components
-        add(topPanel);
+        add(listPanel);
         scrollPane.getViewport().add(jList);
+        setOpaque(false);
     }
 
     public DefaultListModel getListModel() {

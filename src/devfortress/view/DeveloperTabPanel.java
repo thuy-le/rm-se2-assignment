@@ -89,7 +89,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         btnHire = new CustomButton("Hire");
         btnFeed = new CustomButton("Feed");
         btnParty = new CustomButton("Party");
-        JLabel developerDetail = new JLabel("Developer Details");
+//        JLabel developerDetail = new JLabel("Developer Details");
         JPanel top = new JPanel();
         JPanel topR = new JPanel();
         devName = new JLabel("Developer Name");
@@ -129,7 +129,8 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         //adjust look and feel
         topR.setBackground(Colors.LIGHTORANGE);
         topR.setPreferredSize(new Dimension(220, 100));
-        topR.setLayout(new GridLayout(4, 1));
+        topR.setLayout(new GridLayout(3, 1));
+//        topR.setLayout(new GridLayout(4, 1));
         top.setBackground(Colors.LIGHTORANGE);
         top.setLayout(new GridLayout(1, 2));
         devName.setFont(font);
@@ -137,21 +138,19 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         workingPrj.setFont(font);
         status.setFont(font);
         status.setPreferredSize(new Dimension(100, 30));
-        developerDetail.setForeground(Colors.DARKBLUE);
-        developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
+        devName.setForeground(Colors.DARKBLUE);
+        devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
         statusPanel.setBackground(Colors.LIGHTORANGE);
         //add components
         statusPanel.add(status);
         statusPanel.add(isHappy);
         statusPanel.add(isDrunk);
         top.add(imageIcon);
-        topR.add(devName);
         topR.add(mainSkill);
         topR.add(workingPrj);
         topR.add(statusPanel);
         top.add(topR);
-        rightPanel.add(developerDetail, BorderLayout.NORTH);
-        rightPanel.add(top, BorderLayout.CENTER);
+
         add(rightPanel, BorderLayout.CENTER);
         //---Bottom:
         //adjust look and feel:
@@ -166,7 +165,8 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         bottom.add(btnFeedDev);
         bottom.add(btnPartyDev);
         bottom.add(btnTrain);
-
+        rightPanel.add(devName, BorderLayout.NORTH);
+        rightPanel.add(top, BorderLayout.CENTER);
         rightPanel.add(((CustomTable) table).getTableScroll(), BorderLayout.NORTH);
         rightPanel.add(bottom, BorderLayout.SOUTH);
 
@@ -315,7 +315,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             Object[] ids = {"Skill", "Level"};
             skillModel.setColumnIdentifiers(ids);
             table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            table.getColumnModel().getColumn(1).setMaxWidth(50);
+            table.getColumnModel().getColumn(1).setMaxWidth(70);
 
         }
         developerList.setSelectedValue(dev, true);

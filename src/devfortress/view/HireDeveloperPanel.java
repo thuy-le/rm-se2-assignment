@@ -142,7 +142,6 @@ public class HireDeveloperPanel extends JPanel implements Observer {
 
 
         bottom.setBackground(PNL_COLOR);
-        bottom.setLayout(new FlowLayout());
         title.setForeground(Colors.DARKBLUE);
         //add components
         topPnl.add(imageIcon);
@@ -236,7 +235,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             Object[] ids = {"Skill", "Level"};
             skillTableModel.setColumnIdentifiers(ids);
             skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            skillTable.getColumnModel().getColumn(1).setMaxWidth(50);
+            skillTable.getColumnModel().getColumn(1).setMaxWidth(70);
 
         }
     }

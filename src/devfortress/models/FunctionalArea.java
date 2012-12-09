@@ -91,4 +91,9 @@ public class FunctionalArea {
     public boolean removeDeveloper(Developer dev) {
         return developers.remove(dev);
     }
+
+    @Override
+    public String toString() {
+        return name.getName();
+    }
 }
