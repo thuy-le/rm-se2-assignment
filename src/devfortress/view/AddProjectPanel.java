@@ -67,7 +67,7 @@ public class AddProjectPanel extends JPanel implements Observer {
      * Constructor of the class.
      */
     public AddProjectPanel() {
-        projectPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 0, 0);
+        projectPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 7, 7);
         acceptProjectBtn = new CustomButton("Accept Project");
         closeBtn = new CustomButton("Close");
         projectListModel = new DefaultListModel();
@@ -100,8 +100,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         // panels inside projectPanel:
         JPanel projectInfoPanel = new JPanel();
         JPanel projectDetailsPanel = new JPanel();
-        JPanel projectCenterPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 0, 0);
-        JPanel projectBottomPanel = new JPanel();
+        JPanel projectCenterPanel = new GlassPanel(25, 25, 480, 365, 1f, PANEL_COLOR, 0, 0);
 
         // Add model for projectList:
         projectList.setModel(projectListModel);
@@ -143,18 +142,14 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectDetailsPanel.add(mainSkillLbl);
         projectDetailsPanel.add(budgetLbl);
         projectDetailsPanel.add(deadlineLbl);
-//        projectCenterPanel.setLayout(new BorderLayout());
         projectCenterPanel.add(projectInfoPanel, BorderLayout.CENTER);
         projectCenterPanel.add(functionalTable.getTableScroll(), BorderLayout.SOUTH);
         projectInfoPanel.setBackground(PANEL_COLOR);
         projectDetailsPanel.setBackground(PANEL_COLOR);
         projectCenterPanel.setBackground(PANEL_COLOR);
-        projectBottomPanel.setBackground(PANEL_COLOR);
         // Add components to projectPanel:
-//        projectPanel.setLayout(new BorderLayout());
         projectPanel.add(projectPanelTitle, BorderLayout.NORTH);
         projectPanel.add(projectCenterPanel, BorderLayout.CENTER);
-        projectPanel.add(projectBottomPanel, BorderLayout.SOUTH);
 
         headerPanel.add(title);
         bottomPanel.add(closeBtn);
