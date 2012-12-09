@@ -34,6 +34,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -61,7 +63,7 @@ public class AddProjectPanel extends JPanel implements Observer {
     private JLabel projectNameLbl, mainSkillLbl, budgetLbl, deadlineLbl;
     private DefaultTableModel functionalTableModel;
     private DefaultListModel projectListModel;
-    private Project acceptedProject;
+    private Project selectedProject;
     private GameEngine model;
 
     /**
@@ -106,6 +108,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         // Add model for projectList:
         projectList.setModel(projectListModel);
         projectList.setCellRenderer(new CustomListRenderer());
+        projectList.addListSelectionListener(new ProjectList_ListListener());
 
         // UI programming:
         // Project list:
@@ -160,15 +163,15 @@ public class AddProjectPanel extends JPanel implements Observer {
         add(projectPanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
     }
-    
-    public Project getAcceptedProject() {
-        return acceptedProject;
+
+    public Project getSelectedProject() {
+        return selectedProject;
     }
-    
+
     public void addAcceptProjectEvent(MouseListener l) {
         acceptProjectBtn.addMouseListener(l);
     }
-    
+
     public void addCloseEvent(MouseListener l) {
         closeBtn.addMouseListener(l);
     }
@@ -200,9 +203,9 @@ public class AddProjectPanel extends JPanel implements Observer {
         mainSkillLbl.setText("Skill: " + project.getMainRequirement().getName());
         budgetLbl.setText("Budget: " + project.getBudget());
         deadlineLbl.setText("Deadline: " + deadline.getWeek() + "/" + deadline.getMonth() + "/" + deadline.getYear());
-        functionalTableModel.setColumnIdentifiers(new String[]{"Functional Area", "Function Point"});
-        while (functionalTableModel.getColumnCount() > 0) {
-            functionalTableModel.removeRow(functionalTableModel.getColumnCount() - 1);
+        functionalTableModel.setColumnIdentifiers(new String[]{"Functional Area", "Point"});
+        while (functionalTableModel.getRowCount() > 0) {
+            functionalTableModel.removeRow(functionalTableModel.getRowCount() - 1);
         }
         for (FunctionalArea area : project.getAreas().values()) {
             functionalTableModel.addRow(new Object[]{area.getName(), area.getFunctionPoints()});
@@ -224,6 +227,17 @@ public class AddProjectPanel extends JPanel implements Observer {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
+    }
+
+    private class ProjectList_ListListener implements ListSelectionListener {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (projectList.getSelectedIndex() != -1) {
+                selectedProject = (Project) projectList.getSelectedValue();
+                showProject((Project) projectList.getSelectedValue());
+            }
+        }
     }
 
     public static void main(String[] a) {

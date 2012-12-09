@@ -48,6 +48,7 @@ public class DevFortressMain {
         model.addObserver(projTab);
         model.addObserver(devTab);
         model.addObserver(availableDev);
+        model.addObserver(availableProject);
         model.addObserver(eventTab);
     }
 }

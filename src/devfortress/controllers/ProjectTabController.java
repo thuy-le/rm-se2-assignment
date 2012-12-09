@@ -10,6 +10,7 @@ import devfortress.view.NavigationToolBar;
 import devfortress.view.ProjectTabPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -85,7 +86,15 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            
+            Project project = addProjectPanel.getSelectedProject();
+            if (project != null) {
+                // add project to project list:
+                model.acceptProject(project);
+                model.notifyObservers();
+                JOptionPane.showMessageDialog(null, "New project accepted:\n" + project.getName());
+            } else {
+                JOptionPane.showMessageDialog(null, "No Project selected");
+            }
         }
     }
 
