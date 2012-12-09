@@ -16,9 +16,11 @@ import devfortress.view.components.GlassPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Collection;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -56,16 +58,22 @@ public class AddDeveloperToProject extends JFrame {
         }
         Font font = new Font("Century Gothic", Font.BOLD, 17);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(790, 540);
+        setSize(800, 540);
         setResizable(false);
         setLocationRelativeTo(null);
         DefaultComboBoxModel cmbModel = new DefaultComboBoxModel(areas);
         String[] names = {"A", "B"};
-        skillTblModel = new DefaultTableModel(names, 5);
+        skillTblModel = new DefaultTableModel(names, 20);
         devName = new JLabel("Developer name");
-        mainSkill = new JLabel("Main skill");
+        mainSkill = new JLabel("Main skill: ");
         status = new JLabel("Status");
+        JPanel assignedArea = new JPanel();
+        assignedArea.setLayout(new BoxLayout(assignedArea, BoxLayout.X_AXIS));
+        JLabel assignLbl = new JLabel("Assign: ");
+        assignLbl.setFont(font);
+        assignedArea.add(assignLbl);
         pAreasCmB = new JComboBox(cmbModel);
+        assignedArea.add(pAreasCmB);
         skillTable = new CustomTable(skillTblModel);
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(colour);
@@ -83,7 +91,8 @@ public class AddDeveloperToProject extends JFrame {
         for (int i = 0; i < 30; i++) {
             devsListModel.addElement(new Developer());
         }
-        devName.setFont(font);
+        devName.setForeground(Colors.DARKBLUE);
+        devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
         mainSkill.setFont(font);
         status.setFont(font);
         panel.add(devsJListPanel, BorderLayout.WEST);
@@ -98,23 +107,33 @@ public class AddDeveloperToProject extends JFrame {
         btnPanel.setLayout(new GridLayout(1, 2));
         btnPanel.add(btn1);
         btnPanel.add(btn2);
+        //Now do the info panel
+        JPanel infoTopPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-        JPanel infoTopPanel = new JPanel(new GridLayout(1, 2));
-        infoTopPanel.setBackground(Colors.LIGHTORANGE);
         JPanel infoTopRightPanel = new JPanel(new GridLayout(3, 1));
+
+        infoTopPanel.setBackground(Colors.LIGHTORANGE);
         infoTopRightPanel.setBackground(Colors.LIGHTORANGE);
-        infoTopRightPanel.setPreferredSize(new Dimension(220, 100));
+        infoTopRightPanel.setPreferredSize(new Dimension(280, 100));
         infoTopRightPanel.add(mainSkill);
         infoTopRightPanel.add(status);
-        infoTopRightPanel.add(pAreasCmB);
+        infoTopRightPanel.add(assignedArea);
         infoTopPanel.add(new JLabel(new ImageIcon(picture)));
         infoTopPanel.add(infoTopRightPanel);
 
-
-        infoGPanel.setLayout(new BorderLayout());
-        infoGPanel.add(devName, BorderLayout.NORTH);
-        infoGPanel.add(infoTopPanel, BorderLayout.CENTER);
-        infoGPanel.add(skillTable, BorderLayout.NORTH);
+        JPanel innerPnl = new JPanel(new BorderLayout());
+        innerPnl.setOpaque(false);
+//        innerPnl.setSize(new Dimension(430, 440));
+        innerPnl.setBounds(15, 10, 470, 440);
+        JPanel northPanel = new JPanel();
+        northPanel.setOpaque(false);
+        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+        northPanel.add(devName);
+        northPanel.add(infoTopPanel);
+        innerPnl.add(northPanel, BorderLayout.NORTH);
+        innerPnl.add(((CustomTable) skillTable).getTableScroll(), BorderLayout.CENTER);
+        infoGPanel.setLayout(null);
+        infoGPanel.add(innerPnl);
         add(panel);
     }
 
