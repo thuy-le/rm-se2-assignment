@@ -20,6 +20,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -46,6 +49,8 @@ public class AddDeveloperToProject extends JFrame {
     private JComboBox pAreasCmB;
     private JTable skillTable;
     private DefaultTableModel skillTblModel;
+    private Map<Developer, FunctionalArea> assignMap;
+    private DefaultComboBoxModel cmbModel;
 
     public AddDeveloperToProject(GameEngine model, Project project) {
         this.project = project;
@@ -56,12 +61,18 @@ public class AddDeveloperToProject extends JFrame {
             areas = new FunctionalArea[pAreas.size()];
             pAreas.toArray(areas);
         }
+        assignMap = new HashMap<Developer, FunctionalArea>();
         Font font = new Font("Century Gothic", Font.BOLD, 17);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800, 540);
         setResizable(false);
         setLocationRelativeTo(null);
-        DefaultComboBoxModel cmbModel = new DefaultComboBoxModel(areas);
+        cmbModel = new DefaultComboBoxModel();
+        System.out.println(areas.length);
+        for (FunctionalArea area : areas) {
+            cmbModel.addElement(area);
+        }
+        cmbModel.setSelectedItem(null);
         String[] names = {"A", "B"};
         skillTblModel = new DefaultTableModel(names, 20);
         devName = new JLabel("Developer name");
@@ -123,7 +134,6 @@ public class AddDeveloperToProject extends JFrame {
 
         JPanel innerPnl = new JPanel(new BorderLayout());
         innerPnl.setOpaque(false);
-//        innerPnl.setSize(new Dimension(430, 440));
         innerPnl.setBounds(15, 10, 470, 440);
         JPanel northPanel = new JPanel();
         northPanel.setOpaque(false);
@@ -135,6 +145,10 @@ public class AddDeveloperToProject extends JFrame {
         infoGPanel.setLayout(null);
         infoGPanel.add(innerPnl);
         add(panel);
+    }
+
+    private void showDeveloper(Developer dev) {
+        cmbModel.setSelectedItem(assignMap.get(dev));
     }
 
     public static void main(String[] args) {
