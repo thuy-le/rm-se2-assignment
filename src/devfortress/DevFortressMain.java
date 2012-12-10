@@ -26,6 +26,7 @@ public class DevFortressMain {
         AboutScreenPanel aboutScr = new AboutScreenPanel();
         HireDeveloperPanel availableDev = new HireDeveloperPanel();
         AddProjectPanel availableProject = new AddProjectPanel();
+        WelcomePanel welcome = new WelcomePanel();
         //Views
         DevFortressMainFrame mainFrame = new DevFortressMainFrame(welCm, nav, inf);
         DeveloperTabPanel devTab = new DeveloperTabPanel();
@@ -34,7 +35,7 @@ public class DevFortressMain {
         EventTabPanel eventTab = new EventTabPanel();
         DevFortressTabbedPane tabPne = new DevFortressTabbedPane(devTab, projTab, sysTab, eventTab);
         //Controllers
-        MainFrameController gameController = new MainFrameController(mainFrame, welCm, nav, inf, tabPne, aboutScr, model);
+        MainFrameController gameController = new MainFrameController(mainFrame, welCm, nav, inf, tabPne, aboutScr, model, welcome);
         DeveloperTabController devController = new DeveloperTabController(devTab, model, availableDev, nav, inf, tabPne, mainFrame, sysTab);
         ProjectTabController projectController = new ProjectTabController(projTab, model, availableProject, mainFrame, tabPne, nav, inf);
         SystemTabController systemController = new SystemTabController(sysTab, model);

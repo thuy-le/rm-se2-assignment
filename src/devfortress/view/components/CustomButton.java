@@ -25,21 +25,24 @@ import javax.swing.JPanel;
 public class CustomButton extends JPanel {
 
     //declare constant variables 
-    private static final int arcW = 5;
-    private static final int arcH = 5;
+    private static final int ARCW = 5;
+    private static final int ARCH = 5;
     private static final int BTN_WIDTH = 150;
     private static final int BTN_HEIGHT = 35;
-    private static final Font f = new Font("Century Gothic", Font.BOLD, 17);
     //declare variables
     private int x;
     private int y;
     private int width;
     private int height;
+    private int arcH;
+    private int arcW;
+    private float alpha;
     private Color colour;
     private Color textColour;
     private Color onMouseColor;
     private String text;
     private boolean isActive;
+    private Font font;
 
     //constructor
     public CustomButton(String text) {
@@ -54,10 +57,24 @@ public class CustomButton extends JPanel {
         this.setOpaque(false);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.isActive = true;
+        this.alpha = 1f;
+        this.arcH = ARCH;
+        this.arcW = ARCW;
+        this.font = new Font("Century Gothic", Font.BOLD, 17);
         addMouseListener(new CustomButtonEvent(colour, onMouseColor));
     }
 
     //accessors and mutators
+    public void setAlpha(float a){
+        this.alpha = a;
+        repaint();
+    }
+    
+    public void setCustomFont(Font f){
+        this.font = f;
+        repaint();
+    }
+    
     public void setColour(Color colour) {
         this.colour = colour;
         repaint();
@@ -76,6 +93,11 @@ public class CustomButton extends JPanel {
 
     public void setText(String text) {
         this.text = text;
+        repaint();
+    }
+    
+    public void setArc(int arc){
+        this.arcH = arc;
         repaint();
     }
 
@@ -116,7 +138,7 @@ public class CustomButton extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         if (colour != null) {
             if (isActive) {
                 g2d.setColor(colour);
@@ -125,15 +147,15 @@ public class CustomButton extends JPanel {
             }
         }
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
-        g.setFont(f);
+        g.setFont(font);
         if (isActive) {
             g.setColor(textColour);
         } else {
             g.setColor(Colors.LIGHTGREY);
         }
         FontMetrics fm = g.getFontMetrics();
-        int fx = (width - fm.stringWidth(text)) / 2;
-        int fy = (fm.getAscent() + (height - (fm.getAscent() + fm.getDescent())) / 2);
+        int fx = (width + x*2 - fm.stringWidth(text)) / 2;
+        int fy = (fm.getAscent() + (height + y - (fm.getAscent() + fm.getDescent())) / 2);
         g.drawString(text, fx, fy);
     }
 
@@ -149,7 +171,7 @@ public class CustomButton extends JPanel {
         private Color onMouseColour;
         private CustomButton btn;
 
-        public CustomButtonEvent(Color oldColour, Color newColour) {;
+        public CustomButtonEvent(Color oldColour, Color newColour) {
             this.onMouseColour = oldColour;
             this.colour = newColour;
             this.btn = CustomButton.this;

@@ -21,8 +21,9 @@ public class MainFrameController {
     private InfomationPanel infoPnl;
     private AboutScreenPanel aboutPnl;
     private GameEngine model;
+    private WelcomePanel welcome;
 
-    public MainFrameController(DevFortressMainFrame mainFrame, NewGameWelcomePanel welCm, NavigationToolBar navPne, InfomationPanel infoPnl, DevFortressTabbedPane tabPne, AboutScreenPanel aboutPnl, GameEngine model) {
+    public MainFrameController(DevFortressMainFrame mainFrame, NewGameWelcomePanel welCm, NavigationToolBar navPne, InfomationPanel infoPnl, DevFortressTabbedPane tabPne, AboutScreenPanel aboutPnl, GameEngine model, WelcomePanel welcome) {
         this.mainFrame = mainFrame;
         this.welCm = welCm;
         this.aboutPnl = aboutPnl;
@@ -30,6 +31,7 @@ public class MainFrameController {
         this.infoPnl = infoPnl;
         this.tabPne = tabPne;
         this.model = model;
+        this.welcome = welcome;
     }
 
     /**
@@ -43,7 +45,19 @@ public class MainFrameController {
         navBar.addNewGameListener(new NewGameListener());
         navBar.addSaveGameListener(new SaveGameListener());
         aboutPnl.addBackListener(new AboutBackBtnListener());
+        welcome.addNewGameListener(new OpenNewGameListener());
 
+    }
+    
+    private class OpenNewGameListener extends MouseAdapter{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            mainFrame.remove(welcome.getContainer());
+            //welCm.getContainer().setVisible(true);
+            mainFrame.getContentPane().add(welCm.getContainer(), BorderLayout.CENTER);
+            mainFrame.getContentPane().repaint();
+        }        
     }
 
     private class NextWeekListener extends MouseAdapter {
