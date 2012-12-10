@@ -13,10 +13,12 @@ import javax.swing.JPanel;
 
 /**
  * A custom JPanel which could be transparent.
+ *
  * @author Team Poseidon
  */
 public class GlassPanel extends JPanel {
     //declare variables
+
     public int x;
     public int y;
     public int width;
@@ -25,12 +27,15 @@ public class GlassPanel extends JPanel {
     public Color colour;
     public int arcW;
     public int arcH;
+
     /**
-     * Simple constructor of <code>GlassPanel</code>.
+     * Simple constructor of
+     * <code>GlassPanel</code>.
+     *
      * @param width width of the panel
      * @param height height of the panel
      */
-    public GlassPanel(final int width, final int height){
+    public GlassPanel(final int width, final int height) {
         this.x = 0;
         this.y = 0;
         this.width = width;
@@ -41,8 +46,11 @@ public class GlassPanel extends JPanel {
         this.arcH = 0;
         setOpaque(false);
     }
+
     /**
-     * Constructor of <code>GlassPanel</code>.
+     * Constructor of
+     * <code>GlassPanel</code>.
+     *
      * @param x position of the panel on x axis
      * @param y position of the panel on y axis
      * @param width width of the panel
@@ -52,7 +60,7 @@ public class GlassPanel extends JPanel {
      * @param arcW the horizontal diameter of the arc at the four corners
      * @param arcH the vertical diameter of the arc at the four corners
      */
-    public GlassPanel(final int x, final int y, final int width, final int height, final float alpha, final Color colour, final int arcW, final int arcH){
+    public GlassPanel(final int x, final int y, final int width, final int height, final float alpha, final Color colour, final int arcW, final int arcH) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -62,22 +70,25 @@ public class GlassPanel extends JPanel {
         this.arcW = arcW;
         this.arcH = arcH;
         setOpaque(false);
-		addContainerListener(new GlassPanelEvent());
+        addContainerListener(new GlassPanelEvent());
     }
     //override paintComponent method
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        if(colour!=null)
-        g2d.setColor(colour);
+        if (colour != null) {
+            g2d.setColor(colour);
+        }
         g2d.fillRoundRect(x, y, width, height, arcW, arcH);
     }
     //override getPreferredSize method
+
     @Override
-    public Dimension getPreferredSize(){
+    public Dimension getPreferredSize() {
         return new Dimension(width, height);
     }
 
@@ -85,16 +96,15 @@ public class GlassPanel extends JPanel {
 
         @Override
         public void componentAdded(ContainerEvent e) {
-            if(e.getChild() instanceof JComponent){
-               JComponent source = (JComponent) e.getContainer();
-               JComponent comp = (JComponent)e.getChild();
-			}
+            if (e.getChild() instanceof JComponent) {
+                JComponent source = (JComponent) e.getContainer();
+                JComponent comp = (JComponent) e.getChild();
+            }
         }
 
         @Override
         public void componentRemoved(ContainerEvent e) {
             //System.out.println("Component removed");
         }
-        
     }
 }

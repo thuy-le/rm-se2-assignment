@@ -20,34 +20,66 @@ import javax.swing.table.TableModel;
 public class CustomTable extends JTable {
 
     private JScrollPane tableScroll;
+    private Color scrollBackground;
+    private Color headerBackgrond;
+    private Color headerForeground;
+    private Color borderColor;
+    private int width;
+    private int height;
 
     public CustomTable(TableModel dm) {
         super(dm);
+        scrollBackground = Colors.ORANGE;
+        headerBackgrond = Colors.ORANGE;
+        headerForeground = Color.WHITE;
+        borderColor = Colors.ORANGE;
+        width = 440;
+        height = 180;
+        init();
+    }
+    
+    private void init(){
         setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
+        setBorder(BorderFactory.createLineBorder(borderColor, 1));
         setRowHeight(25);
         JTableHeader header = getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
+        header.setBorder(BorderFactory.createLineBorder(borderColor, 1));
         header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(Colors.ORANGE);
-        header.setForeground(Color.WHITE);
+        header.setBackground(headerBackgrond);
+        header.setForeground(headerForeground);
         tableScroll = new JScrollPane(this);
         tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(440, 180));
-        tableScroll.setBackground(Colors.ORANGE);
-        tableScroll.getViewport().setBackground(Colors.ORANGE);
+        tableScroll.setPreferredSize(new Dimension(width, height));
+        tableScroll.setBackground(scrollBackground);
+        tableScroll.getViewport().setBackground(scrollBackground);
         JScrollBar sb = tableScroll.getVerticalScrollBar();
         sb.setUI(new MyScrollbarUI());
-
-        JTableHeader skillTableHeader = getTableHeader();
-        skillTableHeader.setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
-        skillTableHeader.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        skillTableHeader.setBackground(Colors.ORANGE);
-        skillTableHeader.setForeground(Color.WHITE);
     }
 
     public JScrollPane getTableScroll() {
         return tableScroll;
+    }
+    
+    public void setTableSize(int w, int h){
+        this.width = w;
+        this.height = h;
+        init();
+    }
+    
+    public void setHeaderColors(Color foreground, Color background){
+        this.headerForeground = foreground;
+        this.headerBackgrond = background;
+        init();
+    }
+    
+    public void setScrollBackground(Color c){
+        this.scrollBackground = c;
+        init();
+    }
+    
+    public void setBorderColor(Color c){
+        this.borderColor = c;
+        init();
     }
 
     @Override

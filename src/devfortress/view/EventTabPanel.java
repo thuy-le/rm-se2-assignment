@@ -11,6 +11,7 @@ import devfortress.view.components.GlassPanel;
 import devfortress.utilities.Colors;
 import devfortress.view.components.CustomLabel;
 import devfortress.view.components.CustomTable;
+import devfortress.view.components.MyScrollbarUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,6 +19,8 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -45,13 +48,14 @@ public class EventTabPanel extends JPanel implements Observer {
     private JLabel projectName;
     private JTable eventTable;
     private DefaultTableModel tableModel;
+    private JLabel eventDescription;
 
     //constructor
     public EventTabPanel() {
         setOpaque(false);
         init();
     }
-
+    
     private void showEvent() {
         if (listProject.size() > 0) {
             page = listProject.size();
@@ -65,41 +69,56 @@ public class EventTabPanel extends JPanel implements Observer {
                 leftArrow.setVisible(false);
                 rightArrow.setVisible(false);
             }
-
+            
             Project currentProject = listProject.get(currentPage);
             projectName.setText(currentProject.getName());
             int i = 1;
             System.out.println("Event Size: " + currentProject.getEvents().size());
+            while (tableModel.getRowCount() > 0) {
+                tableModel.removeRow(tableModel.getRowCount() - 1);
+            }
+            Object[] ids = {"Skill", "Level"};
+            tableModel.setColumnIdentifiers(ids);
             for (Event event : currentProject.getEvents()) {
                 Object[] rowData = {i, event.getDescription()};
                 tableModel.addRow(rowData);
                 i++;
             }
-
-
         }
     }
-
+    
     private void init() {
+        eventDescription = new JLabel("This is the event description. It'll help you to have a more specific about every happening event in your project(s)");
         /*
          * ########### initialize variables ##########
          */
         //$$$$$-----Global variables
-        subContainer = new GlassPanel(550, 400);
+        subContainer = new GlassPanel(650,400);
         top = new GlassPanel(550, 55);
         projectName = new JLabel("") {
-
+            
             @Override
             protected void paintComponent(Graphics g) {
                 ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 super.paintComponent(g);
             }
         };
+        
         tableModel = new DefaultTableModel(1, 2);
         eventTable = new CustomTable(tableModel);
+        eventTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        eventTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        eventTable.getColumnModel().getColumn(1).setMinWidth(400);
+        ((CustomTable) eventTable).setTableSize(500, 340);
+        ((CustomTable) eventTable).setHeaderColors(Colors.LIGHTBLUE, Colors.DARKBLUE);
+        ((CustomTable) eventTable).setBorderColor(Colors.DARKBLUE);
+        ((CustomTable) eventTable).setScrollBackground(Colors.LIGHTBLUE);
         //$$$$$-----Local variable for UI
         GlassPanel marginTop = new GlassPanel(250, 15);
         GlassPanel gp3 = new GlassPanel(15, 15, 250, 390, .9f, Colors.YELLOW, 15, 15);
+        JPanel tableContainer = new GlassPanel(0,5,500,340,1f,Colors.DARKBLUE,0,0);
+        tableContainer.setBackground(Colors.DARKBLUE);
+        tableContainer.setPreferredSize(new Dimension(500,320));
         leftArrow = new CustomLabel("");
         rightArrow = new CustomLabel("");
         leftArrow.setIcon(new ImageIcon("images/arrowLeft.png"));
@@ -127,10 +146,11 @@ public class EventTabPanel extends JPanel implements Observer {
         top.add(nameContainer, BorderLayout.CENTER);
         top.add(rightArrow, BorderLayout.EAST);
         subContainer.add(top, BorderLayout.NORTH);
-        subContainer.add(eventTable, BorderLayout.CENTER);
+        tableContainer.add(((CustomTable) eventTable).getTableScroll());
+        subContainer.add(tableContainer, BorderLayout.CENTER);
         setUpArrowListener();
         setDownArrowListener();
-
+        
     }
 
     //override the paint component method
@@ -151,33 +171,32 @@ public class EventTabPanel extends JPanel implements Observer {
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
     }
-
+    
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
-
+    
     public int getPage() {
         return page;
     }
-
+    
     @Override
     public void update(Observable o, Object arg) {
         GameEngine model = (GameEngine) o;
         listProject = model.getProjects();
         showEvent();
-        String welcomeStr = "<html>Hi, " + model.getPlayerName() + " ◕‿◕</html>";
     }
-
+    
     public void setUpArrowListener() {
         leftArrow.addMouseListener(new UpArrowNavigator());
     }
-
+    
     public void setDownArrowListener() {
         rightArrow.addMouseListener(new DownArrowNavigator());
     }
-
+    
     private class UpArrowNavigator extends MouseAdapter {
-
+        
         @Override
         public void mouseClicked(MouseEvent e) {
             if (page > 0 && currentPage > 0) {
@@ -186,7 +205,7 @@ public class EventTabPanel extends JPanel implements Observer {
                 subContainer.repaint();
             }
         }
-
+        
         @Override
         public void mouseEntered(MouseEvent e) {
             if (page > 0 && currentPage > 0) {
@@ -197,16 +216,16 @@ public class EventTabPanel extends JPanel implements Observer {
                 leftArrow.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         }
-
+        
         @Override
         public void mouseExited(MouseEvent e) {
             leftArrow.setIcon(new ImageIcon("images/arrowLeft.png"));
             leftArrow.repaint();
         }
     }
-
+    
     private class DownArrowNavigator extends MouseAdapter {
-
+        
         @Override
         public void mouseClicked(MouseEvent e) {
             if (page > 0 && currentPage < page - 1) {
@@ -214,9 +233,9 @@ public class EventTabPanel extends JPanel implements Observer {
                 showEvent();
                 subContainer.repaint();
             }
-
+            
         }
-
+        
         @Override
         public void mouseEntered(MouseEvent e) {
             if (page > 0 && currentPage < page - 1) {
@@ -227,7 +246,7 @@ public class EventTabPanel extends JPanel implements Observer {
                 rightArrow.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
         }
-
+        
         @Override
         public void mouseExited(MouseEvent e) {
             rightArrow.setIcon(new ImageIcon("images/arrowRight.png"));
