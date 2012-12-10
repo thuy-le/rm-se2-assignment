@@ -20,7 +20,7 @@ public class DevFortressMain {
         //Model
         GameEngine model = GameEngine.getInstance();
         //GUI Components
-        WelcomePanel welCm = new WelcomePanel();
+        NewGameWelcomePanel welCm = new NewGameWelcomePanel();
         NavigationToolBar nav = new NavigationToolBar();
         InfomationPanel inf = new InfomationPanel();
         AboutScreenPanel aboutScr = new AboutScreenPanel();

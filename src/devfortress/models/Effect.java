@@ -10,7 +10,7 @@ public abstract class Effect {
     protected GameEngine engine;
 
     public Effect() {
-        description = "";
+        description = "Default";
     }
 
     public void setEngine(GameEngine engine) {

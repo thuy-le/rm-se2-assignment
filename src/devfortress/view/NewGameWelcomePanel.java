@@ -28,7 +28,7 @@ import javax.swing.text.DocumentFilter.FilterBypass;
  *
  * @author PC
  */
-public class WelcomePanel{
+public class NewGameWelcomePanel{
 
     private int x, y, width, height, arcH, arcW;
     private float alpha;
@@ -38,7 +38,7 @@ public class WelcomePanel{
     private CustomButton submitName;
     private JPanel container;
 
-    public WelcomePanel() {
+    public NewGameWelcomePanel() {
         this.x = 20;
         this.y = 25;
         this.width = 755;

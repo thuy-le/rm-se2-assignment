@@ -22,7 +22,7 @@ public class Event {
         if (implementor != null) {
             return implementor.getEventDescription();
         } else {
-            return "";
+            return "Null Event";
         }
     }
 

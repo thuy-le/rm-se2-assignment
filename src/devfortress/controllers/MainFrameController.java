@@ -15,14 +15,14 @@ import javax.swing.JOptionPane;
 public class MainFrameController {
 
     private DevFortressMainFrame mainFrame;
-    private WelcomePanel welCm;
+    private NewGameWelcomePanel welCm;
     private DevFortressTabbedPane tabPne;
     private NavigationToolBar navBar;
     private InfomationPanel infoPnl;
     private AboutScreenPanel aboutPnl;
     private GameEngine model;
 
-    public MainFrameController(DevFortressMainFrame mainFrame, WelcomePanel welCm, NavigationToolBar navPne, InfomationPanel infoPnl, DevFortressTabbedPane tabPne, AboutScreenPanel aboutPnl, GameEngine model) {
+    public MainFrameController(DevFortressMainFrame mainFrame, NewGameWelcomePanel welCm, NavigationToolBar navPne, InfomationPanel infoPnl, DevFortressTabbedPane tabPne, AboutScreenPanel aboutPnl, GameEngine model) {
         this.mainFrame = mainFrame;
         this.welCm = welCm;
         this.aboutPnl = aboutPnl;

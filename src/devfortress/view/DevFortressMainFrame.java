@@ -22,7 +22,7 @@ public class DevFortressMainFrame extends JFrame {
     private JPanel contentPane;
 
     //constructor
-    public DevFortressMainFrame(WelcomePanel welCm, NavigationToolBar navBar, InfomationPanel infoPnl) {
+    public DevFortressMainFrame(NewGameWelcomePanel welCm, NavigationToolBar navBar, InfomationPanel infoPnl) {
         //initialization
         background = new ImageIcon(BG_IMAGE_PATH);
         contentPane = new CustomJPanel();
