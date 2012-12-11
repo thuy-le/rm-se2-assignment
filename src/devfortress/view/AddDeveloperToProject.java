@@ -32,8 +32,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -44,11 +46,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Team Poseidon
  */
-public class AddDeveloperToProject extends JFrame implements ActionListener, ListSelectionListener {
+public class AddDeveloperToProject extends JDialog implements ActionListener, ListSelectionListener {
 
     static private final String picture = "images/i6.png";
     static private final Color colour = Colors.LIGHTBLUE;
-    private Project project;
     private CustomCheckBoxJListPanel<Developer> devsJListPanel;
     private CustomButton applyBtn, cancelBtn;
     private JLabel devName, mainSkill;
@@ -59,7 +60,6 @@ public class AddDeveloperToProject extends JFrame implements ActionListener, Lis
     private JPanel infoPanel;
 
     public AddDeveloperToProject(GameEngine model, Project project) {
-        this.project = project;
         FunctionalArea[] areas;
         //Get an array of areas
         {
@@ -69,7 +69,7 @@ public class AddDeveloperToProject extends JFrame implements ActionListener, Lis
         }
         assignMap = new HashMap<Developer, FunctionalArea>();
         Font font = new Font("Century Gothic", Font.BOLD, 17);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(800, 540);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -106,8 +106,11 @@ public class AddDeveloperToProject extends JFrame implements ActionListener, Lis
         //TODO: replace with free developers
 
         devsListModel.clear();
-        for (int i = 0; i < 30; i++) {
-            devsListModel.addElement(new Developer());
+        {
+            List<Developer> devs = model.getDevelopers();
+            for (Developer dev : devs) {
+                devsListModel.addElement(dev);
+            }
         }
         devName.setForeground(Colors.DARKBLUE);
         devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
@@ -174,6 +177,17 @@ public class AddDeveloperToProject extends JFrame implements ActionListener, Lis
         infoPanel.setVisible(true);
     }
 
+    public Map<Developer, FunctionalArea> getSelectedDevelopers() {
+        Map<Developer, FunctionalArea> map = new HashMap<Developer, FunctionalArea>(assignMap);
+        List<Developer> list = devsJListPanel.getSelectedItems();
+        for (Developer dev : map.keySet()) {
+            if (!list.contains(dev)) {
+                map.remove(dev);
+            }
+        }
+        return map;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Developer dev = devsJListPanel.getSelectedItem();
@@ -184,10 +198,5 @@ public class AddDeveloperToProject extends JFrame implements ActionListener, Lis
     @Override
     public void valueChanged(ListSelectionEvent e) {
         showDeveloper(devsJListPanel.getSelectedItem());
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new AddDeveloperToProject(null, new Project());
-        frame.setVisible(true);
     }
 }
