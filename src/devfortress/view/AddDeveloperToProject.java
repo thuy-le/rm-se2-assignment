@@ -22,6 +22,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -35,7 +38,6 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -96,6 +98,7 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         panel.setBackground(colour);
         applyBtn = new CustomButton("Apply");
         cancelBtn = new CustomButton("Cancel");
+        cancelBtn.addMouseListener(new CancelButtonMouseAdapter(this));
         GlassPanel infoGPanel = new GlassPanel(10, 10, 480, 450, 1f, Colors.LIGHTBLUE2, 7, 7);
         GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.LIGHTBLUE3, 7, 7);
 //        GlassPanel sysPanel = new GlassPanel(15, 0, 745, 30, 1f, Colors.LIGHTBLUE3, 7, 7);
@@ -188,6 +191,10 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         return map;
     }
 
+    public void addApplyButtonListener(MouseListener l) {
+        applyBtn.addMouseListener(l);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Developer dev = devsJListPanel.getSelectedItem();
@@ -198,5 +205,19 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
     @Override
     public void valueChanged(ListSelectionEvent e) {
         showDeveloper(devsJListPanel.getSelectedItem());
+    }
+
+    private static class CancelButtonMouseAdapter extends MouseAdapter {
+
+        private JDialog dialog;
+
+        public CancelButtonMouseAdapter(JDialog dialog) {
+            this.dialog = dialog;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            dialog.dispose();
+        }
     }
 }
