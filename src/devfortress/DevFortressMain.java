@@ -43,7 +43,7 @@ public class DevFortressMain {
         gameController.initialize();
         devController.initialize();
         projectController.initialize();
-        systemController.initilize();
+        systemController.initialize();
         model.addObserver(inf);
         model.addObserver(sysTab);
         model.addObserver(projTab);

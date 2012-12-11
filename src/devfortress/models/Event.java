@@ -1,10 +1,12 @@
 package devfortress.models;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Team Poseidon
  */
-public class Event {
+public class Event implements Serializable {
 
     private Effect implementor;
     private Project project;
