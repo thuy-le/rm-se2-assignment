@@ -6,7 +6,7 @@ import devfortress.enumerations.SkillInfo;
 import devfortress.enumerations.SkillTypes;
 import devfortress.utilities.ReadOnlyMap;
 import devfortress.utilities.Utilities;
-import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -27,7 +27,7 @@ import java.util.Map;
  * (20%)</p>
  * @author Team Poseidon
  */
-public class Developer {
+public class Developer implements Serializable {
 
     private String name;
     private Map<SkillInfo, Skill> skills;

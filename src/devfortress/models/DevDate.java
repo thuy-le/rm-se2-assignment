@@ -1,6 +1,7 @@
 package devfortress.models;
 
 import devfortress.models.exceptions.InvalidDevDateException;
+import java.io.Serializable;
 
 /**
  * Development date is used in the game. It different to the normal date.
@@ -11,7 +12,7 @@ import devfortress.models.exceptions.InvalidDevDateException;
  * <p>A game is started at year 0, month 1 and week 1.</p>
  * @author Team Poseidon
  */
-public class DevDate {
+public class DevDate implements Serializable {
 
     private int year, month, week;
 

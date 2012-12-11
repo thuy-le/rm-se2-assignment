@@ -10,16 +10,24 @@ import devfortress.enumerations.Expenses;
 import devfortress.enumerations.SkillInfo;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.Utilities;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Team Poseidon
  */
-public class GameEngine extends Observable {
+public class GameEngine extends Observable implements Serializable {
 
     private static final int DEFAULT_BUDGET = 10000;
     private int budget;
@@ -320,7 +328,12 @@ public class GameEngine extends Observable {
      *
      * @param file Namepath of the save file
      */
-    public void saveBinary(String file) {
+    public void saveBinary(String file) throws FileNotFoundException, IOException {
+        FileOutputStream fileOut = new FileOutputStream(file);
+        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+        objectOut.writeObject(this);
+        objectOut.close();
+        fileOut.close();
     }
 
     /**
@@ -330,7 +343,15 @@ public class GameEngine extends Observable {
      *
      * @param file Namepath of the saved file
      */
-    public static void loadBinary(String file) {
+    public static void loadBinary(String file) throws FileNotFoundException, IOException {
+        FileInputStream fileIn = new FileInputStream(file);
+        ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+        try {
+            instance = (GameEngine) objectIn.readObject();
+        } catch (ClassNotFoundException ex) {
+        }
+        objectIn.close();
+        fileIn.close();
     }
 
     public void quit() {

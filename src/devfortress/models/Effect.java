@@ -1,10 +1,12 @@
 package devfortress.models;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Team Poseidon
  */
-public abstract class Effect {
+public abstract class Effect implements Serializable {
 
     protected String description;
     protected GameEngine engine;

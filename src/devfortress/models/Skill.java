@@ -1,12 +1,13 @@
 package devfortress.models;
 
 import devfortress.enumerations.SkillInfo;
+import java.io.Serializable;
 
 /**
  *
  * @author Team Poseidon
  */
-public class Skill implements Comparable<Skill> {
+public class Skill implements Comparable<Skill>, Serializable {
 
     private int level;
     private SkillInfo skillInfo;

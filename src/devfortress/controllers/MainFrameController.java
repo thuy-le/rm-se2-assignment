@@ -6,6 +6,7 @@ import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -132,7 +133,12 @@ public class MainFrameController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            JOptionPane.showMessageDialog(null, "Save Game Not Implemented");
+            JFileChooser fileChooser = new JFileChooser(".");
+            fileChooser.setApproveButtonText("Save...");
+            fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+            fileChooser.setDialogTitle("Save Game");
+            fileChooser.setVisible(true);
+            
         }
     }
 
