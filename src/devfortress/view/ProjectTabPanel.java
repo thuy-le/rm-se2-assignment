@@ -52,7 +52,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
     private JList prjList;
     private DefaultListModel prjModel;
     private DefaultTableModel projTableModel;
-    private CustomButton btnAdd, btnAddDev, btnRemoveDev;
+    private CustomButton btnAdd, btnAddDev, btnRemoveDev, btnCancelProject;
     private GlassPanel rightPanel;
     private JLabel prjName, deadline, cost, info1, status;
     private JTable table;
@@ -143,16 +143,18 @@ public class ProjectTabPanel extends JPanel implements Observer {
         JPanel bottom = new JPanel();
         btnAddDev = new CustomButton("Add Developer");
         btnRemoveDev = new CustomButton("Remove Developer");
-
+        btnCancelProject = new CustomButton("Cancel Project");
         //adjust look and feel:
 
         bottom.setBackground(contentColor);
         bottom.setLayout(new FlowLayout());
-        btnAddDev.setButtonSize(0, 0, 175, 35);
-        btnRemoveDev.setButtonSize(0, 0, 185, 35);
+        btnAddDev.setButtonSize(0, 0, 140, 35);
+        btnRemoveDev.setButtonSize(0, 0, 170, 35);
+        btnCancelProject.setButtonSize(0, 0, 140, 35);
         //add components
         bottom.add(btnAddDev);
         bottom.add(btnRemoveDev);
+        bottom.add(btnCancelProject);
         rightPanel.add(((CustomProjectTable) table).getTableScroll(), BorderLayout.NORTH);
         rightPanel.add(bottom, BorderLayout.SOUTH);
     }
@@ -175,7 +177,6 @@ public class ProjectTabPanel extends JPanel implements Observer {
     }
 
     public void cancelProjectListener(MouseListener l) {
-        
     }
 
     public void addDevToProjectListener(MouseListener l) {
@@ -209,14 +210,14 @@ public class ProjectTabPanel extends JPanel implements Observer {
             try {
                 rightPanel.setVisible(true);
                 //set projectname... blah blah blah
-                prjName = new JLabel(project.getName());
+                prjName.setText("Project: " + project.getName());
                 DevDate acceptedDate = null;
                 if (project.getAcceptedDate() == null) {
                     project.setAcceptedDate(GameEngine.getInstance().getDate());
                 }
                 acceptedDate = project.getAcceptedDate();
                 DevDate deadlineDate = acceptedDate.addMonths(project.getDuration());
-                
+
                 deadline.setText("Deadline: " + deadlineDate.getWeek() + "/" + deadlineDate.getMonth() + "/" + deadlineDate.getYear());
                 cost.setText("Budget: " + project.getBudget());
                 info1.setText("Level: " + project.getLevel());
