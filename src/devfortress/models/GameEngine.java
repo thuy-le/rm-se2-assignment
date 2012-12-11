@@ -63,7 +63,7 @@ public class GameEngine extends Observable {
         developers.clear();
         projects.clear();
         date.reset();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 1; i++) {
             this.projects.add(new Project());
         }
         setChanged();
@@ -125,7 +125,7 @@ public class GameEngine extends Observable {
         int cost = (numPCs > developers.size()) ? 0 : Expenses.PC.getCost();
         if (developers.add(dev)) {
             marketDevelopers.remove(dev);
-            budget -= cost;
+//            budget -= cost;
             if (cost > 0) {
                 numPCs++;
             }
@@ -233,7 +233,7 @@ public class GameEngine extends Observable {
     }
 
     /**
-     * @return a list of past projects which the player had finished in the game 
+     * @return a list of past projects which the player had finished in the game
      */
     public List<Project> getPastProjects() {
         return new ReadOnlyList<Project>(pastProjects);
@@ -289,13 +289,14 @@ public class GameEngine extends Observable {
         /*
          * Time changes
          */
+        System.out.println("NEXT WEEK ----------------------");
         if (!ended) {
             date.nextWeek();
             for (Developer dev : developers) {
                 dev.getTired();
             }
             generateRandomEvents();
-//            allEventsTakeEffects();
+            allEventsTakeEffects();
             allProjectProgress();
             /*
              * Calculate other factors
@@ -306,7 +307,7 @@ public class GameEngine extends Observable {
                  */
                 paySalary();
                 generateRandomMarketDevelopers();
-                generateRandomMarketProjects();
+//                generateRandomMarketProjects();
             }
             date.nextWeek();
             setChanged();
@@ -378,14 +379,16 @@ public class GameEngine extends Observable {
     private void generateRandomEvents() {
         try {
             EffectFactory fact = EffectFactory.getInstance();
+
             for (Project p : projects) {
                 List<Developer> devs = p.getDevelopers();
-//                for (Developer dev : devs) {
-                for (int i = 0; i < 5; i++) {
+                p.clearEvents();
+                for (Developer dev : devs) {
+//                    for (int i = 0; i < 5; i++) {
                     Event event = new Event(fact.getRandomEffect(this), p);
                     p.addEvent(event);
+//                    }
                 }
-//                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

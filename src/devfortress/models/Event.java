@@ -8,10 +8,12 @@ public class Event {
 
     private Effect implementor;
     private Project project;
+    private String description;
 
     public Event(Effect implementor, Project project) {
         this.implementor = implementor;
         this.project = project;
+        this.description = "";
     }
 
     public Effect getImplementor() {
@@ -19,16 +21,15 @@ public class Event {
     }
 
     public String getDescription() {
-        if (implementor != null) {
-            return implementor.getEventDescription();
-        } else {
-            return "Null Event";
-        }
+        return description;
     }
 
     public void takeEffect() {
         if (implementor != null) {
             implementor.takeEffect(project);
+            description = implementor.getEventDescription();
+        } else {
+            description = "";
         }
     }
 }

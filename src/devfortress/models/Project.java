@@ -13,6 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -40,14 +42,32 @@ public class Project {
         this.finished = false;
         randomize();
         calculateBudget();
+        for (int i = 0; i < 5; i++) {
+            try {
+                Developer dev = new Developer();
+                GameEngine.getInstance().hireDeveloper(dev);
+                FunctionalArea[] as = new FunctionalArea[functionalAreas.values().size()];
+                functionalAreas.values().toArray(as);
+                AreaName a = as[Utilities.randInt(as.length)].getName();
+                if (functionalAreas.get(a) == null) {
+                }
+                addDeveloper(dev, a);
+            } catch (DeveloperBusyException ex) {
+            } catch (InvalidFunctionalAreaException ex) {
+            }
+        }
     }
 
-    /* Setter */
+    /*
+     * Setter
+     */
     public void setAcceptedDate(DevDate acceptedDate) {
         this.acceptedDate = acceptedDate;
     }
 
-    /* Getters */
+    /*
+     * Getters
+     */
     public DevDate getAcceptedDate() {
         return acceptedDate;
     }
@@ -94,32 +114,40 @@ public class Project {
 
     /**
      * Developers are added when project is created
+     *
      * @param dev
      * @param area
-     * @exception InvalidFunctionalAreaException if the area is not exist in the project
+     * @exception InvalidFunctionalAreaException if the area is not exist in the
+     * project
      */
     public void addDeveloper(Developer dev, AreaName area) throws DeveloperBusyException, InvalidFunctionalAreaException {
         FunctionalArea fArea = functionalAreas.get(area);
         if (fArea == null) {
             throw new InvalidFunctionalAreaException("\"" + area + "\" is not in the project's requirements");
         }
+        fArea.addDeveloper(dev);
         dev.acceptProject(this, area);
         developers.add(dev);
     }
 
     /**
      * Developers can be removed after each turn
+     *
      * @param dev
      */
     public void removeDeveloper(Developer dev) {
+        System.out.println("Working: " + dev.getWorkingArea());
+        System.out.println("Functional Area: " + functionalAreas.get(dev.getWorkingArea()));
         functionalAreas.get(dev.getWorkingArea()).removeDeveloper(dev);
-        dev.leaveProject();
         developers.remove(dev);
+        dev.leaveProject();
     }
 
-    public void removeFunctionalArea(AreaName area) {
+    public synchronized void removeFunctionalArea(AreaName area) {
         Set<Developer> devs = functionalAreas.get(area).getDevelopers();
+        System.out.println("REMOVE FUNCTIONAL AREA: " + area.getName() + " | " + devs.size());
         for (Developer dev : devs) {
+            System.out.println("LEAVE AREA: " + dev.getName());
             removeDeveloper(dev);
         }
         functionalAreas.remove(area);
@@ -135,7 +163,7 @@ public class Project {
     }
 
     /**
-     * Loop through all events and call take effect from each events 
+     * Loop through all events and call take effect from each events
      */
     public void proceedEvents() {
         for (Event event : events) {
@@ -162,13 +190,17 @@ public class Project {
     public void removeAllEvents() {
         events.clear();
     }
-    /* This method can be used after the project is finished,
-     * or a faster way to remove developers after each turn */
+    /*
+     * This method can be used after the project is finished, or a faster way to
+     * remove developers after each turn
+     */
 
     public void removeAllDevelopers() {
     }
 
-    /* Private methods and functions */
+    /*
+     * Private methods and functions
+     */
     private void calculateBudget() {
         budget = level * duration * 300;
         bonus = 0;
@@ -257,11 +289,17 @@ public class Project {
             }
 
         }
-        /*******/
+        /**
+         * ****
+         */
         mainRequirement = SkillInfo.values()[Utilities.randInt(SkillInfo.values().length)];
     }
 
     public void addFunctionalArea(FunctionalArea area) {
         functionalAreas.put(area.getName(), area);
+    }
+
+    public void clearEvents() {
+        events.clear();
     }
 }

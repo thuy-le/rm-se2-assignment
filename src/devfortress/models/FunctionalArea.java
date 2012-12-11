@@ -26,7 +26,9 @@ public class FunctionalArea {
         this.developers = new HashSet<Developer>();
     }
 
-    /* Getters */
+    /*
+     * Getters
+     */
     public Set<Developer> getDevelopers() {
         return new ReadOnlySet<Developer>(developers);
     }
@@ -60,7 +62,9 @@ public class FunctionalArea {
         this.functionPoints += points;
     }
 
-    /* Function called every week. Called by project */
+    /*
+     * Function called every week. Called by project
+     */
     public void progress() {
         for (Developer dev : developers) {
             int points = dev.getLastWeekFunctionPoints();
@@ -78,7 +82,9 @@ public class FunctionalArea {
         reducedPoints += points;
     }
 
-    /* Assume that developer is free. This function is called by Project */
+    /*
+     * Assume that developer is free. This function is called by Project
+     */
     public boolean addDeveloper(Developer dev) {
         if (dev.isAvailable()) {
             return developers.add(dev);
@@ -86,8 +92,10 @@ public class FunctionalArea {
         return false;
     }
 
-    /* Assume that developer is occupied by this Functional Area.
-     * This function is called by Project */
+    /*
+     * Assume that developer is occupied by this Functional Area. This function
+     * is called by Project
+     */
     public boolean removeDeveloper(Developer dev) {
         return developers.remove(dev);
     }

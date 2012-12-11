@@ -13,18 +13,18 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * Developer is the work force of the game.
- * He provide the function point each week on the project.
- * <p>A <code>Developer</code> has skills which has level. The skill can be
- * leveled up when he work on the project require the skill or be trained with
- * money. His salary is calculated base on the skills.</p>
- * <p>He can be fed every week with pizza, coffee and redbull. He will not work
- * when he hungry or thirsty. The developer can also drink beer, which keep him
- * happy but halve his productivity.</p>
- * <p>An developer can be happy or unhappy. He can be kept happy with beer and
- * party. The developer become unhappy when he is assigned to a project which is
- * not match his skills. An unhappy developer may leave at the end of the month.
- * (20%)</p>
+ * Developer is the work force of the game. He provide the function point each
+ * week on the project. <p>A
+ * <code>Developer</code> has skills which has level. The skill can be leveled
+ * up when he work on the project require the skill or be trained with money.
+ * His salary is calculated base on the skills.</p> <p>He can be fed every week
+ * with pizza, coffee and redbull. He will not work when he hungry or thirsty.
+ * The developer can also drink beer, which keep him happy but halve his
+ * productivity.</p> <p>An developer can be happy or unhappy. He can be kept
+ * happy with beer and party. The developer become unhappy when he is assigned
+ * to a project which is not match his skills. An unhappy developer may leave at
+ * the end of the month. (20%)</p>
+ *
  * @author Team Poseidon
  */
 public class Developer {
@@ -77,7 +77,9 @@ public class Developer {
 
     }
 
-    /* Getters */
+    /*
+     * Getters
+     */
     public boolean isHappy() {
         return happy;
     }
@@ -118,18 +120,26 @@ public class Developer {
         return new ReadOnlyMap<SkillInfo, Skill>(skills);
     }
 
-    /* Setters */
-    /* Events can make developers unhappy or happy */
+    /*
+     * Setters
+     */
+    /*
+     * Events can make developers unhappy or happy
+     */
     public void setHappy(boolean happy) {
         this.happy = happy;
     }
 
-    /* Everyweek, have to feed developers */
+    /*
+     * Everyweek, have to feed developers
+     */
     public void feed() {
         this.fed = true;
     }
 
-    /* Give him some beers */
+    /*
+     * Give him some beers
+     */
     public void drink() {
         this.drunk = true;
         this.happy = true;
@@ -148,6 +158,7 @@ public class Developer {
 
     /**
      * Used when initialize a new developer or train a new skill
+     *
      * @see Skill
      * @see SkillInfo
      */
@@ -158,6 +169,7 @@ public class Developer {
 
     /**
      * Select the skill to train
+     *
      * @see Skill
      * @see SkillInfo
      */
@@ -172,8 +184,9 @@ public class Developer {
         re_calculateDeveloperInfo();
     }
 
-    /** 
-     * This function should be only called by <code>{@link Project}</code>.
+    /**
+     * This function should be only called by
+     * <code>{@link Project}</code>.
      */
     public void acceptProject(Project project, AreaName area) throws DeveloperBusyException {
         if (workingProject != null) {
@@ -187,7 +200,8 @@ public class Developer {
     }
 
     /**
-     * This function should be only called by <code>{@link Project}</code>.
+     * This function should be only called by
+     * <code>{@link Project}</code>.
      */
     public void leaveProject() {
         workingProject = null;
@@ -215,9 +229,21 @@ public class Developer {
             int numMem = workingProject.getDevelopers().size();
             SkillInfo proMainSkill = workingProject.getMainRequirement();
             if (mainSkillInfo != proMainSkill) {
-                int lisp = skills.get(SkillInfo.LISP).getLevel();
-                int haskell = skills.get(SkillInfo.HASKELL).getLevel();
-                int forth = skills.get(SkillInfo.FORTH).getLevel();
+                int lisp = 0;
+                try {
+                    lisp = skills.get(SkillInfo.LISP).getLevel();
+                } catch (Exception ex) {
+                }
+                int haskell = 0;
+                try {
+                    haskell = skills.get(SkillInfo.HASKELL).getLevel();
+                } catch (Exception ex) {
+                }
+                int forth = 0;
+                try {
+                    forth = skills.get(SkillInfo.FORTH).getLevel();
+                } catch (Exception ex) {
+                }
                 if (lisp * haskell * forth != 0) {
                     int temp = lisp > haskell ? lisp : haskell;
                     tech = temp > forth ? temp : forth;
@@ -245,7 +271,9 @@ public class Developer {
         }
         return result;
     }
-    /* Private methods */
+    /*
+     * Private methods
+     */
 
     private void re_calculateDeveloperInfo() {
         determineMainSkill();

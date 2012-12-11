@@ -78,6 +78,9 @@ public class EventTabPanel extends JPanel implements Observer {
             Object[] ids = {"ID", "Description"};
             tableModel.setColumnIdentifiers(ids);
             for (Event event : currentProject.getEvents()) {
+                if (event.getDescription().length() == 0) {
+                    continue;
+                }
                 Object[] rowData = {i, event.getDescription()};
                 tableModel.addRow(rowData);
                 i++;
@@ -116,13 +119,12 @@ public class EventTabPanel extends JPanel implements Observer {
         tableModel = new DefaultTableModel(1, 2);
         eventTable = new CustomTable(tableModel);
         eventTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-        eventTable.getColumnModel().getColumn(0).setMaxWidth(50);
-        eventTable.getColumnModel().getColumn(1).setMinWidth(400);
         eventTable.addMouseListener(new EventTableMouseAdapter());
         ((CustomTable) eventTable).setTableSize(500, 340);
         ((CustomTable) eventTable).setHeaderColors(Colors.LIGHTBLUE, Colors.DARKBLUE);
         ((CustomTable) eventTable).setBorderColor(Colors.DARKBLUE);
         ((CustomTable) eventTable).setScrollBackground(Colors.LIGHTBLUE);
+        eventTable.getColumnModel().getColumn(0).setMaxWidth(50);
         //$$$$$-----Local variable for UI
         GlassPanel marginTop = new GlassPanel(250, 15);
         GlassPanel gp3 = new GlassPanel(15, 15, 250, 390, 1f, Colors.YELLOW, 15, 15);
