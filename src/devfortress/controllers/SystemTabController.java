@@ -19,7 +19,7 @@ public final class SystemTabController {
         this.model = model;
     }
 
-    public void initilize() {
+    public void initialize() {
 //        view.addBtnAddProjectListener(new ButtonAddProjectMouseListener());
 //        view.addBtnHireDevListener(new ButtonHireMouseListener());
 //        view.addDevListListener(new DeveloperListMouseListener());

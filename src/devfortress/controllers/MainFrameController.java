@@ -6,8 +6,15 @@ import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -45,12 +52,13 @@ public class MainFrameController {
         navBar.addExitGameListener(new ExitGameListener());
         navBar.addNewGameListener(new NewGameListener());
         navBar.addSaveGameListener(new SaveGameListener());
+        navBar.addLoadGameListener(new LoadGameListener());
         aboutPnl.addBackListener(new AboutBackBtnListener());
         welcome.addNewGameListener(new OpenNewGameListener());
 
     }
-    
-    private class OpenNewGameListener extends MouseAdapter{
+
+    private class OpenNewGameListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -58,7 +66,7 @@ public class MainFrameController {
             //welCm.getContainer().setVisible(true);
             mainFrame.getContentPane().add(welCm.getContainer(), BorderLayout.CENTER);
             mainFrame.getContentPane().repaint();
-        }        
+        }
     }
 
     private class NextWeekListener extends MouseAdapter {
@@ -128,17 +136,57 @@ public class MainFrameController {
         }
     }
 
-    //TODO: implement save game
+    /**
+     * A class that take care of saving game.
+     */
     private class SaveGameListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
             JFileChooser fileChooser = new JFileChooser(".");
-            fileChooser.setApproveButtonText("Save...");
             fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
             fileChooser.setDialogTitle("Save Game");
             fileChooser.setVisible(true);
-            
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Save file", "save"));
+
+            int returnVal = fileChooser.showDialog(null, "Save...");
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                try {
+                    model.saveBinary(file.getAbsolutePath());
+                } catch (FileNotFoundException ex) {
+                } catch (IOException ex) {
+                    String error = "Error Occur! Cannot save game.";
+                    JOptionPane.showMessageDialog(null, error, null, JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+
+    private class LoadGameListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            JFileChooser fileChooser = new JFileChooser(".");
+            fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
+            fileChooser.setDialogTitle("Load Game");
+            fileChooser.setVisible(true);
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Save file", "save"));
+
+            int returnVal = fileChooser.showDialog(null, "Load");
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                try {
+                    GameEngine.loadBinary(file.getAbsolutePath());
+                    
+                } catch (FileNotFoundException ex) {
+                    String error = "Error Occur! Cannot find save file.";
+                    JOptionPane.showMessageDialog(null, error, null, JOptionPane.ERROR_MESSAGE);
+                } catch (IOException ex) {
+                    String error = "Error Occur! Cannot load game.";
+                    JOptionPane.showMessageDialog(null, error, null, JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 

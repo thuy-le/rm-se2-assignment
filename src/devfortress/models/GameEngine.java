@@ -352,6 +352,8 @@ public class GameEngine extends Observable implements Serializable {
         }
         objectIn.close();
         fileIn.close();
+        instance.setChanged();
+        instance.notifyObservers();
     }
 
     public void quit() {
