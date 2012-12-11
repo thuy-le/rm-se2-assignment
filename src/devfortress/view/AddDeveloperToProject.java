@@ -8,6 +8,7 @@ import devfortress.models.Developer;
 import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
+import devfortress.models.Skill;
 import devfortress.utilities.Colors;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomCheckBoxJListPanel;
@@ -19,10 +20,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -32,25 +36,27 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Team Poseidon
  */
-public class AddDeveloperToProject extends JFrame {
+public class AddDeveloperToProject extends JFrame implements ActionListener, ListSelectionListener {
 
     static private final String picture = "images/i6.png";
     static private final Color colour = Colors.LIGHTBLUE;
     private Project project;
     private CustomCheckBoxJListPanel<Developer> devsJListPanel;
     private CustomButton applyBtn, cancelBtn;
-    private JLabel devName, mainSkill, status;
-    private JComboBox pAreasCmB;
+    private JLabel devName, mainSkill;
     private JTable skillTable;
     private DefaultTableModel skillTblModel;
     private Map<Developer, FunctionalArea> assignMap;
     private DefaultComboBoxModel cmbModel;
+    private JPanel infoPanel;
 
     public AddDeveloperToProject(GameEngine model, Project project) {
         this.project = project;
@@ -74,16 +80,16 @@ public class AddDeveloperToProject extends JFrame {
         }
         cmbModel.setSelectedItem(null);
         String[] names = {"A", "B"};
-        skillTblModel = new DefaultTableModel(names, 20);
+        skillTblModel = new DefaultTableModel(names, 10);
         devName = new JLabel("Developer name");
         mainSkill = new JLabel("Main skill: ");
-        status = new JLabel("Status");
         JPanel assignedArea = new JPanel();
         assignedArea.setLayout(new BoxLayout(assignedArea, BoxLayout.X_AXIS));
         JLabel assignLbl = new JLabel("Assign: ");
         assignLbl.setFont(font);
         assignedArea.add(assignLbl);
-        pAreasCmB = new JComboBox(cmbModel);
+        JComboBox pAreasCmB = new JComboBox(cmbModel);
+        pAreasCmB.addActionListener(this);
         assignedArea.add(pAreasCmB);
         skillTable = new CustomTable(skillTblModel);
         JPanel panel = new JPanel(new BorderLayout());
@@ -94,6 +100,7 @@ public class AddDeveloperToProject extends JFrame {
         GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.LIGHTBLUE3, 7, 7);
 //        GlassPanel sysPanel = new GlassPanel(15, 0, 745, 30, 1f, Colors.LIGHTBLUE3, 7, 7);
         devsJListPanel = new CustomCheckBoxJListPanel<Developer>(Colors.LIGHTBLUE2);
+        devsJListPanel.addJListOnSelectionListener(this);
         DefaultListModel devsListModel = devsJListPanel.getListModel();
         //mock up data
         //TODO: replace with free developers
@@ -105,7 +112,6 @@ public class AddDeveloperToProject extends JFrame {
         devName.setForeground(Colors.DARKBLUE);
         devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
         mainSkill.setFont(font);
-        status.setFont(font);
         panel.add(devsJListPanel, BorderLayout.WEST);
         panel.add(infoGPanel, BorderLayout.CENTER);
         panel.add(btnPanel, BorderLayout.SOUTH);
@@ -121,34 +127,63 @@ public class AddDeveloperToProject extends JFrame {
         //Now do the info panel
         JPanel infoTopPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-        JPanel infoTopRightPanel = new JPanel(new GridLayout(3, 1));
+        JPanel infoTopRightPanel = new JPanel(new GridLayout(2, 1));
 
         infoTopPanel.setBackground(Colors.LIGHTORANGE);
         infoTopRightPanel.setBackground(Colors.LIGHTORANGE);
-        infoTopRightPanel.setPreferredSize(new Dimension(280, 100));
+        infoTopRightPanel.setPreferredSize(new Dimension(280, 60));
         infoTopRightPanel.add(mainSkill);
-        infoTopRightPanel.add(status);
         infoTopRightPanel.add(assignedArea);
         infoTopPanel.add(new JLabel(new ImageIcon(picture)));
         infoTopPanel.add(infoTopRightPanel);
 
-        JPanel innerPnl = new JPanel(new BorderLayout());
-        innerPnl.setOpaque(false);
-        innerPnl.setBounds(15, 10, 470, 440);
+        infoPanel = new JPanel(new BorderLayout());
+        infoPanel.setOpaque(false);
+        infoPanel.setBounds(15, 10, 470, 440);
         JPanel northPanel = new JPanel();
         northPanel.setOpaque(false);
         northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
         northPanel.add(devName);
         northPanel.add(infoTopPanel);
-        innerPnl.add(northPanel, BorderLayout.NORTH);
-        innerPnl.add(((CustomTable) skillTable).getTableScroll(), BorderLayout.CENTER);
+        infoPanel.add(northPanel, BorderLayout.NORTH);
+        infoPanel.add(((CustomTable) skillTable).getTableScroll(), BorderLayout.CENTER);
         infoGPanel.setLayout(null);
-        infoGPanel.add(innerPnl);
+        infoGPanel.add(infoPanel);
         add(panel);
+        infoPanel.setVisible(false);
+    }
+
+    private void assignArea(Developer dev, FunctionalArea area) {
+        assignMap.put(dev, area);
     }
 
     private void showDeveloper(Developer dev) {
         cmbModel.setSelectedItem(assignMap.get(dev));
+        while (skillTblModel.getRowCount() != 0) {
+            skillTblModel.removeRow(skillTblModel.getRowCount() - 1);
+        }
+        if (dev != null) {
+            devName.setText(dev.getName());
+            mainSkill.setText("Main skill: " + dev.getMainSkill().getName());
+            List<Skill> skills = new LinkedList<Skill>(dev.getSkills().values());
+            for (Skill skill : skills) {
+                Object[] row = {skill.getSkillInfo().getName(), skill.getLevel()};
+                skillTblModel.addRow(row);
+            }
+        }
+        infoPanel.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Developer dev = devsJListPanel.getSelectedItem();
+        FunctionalArea area = (FunctionalArea) cmbModel.getSelectedItem();
+        assignArea(dev, area);
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        showDeveloper(devsJListPanel.getSelectedItem());
     }
 
     public static void main(String[] args) {

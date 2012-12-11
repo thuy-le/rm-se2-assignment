@@ -4,6 +4,7 @@
  */
 package devfortress.view.components;
 
+import devfortress.models.Developer;
 import devfortress.utilities.Colors;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
@@ -107,6 +108,10 @@ public class CustomCheckBoxJListPanel<T> extends JPanel {
             }
         }
         return objs;
+    }
+
+    public T getSelectedItem() {
+        return (T) jList.getSelectedValue();
     }
 
     public void addJListOnSelectionListener(ListSelectionListener l) {
