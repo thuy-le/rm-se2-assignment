@@ -2,6 +2,7 @@ package devfortress.models;
 
 import devfortress.enumerations.AreaName;
 import devfortress.utilities.ReadOnlySet;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
  *
  * @author Team Poseidon
  */
-public class FunctionalArea {
+public class FunctionalArea implements Serializable {
 
     private AreaName name;
     private int functionPoints;

@@ -7,6 +7,7 @@ import devfortress.models.exceptions.InvalidFunctionalAreaException;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.ReadOnlyMap;
 import devfortress.utilities.Utilities;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -18,7 +19,7 @@ import java.util.Set;
  *
  * @author Team Poseidon
  */
-public class Project {
+public class Project implements Serializable {
 
     private int duration, level, budget, bonus, timeLeft;
     private boolean finished;

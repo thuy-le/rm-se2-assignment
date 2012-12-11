@@ -19,7 +19,7 @@ import javax.swing.JToolBar;
  */
 public class NavigationToolBar extends JToolBar {
 
-    private CustomLabel exitGame, newGame, aboutGame, saveGame;
+    private CustomLabel exitGame, newGame, aboutGame, saveGame, loadGame;
 
     public NavigationToolBar() {
         setBorder(BorderFactory.createEmptyBorder());
@@ -29,6 +29,8 @@ public class NavigationToolBar extends JToolBar {
         newGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         saveGame = new CustomLabel(new ImageIcon("images/save.png"), "Save Game");
         saveGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        loadGame = new CustomLabel(new ImageIcon("images/save.png"), "Load Game");
+        loadGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aboutGame = new CustomLabel(new ImageIcon("images/about.png"), "About Us");
         aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -36,10 +38,12 @@ public class NavigationToolBar extends JToolBar {
         exitGame.setOpaque(false);
         newGame.setOpaque(false);
         saveGame.setOpaque(false);
+        loadGame.setOpaque(false);
         aboutGame.setOpaque(false);
         //add components
         add(newGame);
         add(saveGame);
+        add(loadGame);
         add(aboutGame);
         add(exitGame);
     }
@@ -58,6 +62,10 @@ public class NavigationToolBar extends JToolBar {
 
     public void addSaveGameListener(MouseListener l) {
         saveGame.addMouseListener(l);
+    }
+    
+    public void addLoadGameListener(MouseListener l) {
+        loadGame.addMouseListener(l);
     }
 
     @Override
