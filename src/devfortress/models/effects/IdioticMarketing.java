@@ -8,6 +8,7 @@ import devfortress.enumerations.AreaName;
 import devfortress.models.Effect;
 import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -29,6 +30,7 @@ public class IdioticMarketing extends Effect {
         }
         if (areas.isEmpty()) {
             description = "";
+            effect = EffectLevel.NEUTRAL;
             return;
         }
 
@@ -44,8 +46,10 @@ public class IdioticMarketing extends Effect {
             fArea.addFunctionPoints(10);
             // Set descripttion
             description = "Requirement \"" + area.getName().toString() + "\" is added to the project. Area \"" + fArea.getName() + "\" is added with 10 more function points";
+            effect = EffectLevel.NEGATIVE;
         } else {
             description = "";
+            effect = EffectLevel.NEUTRAL;
         }
     }
 }

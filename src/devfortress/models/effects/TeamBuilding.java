@@ -3,6 +3,7 @@ package devfortress.models.effects;
 import devfortress.models.Developer;
 import devfortress.models.Effect;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import java.util.List;
 
 /**
@@ -18,5 +19,6 @@ public class TeamBuilding extends Effect {
             dev.setLastWeekFunctionPoints(5);
         }
         description = "Team building! Everyone only produced 5 function points last week. However, everyone is happy now";
+        effect = EffectLevel.POSITIVE;
     }
 }

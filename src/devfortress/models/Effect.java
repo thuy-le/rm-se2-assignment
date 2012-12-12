@@ -8,11 +8,17 @@ import java.io.Serializable;
  */
 public abstract class Effect implements Serializable {
 
+    private static final int NEGATIVE = -1;
+    private static final int POSITIVE = 1;
+    private static final int NEUTRAL = 0;
+    
     protected String description;
     protected GameEngine engine;
+    protected int effect;
 
     public Effect() {
         description = "Default";
+        effect = NEUTRAL;
     }
 
     public void setEngine(GameEngine engine) {
@@ -23,5 +29,9 @@ public abstract class Effect implements Serializable {
 
     public String getEventDescription() {
         return description;
+    }
+    
+    public int getEventEffect() {
+        return effect;
     }
 }

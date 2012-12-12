@@ -7,6 +7,7 @@ package devfortress.models.effects;
 import devfortress.models.Developer;
 import devfortress.models.Effect;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class Holiday extends Effect {
         List<Developer> devs = project.getDevelopers();
         if (devs.isEmpty()) {
             description = "";
+            effect = EffectLevel.NEUTRAL;
             return;
         }
 
@@ -32,5 +34,6 @@ public class Holiday extends Effect {
         }
         //Set description
         description = "Holiday! Yey! Everyone is happy. However, " + dev.getName() + " only produces " + 1 + " this week.";
+        effect = EffectLevel.NEUTRAL;
     }
 }

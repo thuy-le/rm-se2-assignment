@@ -70,7 +70,6 @@ public class GlassPanel extends JPanel {
         this.arcW = arcW;
         this.arcH = arcH;
         setOpaque(false);
-        addContainerListener(new GlassPanelEvent());
     }
     //override paintComponent method
 
@@ -90,20 +89,5 @@ public class GlassPanel extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
-    }
-
-    private class GlassPanelEvent implements ContainerListener {
-
-        @Override
-        public void componentAdded(ContainerEvent e) {
-            if (e.getChild() instanceof JComponent) {
-                JComponent source = (JComponent) e.getContainer();
-                JComponent comp = (JComponent) e.getChild();
-            }
-        }
-
-        @Override
-        public void componentRemoved(ContainerEvent e) {
-        }
     }
 }

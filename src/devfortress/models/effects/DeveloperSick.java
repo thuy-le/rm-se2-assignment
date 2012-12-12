@@ -7,6 +7,7 @@ package devfortress.models.effects;
 import devfortress.models.Developer;
 import devfortress.models.Effect;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class DeveloperSick extends Effect {
         }
         if (devs.isEmpty()) {
             description = "";
+            effect = EffectLevel.NEUTRAL;
             return;
         }
         //Who s sick
@@ -34,5 +36,6 @@ public class DeveloperSick extends Effect {
         dev.setLastWeekFunctionPoints(fPoints);
         //Set description
         description = dev.getName() + " is sick and only produces " + fPoints + " this week";
+        effect = EffectLevel.NEGATIVE;
     }
 }

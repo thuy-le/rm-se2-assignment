@@ -7,6 +7,7 @@ package devfortress.models.effects;
 import devfortress.models.Effect;
 import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class NewTechnology extends Effect {
         }
         if (areas.isEmpty()) {
             description = "";
+            effect = EffectLevel.NEUTRAL;
             return;
         }
         int reducePoints = 50;
@@ -36,6 +38,7 @@ public class NewTechnology extends Effect {
             int remaining = area.getFunctionPoints() - area.getCompletedPoints() - area.getReducedPoints();
             if (remaining > reducePoints) {
                 description += reducePoints + " function points is removed from " + area.getName().toString();
+                effect = EffectLevel.POSITIVE;
                 area.reducePoints(reducePoints);
                 reducePoints = 0;
             } else {
@@ -43,6 +46,7 @@ public class NewTechnology extends Effect {
                 area.reducePoints(decrease);
                 reducePoints -= decrease;
                 description += decrease + " function points is removed from " + area.getName().toString() + ". ";
+                effect = EffectLevel.POSITIVE;
             }
             areas.remove(area);
             if (areas.isEmpty()) {

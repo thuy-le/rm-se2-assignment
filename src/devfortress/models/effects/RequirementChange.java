@@ -7,6 +7,7 @@ package devfortress.models.effects;
 import devfortress.models.Effect;
 import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,5 +33,6 @@ public class RequirementChange extends Effect {
         FunctionalArea area = areas.get(Utilities.randInt(areas.size()));
         area.addFunctionPoints(25);
         description = "Requirement changed. Area \"" + area.getName().toString() + "\" is added with 25 function points";
+        effect = EffectLevel.NEGATIVE;
     }
 }
