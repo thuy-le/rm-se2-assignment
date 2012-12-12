@@ -104,7 +104,6 @@ public class GlassPanel extends JPanel {
 
         @Override
         public void componentRemoved(ContainerEvent e) {
-            //System.out.println("Component removed");
         }
     }
 }

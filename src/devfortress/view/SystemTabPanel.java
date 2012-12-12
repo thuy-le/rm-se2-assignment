@@ -101,7 +101,6 @@ public class SystemTabPanel extends JPanel implements Observer {
             } catch (Exception ex) {
             }
 
-            System.out.println("Pages: " + page);
         }
 
     }

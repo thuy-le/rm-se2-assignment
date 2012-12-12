@@ -10,6 +10,8 @@ import devfortress.utilities.Utilities;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -136,23 +138,21 @@ public class Project implements Serializable {
      *
      * @param dev
      */
-    public void removeDeveloper(Developer dev) {
-        System.out.println("Working: " + dev.getWorkingArea());
-        System.out.println("Functional Area: " + functionalAreas.get(dev.getWorkingArea()));
+    public synchronized void removeDeveloper(Developer dev) {
         functionalAreas.get(dev.getWorkingArea()).removeDeveloper(dev);
         developers.remove(dev);
         dev.leaveProject();
     }
 
-    public synchronized void removeFunctionalArea(AreaName area) {
-        Set<Developer> devs = functionalAreas.get(area).getDevelopers();
-        System.out.println("REMOVE FUNCTIONAL AREA: " + area.getName() + " | " + devs.size());
-        for (Developer dev : devs) {
-            System.out.println("LEAVE AREA: " + dev.getName());
-            removeDeveloper(dev);
+    public void removeFunctionalArea(AreaName area) {
+        Set<Developer> devs = new HashSet<Developer>(functionalAreas.get(area).getDevelopers());
+        synchronized (devs) {
+            Iterator<Developer> itr = devs.iterator();
+            for (; itr.hasNext();) {
+                removeDeveloper(itr.next());
+            }
+            functionalAreas.remove(area);
         }
-        functionalAreas.remove(area);
-
     }
 
     public void reduceFunctionalPoints(AreaName area, int points) {

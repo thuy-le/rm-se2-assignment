@@ -71,7 +71,7 @@ public class DevDate implements Serializable {
     public void nextYear() {
         year++;
     }
-    
+
     /**
      * Used to calculate the deadline of the project.
      * @param month 
@@ -85,7 +85,7 @@ public class DevDate implements Serializable {
         }
         int newMonth = this.month + month;
         int newYear = this.year;
-        while(newMonth > 12) {
+        while (newMonth > 12) {
             newYear++;
             newMonth -= 12;
         }

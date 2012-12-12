@@ -297,9 +297,7 @@ public class GameEngine extends Observable implements Serializable {
         /*
          * Time changes
          */
-        System.out.println("NEXT WEEK ----------------------");
         if (!ended) {
-            date.nextWeek();
             for (Developer dev : developers) {
                 dev.getTired();
             }

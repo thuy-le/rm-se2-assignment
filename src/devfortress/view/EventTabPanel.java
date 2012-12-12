@@ -58,7 +58,6 @@ public class EventTabPanel extends JPanel implements Observer {
         if (listProject.size() > 0) {
             page = listProject.size();
         }
-        System.out.println("List size: " + listProject.size());
         if (page >= 0) {
             if (page > 1) {
                 leftArrow.setVisible(true);
@@ -71,7 +70,6 @@ public class EventTabPanel extends JPanel implements Observer {
             Project currentProject = listProject.get(currentPage);
             projectName.setText(currentProject.getName());
             int i = 1;
-            System.out.println("Event Size: " + currentProject.getEvents().size());
             while (tableModel.getRowCount() > 0) {
                 tableModel.removeRow(tableModel.getRowCount() - 1);
             }

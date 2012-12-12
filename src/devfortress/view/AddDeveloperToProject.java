@@ -76,7 +76,6 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         setResizable(false);
         setLocationRelativeTo(null);
         cmbModel = new DefaultComboBoxModel();
-        System.out.println(areas.length);
         for (FunctionalArea area : areas) {
             cmbModel.addElement(area);
         }
