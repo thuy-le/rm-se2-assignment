@@ -98,18 +98,15 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         panel.setBackground(colour);
         applyBtn = new CustomButton("Apply");
         cancelBtn = new CustomButton("Cancel");
-        cancelBtn.addMouseListener(new CancelButtonMouseAdapter(this));
+        cancelBtn.addMouseListener(new CancelButtonMouseAdapter());
         GlassPanel infoGPanel = new GlassPanel(10, 10, 480, 450, 1f, Colors.LIGHTBLUE2, 7, 7);
         GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.LIGHTBLUE3, 7, 7);
 //        GlassPanel sysPanel = new GlassPanel(15, 0, 745, 30, 1f, Colors.LIGHTBLUE3, 7, 7);
         devsJListPanel = new CustomCheckBoxJListPanel<Developer>(Colors.LIGHTBLUE2);
         devsJListPanel.addJListOnSelectionListener(this);
         DefaultListModel devsListModel = devsJListPanel.getListModel();
-        //mock up data
-        //TODO: replace with free developers
-
-        devsListModel.clear();
         {
+            devsListModel.clear();
             List<Developer> devs = model.getDevelopers();
             for (Developer dev : devs) {
                 devsListModel.addElement(dev);
@@ -207,17 +204,11 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         showDeveloper(devsJListPanel.getSelectedItem());
     }
 
-    private static class CancelButtonMouseAdapter extends MouseAdapter {
-
-        private JDialog dialog;
-
-        public CancelButtonMouseAdapter(JDialog dialog) {
-            this.dialog = dialog;
-        }
+    private class CancelButtonMouseAdapter extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            dialog.dispose();
+            AddDeveloperToProject.this.dispose();
         }
     }
 }
