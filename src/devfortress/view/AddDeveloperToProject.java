@@ -27,6 +27,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -54,12 +55,13 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
     static private final Color colour = Colors.LIGHTBLUE;
     private CustomCheckBoxJListPanel<Developer> devsJListPanel;
     private CustomButton applyBtn, cancelBtn;
-    private JLabel devName, mainSkill;
+    private JLabel devName, mainSkill, production;
     private JTable skillTable;
     private DefaultTableModel skillTblModel;
     private Map<Developer, FunctionalArea> assignMap;
     private DefaultComboBoxModel cmbModel;
     private JPanel infoPanel;
+    private Project project;
 
     public AddDeveloperToProject(GameEngine model, Project project) {
         FunctionalArea[] areas;
@@ -69,6 +71,7 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
             areas = new FunctionalArea[pAreas.size()];
             pAreas.toArray(areas);
         }
+        this.project = project;
         assignMap = new HashMap<Developer, FunctionalArea>();
         Font font = new Font("Century Gothic", Font.BOLD, 17);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -84,6 +87,7 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         skillTblModel = new DefaultTableModel(names, 10);
         devName = new JLabel("Developer name");
         mainSkill = new JLabel("Main skill: ");
+        production = new JLabel("Production: ");
         JPanel assignedArea = new JPanel();
         assignedArea.setLayout(new BoxLayout(assignedArea, BoxLayout.X_AXIS));
         JLabel assignLbl = new JLabel("Assign: ");
@@ -114,6 +118,7 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         devName.setForeground(Colors.DARKBLUE);
         devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
         mainSkill.setFont(font);
+        production.setFont(font);
         panel.add(devsJListPanel, BorderLayout.WEST);
         panel.add(infoGPanel, BorderLayout.CENTER);
         panel.add(btnPanel, BorderLayout.SOUTH);
@@ -129,12 +134,13 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         //Now do the info panel
         JPanel infoTopPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-        JPanel infoTopRightPanel = new JPanel(new GridLayout(2, 1));
+        JPanel infoTopRightPanel = new JPanel(new GridLayout(3, 1));
 
         infoTopPanel.setBackground(Colors.LIGHTORANGE);
         infoTopRightPanel.setBackground(Colors.LIGHTORANGE);
-        infoTopRightPanel.setPreferredSize(new Dimension(280, 60));
+        infoTopRightPanel.setPreferredSize(new Dimension(290, 100));
         infoTopRightPanel.add(mainSkill);
+        infoTopRightPanel.add(production);
         infoTopRightPanel.add(assignedArea);
         infoTopPanel.add(new JLabel(new ImageIcon(picture)));
         infoTopPanel.add(infoTopRightPanel);
@@ -167,6 +173,7 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         if (dev != null) {
             devName.setText(dev.getName());
             mainSkill.setText("Main skill: " + dev.getMainSkill().getName());
+            production.setText("Production: " + dev.getProduction(project) + " points/week");
             List<Skill> skills = new LinkedList<Skill>(dev.getSkills().values());
             for (Skill skill : skills) {
                 Object[] row = {skill.getSkillInfo().getName(), skill.getLevel()};
@@ -179,9 +186,11 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
     public Map<Developer, FunctionalArea> getSelectedDevelopers() {
         Map<Developer, FunctionalArea> map = new HashMap<Developer, FunctionalArea>(assignMap);
         List<Developer> list = devsJListPanel.getSelectedItems();
-        for (Developer dev : map.keySet()) {
+
+        for (Iterator<Developer> itr = map.keySet().iterator(); itr.hasNext();) {
+            Developer dev = itr.next();
             if (!list.contains(dev)) {
-                map.remove(dev);
+                itr.remove();
             }
         }
         return map;

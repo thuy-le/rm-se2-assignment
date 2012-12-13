@@ -16,8 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -217,7 +215,7 @@ public class Project implements Serializable {
         level = Utilities.randInt(5) + 1;
         int numAreas = 0;
         int numUnknown = 0;
-        int pointsPerMonth = (level == 5) ? (Utilities.randInt(150) + 250) : (Utilities.randInt(25) + 75);
+        int pointsPerMonth = (level == 5) ? (Utilities.randInt(100) + 300) : (Utilities.randInt(75) + 25);
         int totalPoints = 0;
         int[] pointsHolder;
         // Dependencies on levels

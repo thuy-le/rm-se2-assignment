@@ -9,7 +9,9 @@ import devfortress.utilities.Utilities;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -217,49 +219,50 @@ public class Developer implements Serializable {
     }
 
     public int getCalculateLastWeekFunctionPoints() {
-        if (workingProject == null) {
-            lastWeekFunctionPoints = 0;
-        } else {
-            int tech = skills.get(mainSkillInfo).getLevel();
-            int design = getSkillLevel(SkillInfo.DESIGN);
-            int algorithm = getSkillLevel(SkillInfo.ALGORITHMS);
-            int analysis = getSkillLevel(SkillInfo.ANALYSIS);
-            int teamPlayer = getSkillLevel(SkillInfo.TEAM_PLAYER);
-            int config = getSkillLevel(SkillInfo.CONFIG_MANAGEMENT);
-            int numMem = workingProject.getDevelopers().size();
-            SkillInfo proMainSkill = workingProject.getMainRequirement();
-            if (mainSkillInfo != proMainSkill) {
-                int lisp = 0;
-                try {
-                    lisp = skills.get(SkillInfo.LISP).getLevel();
-                } catch (Exception ex) {
-                }
-                int haskell = 0;
-                try {
-                    haskell = skills.get(SkillInfo.HASKELL).getLevel();
-                } catch (Exception ex) {
-                }
-                int forth = 0;
-                try {
-                    forth = skills.get(SkillInfo.FORTH).getLevel();
-                } catch (Exception ex) {
-                }
-                if (lisp * haskell * forth != 0) {
-                    int temp = lisp > haskell ? lisp : haskell;
-                    tech = temp > forth ? temp : forth;
-                } else {
-                    for (Skill skill : skills.values()) {
-                        if (tech > skill.getLevel()) {
-                            tech = skill.getLevel();
-                        }
-                    }
-                }
-            }
-            lastWeekFunctionPoints = (tech + 2 * design + tech * algorithm + 3 * analysis + (teamPlayer * numMem) / (12 - config)) * (fed ? 1 : 0);
-            if (lastWeekFunctionPoints > 1) {
-                lastWeekFunctionPoints = 1;
-            }
-        }
+        lastWeekFunctionPoints = getProduction(workingProject);
+//        if (workingProject == null) {
+//            lastWeekFunctionPoints = 0;
+//        } else {
+//            int tech = skills.get(mainSkillInfo).getLevel();
+//            int design = getSkillLevel(SkillInfo.DESIGN);
+//            int algorithm = getSkillLevel(SkillInfo.ALGORITHMS);
+//            int analysis = getSkillLevel(SkillInfo.ANALYSIS);
+//            int teamPlayer = getSkillLevel(SkillInfo.TEAM_PLAYER);
+//            int config = getSkillLevel(SkillInfo.CONFIG_MANAGEMENT);
+//            int numMem = workingProject.getDevelopers().size();
+//            SkillInfo proMainSkill = workingProject.getMainRequirement();
+//            if (mainSkillInfo != proMainSkill) {
+//                int lisp = 0;
+//                try {
+//                    lisp = skills.get(SkillInfo.LISP).getLevel();
+//                } catch (Exception ex) {
+//                }
+//                int haskell = 0;
+//                try {
+//                    haskell = skills.get(SkillInfo.HASKELL).getLevel();
+//                } catch (Exception ex) {
+//                }
+//                int forth = 0;
+//                try {
+//                    forth = skills.get(SkillInfo.FORTH).getLevel();
+//                } catch (Exception ex) {
+//                }
+//                if (lisp * haskell * forth != 0) {
+//                    int temp = lisp > haskell ? lisp : haskell;
+//                    tech = temp > forth ? temp : forth;
+//                } else {
+//                    for (Skill skill : skills.values()) {
+//                        if (tech > skill.getLevel()) {
+//                            tech = skill.getLevel();
+//                        }
+//                    }
+//                }
+//            }
+//            lastWeekFunctionPoints = (tech + 2 * design + tech * algorithm + 3 * analysis + (teamPlayer * numMem) / (12 - config)) * (fed ? 1 : 0);
+//            if (lastWeekFunctionPoints > 1) {
+//                lastWeekFunctionPoints = 1;
+//            }
+//        }
         return lastWeekFunctionPoints;
     }
 
@@ -316,5 +319,73 @@ public class Developer implements Serializable {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    public int getProduction(Project project) {
+        int functionPoints = 0;
+        if (project == null) {
+            functionPoints = 0;
+        } else {
+            int tech = skills.get(mainSkillInfo).getLevel();
+            int design = getSkillLevel(SkillInfo.DESIGN);
+            int algorithm = getSkillLevel(SkillInfo.ALGORITHMS);
+            int analysis = getSkillLevel(SkillInfo.ANALYSIS);
+            int teamPlayer = getSkillLevel(SkillInfo.TEAM_PLAYER);
+            int config = getSkillLevel(SkillInfo.CONFIG_MANAGEMENT);
+            int numMem = project.getDevelopers().size();
+            SkillInfo proMainSkill = project.getMainRequirement();
+            if (mainSkillInfo != proMainSkill) {
+                int lisp = 0;
+                int haskell = 0;
+                int forth = 0;
+                {
+                    try {
+                        lisp = skills.get(SkillInfo.LISP).getLevel();
+                    } catch (Exception ex) {
+                    }
+                    try {
+                        haskell = skills.get(SkillInfo.HASKELL).getLevel();
+                    } catch (Exception ex) {
+                    }
+                    try {
+                        forth = skills.get(SkillInfo.FORTH).getLevel();
+                    } catch (Exception ex) {
+                    }
+                }
+                if (lisp + haskell + forth != 0) {
+                    int temp = lisp > haskell ? lisp : haskell;
+                    tech = temp > forth ? temp : forth;
+                } else {
+                    List<Skill> techSkills = new LinkedList<Skill>(skills.values());
+                    for (Iterator<Skill> itr = techSkills.iterator(); itr.hasNext();) {
+                        Skill skill = itr.next();
+                        if (skill.getSkillInfo().getType() != SkillTypes.TECHNICAL) {
+                            itr.remove();
+                        }
+                    }
+                    for (Skill skill : techSkills) {
+                        if (tech > skill.getLevel()) {
+                            tech = skill.getLevel();
+                        }
+                    }
+                }
+            }
+            functionPoints = (tech + 2 * design + tech * algorithm + 3 * analysis + (teamPlayer * numMem) / (12 - config)) * (fed ? 1 : 0);
+            System.out.println("Dev: " + getName() + "------------------");
+            System.out.println("Tech: " + tech);
+            System.out.println("Design: " + design);
+            System.out.println("Algorithm: " + algorithm);
+            System.out.println("Analysis: " + analysis);
+            System.out.println("Team Player: " + teamPlayer);
+            System.out.println("Config: " + config);
+            System.out.println("Fed: " + fed);
+
+
+
+            if (functionPoints < 1) {
+                functionPoints = 1;
+            }
+        }
+        return functionPoints;
     }
 }
