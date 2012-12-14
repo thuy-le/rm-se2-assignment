@@ -73,10 +73,8 @@ public class ProjectTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             Project pro = projectTab.getSelectedProject();
-            System.out.println("Clicked");
             if (pro != null) {
                 try {
-                    System.out.println("Cancel");
                     model.cancelProject(pro);
                     JOptionPane.showMessageDialog(null, pro.getName() + "cancelled");
                     model.notifyObservers();
@@ -112,7 +110,6 @@ public class ProjectTabController {
                 for (Iterator<Developer> itr = selected.keySet().iterator(); itr.hasNext();) {
                     Developer dev = itr.next();
                     FunctionalArea area = selected.get(dev);
-                    System.out.println(dev.getName() + " is added");
                     try {
                         project.addDeveloper(dev, area.getName());
                     } catch (DeveloperBusyException ex) {
