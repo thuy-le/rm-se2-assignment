@@ -59,7 +59,8 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     private String playerName;
     //private variables
     private JList developerList;
-    private JLabel devNameLbl, mainSkillLbl, workingPrj, status;
+    private JLabel devNameLbl, mainSkillLbl, workingPrj;
+    private JPanel status;
     private CustomButton hireBtn, closeBtn;
     private GlassPanel rightPanel;
     private JTable skillTable;
@@ -76,7 +77,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         devNameLbl = new JLabel("Developer Name");
         mainSkillLbl = new JLabel("Main Skill (Level)");
         workingPrj = new JLabel("Working Project");
-        status = new JLabel("Status");
+        status = new JPanel();
         developerList = new JList();
         skillTable = new CustomTable(skillTableModel);
         hireBtn = new CustomButton("Hire Developer");
@@ -208,16 +209,16 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         } else {
             rightPanel.setVisible(true);
             setDevName(dev.getName());
-            String toolTip = dev.getName() + " is currently ";
+            
+            JLabel statusLabel = new JLabel("Status:");
             JLabel isHappy = new JLabel();
             JLabel isFull = new JLabel();
+            String toolTip = dev.getName() + " is currently ";
             if (dev.isHappy()) {
                 isHappy.setIcon(new ImageIcon("images/happy.png"));
-//                isHappy.repaint();
                 toolTip += "happy"; 
             } else {
                 isHappy.setIcon(new ImageIcon("images/unhappy.png"));
-//                isHappy.repaint();
                 toolTip += "not happy";
             }
             if (dev.isFed()) {
@@ -232,7 +233,12 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             } else {
                 toolTip += ".";
             }
-            setStatus(s);
+            status.add(statusLabel);
+            status.add(isHappy);
+            status.add(isFull);
+            status.setToolTipText(toolTip);
+            status.setBackground(PNL_COLOR);
+            
             Project p = dev.getWorkingProject();
             if (p != null) {
                 setWorkingPrj(p.getName());
@@ -292,15 +298,6 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     public void setMainSkill(String mainSkill) {
         this.mainSkillLbl.setText(mainSkill);
         this.mainSkillLbl.repaint();
-    }
-
-    public String getStatus() {
-        return status.getText();
-    }
-
-    public void setStatus(JLabel status) {
-        this.status.setText(status.getText());
-        this.status.repaint();
     }
 
     public String getWorkingPrj() {
