@@ -219,50 +219,10 @@ public class Developer implements Serializable {
     }
 
     public int getCalculateLastWeekFunctionPoints() {
-        lastWeekFunctionPoints = getProduction(workingProject);
-//        if (workingProject == null) {
-//            lastWeekFunctionPoints = 0;
-//        } else {
-//            int tech = skills.get(mainSkillInfo).getLevel();
-//            int design = getSkillLevel(SkillInfo.DESIGN);
-//            int algorithm = getSkillLevel(SkillInfo.ALGORITHMS);
-//            int analysis = getSkillLevel(SkillInfo.ANALYSIS);
-//            int teamPlayer = getSkillLevel(SkillInfo.TEAM_PLAYER);
-//            int config = getSkillLevel(SkillInfo.CONFIG_MANAGEMENT);
-//            int numMem = workingProject.getDevelopers().size();
-//            SkillInfo proMainSkill = workingProject.getMainRequirement();
-//            if (mainSkillInfo != proMainSkill) {
-//                int lisp = 0;
-//                try {
-//                    lisp = skills.get(SkillInfo.LISP).getLevel();
-//                } catch (Exception ex) {
-//                }
-//                int haskell = 0;
-//                try {
-//                    haskell = skills.get(SkillInfo.HASKELL).getLevel();
-//                } catch (Exception ex) {
-//                }
-//                int forth = 0;
-//                try {
-//                    forth = skills.get(SkillInfo.FORTH).getLevel();
-//                } catch (Exception ex) {
-//                }
-//                if (lisp * haskell * forth != 0) {
-//                    int temp = lisp > haskell ? lisp : haskell;
-//                    tech = temp > forth ? temp : forth;
-//                } else {
-//                    for (Skill skill : skills.values()) {
-//                        if (tech > skill.getLevel()) {
-//                            tech = skill.getLevel();
-//                        }
-//                    }
-//                }
-//            }
-//            lastWeekFunctionPoints = (tech + 2 * design + tech * algorithm + 3 * analysis + (teamPlayer * numMem) / (12 - config)) * (fed ? 1 : 0);
-//            if (lastWeekFunctionPoints > 1) {
-//                lastWeekFunctionPoints = 1;
-//            }
-//        }
+        lastWeekFunctionPoints = getProduction(workingProject) * (fed ? 1 : 0);
+        if (lastWeekFunctionPoints < 1) {
+            lastWeekFunctionPoints = 1;
+        }
         return lastWeekFunctionPoints;
     }
 
@@ -370,17 +330,7 @@ public class Developer implements Serializable {
                     }
                 }
             }
-            functionPoints = (tech + 2 * design + tech * algorithm + 3 * analysis + (teamPlayer * numMem) / (12 - config)) * (fed ? 1 : 0);
-            System.out.println("Dev: " + getName() + "------------------");
-            System.out.println("Tech: " + tech);
-            System.out.println("Design: " + design);
-            System.out.println("Algorithm: " + algorithm);
-            System.out.println("Analysis: " + analysis);
-            System.out.println("Team Player: " + teamPlayer);
-            System.out.println("Config: " + config);
-            System.out.println("Fed: " + fed);
-
-
+            functionPoints = (tech + 2 * design + tech * algorithm + 3 * analysis + (teamPlayer * numMem) / (12 - config));
 
             if (functionPoints < 1) {
                 functionPoints = 1;

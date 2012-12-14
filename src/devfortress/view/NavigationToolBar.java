@@ -4,11 +4,14 @@
  */
 package devfortress.view;
 
+import devfortress.models.GameEngine;
 import devfortress.view.components.CustomLabel;
 import devfortress.utilities.Colors;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,7 +21,7 @@ import javax.swing.JToolBar;
  *
  * @author PC
  */
-public class NavigationToolBar extends JToolBar {
+public class NavigationToolBar extends JToolBar implements Observer {
 
     private JLabel exitGame, newGame, aboutGame, saveGame, loadGame, seperator, budget;
 
@@ -87,8 +90,8 @@ public class NavigationToolBar extends JToolBar {
     public Dimension getPreferredSize() {
         return new Dimension(getWidth(), 55);
     }
-    
-    public Image generateSeperator(){
+
+    public Image generateSeperator() {
         BufferedImage bi = new BufferedImage(350, 50, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bi.createGraphics();
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
@@ -96,5 +99,10 @@ public class NavigationToolBar extends JToolBar {
         g2d.fillRect(0, 0, 350, 50);
         g2d.dispose();
         return bi;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        budget.setText("Budget: " + ((GameEngine) o).getBudget());
     }
 }

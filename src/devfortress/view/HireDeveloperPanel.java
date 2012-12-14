@@ -216,14 +216,14 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             String toolTip = dev.getName() + " is currently ";
             if (dev.isHappy()) {
                 isHappy.setIcon(new ImageIcon("images/happy.png"));
-                toolTip += "happy"; 
+                toolTip += "happy";
             } else {
                 isHappy.setIcon(new ImageIcon("images/unhappy.png"));
                 toolTip += "not happy";
             }
             if (dev.isFed()) {
                 isFull.setIcon(new ImageIcon("images/drunk.png"));
-                toolTip += ""; 
+                toolTip += "";
             } else {
                 isFull.setIcon(new ImageIcon("images/notDrunk.png"));
                 toolTip += " and hungry";

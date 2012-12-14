@@ -206,7 +206,13 @@ public class SystemTabPanel extends JPanel implements Observer {
         developers = model.getDevelopers();
         numPCs = model.getNumPCs();
         createSeats();
-        budget.setText(model.getBudget() + "");
+        budget.setText("$" + model.getBudget());
+        List<Developer> devs = model.getDevelopers();
+        int total = 0;
+        for (Iterator<Developer> itr = devs.iterator(); itr.hasNext();) {
+            total += itr.next().getSalary();
+        }
+        salary.setText("$" + total);
         String welcomeStr = "<html>Hi, " + model.getPlayerName() + " ◕‿◕</html>";
         welcome.setText(welcomeStr);
     }
