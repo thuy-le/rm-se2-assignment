@@ -9,6 +9,7 @@ import devfortress.models.Event;
 import devfortress.models.Project;
 import devfortress.view.components.GlassPanel;
 import devfortress.utilities.Colors;
+import devfortress.utilities.EffectLevel;
 import devfortress.view.components.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -26,14 +27,20 @@ import javax.swing.table.TableColumn;
 public class EventTabPanel extends JPanel implements Observer {
 
     //initialize constant variables
-    static private final float alpha = 0.8f;
-    static private final Color colour = Colors.MIDDLERED;
-    static private final int x = 0;
-    static private final int y = 5;
-    static private final int width = 793;
-    static private final int height = 418;
-    static private final int arcW = 10;
-    static private final int arcH = 10;
+    static private final float ALPHA = 0.8f;
+    static private final int X = 0;
+    static private final int Y = 5;
+    static private final int W = 793;
+    static private final int H = 418;
+    static private final int ARCW = 10;
+    static private final int ARCH = 10;
+    static private final Color BACKGROUNDCOLOR = Colors.LIGHTBLUE;
+    static private final Color HIGHLIGHTBACKGROUND = Colors.REDORANGEDARK;
+    static private final Color HIGHLIGHTFOREGROUND = Color.WHITE;
+    static private final Color TABLEDARK = Colors.DARKBLUE;
+    static private final Color TABLELIGHT = Colors.LIGHTBLUE;
+    static private final Font DESCFONT = new Font("Century Gothic", Font.PLAIN, 17);
+    static private final Font EFFECTFONT = new Font("Century Gothic", Font.BOLD, 18);
     //declare private variables
     private JPanel subContainer;
     private JPanel top;
@@ -47,6 +54,8 @@ public class EventTabPanel extends JPanel implements Observer {
     private DefaultTableModel tableModel;
     private JTextArea eventDescription;
     private JLabel eventEffect;
+    private Map<Integer, Event> listCurrentEvents;
+    private JPanel tableContainer;
 
     //constructor
     public EventTabPanel() {
@@ -66,22 +75,36 @@ public class EventTabPanel extends JPanel implements Observer {
                 leftArrow.setVisible(false);
                 rightArrow.setVisible(false);
             }
-
-            Project currentProject = listProject.get(currentPage);
-            projectName.setText(currentProject.getName());
+            listCurrentEvents.clear();
             int i = 1;
-            while (tableModel.getRowCount() > 0) {
-                tableModel.removeRow(tableModel.getRowCount() - 1);
-            }
-            Object[] ids = {"ID", "Description"};
-            tableModel.setColumnIdentifiers(ids);
+            Project currentProject = listProject.get(currentPage);
             for (Event event : currentProject.getEvents()) {
-                if (event.getDescription().length() == 0) {
-                    continue;
-                }
-                Object[] rowData = {i, event.getDescription()};
-                tableModel.addRow(rowData);
+                listCurrentEvents.put(i, event);
                 i++;
+            }
+            projectName.setText(currentProject.getName());
+            if (listCurrentEvents.size() > 0) {
+                ((CustomTable) eventTable).getTableScroll().setVisible(true);
+                tableContainer.setVisible(true);
+                while (tableModel.getRowCount() > 0) {
+                    tableModel.removeRow(tableModel.getRowCount() - 1);
+                }
+                Iterator iterator = listCurrentEvents.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry pairs = (Map.Entry) iterator.next();
+                    int id = (int) pairs.getKey();
+                    Event event = (Event) pairs.getValue();
+                    if (event.getDescription().length() == 0) {
+                        continue;
+                    }
+                    Object[] rowData = {id, event.getDescription()};
+                    tableModel.addRow(rowData);
+                }
+                repaint();
+            } else {
+                ((CustomTable) eventTable).getTableScroll().setVisible(false);
+                tableContainer.setVisible(false);
+                repaint();
             }
         }
     }
@@ -91,18 +114,10 @@ public class EventTabPanel extends JPanel implements Observer {
         /*
          * ########### initialize variables ##########
          */ //$$$$$-----Global variables
+        listCurrentEvents = new HashMap<>();
         eventEffect = new JLabel("");
-        String demoText = "This is the event description. It'll give you "
-                + "a more specific statistic about every event happened in "
-                + "your project(s)";
-        eventDescription = new JTextArea(demoText);
-        eventDescription.setWrapStyleWord(true);
-        eventDescription.setLineWrap(true);
-        eventDescription.setEditable(false);
-        eventDescription.setBackground(Colors.YELLOW);
-        eventDescription.setPreferredSize(new Dimension(200, 320));
-        eventDescription.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        eventDescription.setForeground(Colors.DARKBLUE);
+        tableContainer = new GlassPanel(0, 5, 500, 340, 1f, TABLEDARK, 0, 0);
+        eventDescription = new JTextArea();
         subContainer = new GlassPanel(650, 400);
         top = new GlassPanel(550, 55);
         projectName = new JLabel("") {
@@ -113,44 +128,53 @@ public class EventTabPanel extends JPanel implements Observer {
                 super.paintComponent(g);
             }
         };
-
         tableModel = new DefaultTableModel(1, 2);
         eventTable = new CustomTable(tableModel);
-        eventTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-        eventTable.addMouseListener(new EventTableMouseAdapter());
-        ((CustomTable) eventTable).setTableSize(500, 340);
-        ((CustomTable) eventTable).setHeaderColors(Colors.LIGHTBLUE, Colors.DARKBLUE);
-        ((CustomTable) eventTable).setBorderColor(Colors.DARKBLUE);
-        ((CustomTable) eventTable).setScrollBackground(Colors.LIGHTBLUE);
-        eventTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        leftArrow = new CustomLabel(new ImageIcon("images/arrowLeft.png"));
+        rightArrow = new CustomLabel(new ImageIcon("images/arrowRight.png"));
         //$$$$$-----Local variable for UI
         GlassPanel marginTop = new GlassPanel(250, 15);
-        GlassPanel gp3 = new GlassPanel(15, 15, 250, 390, 1f, Colors.YELLOW, 15, 15);
-        JPanel tableContainer = new GlassPanel(0, 5, 500, 340, 1f, Colors.DARKBLUE, 0, 0);
-        tableContainer.setBackground(Colors.DARKBLUE);
-        tableContainer.setPreferredSize(new Dimension(500, 320));
-        leftArrow = new CustomLabel("");
-        rightArrow = new CustomLabel("");
-        leftArrow.setIcon(new ImageIcon("images/arrowLeft.png"));
-        rightArrow.setIcon(new ImageIcon("images/arrowRight.png"));
+        GlassPanel highlightPanel = new GlassPanel(15, 15, 250, 390, 1f, HIGHLIGHTBACKGROUND, 15, 15);
+        String demoText = "This is the event description. It'll give you "
+                + "a more specific statistic about every event happened in "
+                + "your project(s)";
+        JPanel effectContainer = new GlassPanel(10, 0, 220, 50, 1f, HIGHLIGHTBACKGROUND, 0, 0);
+        JPanel nameContainer = new GlassPanel(380, 50);
+        /*
+         * ########## Set some default values ##########
+         */
+        eventDescription.setText(demoText);
+        Object[] ids = {"ID", "Description"};
+        tableModel.setColumnIdentifiers(ids);
         /*
          * ########## Adjust look and feel ##########
          */
-        projectName.setForeground(Colors.DARKBLUE);
+        tableContainer.setPreferredSize(new Dimension(500, 320));
+        eventEffect.setForeground(HIGHLIGHTFOREGROUND);
+        eventDescription.setWrapStyleWord(true);
+        eventDescription.setLineWrap(true);
+        eventDescription.setEditable(false);
+        eventDescription.setBackground(HIGHLIGHTBACKGROUND);
+        eventDescription.setPreferredSize(new Dimension(200, 320));
+        eventDescription.setFont(DESCFONT);
+        eventDescription.setForeground(HIGHLIGHTFOREGROUND);
+        eventTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        ((CustomTable) eventTable).setTableSize(500, 340);
+        ((CustomTable) eventTable).setHeaderColors(TABLELIGHT, TABLEDARK);
+        ((CustomTable) eventTable).setBorderColor(TABLEDARK);
+        ((CustomTable) eventTable).setScrollBackground(TABLELIGHT);
+        eventTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        projectName.setForeground(TABLEDARK);
         projectName.setFont(new Font("Century Gothic", Font.BOLD, 32));
         /*
-         * ########## set border layout to the container ##########
+         * ########## add components together ##########
          */
-        JPanel effectContainer = new GlassPanel(10, 0, 220, 50, 1f, Colors.YELLOW, 0, 0);
-        //-------Add components together
         effectContainer.add(eventEffect);
         add(subContainer, BorderLayout.CENTER);
-        add(gp3, BorderLayout.EAST);
-        gp3.add(marginTop, BorderLayout.NORTH);
-        gp3.add(eventDescription, BorderLayout.CENTER);
-        gp3.add(effectContainer, BorderLayout.SOUTH);
-        //
-        JPanel nameContainer = new GlassPanel(380, 50);
+        add(highlightPanel, BorderLayout.EAST);
+        highlightPanel.add(marginTop, BorderLayout.NORTH);
+        highlightPanel.add(eventDescription, BorderLayout.CENTER);
+        highlightPanel.add(effectContainer, BorderLayout.SOUTH);
         nameContainer.add(projectName);
         top.add(leftArrow, BorderLayout.WEST);
         top.add(nameContainer, BorderLayout.CENTER);
@@ -158,17 +182,34 @@ public class EventTabPanel extends JPanel implements Observer {
         subContainer.add(top, BorderLayout.NORTH);
         tableContainer.add(((CustomTable) eventTable).getTableScroll());
         subContainer.add(tableContainer, BorderLayout.CENTER);
-        setUpArrowListener();
-        setDownArrowListener();
+
+        //add listeners
+        setPreviousArrowListener();
+        setNextArrowListener();
+        setTableNavigation();
     }
 
     public void showDescription() {
         int rowID = eventTable.getSelectedRow();
-        String desc = eventTable.getModel().getValueAt(rowID, 1).toString();
-        eventDescription.setText(desc);
-        eventEffect.setIcon(new ImageIcon("images/happy.png"));
-        eventEffect.setText("Congrats");
-        eventEffect.setFont(new Font("Century Gothic", Font.BOLD, 18));
+        int descID = (int) eventTable.getModel().getValueAt(rowID, 0);
+        Event selectedEvent = listCurrentEvents.get(descID);
+        int effect = selectedEvent.getEffect();
+        String eventDesc = selectedEvent.getDescription();
+        eventDescription.setText(eventDesc);
+        if (effect == EffectLevel.POSITIVE) {
+            eventEffect.setIcon(new ImageIcon("images/positive.png"));
+            eventEffect.setText("Congrats!");
+            eventEffect.setFont(EFFECTFONT);
+        } else if (effect == EffectLevel.NEGATIVE) {
+            eventEffect.setIcon(new ImageIcon("images/negative.png"));
+            eventEffect.setText("Oppps! Too bad!");
+            eventEffect.setFont(EFFECTFONT);
+        } else if (effect == EffectLevel.NEUTRAL) {
+            eventEffect.setIcon(new ImageIcon("images/neutral.png"));
+            eventEffect.setText("Not bad!");
+            eventEffect.setFont(EFFECTFONT);
+        }
+        eventEffect.repaint();
         repaint();
     }
 
@@ -177,18 +218,18 @@ public class EventTabPanel extends JPanel implements Observer {
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        if (colour != null) {
-            g2d.setColor(colour);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, ALPHA));
+        if (BACKGROUNDCOLOR != null) {
+            g2d.setColor(BACKGROUNDCOLOR);
         }
-        g2d.drawRoundRect(x, y, width, height, width, height);
-        g2d.fillRoundRect(x, y, width, height, arcW, arcH);
+        g2d.drawRoundRect(X, Y, W, H, W, H);
+        g2d.fillRoundRect(X, Y, W, H, ARCW, ARCH);
     }
 
     //override the getPreferredSize method
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(width, height);
+        return new Dimension(W, H);
     }
 
     public void setCurrentPage(int currentPage) {
@@ -206,15 +247,19 @@ public class EventTabPanel extends JPanel implements Observer {
         showEvent();
     }
 
-    public void setUpArrowListener() {
-        leftArrow.addMouseListener(new UpArrowNavigator());
+    public void setPreviousArrowListener() {
+        leftArrow.addMouseListener(new PreviousArrowNavigator());
     }
 
-    public void setDownArrowListener() {
-        rightArrow.addMouseListener(new DownArrowNavigator());
+    public void setNextArrowListener() {
+        rightArrow.addMouseListener(new NextArrowNavigator());
     }
 
-    private class UpArrowNavigator extends MouseAdapter {
+    public void setTableNavigation() {
+        eventTable.addMouseListener(new EventTableMouseAdapter());
+    }
+
+    private class PreviousArrowNavigator extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -243,7 +288,7 @@ public class EventTabPanel extends JPanel implements Observer {
         }
     }
 
-    private class DownArrowNavigator extends MouseAdapter {
+    private class NextArrowNavigator extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {

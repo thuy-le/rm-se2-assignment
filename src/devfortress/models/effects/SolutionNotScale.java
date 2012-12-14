@@ -7,6 +7,7 @@ package devfortress.models.effects;
 import devfortress.models.Effect;
 import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,5 +36,6 @@ public class SolutionNotScale extends Effect {
         FunctionalArea area = areas.get(Utilities.randInt(areas.size()));
         area.addFunctionPoints(10);
         description = "Solution does not scale. Area \"" + area.getName().toString() + "\" is added with 10 function points";
+        effect = EffectLevel.NEGATIVE;
     }
 }

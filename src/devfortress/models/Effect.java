@@ -1,5 +1,6 @@
 package devfortress.models;
 
+import devfortress.utilities.EffectLevel;
 import java.io.Serializable;
 
 /**
@@ -8,17 +9,13 @@ import java.io.Serializable;
  */
 public abstract class Effect implements Serializable {
 
-    private static final int NEGATIVE = -1;
-    private static final int POSITIVE = 1;
-    private static final int NEUTRAL = 0;
-    
     protected String description;
     protected GameEngine engine;
     protected int effect;
 
     public Effect() {
         description = "Default";
-        effect = NEUTRAL;
+        effect = EffectLevel.NEUTRAL;
     }
 
     public void setEngine(GameEngine engine) {

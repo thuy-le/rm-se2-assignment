@@ -7,6 +7,7 @@ package devfortress.models.effects;
 import devfortress.models.Effect;
 import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,11 +29,13 @@ public class FeatureCut extends Effect {
         }
         if (areas.isEmpty()) {
             description = "";
+            effect = EffectLevel.NEUTRAL;
             return;
         }
         FunctionalArea area = areas.get(Utilities.randInt(areas.size()));
         project.removeFunctionalArea(area.getName());
         //Set description
         description = "Area \"" + area.getName().toString() + "\" is cut from the project";
+        effect = EffectLevel.POSITIVE;
     }
 }

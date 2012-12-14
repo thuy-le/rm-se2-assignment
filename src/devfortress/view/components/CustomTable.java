@@ -10,7 +10,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.plaf.TableHeaderUI;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
@@ -29,10 +31,10 @@ public class CustomTable extends JTable {
 
     public CustomTable(TableModel dm) {
         super(dm);
-        scrollBackground = Colors.ORANGE;
-        headerBackgrond = Colors.ORANGE;
+        scrollBackground = Colors.REDORANGE;
+        headerBackgrond = Colors.REDORANGE;
         headerForeground = Color.WHITE;
-        borderColor = Colors.ORANGE;
+        borderColor = Colors.REDORANGE;
         width = 440;
         height = 180;
         init();
@@ -40,15 +42,19 @@ public class CustomTable extends JTable {
     
     private void init(){
         setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        setBorder(BorderFactory.createLineBorder(borderColor, 1));
+        setDefaultRenderer(getColumnClass(0), new CustomTableRenderer());
+        setSelectionBackground(headerForeground);
+        setSelectionForeground(headerBackgrond);
+        setBorder(BorderFactory.createEmptyBorder());
+        setShowGrid(false);
         setRowHeight(25);
         JTableHeader header = getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(borderColor, 1));
+        header.setBorder(BorderFactory.createLineBorder(headerForeground, 1));
         header.setFont(new Font("Century Gothic", Font.BOLD, 18));
         header.setBackground(headerBackgrond);
         header.setForeground(headerForeground);
         tableScroll = new JScrollPane(this);
-        tableScroll.setBorder(BorderFactory.createEmptyBorder());
+        tableScroll.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         tableScroll.setPreferredSize(new Dimension(width, height));
         tableScroll.setBackground(scrollBackground);
         tableScroll.getViewport().setBackground(scrollBackground);

@@ -63,10 +63,16 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
                         AlphaComposite.SRC_OVER, .7f));
                 GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.LIGHTORANGE, 0, y + 15 + h / 2, Colors.ORANGE);
                 g2D.setPaint(gradientShadowTmp);
-            } else {
+            } else if (tabIndex == 2) {
                 g2D.setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, .7f));
                 GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.LIGHTGREEN, 0, y + 15 + h / 2, Colors.YOUNGGREEN);
+                g2D.setPaint(gradientShadowTmp);
+            }
+            else{
+                g2D.setComposite(AlphaComposite.getInstance(
+                        AlphaComposite.SRC_OVER, .7f));
+                GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.LIGHTBLUE, 0, y + 15 + h / 2, Colors.LIGHTBLUE6);
                 g2D.setPaint(gradientShadowTmp);
             }
         } else {

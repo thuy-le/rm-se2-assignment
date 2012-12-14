@@ -7,6 +7,7 @@ package devfortress.models.effects;
 import devfortress.models.Effect;
 import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
 import java.util.ArrayList;
 
@@ -29,5 +30,6 @@ public class BackUpFailed extends Effect {
         area.addFunctionPoints(index);
         //Set description
         description = "Add 25 function points into " + area.getName().toString();
+        effect = EffectLevel.NEGATIVE;
     }
 }

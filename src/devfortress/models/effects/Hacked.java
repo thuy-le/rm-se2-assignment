@@ -7,6 +7,7 @@ package devfortress.models.effects;
 import devfortress.models.Developer;
 import devfortress.models.Effect;
 import devfortress.models.Project;
+import devfortress.utilities.EffectLevel;
 import java.util.List;
 
 /**
@@ -24,5 +25,6 @@ public class Hacked extends Effect {
         }
         //Set description
         description = "System was hacked. All developers do not produce anything this week.";
+        effect = EffectLevel.NEGATIVE;
     }
 }

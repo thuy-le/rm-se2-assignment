@@ -9,6 +9,7 @@ import devfortress.models.Effect;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.models.exceptions.DeveloperBusyException;
+import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class DeveloperKilled extends Effect {
         List<Developer> devs = project.getDevelopers();
         if (devs.size() < 2) {
             description = "";
+            effect = EffectLevel.NEUTRAL;
             return;
         }
         // Random 2 developers
@@ -48,5 +50,6 @@ public class DeveloperKilled extends Effect {
         } catch (DeveloperBusyException ex) {
         }
         description = killerDev.getName() + " murdered " + victimDev.getName() + "! " + killerDev.getName() + " is arrested. R.I.P our dear " + victimDev.getName();
+        effect = EffectLevel.NEGATIVE;
     }
 }
