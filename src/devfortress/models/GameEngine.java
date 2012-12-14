@@ -344,7 +344,17 @@ public class GameEngine extends Observable implements Serializable {
         FileInputStream fileIn = new FileInputStream(file);
         ObjectInputStream objectIn = new ObjectInputStream(fileIn);
         try {
-            instance = (GameEngine) objectIn.readObject();
+            GameEngine loadedInstance = (GameEngine) objectIn.readObject();
+            instance.budget = loadedInstance.budget;
+            instance.playerName = loadedInstance.playerName;
+            instance.date = loadedInstance.date;
+            instance.developers = loadedInstance.developers;
+            instance.ended = loadedInstance.ended;
+            instance.numPCs = loadedInstance.numPCs;
+            instance.pastProjects = loadedInstance.pastProjects;
+            
+            instance.marketDevelopers = loadedInstance.marketDevelopers;
+            instance.marketProjects = loadedInstance.marketProjects;
         } catch (ClassNotFoundException ex) {
         }
         objectIn.close();
