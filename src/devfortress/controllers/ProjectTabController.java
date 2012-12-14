@@ -52,7 +52,6 @@ public class ProjectTabController {
         projectTab.addDevToProjectListener(new AddDevToProjectListener());
         projectTab.cancelProjectListener(new CancelProjectListener());
         projectTab.removeDevFromProjectListener(new RemoveDevFromProjectListener());
-
         addProjectPanel.addAcceptProjectEvent(new AcceptProjectListener());
         addProjectPanel.addCloseEvent(new CloseAddProjectPanelListener());
     }
@@ -74,8 +73,10 @@ public class ProjectTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             Project pro = projectTab.getSelectedProject();
+            System.out.println("Clicked");
             if (pro != null) {
                 try {
+                    System.out.println("Cancel");
                     model.cancelProject(pro);
                     JOptionPane.showMessageDialog(null, pro.getName() + "cancelled");
                     model.notifyObservers();

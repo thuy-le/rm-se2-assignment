@@ -177,6 +177,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
     }
 
     public void cancelProjectListener(MouseListener l) {
+        btnCancelProject.addMouseListener(l);
     }
 
     public void addDevToProjectListener(MouseListener l) {
