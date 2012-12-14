@@ -40,6 +40,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * The view of adding (accepting) new projects function of the game.
+ *
  * @author Team Poseidon
  */
 public class AddProjectPanel extends JPanel implements Observer {
@@ -60,7 +61,7 @@ public class AddProjectPanel extends JPanel implements Observer {
     private CustomButton acceptProjectBtn, closeBtn;
     private CustomTable functionalTable;
     private JList projectList;
-    private JLabel projectNameLbl, mainSkillLbl, budgetLbl, deadlineLbl;
+    private JLabel projectLevelLbl, mainSkillLbl, budgetLbl, deadlineLbl, levelLbl, projectPanelTitle;
     private DefaultTableModel functionalTableModel;
     private DefaultListModel projectListModel;
     private Project selectedProject;
@@ -77,7 +78,8 @@ public class AddProjectPanel extends JPanel implements Observer {
         functionalTableModel = new DefaultTableModel(1, 2);
         projectList = new JList();
         functionalTable = new CustomTable(functionalTableModel);
-        projectNameLbl = new JLabel("Project Name");
+        projectLevelLbl = new JLabel("Project Name");
+        levelLbl = new JLabel("1");
         mainSkillLbl = new JLabel("Skill ABC");
         budgetLbl = new JLabel("$100000?");
         deadlineLbl = new JLabel("1/1/1");
@@ -88,12 +90,12 @@ public class AddProjectPanel extends JPanel implements Observer {
         setOpaque(false);
         setLayout(new BorderLayout());
         // variable for decoration:
-        GlassPanel headerPanel = new GlassPanel(800, 70);
+        GlassPanel projectNamePnl = new GlassPanel(800, 70);
         GlassPanel bottomPanel = new GlassPanel(800, 70);
         List<CustomButton> btnList = new LinkedList<CustomButton>();
         btnList.add(acceptProjectBtn);
         CustomListPanel projectListPanel = new CustomListPanel(projectList, btnList);
-        JLabel projectPanelTitle = new JLabel("Project details");
+        projectPanelTitle = new JLabel("Project details");
         JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
         Font bigFont = new Font("Century Gothic", Font.BOLD, 22);
         Font bigFont2 = new Font("Century Gothic", Font.BOLD, 17);
@@ -133,7 +135,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         title.setForeground(LIST_COLOR);
         projectPanelTitle.setForeground(LIST_COLOR);
         projectPanelTitle.setFont(bigFont);
-        projectNameLbl.setFont(bigFont2);
+        projectLevelLbl.setFont(bigFont2);
         mainSkillLbl.setFont(bigFont2);
         budgetLbl.setFont(bigFont2);
         deadlineLbl.setFont(bigFont2);
@@ -142,7 +144,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectInfoPanel.add(imageIcon);
         projectInfoPanel.add(projectDetailsPanel);
         projectDetailsPanel.setLayout(new GridLayout(4, 1));
-        projectDetailsPanel.add(projectNameLbl);
+        projectDetailsPanel.add(projectLevelLbl);
         projectDetailsPanel.add(mainSkillLbl);
         projectDetailsPanel.add(budgetLbl);
         projectDetailsPanel.add(deadlineLbl);
@@ -155,10 +157,10 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectPanel.add(projectPanelTitle, BorderLayout.NORTH);
         projectPanel.add(projectCenterPanel, BorderLayout.CENTER);
 
-        headerPanel.add(title);
+        projectNamePnl.add(title);
         bottomPanel.add(closeBtn);
 
-        add(headerPanel, BorderLayout.NORTH);
+        add(projectNamePnl, BorderLayout.NORTH);
         add(projectListPanel, BorderLayout.WEST);
         add(projectPanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
@@ -199,7 +201,8 @@ public class AddProjectPanel extends JPanel implements Observer {
         }
 
         projectPanel.setVisible(true);
-        projectNameLbl.setText(project.getName());
+        projectPanelTitle.setText(project.getName());
+        projectLevelLbl.setText("Level: " + project.getLevel());
         mainSkillLbl.setText("Skill: " + project.getMainRequirement().getName());
         budgetLbl.setText("Budget: " + project.getBudget());
         deadlineLbl.setText("Deadline: " + deadline.getWeek() + "/" + deadline.getMonth() + "/" + deadline.getYear());
@@ -238,14 +241,5 @@ public class AddProjectPanel extends JPanel implements Observer {
                 showProject((Project) projectList.getSelectedValue());
             }
         }
-    }
-
-    public static void main(String[] a) {
-        JFrame frame = new JFrame();
-        frame.add(new AddProjectPanel());
-        frame.setSize(800, 600);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

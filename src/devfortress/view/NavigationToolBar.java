@@ -38,7 +38,7 @@ public class NavigationToolBar extends JToolBar implements Observer {
         aboutGame = new CustomLabel(new ImageIcon("images/about.png"), "About Us");
         aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         seperator = new JLabel(new ImageIcon(generateSeperator()));
-        budget = new JLabel("<html>Budget: <b>10000</b></html>");
+        budget = new JLabel("");
         //adjust look and feel
         exitGame.setOpaque(false);
         newGame.setOpaque(false);
@@ -103,6 +103,6 @@ public class NavigationToolBar extends JToolBar implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        budget.setText("Budget: " + ((GameEngine) o).getBudget());
+        budget.setText("<html>Budget: <b>$" + +((GameEngine) o).getBudget() + "</b></html>");
     }
 }

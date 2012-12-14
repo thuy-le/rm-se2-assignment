@@ -95,6 +95,8 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
         JComboBox pAreasCmB = new JComboBox(cmbModel);
         pAreasCmB.addActionListener(this);
         assignedArea.add(pAreasCmB);
+        pAreasCmB.setBackground(Colors.LIGHTORANGE);
+        assignedArea.setBackground(Colors.LIGHTORANGE);
         skillTable = new CustomTable(skillTblModel);
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(colour);

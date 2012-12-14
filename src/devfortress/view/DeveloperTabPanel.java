@@ -197,7 +197,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     }
 
     public void setDevName(String devName) {
-        this.devName.setText(devName);
+        this.devName.setText("Name: "+devName);
         this.devName.repaint();
     }
 
@@ -214,7 +214,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     }
 
     public void setMainSkill(String mainSkill) {
-        this.mainSkill.setText(mainSkill);
+        this.mainSkill.setText("Main Skill: "+mainSkill);
         this.mainSkill.repaint();
     }
 
@@ -314,12 +314,12 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             
             Project p = dev.getWorkingProject();
             if (p != null) {
-                setWorkingPrj(p.getName());
+                setWorkingPrj("Working on: "+p.getName());
             } else {
                 setWorkingPrj("Not working");
             }
             setMainSkill(dev.getMainSkill().toString());
-            salaryLbl.setText("Salary: " + dev.getSalary());
+            salaryLbl.setText("Salary: $" + dev.getSalary());
             //Table
             table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
             table.getColumnModel().getColumn(0).setMinWidth(400);

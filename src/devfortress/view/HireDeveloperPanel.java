@@ -291,7 +291,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     }
 
     public void setDevName(String devName) {
-        this.devNameLbl.setText(devName);
+        this.devNameLbl.setText("Name: "+devName);
         this.devNameLbl.repaint();
 
     }
@@ -305,7 +305,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     }
 
     public void setMainSkill(String mainSkill) {
-        this.mainSkillLbl.setText(mainSkill);
+        this.mainSkillLbl.setText("Main Skill: "+mainSkill);
         this.mainSkillLbl.repaint();
     }
 
