@@ -308,7 +308,7 @@ public class GameEngine extends Observable implements Serializable {
                  */
                 paySalary();
                 generateRandomMarketDevelopers();
-//                generateRandomMarketProjects();
+                generateRandomMarketProjects();
             }
             date.nextWeek();
             setChanged();

@@ -51,5 +51,6 @@ public class DevFortressMain {
         model.addObserver(availableDev);
         model.addObserver(availableProject);
         model.addObserver(eventTab);
+        model.addObserver(nav);
     }
 }

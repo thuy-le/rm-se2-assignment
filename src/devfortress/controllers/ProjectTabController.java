@@ -1,6 +1,5 @@
 package devfortress.controllers;
 
-import devfortress.enumerations.AreaName;
 import devfortress.models.Developer;
 import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
@@ -14,12 +13,11 @@ import devfortress.view.DevFortressTabbedPane;
 import devfortress.view.InfomationPanel;
 import devfortress.view.NavigationToolBar;
 import devfortress.view.ProjectTabPanel;
+import devfortress.view.RemoveDeveloperFromProjectDialog;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -120,6 +118,32 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            Project project = projectTab.getSelectedProject();
+            RemoveDeveloperFromProjectDialog dialog = new RemoveDeveloperFromProjectDialog(model, project);
+            dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
+            dialog.setVisible(true);
+        }
+
+        private class ApplyMouseAdapter extends MouseAdapter {
+
+            RemoveDeveloperFromProjectDialog dialog;
+            Project project;
+
+            public ApplyMouseAdapter(RemoveDeveloperFromProjectDialog dialog, Project project) {
+                this.dialog = dialog;
+                this.project = project;
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
+                for (Iterator<Developer> itr = selected.keySet().iterator(); itr.hasNext();) {
+                    Developer dev = itr.next();
+                    project.removeDeveloper(dev);
+
+                }
+                dialog.dispose();
+            }
         }
     }
 
