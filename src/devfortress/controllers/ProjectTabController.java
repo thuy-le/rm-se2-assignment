@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -48,7 +49,6 @@ public class ProjectTabController {
         projectTab.addDevToProjectListener(new AddDevToProjectListener());
         projectTab.cancelProjectListener(new CancelProjectListener());
         projectTab.removeDevFromProjectListener(new RemoveDevFromProjectListener());
-
         addProjectPanel.addAcceptProjectEvent(new AcceptProjectListener());
         addProjectPanel.addCloseEvent(new CloseAddProjectPanelListener());
     }
@@ -69,6 +69,15 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+          Project pro = projectTab.getSelectedProject();
+          if(pro != null){
+              try{
+                model.cancelProject(pro);
+                JOptionPane.showMessageDialog(null, pro.getName()+ "cancelled");
+                model.notifyObservers();
+              }catch (Exception ex){
+              }
+          }
         }
     }
 
