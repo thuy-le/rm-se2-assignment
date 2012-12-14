@@ -154,6 +154,7 @@ public class MainFrameController {
                 File file = fileChooser.getSelectedFile();
                 try {
                     model.saveBinary(file.getAbsolutePath());
+                    JOptionPane.showMessageDialog(null, "Game saved.");
                 } catch (FileNotFoundException ex) {
                 } catch (IOException ex) {
                     String error = "Error Occur! Cannot save game.";
@@ -178,7 +179,7 @@ public class MainFrameController {
                 File file = fileChooser.getSelectedFile();
                 try {
                     GameEngine.loadBinary(file.getAbsolutePath());
-                    
+                    JOptionPane.showMessageDialog(null, file.getName() + " loaded.");
                 } catch (FileNotFoundException ex) {
                     String error = "Error Occur! Cannot find save file.";
                     JOptionPane.showMessageDialog(null, error, null, JOptionPane.ERROR_MESSAGE);

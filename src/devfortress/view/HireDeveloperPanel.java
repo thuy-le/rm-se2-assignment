@@ -208,10 +208,30 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         } else {
             rightPanel.setVisible(true);
             setDevName(dev.getName());
-            String s = "<html>Status: " + (dev.isHappy() ? "☺" : "☹");
-            s += (dev.isDrunk() ? ",☻" : "");
-            s += (dev.isFed() ? ",☀" : ",☠");
-            s += "</html>";
+            String toolTip = dev.getName() + " is currently ";
+            JLabel isHappy = new JLabel();
+            JLabel isFull = new JLabel();
+            if (dev.isHappy()) {
+                isHappy.setIcon(new ImageIcon("images/happy.png"));
+//                isHappy.repaint();
+                toolTip += "happy"; 
+            } else {
+                isHappy.setIcon(new ImageIcon("images/unhappy.png"));
+//                isHappy.repaint();
+                toolTip += "not happy";
+            }
+            if (dev.isFed()) {
+                isFull.setIcon(new ImageIcon("images/drunk.png"));
+                toolTip += ""; 
+            } else {
+                isFull.setIcon(new ImageIcon("images/notDrunk.png"));
+                toolTip += " and hungry";
+            }
+            if (dev.isDrunk()) {
+                toolTip += " and drunk.";
+            } else {
+                toolTip += ".";
+            }
             setStatus(s);
             Project p = dev.getWorkingProject();
             if (p != null) {
@@ -278,8 +298,8 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         return status.getText();
     }
 
-    public void setStatus(String status) {
-        this.status.setText(status);
+    public void setStatus(JLabel status) {
+        this.status.setText(status.getText());
         this.status.repaint();
     }
 
