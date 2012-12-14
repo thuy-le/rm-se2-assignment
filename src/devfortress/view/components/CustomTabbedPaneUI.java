@@ -68,8 +68,7 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
                         AlphaComposite.SRC_OVER, .7f));
                 GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.LIGHTGREEN, 0, y + 15 + h / 2, Colors.YOUNGGREEN);
                 g2D.setPaint(gradientShadowTmp);
-            }
-            else{
+            } else {
                 g2D.setComposite(AlphaComposite.getInstance(
                         AlphaComposite.SRC_OVER, .7f));
                 GradientPaint gradientShadowTmp = new GradientPaint(0, 0, Colors.LIGHTBLUE, 0, y + 15 + h / 2, Colors.LIGHTBLUE6);
@@ -149,16 +148,16 @@ public class CustomTabbedPaneUI extends BasicTabbedPaneUI {
     @Override
     protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
         ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .8f));
-       if(!isSelected){
-        g.setColor(new Color(7, 53, 170));
-        g.drawPolygon(shape);
-       }
+        if (!isSelected) {
+            g.setColor(new Color(7, 53, 170));
+            g.drawPolygon(shape);
+        }
     }
 
     //override the paint method -> make the tabbed pane transparent
     @Override
     public void paint(Graphics g, JComponent c) {
-        g.drawRect(0,0,0,0);
+        g.drawRect(0, 0, 0, 0);
         if (tabPane.getTabCount() > 1 || !hideSingleTab) {
             ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));

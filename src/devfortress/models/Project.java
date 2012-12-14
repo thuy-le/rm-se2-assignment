@@ -43,20 +43,6 @@ public class Project implements Serializable {
         this.finished = false;
         randomize();
         calculateBudget();
-        for (int i = 0; i < 5; i++) {
-            try {
-                Developer dev = new Developer();
-                GameEngine.getInstance().hireDeveloper(dev);
-                FunctionalArea[] as = new FunctionalArea[functionalAreas.values().size()];
-                functionalAreas.values().toArray(as);
-                AreaName a = as[Utilities.randInt(as.length)].getName();
-                if (functionalAreas.get(a) == null) {
-                }
-                addDeveloper(dev, a);
-            } catch (DeveloperBusyException ex) {
-            } catch (InvalidFunctionalAreaException ex) {
-            }
-        }
     }
 
     /*
