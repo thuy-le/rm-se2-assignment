@@ -197,7 +197,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     }
 
     public void setDevName(String devName) {
-        this.devName.setText("Name: "+devName);
+        this.devName.setText(devName);
         this.devName.repaint();
     }
 

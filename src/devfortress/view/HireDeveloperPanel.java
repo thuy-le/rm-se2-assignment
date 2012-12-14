@@ -69,7 +69,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     private Developer devToHire;
     private GameEngine model;
     private JLabel isHappy, isDrunk;
-
+    private JLabel developerDetail = new JLabel("");
     public HireDeveloperPanel() {
         // Initialize variables
         rightPanel = new GlassPanel(25, 25, 480, 380, 1f, PNL_COLOR, 7, 7);
@@ -95,7 +95,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         List<CustomButton> btnList = new LinkedList<CustomButton>();
         btnList.add(hireBtn);
         CustomListPanel devListPanel = new CustomListPanel(developerList, btnList);
-        JLabel developerDetail = new JLabel("Developer Details");
+        developerDetail = new JLabel("");
         JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
         JPanel topPnl = new JPanel();
         JPanel topRightPnl = new JPanel();
@@ -221,6 +221,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             rightPanel.setVisible(false);
         } else {
             rightPanel.setVisible(true);
+            developerDetail.setText(dev.getName());
             setDevName(dev.getName());
             String toolTip = dev.getName() + " is currently ";
             if (dev.isHappy()) {
