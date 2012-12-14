@@ -112,7 +112,9 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             devsListModel.clear();
             List<Developer> devs = model.getDevelopers();
             for (Developer dev : devs) {
-                devsListModel.addElement(dev);
+                if (dev.isAvailable()) {
+                    devsListModel.addElement(dev);
+                }
             }
         }
         devName.setForeground(Colors.DARKBLUE);
