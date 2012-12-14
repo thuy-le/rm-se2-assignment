@@ -92,7 +92,7 @@ public class EventTabPanel extends JPanel implements Observer {
                 Iterator iterator = listCurrentEvents.entrySet().iterator();
                 while (iterator.hasNext()) {
                     Map.Entry pairs = (Map.Entry) iterator.next();
-                    int id = (int) pairs.getKey();
+                    int id = ((Integer) pairs.getKey()).intValue();
                     Event event = (Event) pairs.getValue();
                     if (event.getDescription().length() == 0) {
                         continue;
@@ -114,7 +114,7 @@ public class EventTabPanel extends JPanel implements Observer {
         /*
          * ########### initialize variables ##########
          */ //$$$$$-----Global variables
-        listCurrentEvents = new HashMap<>();
+        listCurrentEvents = new HashMap<Integer, Event>();
         eventEffect = new JLabel("");
         tableContainer = new GlassPanel(0, 5, 500, 340, 1f, TABLEDARK, 0, 0);
         eventDescription = new JTextArea();
@@ -191,7 +191,7 @@ public class EventTabPanel extends JPanel implements Observer {
 
     public void showDescription() {
         int rowID = eventTable.getSelectedRow();
-        int descID = (int) eventTable.getModel().getValueAt(rowID, 0);
+        int descID = ((Integer) eventTable.getModel().getValueAt(rowID, 0)).intValue();
         Event selectedEvent = listCurrentEvents.get(descID);
         int effect = selectedEvent.getEffect();
         String eventDesc = selectedEvent.getDescription();
