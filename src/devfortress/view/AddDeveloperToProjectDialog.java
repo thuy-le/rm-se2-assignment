@@ -49,7 +49,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Team Poseidon
  */
-public class AddDeveloperToProject extends JDialog implements ActionListener, ListSelectionListener {
+public class AddDeveloperToProjectDialog extends JDialog implements ActionListener, ListSelectionListener {
 
     static private final String picture = "images/i6.png";
     static private final Color colour = Colors.LIGHTBLUE;
@@ -63,7 +63,7 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
     private JPanel infoPanel;
     private Project project;
 
-    public AddDeveloperToProject(GameEngine model, Project project) {
+    public AddDeveloperToProjectDialog(GameEngine model, Project project) {
         FunctionalArea[] areas;
         //Get an array of areas
         {
@@ -112,7 +112,9 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
             devsListModel.clear();
             List<Developer> devs = model.getDevelopers();
             for (Developer dev : devs) {
-                devsListModel.addElement(dev);
+                if (dev.isAvailable()) {
+                    devsListModel.addElement(dev);
+                }
             }
         }
         devName.setForeground(Colors.DARKBLUE);
@@ -159,6 +161,7 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
         infoGPanel.add(infoPanel);
         add(panel);
         infoPanel.setVisible(false);
+        setModalityType(ModalityType.APPLICATION_MODAL);
     }
 
     private void assignArea(Developer dev, FunctionalArea area) {
@@ -216,7 +219,7 @@ public class AddDeveloperToProject extends JDialog implements ActionListener, Li
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            AddDeveloperToProject.this.dispose();
+            AddDeveloperToProjectDialog.this.dispose();
         }
     }
 }

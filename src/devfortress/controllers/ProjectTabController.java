@@ -1,8 +1,13 @@
 package devfortress.controllers;
 
+import devfortress.enumerations.AreaName;
+import devfortress.models.Developer;
+import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
-import devfortress.view.AddDeveloperToProject;
+import devfortress.models.exceptions.DeveloperBusyException;
+import devfortress.models.exceptions.InvalidFunctionalAreaException;
+import devfortress.view.AddDeveloperToProjectDialog;
 import devfortress.view.AddProjectPanel;
 import devfortress.view.DevFortressMainFrame;
 import devfortress.view.DevFortressTabbedPane;
@@ -11,8 +16,10 @@ import devfortress.view.NavigationToolBar;
 import devfortress.view.ProjectTabPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -75,8 +82,37 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            JDialog dialog = new AddDeveloperToProject(model, new Project());
+            Project project = projectTab.getSelectedProject();
+            AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
+            dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
             dialog.setVisible(true);
+        }
+
+        private class ApplyMouseAdapter extends MouseAdapter {
+
+            AddDeveloperToProjectDialog dialog;
+            Project project;
+
+            public ApplyMouseAdapter(AddDeveloperToProjectDialog dialog, Project project) {
+                this.dialog = dialog;
+                this.project = project;
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
+                for (Iterator<Developer> itr = selected.keySet().iterator(); itr.hasNext();) {
+                    Developer dev = itr.next();
+                    FunctionalArea area = selected.get(dev);
+                    System.out.println(dev.getName() + " is added");
+                    try {
+                        project.addDeveloper(dev, area.getName());
+                    } catch (DeveloperBusyException ex) {
+                    } catch (InvalidFunctionalAreaException ex) {
+                    }
+                }
+                dialog.dispose();
+            }
         }
     }
 
