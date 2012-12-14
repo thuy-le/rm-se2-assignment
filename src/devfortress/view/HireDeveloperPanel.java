@@ -214,7 +214,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             if (dev.isHappy()) {
                 isHappy.setIcon(new ImageIcon("images/happy.png"));
 //                isHappy.repaint();
-                toolTip += "happy"; 
+                toolTip += "happy";
             } else {
                 isHappy.setIcon(new ImageIcon("images/unhappy.png"));
 //                isHappy.repaint();
@@ -222,7 +222,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             }
             if (dev.isFed()) {
                 isFull.setIcon(new ImageIcon("images/drunk.png"));
-                toolTip += ""; 
+                toolTip += "";
             } else {
                 isFull.setIcon(new ImageIcon("images/notDrunk.png"));
                 toolTip += " and hungry";
@@ -232,7 +232,6 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             } else {
                 toolTip += ".";
             }
-            setStatus(s);
             Project p = dev.getWorkingProject();
             if (p != null) {
                 setWorkingPrj(p.getName());
