@@ -59,6 +59,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     //private variables
     private JList developerList;
     private JLabel devName, mainSkill, workingPrj, status, salaryLbl;
+    private JPanel statusPanel;
     private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev, btnTrain;
     private GlassPanel rightPanel;
     private JTable table;
@@ -85,7 +86,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         developerList.setCellRenderer(new CustomListRenderer());
         developerList.setModel(devModel);
         //buttons
-        JPanel statusPanel = new JPanel(new GridLayout(1, 3));
+        statusPanel = new JPanel(new GridLayout(1, 3));
         List<CustomButton> btnList = new LinkedList<CustomButton>();
         btnHire = new CustomButton("Hire");
         btnFeed = new CustomButton("Feed");
@@ -287,18 +288,30 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         } else {
             rightPanel.setVisible(true);
             setDevName(dev.getName());
+            String toolTip = dev.getName() + " is currently ";
             if (dev.isHappy()) {
                 isHappy.setIcon(new ImageIcon("images/happy.png"));
-                isHappy.repaint();
+//                isHappy.repaint();
+                toolTip += "happy"; 
             } else {
                 isHappy.setIcon(new ImageIcon("images/unhappy.png"));
-                isHappy.repaint();
+//                isHappy.repaint();
+                toolTip += "not happy";
             }
             if (dev.isFed()) {
                 isDrunk.setIcon(new ImageIcon("images/drunk.png"));
+                toolTip += ""; 
             } else {
                 isDrunk.setIcon(new ImageIcon("images/notDrunk.png"));
+                toolTip += " and hungry";
             }
+            if (dev.isDrunk()) {
+                toolTip += " and drunk.";
+            } else {
+                toolTip += ".";
+            }
+            statusPanel.setToolTipText(toolTip);
+            
             Project p = dev.getWorkingProject();
             if (p != null) {
                 setWorkingPrj(p.getName());

@@ -4,6 +4,8 @@ import devfortress.models.Developer;
 import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
+import devfortress.models.exceptions.DeveloperBusyException;
+import devfortress.models.exceptions.InvalidFunctionalAreaException;
 import devfortress.view.AddDeveloperToProjectDialog;
 import devfortress.view.AddProjectPanel;
 import devfortress.view.DevFortressMainFrame;
@@ -11,11 +13,12 @@ import devfortress.view.DevFortressTabbedPane;
 import devfortress.view.InfomationPanel;
 import devfortress.view.NavigationToolBar;
 import devfortress.view.ProjectTabPanel;
+import devfortress.view.RemoveDeveloperFromProjectDialog;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  *
@@ -49,6 +52,7 @@ public class ProjectTabController {
         projectTab.addDevToProjectListener(new AddDevToProjectListener());
         projectTab.cancelProjectListener(new CancelProjectListener());
         projectTab.removeDevFromProjectListener(new RemoveDevFromProjectListener());
+
         addProjectPanel.addAcceptProjectEvent(new AcceptProjectListener());
         addProjectPanel.addCloseEvent(new CloseAddProjectPanelListener());
     }
@@ -69,15 +73,15 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-          Project pro = projectTab.getSelectedProject();
-          if(pro != null){
-              try{
-                model.cancelProject(pro);
-                JOptionPane.showMessageDialog(null, pro.getName()+ "cancelled");
-                model.notifyObservers();
-              }catch (Exception ex){
-              }
-          }
+            Project pro = projectTab.getSelectedProject();
+            if (pro != null) {
+                try {
+                    model.cancelProject(pro);
+                    JOptionPane.showMessageDialog(null, pro.getName() + "cancelled");
+                    model.notifyObservers();
+                } catch (Exception ex) {
+                }
+            }
         }
     }
 
@@ -104,7 +108,17 @@ public class ProjectTabController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
-
+                for (Iterator<Developer> itr = selected.keySet().iterator(); itr.hasNext();) {
+                    Developer dev = itr.next();
+                    FunctionalArea area = selected.get(dev);
+                    System.out.println(dev.getName() + " is added");
+                    try {
+                        project.addDeveloper(dev, area.getName());
+                    } catch (DeveloperBusyException ex) {
+                    } catch (InvalidFunctionalAreaException ex) {
+                    }
+                }
+                dialog.dispose();
             }
         }
     }
@@ -113,6 +127,32 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            Project project = projectTab.getSelectedProject();
+            RemoveDeveloperFromProjectDialog dialog = new RemoveDeveloperFromProjectDialog(model, project);
+            dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
+            dialog.setVisible(true);
+        }
+
+        private class ApplyMouseAdapter extends MouseAdapter {
+
+            RemoveDeveloperFromProjectDialog dialog;
+            Project project;
+
+            public ApplyMouseAdapter(RemoveDeveloperFromProjectDialog dialog, Project project) {
+                this.dialog = dialog;
+                this.project = project;
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
+                for (Iterator<Developer> itr = selected.keySet().iterator(); itr.hasNext();) {
+                    Developer dev = itr.next();
+                    project.removeDeveloper(dev);
+
+                }
+                dialog.dispose();
+            }
         }
     }
 

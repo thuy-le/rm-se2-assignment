@@ -4,22 +4,26 @@
  */
 package devfortress.view;
 
+import devfortress.models.GameEngine;
 import devfortress.view.components.CustomLabel;
 import devfortress.utilities.Colors;
 import java.awt.*;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JToolBar;
 
 /**
  *
  * @author PC
  */
-public class NavigationToolBar extends JToolBar {
+public class NavigationToolBar extends JToolBar implements Observer {
 
-    private CustomLabel exitGame, newGame, aboutGame, saveGame, loadGame;
+    private JLabel exitGame, newGame, aboutGame, saveGame, loadGame, seperator, budget;
 
     public NavigationToolBar() {
         setBorder(BorderFactory.createEmptyBorder());
@@ -33,19 +37,25 @@ public class NavigationToolBar extends JToolBar {
         loadGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aboutGame = new CustomLabel(new ImageIcon("images/about.png"), "About Us");
         aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        seperator = new JLabel(new ImageIcon(generateSeperator()));
+        budget = new JLabel("<html>Budget: <b>10000</b></html>");
         //adjust look and feel
         exitGame.setOpaque(false);
         newGame.setOpaque(false);
         saveGame.setOpaque(false);
         loadGame.setOpaque(false);
         aboutGame.setOpaque(false);
+        seperator.setSize(new Dimension(200, 55));
+        budget.setForeground(Color.WHITE);
+        budget.setFont(new Font("Century Gothic", Font.PLAIN, 22));
         //add components
         add(newGame);
         add(saveGame);
         add(loadGame);
         add(aboutGame);
         add(exitGame);
+        add(seperator);
+        add(budget);
     }
 
     public void addExitGameListener(MouseListener l) {
@@ -63,7 +73,7 @@ public class NavigationToolBar extends JToolBar {
     public void addSaveGameListener(MouseListener l) {
         saveGame.addMouseListener(l);
     }
-    
+
     public void addLoadGameListener(MouseListener l) {
         loadGame.addMouseListener(l);
     }
@@ -79,5 +89,20 @@ public class NavigationToolBar extends JToolBar {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(getWidth(), 55);
+    }
+
+    public Image generateSeperator() {
+        BufferedImage bi = new BufferedImage(350, 50, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bi.createGraphics();
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
+        g2d.setPaint(Colors.DARKBLUE);
+        g2d.fillRect(0, 0, 350, 50);
+        g2d.dispose();
+        return bi;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        budget.setText("Budget: " + ((GameEngine) o).getBudget());
     }
 }

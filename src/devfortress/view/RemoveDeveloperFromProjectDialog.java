@@ -48,7 +48,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Team Poseidon
  */
-public class AddDeveloperToProjectDialog extends JDialog implements ActionListener, ListSelectionListener {
+public class RemoveDeveloperFromProjectDialog extends JDialog implements ActionListener, ListSelectionListener {
 
     static private final String picture = "images/i6.png";
     static private final Color colour = Colors.LIGHTBLUE;
@@ -62,7 +62,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
     private JPanel infoPanel;
     private Project project;
 
-    public AddDeveloperToProjectDialog(GameEngine model, Project project) {
+    public RemoveDeveloperFromProjectDialog(GameEngine model, Project project) {
         FunctionalArea[] areas;
         //Get an array of areas
         {
@@ -93,6 +93,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
         assignLbl.setFont(font);
         assignedArea.add(assignLbl);
         JComboBox pAreasCmB = new JComboBox(cmbModel);
+        pAreasCmB.setEditable(false);
         pAreasCmB.addActionListener(this);
         assignedArea.add(pAreasCmB);
         skillTable = new CustomTable(skillTblModel);
@@ -109,11 +110,10 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
         DefaultListModel devsListModel = devsJListPanel.getListModel();
         {
             devsListModel.clear();
-            List<Developer> devs = model.getDevelopers();
+            List<Developer> devs = project.getDevelopers();
             for (Developer dev : devs) {
-                if (dev.isAvailable()) {
-                    devsListModel.addElement(dev);
-                }
+                devsListModel.addElement(dev);
+                assignMap.put(dev, project.getAreas().get(dev.getWorkingArea()));
             }
         }
         devName.setForeground(Colors.DARKBLUE);
@@ -218,7 +218,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            AddDeveloperToProjectDialog.this.dispose();
+            RemoveDeveloperFromProjectDialog.this.dispose();
         }
     }
 }
