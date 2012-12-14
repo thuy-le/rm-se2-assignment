@@ -2,7 +2,7 @@ package devfortress.controllers;
 
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
-import devfortress.view.AddDeveloperToProject;
+import devfortress.view.AddDeveloperToProjectDialog;
 import devfortress.view.AddProjectPanel;
 import devfortress.view.DevFortressMainFrame;
 import devfortress.view.DevFortressTabbedPane;
@@ -11,8 +11,7 @@ import devfortress.view.NavigationToolBar;
 import devfortress.view.ProjectTabPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -73,10 +72,21 @@ public class ProjectTabController {
 
     private class AddDevToProjectListener extends MouseAdapter {
 
+        AddDeveloperToProjectDialog dialog;
+
         @Override
         public void mouseClicked(MouseEvent e) {
-            JDialog dialog = new AddDeveloperToProject(model, new Project());
+            dialog = new AddDeveloperToProjectDialog(model, new Project());
+            dialog.addApplyButtonListener(new ApplyMouseAdapter());
             dialog.setVisible(true);
+        }
+
+        private class ApplyMouseAdapter extends MouseAdapter {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+//                Map<Developer
+            }
         }
     }
 

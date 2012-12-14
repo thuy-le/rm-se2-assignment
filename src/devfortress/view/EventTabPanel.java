@@ -66,6 +66,8 @@ public class EventTabPanel extends JPanel implements Observer {
     private void showEvent() {
         if (listProject.size() > 0) {
             page = listProject.size();
+        } else {
+            page = -1;
         }
         if (page >= 0) {
             if (page > 1) {
