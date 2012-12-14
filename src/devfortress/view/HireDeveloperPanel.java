@@ -59,7 +59,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     private String playerName;
     //private variables
     private JList developerList;
-    private JLabel devNameLbl, mainSkillLbl, workingPrj;
+    private JLabel devNameLbl, mainSkillLbl, workingPrj, salaryLbl, statusLbl;
     private JPanel status;
     private CustomButton hireBtn, closeBtn;
     private GlassPanel rightPanel;
@@ -68,6 +68,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     private DefaultListModel devListModel;
     private Developer devToHire;
     private GameEngine model;
+    private JLabel isHappy, isDrunk;
 
     public HireDeveloperPanel() {
         // Initialize variables
@@ -77,7 +78,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         devNameLbl = new JLabel("Developer Name");
         mainSkillLbl = new JLabel("Main Skill (Level)");
         workingPrj = new JLabel("Working Project");
-        status = new JPanel();
+        status = new JPanel(new GridLayout(1,3));
         developerList = new JList();
         skillTable = new CustomTable(skillTableModel);
         hireBtn = new CustomButton("Hire Developer");
@@ -101,6 +102,9 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         JPanel bottom = new JPanel();
         Font font = new Font("Century Gothic", Font.BOLD, 17);
         JLabel title = new CustomLabel("Available Developers");
+        isHappy = new JLabel("");
+        isDrunk = new JLabel("");
+                
 //        JTableHeader skillTableHeader = skillTable.getTableHeader();
 
         developerList.addListSelectionListener(new HireDeveloperListEvent());
@@ -120,8 +124,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         skillTable.setRowHeight(25);
         devNameLbl.setFont(font);
         mainSkillLbl.setFont(font);
-        workingPrj.setFont(font);
-        status.setFont(font);
+        workingPrj.setFont(font);       
         closeBtn.setColour(BTN_COLOR);
         closeBtn.setOnMouseColor(BTN_COLOR.brighter());
         rightPanel.add(developerDetail, BorderLayout.NORTH);
@@ -147,9 +150,19 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         //add components
         topPnl.add(imageIcon);
         topPnl.add(topRightPnl);
+        salaryLbl = new JLabel("");
+        salaryLbl.setFont(font);    
+        
+        statusLbl = new JLabel("Status: ");
+        statusLbl.setFont(font);
+        status.add(statusLbl);
+        status.add(isHappy);
+        status.add(isDrunk);
+        status.setBackground(Colors.LIGHTORANGE);
+        
         topRightPnl.add(devNameLbl);
         topRightPnl.add(mainSkillLbl);
-        topRightPnl.add(workingPrj);
+        topRightPnl.add(salaryLbl);
         topRightPnl.add(status);
 
         hireDevHeader.add(title);
@@ -203,29 +216,27 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         }
     }
 
-    public synchronized void showDeveloper(Developer dev) {
+    public void showDeveloper(Developer dev) {
         if (dev == null) {
             rightPanel.setVisible(false);
         } else {
             rightPanel.setVisible(true);
             setDevName(dev.getName());
-            
-            JLabel statusLabel = new JLabel("Status:");
-            JLabel isHappy = new JLabel();
-            JLabel isFull = new JLabel();
             String toolTip = dev.getName() + " is currently ";
             if (dev.isHappy()) {
                 isHappy.setIcon(new ImageIcon("images/happy.png"));
-                toolTip += "happy";
+//                isHappy.repaint();
+                toolTip += "happy"; 
             } else {
                 isHappy.setIcon(new ImageIcon("images/unhappy.png"));
+//                isHappy.repaint();
                 toolTip += "not happy";
             }
             if (dev.isFed()) {
-                isFull.setIcon(new ImageIcon("images/drunk.png"));
-                toolTip += "";
+                isDrunk.setIcon(new ImageIcon("images/drunk.png"));
+                toolTip += ""; 
             } else {
-                isFull.setIcon(new ImageIcon("images/notDrunk.png"));
+                isDrunk.setIcon(new ImageIcon("images/notDrunk.png"));
                 toolTip += " and hungry";
             }
             if (dev.isDrunk()) {
@@ -233,11 +244,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             } else {
                 toolTip += ".";
             }
-            status.add(statusLabel);
-            status.add(isHappy);
-            status.add(isFull);
             status.setToolTipText(toolTip);
-            status.setBackground(PNL_COLOR);
             
             Project p = dev.getWorkingProject();
             if (p != null) {
@@ -246,6 +253,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
                 setWorkingPrj("Not working");
             }
             setMainSkill(dev.getMainSkill().toString());
+            salaryLbl.setText("Salary: $" + dev.getSalary());
             //Table
             skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
             skillTable.getColumnModel().getColumn(0).setMinWidth(400);
@@ -261,9 +269,10 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             Object[] ids = {"Skill", "Level"};
             skillTableModel.setColumnIdentifiers(ids);
             skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            skillTable.getColumnModel().getColumn(1).setMaxWidth(70);
+            skillTable.getColumnModel().getColumn(1).setMaxWidth(50);
 
         }
+        developerList.setSelectedValue(dev, true);
     }
 
     @Override
