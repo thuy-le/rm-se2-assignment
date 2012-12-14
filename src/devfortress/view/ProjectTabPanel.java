@@ -203,6 +203,10 @@ public class ProjectTabPanel extends JPanel implements Observer {
         showProject((Project) prjList.getSelectedValue());
     }
 
+    public Project getSelectedProject() {
+        return (Project) prjList.getSelectedValue();
+    }
+
     public synchronized void showProject(Project project) {
         if (project == null) {
             rightPanel.setVisible(false);

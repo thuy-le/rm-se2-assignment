@@ -1,5 +1,7 @@
 package devfortress.controllers;
 
+import devfortress.models.Developer;
+import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.view.AddDeveloperToProjectDialog;
@@ -72,20 +74,28 @@ public class ProjectTabController {
 
     private class AddDevToProjectListener extends MouseAdapter {
 
-        AddDeveloperToProjectDialog dialog;
-
         @Override
         public void mouseClicked(MouseEvent e) {
-            dialog = new AddDeveloperToProjectDialog(model, new Project());
-            dialog.addApplyButtonListener(new ApplyMouseAdapter());
+            Project project = projectTab.getSelectedProject();
+            AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
+            dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
             dialog.setVisible(true);
         }
 
         private class ApplyMouseAdapter extends MouseAdapter {
 
+            AddDeveloperToProjectDialog dialog;
+            Project project;
+
+            public ApplyMouseAdapter(AddDeveloperToProjectDialog dialog, Project project) {
+                this.dialog = dialog;
+                this.project = project;
+            }
+
             @Override
             public void mouseClicked(MouseEvent e) {
-//                Map<Developer
+                Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
+
             }
         }
     }
