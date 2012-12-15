@@ -4,20 +4,22 @@
  */
 package devfortress.view;
 
+import com.sun.media.sound.JARSoundbankReader;
 import devfortress.view.components.CustomTable;
 import devfortress.enumerations.SkillInfo;
 import devfortress.models.Developer;
+import devfortress.models.GameEngine;
 import devfortress.models.Skill;
+import devfortress.utilities.Colors;
 import devfortress.view.components.CustomButton;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dialog.ModalityType;
+import java.awt.Font;
 import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -28,15 +30,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TrainSkillDialog extends JDialog implements Observer {
 
-    private Developer developer;
+    private Developer developer;   
     private JTable skillTable;
     private DefaultTableModel skillModel;
     private SkillInfo infos[];
     private CustomButton btnTrain, btnClose;
     private int selectedIndex;
+    private JLabel budgetLbl;
 
     public TrainSkillDialog(Developer developer) {
-        this.developer = developer;
+        this.developer = developer;        
         setSize(800, 600);
         setLayout(new BorderLayout());
         skillModel = new DefaultTableModel(0, 3);
@@ -51,7 +54,17 @@ public class TrainSkillDialog extends JDialog implements Observer {
         btnClose = new CustomButton("Close");
         bottom.add(btnTrain);
         bottom.add(btnClose);
+
+        JPanel top = new JPanel();
+        budgetLbl = new JLabel("");
+        top.setBackground(Colors.DARKBLUE);
+        budgetLbl.setForeground(Color.WHITE);
+        budgetLbl.setFont(new Font("Century Gothic", Font.PLAIN, 22));
+        budgetLbl.setText("Budget: $1000");
+        top.add(budgetLbl);        
+        add(top, BorderLayout.NORTH);            
         add(bottom, BorderLayout.SOUTH);
+        
         setLocationRelativeTo(null);
         setTitle(developer.getName() + " - Training");
         update(null, null);
@@ -92,9 +105,9 @@ public class TrainSkillDialog extends JDialog implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg) {     
         while (skillModel.getRowCount() > 0) {
-                skillModel.removeRow(0);
+            skillModel.removeRow(0);
         }
         Object[][] objs = new Object[infos.length][2];
         for (int i = 0; i < objs.length; i++) {
@@ -107,14 +120,14 @@ public class TrainSkillDialog extends JDialog implements Observer {
             } else {
                 Object[] os = {info.getType(), name, skill.getLevel()};
                 skillModel.addRow(os);
-            }
-        }
+            }           
+        }        
         Object[] ids = {"Type", "Skill Name", "Level"};
         skillModel.setColumnIdentifiers(ids);
         skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         skillTable.getColumnModel().getColumn(0).setMaxWidth(200);
         skillTable.getColumnModel().getColumn(0).setMinWidth(200);
-        skillTable.getColumnModel().getColumn(2).setMaxWidth(80);
+        skillTable.getColumnModel().getColumn(2).setMaxWidth(80);           
     }
 
     private class SelectionListener implements ListSelectionListener {

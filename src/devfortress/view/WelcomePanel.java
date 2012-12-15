@@ -4,17 +4,17 @@
  */
 package devfortress.view;
 
-import devfortress.view.components.GlassPanel;
+import devfortress.utilities.Colors;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
-import devfortress.utilities.Colors;
-import devfortress.view.components.CustomPanelUI;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.plaf.PanelUI;
-import javax.swing.text.*;
-import javax.swing.text.DocumentFilter.FilterBypass;
+import devfortress.view.components.GlassPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.MouseListener;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
