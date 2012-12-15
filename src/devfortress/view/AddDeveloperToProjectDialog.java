@@ -16,6 +16,7 @@ import devfortress.view.components.CustomTable;
 import devfortress.view.components.GlassPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -39,7 +40,6 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -74,23 +74,26 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
         applyBtn = new CustomButton("Apply");
         cancelBtn = new CustomButton("Cancel");
         devsJListPanel = new CustomCheckBoxJListPanel<Developer>(Colors.LIGHTBLUE2);
+        init(model);
+    }
+
+    private void init(GameEngine model) {
         DefaultListModel devsListModel = devsJListPanel.getListModel();
         CustomTable skillTable = new CustomTable();
+        GlassPanel infoGroupPanel = new GlassPanel(10, 10, 480, 450, 1f, Colors.LIGHTBLUE2, 7, 7);
+        GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.LIGHTBLUE3, 7, 7);
         JPanel assignedAreaPanel = new JPanel();
         JPanel applyBtnPanel = new JPanel();
         JPanel cancelBtnPanel = new JPanel();
-        JPanel infoOuterPanel = new JPanel();
+        JPanel backgroundPanel = new JPanel();
         JPanel infoNorthPanel = new JPanel();
         JPanel infoNorthInnerPanel = new JPanel();
         JPanel infoNorthProjectInfoPanel = new JPanel();
         JLabel assignLbl = new JLabel("Assign: ");
         JComboBox assignAreaCmB = new JComboBox(cmbModel);
-        GlassPanel infoGroupPanel = new GlassPanel(10, 10, 480, 450, 1f, Colors.LIGHTBLUE2, 7, 7);
-        GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.LIGHTBLUE3, 7, 7);
         //Data
         {
             FunctionalArea[] areas;
-            String[] columnIdentifiers = {"Skill", "Level"};
             Collection<FunctionalArea> pAreas = project.getAreas().values();
             areas = new FunctionalArea[pAreas.size()];
             pAreas.toArray(areas);
@@ -105,8 +108,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
                 }
             }
             cmbModel.setSelectedItem(null);
-            skillTblModel.setNumRows(10);
-            skillTblModel.setColumnIdentifiers(columnIdentifiers);
+            skillTblModel.setColumnIdentifiers(new String[]{"Skill", "Level"});
             skillTable.init(skillTblModel);
         }
         //Listeners
@@ -118,7 +120,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
         //Layout. Must be in the right order
         {
             //Layout Manager
-            infoOuterPanel.setLayout(new BorderLayout());
+            backgroundPanel.setLayout(new BorderLayout());
             infoGroupPanel.setLayout(null);
             infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
             infoNorthInnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -126,10 +128,10 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             assignedAreaPanel.setLayout(new BoxLayout(assignedAreaPanel, BoxLayout.X_AXIS));
             btnPanel.setLayout(new GridLayout(1, 2));
             //Add components
-            add(infoOuterPanel);
-            infoOuterPanel.add(devsJListPanel, BorderLayout.WEST);
-            infoOuterPanel.add(infoGroupPanel, BorderLayout.CENTER);
-            infoOuterPanel.add(btnPanel, BorderLayout.SOUTH);
+            add(backgroundPanel);
+            backgroundPanel.add(devsJListPanel, BorderLayout.WEST);
+            backgroundPanel.add(infoGroupPanel, BorderLayout.CENTER);
+            backgroundPanel.add(btnPanel, BorderLayout.SOUTH);
             infoGroupPanel.add(infoInnerPanel);
             infoInnerPanel.add(infoNorthPanel, BorderLayout.NORTH);
             infoInnerPanel.add(((CustomTable) skillTable).getTableScroll(), BorderLayout.CENTER);
@@ -151,6 +153,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
         {
             devName.setForeground(Colors.DARKBLUE);
             devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
+            devName.setAlignmentX(Component.CENTER_ALIGNMENT);
             mainSkill.setFont(font);
             production.setFont(font);
             infoInnerPanel.setOpaque(false);
@@ -158,7 +161,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             assignedAreaPanel.setBackground(Colors.LIGHTORANGE);
             assignLbl.setFont(font);
             assignAreaCmB.setBackground(Colors.LIGHTORANGE);
-            infoOuterPanel.setBackground(colour);
+            backgroundPanel.setBackground(colour);
             applyBtnPanel.setOpaque(false);
             cancelBtnPanel.setOpaque(false);
             infoNorthInnerPanel.setBackground(Colors.LIGHTORANGE);
@@ -189,8 +192,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             production.setText("Production: " + dev.getProduction(project) + " points/week");
             List<Skill> skills = new LinkedList<Skill>(dev.getSkills().values());
             for (Skill skill : skills) {
-                Object[] row = {skill.getSkillInfo().getName(), skill.getLevel()};
-                skillTblModel.addRow(row);
+                skillTblModel.addRow(new Object[]{skill.getSkillInfo().getName(), skill.getLevel()});
             }
         }
         infoInnerPanel.setVisible(true);

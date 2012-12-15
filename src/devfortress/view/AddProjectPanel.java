@@ -15,6 +15,7 @@ import devfortress.view.components.GlassPanel;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -27,9 +28,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -57,11 +58,11 @@ public class AddProjectPanel extends JPanel implements Observer {
     private static final int ARCW = 20;
     private static final float alpha = .7f;
     //components
-    private GlassPanel projectPanel;
+    private GlassPanel centerPanel;
     private CustomButton acceptProjectBtn, closeBtn;
     private CustomTable functionalTable;
     private JList projectList;
-    private JLabel projectLevelLbl, mainSkillLbl, budgetLbl, deadlineLbl, levelLbl, projectPanelTitle;
+    private JLabel projectLevelLbl, mainSkillLbl, budgetLbl, deadlineLbl, levelLbl, projectNameLbl;
     private DefaultTableModel functionalTableModel;
     private DefaultListModel projectListModel;
     private Project selectedProject;
@@ -71,99 +72,111 @@ public class AddProjectPanel extends JPanel implements Observer {
      * Constructor of the class.
      */
     public AddProjectPanel() {
-        projectPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 7, 7);
+        centerPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 7, 7);
         acceptProjectBtn = new CustomButton("Accept Project");
         closeBtn = new CustomButton("Close");
         projectListModel = new DefaultListModel();
-        functionalTableModel = new DefaultTableModel(1, 2);
+        functionalTableModel = new DefaultTableModel();
         projectList = new JList();
-        functionalTable = new CustomTable(functionalTableModel);
+        functionalTable = new CustomTable();
         projectLevelLbl = new JLabel("Project Name");
         levelLbl = new JLabel("1");
         mainSkillLbl = new JLabel("Skill ABC");
         budgetLbl = new JLabel("$100000?");
         deadlineLbl = new JLabel("1/1/1");
+        projectNameLbl = new JLabel("Project details");
         init();
     }
 
     private void init() {
-        setOpaque(false);
-        setLayout(new BorderLayout());
-        // variable for decoration:
-        GlassPanel projectNamePnl = new GlassPanel(800, 70);
-        GlassPanel bottomPanel = new GlassPanel(800, 70);
         List<CustomButton> btnList = new LinkedList<CustomButton>();
         btnList.add(acceptProjectBtn);
-        CustomListPanel projectListPanel = new CustomListPanel(projectList, btnList);
-        projectPanelTitle = new JLabel("Project details");
-        JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
         Font bigFont = new Font("Century Gothic", Font.BOLD, 22);
         Font bigFont2 = new Font("Century Gothic", Font.BOLD, 17);
         Font mediumFont = new Font("Century Gothic", Font.PLAIN, 16);
         Font smallFont = new Font("Century Gothic", Font.PLAIN, 15);
-        JLabel title = new CustomLabel("Available Projects");
-        // panels inside projectPanel:
+        GlassPanel northPanel = new GlassPanel(800, 70);
+        GlassPanel bottomPanel = new GlassPanel(800, 70);
+        CustomListPanel projectListPanel = new CustomListPanel(projectList, btnList);
+        JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
+        JLabel titlePanel = new CustomLabel("Available Projects");
         JPanel projectInfoPanel = new JPanel();
         JPanel projectDetailsPanel = new JPanel();
-        JPanel projectCenterPanel = new GlassPanel(25, 25, 480, 365, 1f, PANEL_COLOR, 0, 0);
-
-        // Add model for projectList:
-        projectList.setModel(projectListModel);
-        projectList.setCellRenderer(new CustomListRenderer());
-        projectList.addListSelectionListener(new ProjectList_ListListener());
-
-        // UI programming:
-        // Project list:
-        projectList.setSelectionBackground(Colors.LIGHTORANGE);
-        projectList.setSelectionForeground(LIST_COLOR);
-        projectList.setFont(mediumFont);
-        // Accept Project Button:
-        acceptProjectBtn.setButtonSize(0, 0, 150, 35);
-        acceptProjectBtn.setTextColour(Colors.LIGHTBLUE);
-        acceptProjectBtn.setColour(Colors.DARKBLUE);
-        acceptProjectBtn.setOnMouseColor(Colors.DARKBLUE2);
-        acceptProjectBtn.setButtonSize(0, 0, 150, 35);
-        // Close Button:
-        closeBtn.setTextColour(Colors.LIGHTBLUE);
-        closeBtn.setColour(Colors.DARKBLUE);
-        closeBtn.setOnMouseColor(Colors.DARKBLUE2);
-        // Functional Table:
-        functionalTable.setFont(smallFont);
-        functionalTable.setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
-        functionalTable.setRowHeight(25);
-        // Set Font for labels:
-        title.setForeground(LIST_COLOR);
-        projectPanelTitle.setForeground(LIST_COLOR);
-        projectPanelTitle.setFont(bigFont);
-        projectLevelLbl.setFont(bigFont2);
-        mainSkillLbl.setFont(bigFont2);
-        budgetLbl.setFont(bigFont2);
-        deadlineLbl.setFont(bigFont2);
-        // Set panels (inside projectPanel):
-        projectInfoPanel.setLayout(new GridLayout(1, 2));
-        projectInfoPanel.add(imageIcon);
-        projectInfoPanel.add(projectDetailsPanel);
-        projectDetailsPanel.setLayout(new GridLayout(4, 1));
-        projectDetailsPanel.add(projectLevelLbl);
-        projectDetailsPanel.add(mainSkillLbl);
-        projectDetailsPanel.add(budgetLbl);
-        projectDetailsPanel.add(deadlineLbl);
-        projectCenterPanel.add(projectInfoPanel, BorderLayout.CENTER);
-        projectCenterPanel.add(functionalTable.getTableScroll(), BorderLayout.SOUTH);
-        projectInfoPanel.setBackground(PANEL_COLOR);
-        projectDetailsPanel.setBackground(PANEL_COLOR);
-        projectCenterPanel.setBackground(PANEL_COLOR);
-        // Add components to projectPanel:
-        projectPanel.add(projectPanelTitle, BorderLayout.NORTH);
-        projectPanel.add(projectCenterPanel, BorderLayout.CENTER);
-
-        projectNamePnl.add(title);
-        bottomPanel.add(closeBtn);
-
-        add(projectNamePnl, BorderLayout.NORTH);
-        add(projectListPanel, BorderLayout.WEST);
-        add(projectPanel, BorderLayout.CENTER);
-        add(bottomPanel, BorderLayout.SOUTH);
+        JPanel infoNorthPanel = new JPanel();
+        GlassPanel infoGroupPanel = new GlassPanel(10, 10, 480, 450, 1f, PANEL_COLOR, 7, 7);
+        //Data
+        {
+            // Add model for projectList:
+            projectList.setModel(projectListModel);
+            projectList.setCellRenderer(new CustomListRenderer());
+            projectList.addListSelectionListener(new ProjectList_ListListener());
+            functionalTableModel.setColumnIdentifiers(new String[]{"Functional Area", "Point"});
+            functionalTable.init(functionalTableModel);
+        }
+        //Layout
+        {
+            //Layout Managers
+            setLayout(new BorderLayout());
+            centerPanel.setLayout(new BorderLayout());
+            projectInfoPanel.setLayout(new GridLayout(1, 2));
+            projectDetailsPanel.setLayout(new GridLayout(4, 1));
+            infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
+            infoGroupPanel.setLayout(null);
+            //Add components in order
+            add(northPanel, BorderLayout.NORTH);
+            add(projectListPanel, BorderLayout.WEST);
+            add(infoGroupPanel, BorderLayout.CENTER);
+            add(bottomPanel, BorderLayout.SOUTH);
+            northPanel.add(titlePanel);
+            infoGroupPanel.add(centerPanel);
+            centerPanel.add(infoNorthPanel, BorderLayout.NORTH);
+            infoNorthPanel.add(projectNameLbl);
+            infoNorthPanel.add(projectInfoPanel);
+            centerPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
+            projectInfoPanel.add(imageIcon);
+            projectInfoPanel.add(projectDetailsPanel);
+            projectDetailsPanel.add(projectLevelLbl);
+            projectDetailsPanel.add(mainSkillLbl);
+            projectDetailsPanel.add(budgetLbl);
+            projectDetailsPanel.add(deadlineLbl);
+            bottomPanel.add(closeBtn);
+        }
+        //Styling
+        {
+            setOpaque(false);
+            // Project list:
+            projectList.setSelectionBackground(Colors.LIGHTORANGE);
+            projectList.setSelectionForeground(LIST_COLOR);
+            projectList.setFont(mediumFont);
+            // Accept Project Button:
+            acceptProjectBtn.setButtonSize(0, 0, 150, 35);
+            acceptProjectBtn.setTextColour(Colors.LIGHTBLUE);
+            acceptProjectBtn.setColour(Colors.DARKBLUE);
+            acceptProjectBtn.setOnMouseColor(Colors.DARKBLUE2);
+            acceptProjectBtn.setButtonSize(0, 0, 150, 35);
+            // Close Button:
+            closeBtn.setTextColour(Colors.LIGHTBLUE);
+            closeBtn.setColour(Colors.DARKBLUE);
+            closeBtn.setOnMouseColor(Colors.DARKBLUE2);
+            // Functional Table:
+            functionalTable.setFont(smallFont);
+            functionalTable.setBorder(BorderFactory.createLineBorder(Colors.ORANGE, 1));
+            functionalTable.setRowHeight(25);
+            // Set Font for labels:
+            titlePanel.setForeground(LIST_COLOR);
+            projectNameLbl.setForeground(LIST_COLOR);
+            projectNameLbl.setFont(bigFont);
+            projectNameLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+            projectLevelLbl.setFont(bigFont2);
+            mainSkillLbl.setFont(bigFont2);
+            budgetLbl.setFont(bigFont2);
+            deadlineLbl.setFont(bigFont2);
+            //Panels
+            centerPanel.setBounds(15, 10, 470, 410);
+            infoNorthPanel.setOpaque(false);
+            projectInfoPanel.setBackground(PANEL_COLOR);
+            projectDetailsPanel.setBackground(PANEL_COLOR);
+        }
     }
 
     public Project getSelectedProject() {
@@ -190,7 +203,7 @@ public class AddProjectPanel extends JPanel implements Observer {
 
     public synchronized void showProject(Project project) {
         if (project == null) {
-            projectPanel.setVisible(false);
+            centerPanel.setVisible(false);
             return;
         }
         // if (project != null)
@@ -200,13 +213,12 @@ public class AddProjectPanel extends JPanel implements Observer {
         } catch (InvalidDevDateException ex) {
         }
 
-        projectPanel.setVisible(true);
-        projectPanelTitle.setText(project.getName());
+        centerPanel.setVisible(true);
+        projectNameLbl.setText(project.getName());
         projectLevelLbl.setText("Level: " + project.getLevel());
         mainSkillLbl.setText("Skill: " + project.getMainRequirement().getName());
         budgetLbl.setText("Budget: " + project.getBudget());
         deadlineLbl.setText("Deadline: " + deadline.getWeek() + "/" + deadline.getMonth() + "/" + deadline.getYear());
-        functionalTableModel.setColumnIdentifiers(new String[]{"Functional Area", "Point"});
         while (functionalTableModel.getRowCount() > 0) {
             functionalTableModel.removeRow(functionalTableModel.getRowCount() - 1);
         }

@@ -6,9 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
