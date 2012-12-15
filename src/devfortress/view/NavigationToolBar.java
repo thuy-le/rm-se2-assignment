@@ -33,7 +33,7 @@ public class NavigationToolBar extends JToolBar implements Observer {
         newGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         saveGame = new CustomLabel(new ImageIcon("images/save.png"), "Save Game");
         saveGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        loadGame = new CustomLabel(new ImageIcon("images/save.png"), "Load Game");
+        loadGame = new CustomLabel(new ImageIcon("images/open.png"), "Load Game");
         loadGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aboutGame = new CustomLabel(new ImageIcon("images/about.png"), "About Us");
         aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));

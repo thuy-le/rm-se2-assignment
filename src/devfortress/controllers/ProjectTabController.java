@@ -6,14 +6,7 @@ import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.models.exceptions.DeveloperBusyException;
 import devfortress.models.exceptions.InvalidFunctionalAreaException;
-import devfortress.view.AddDeveloperToProjectDialog;
-import devfortress.view.AddProjectPanel;
-import devfortress.view.DevFortressMainFrame;
-import devfortress.view.DevFortressTabbedPane;
-import devfortress.view.InfomationPanel;
-import devfortress.view.NavigationToolBar;
-import devfortress.view.ProjectTabPanel;
-import devfortress.view.RemoveDeveloperFromProjectDialog;
+import devfortress.view.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
@@ -72,8 +65,7 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            Project pro = projectTab.getSelectedProject();
-            System.out.println("Clicked");
+            Project pro = projectTab.getSelectedProject();            
             if (pro != null) {
                 try {
                     System.out.println("Cancel");
