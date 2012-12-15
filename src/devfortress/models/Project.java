@@ -181,13 +181,32 @@ public class Project implements Serializable {
      */
 
     public void removeAllDevelopers() {
+        //All developer leaves projects
+        for (Developer dev : developers) {
+            dev.leaveProject();
+        }
+        for (FunctionalArea area : functionalAreas.values()) {
+            area.removeAllDeveloper();
+        }
+        functionalAreas.clear();
+        developers.clear();
     }
 
     /*
      * Private methods and functions
      */
     private void calculateBudget() {
-        budget = level * duration * 300;
+        int total = 0;
+        for (FunctionalArea area : functionalAreas.values()) {
+            total += area.getFunctionPoints();
+        }
+        int addition = (int) ((int) total * 10 * (1 + Utilities.randFloat()));
+        System.out.println("Project: " + getName());
+        System.out.println("Level: " + getLevel());
+        System.out.println("Main: " + getMainRequirement());
+        System.out.println("");
+        System.out.println("Addition: " + addition);
+        budget = level * duration * 100 + addition;
         bonus = 0;
     }
 

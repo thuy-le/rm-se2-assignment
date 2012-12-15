@@ -97,12 +97,16 @@ public class FunctionalArea implements Serializable {
      * Assume that developer is occupied by this Functional Area. This function
      * is called by Project
      */
-    public boolean removeDeveloper(Developer dev) {
-        return developers.remove(dev);
+    public void removeDeveloper(Developer dev) {
+        developers.remove(dev);
     }
 
     @Override
     public String toString() {
         return name.getName();
+    }
+
+    public void removeAllDeveloper() {
+        developers.clear();
     }
 }

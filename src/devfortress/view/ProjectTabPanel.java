@@ -60,24 +60,40 @@ public class ProjectTabPanel extends JPanel implements Observer {
 
     public ProjectTabPanel() {
         setOpaque(false);
+
+        prjModel = new DefaultListModel();
+        projTableModel = new DefaultTableModel(0, 2);
+        prjList = new JList();
+        btnAdd = new CustomButton("Add Project");
+        prjName = new JLabel("Project Name");
+        deadline = new JLabel("Deadline");
+        cost = new JLabel("Cost");
+        info1 = new JLabel("Info1");
+        status = new JLabel("Status");
+        table = new CustomProjectTable(projTableModel, contentColor);
+        btnAddDev = new CustomButton("Add Developer");
+        btnRemoveDev = new CustomButton("Remove Developer");
+        btnCancelProject = new CustomButton("Cancel Project");
+        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
         init();
     }
 
     private void init() {
-        //set border layout to the container
+        //Data
+        {
+        }
+        //Style
+        {
+        }
+        //Layout
+        {
+        }
         setLayout(new BorderLayout());
-
-        //------Create a JList of developers
-        //list
-        prjModel = new DefaultListModel();
-        projTableModel = new DefaultTableModel(0, 2);
-
-        prjList = new JList();
         prjList.setModel(prjModel);
         prjList.addListSelectionListener(new MyListEvent());
         //buttons
         java.util.List<CustomButton> btnList = new LinkedList<CustomButton>();
-        btnAdd = new CustomButton("Add Project");
+
         btnList.add(btnAdd);
         //add button(s) and list together
         CustomListPanel projectList = new CustomListPanel(prjList, btnList);
@@ -91,7 +107,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
         //-------Add component
         add(projectList, BorderLayout.WEST);
         //Create a container for contents on the right
-        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
+
         //display developer name
         JLabel developerDetail = new JLabel("Project Details");
         //the "top" panel contain (1) avatar, and basic details about developer
@@ -104,11 +120,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
         imageIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
         //display basic details
         JPanel topR = new JPanel();
-        prjName = new JLabel("Project Name");
-        deadline = new JLabel("Deadline");
-        cost = new JLabel("Cost");
-        info1 = new JLabel("Info1");
-        status = new JLabel("Status");
+
         //adjust look and feel
         topR.setBackground(contentColor);
         topR.setPreferredSize(new Dimension(220, 120));
@@ -137,13 +149,10 @@ public class ProjectTabPanel extends JPanel implements Observer {
 
         //---Bottom: contains a list of developers who belong to the project
         //Create a table:
-        table = new CustomProjectTable(projTableModel, contentColor);
 
         //add buttons
         JPanel bottom = new JPanel();
-        btnAddDev = new CustomButton("Add Developer");
-        btnRemoveDev = new CustomButton("Remove Developer");
-        btnCancelProject = new CustomButton("Cancel Project");
+
         //adjust look and feel:
 
         bottom.setBackground(contentColor);

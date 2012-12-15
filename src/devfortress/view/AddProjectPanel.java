@@ -113,34 +113,6 @@ public class AddProjectPanel extends JPanel implements Observer {
             functionalTableModel.setColumnIdentifiers(new String[]{"Functional Area", "Point"});
             functionalTable.init(functionalTableModel);
         }
-        //Layout
-        {
-            //Layout Managers
-            setLayout(new BorderLayout());
-            centerPanel.setLayout(new BorderLayout());
-            projectInfoPanel.setLayout(new GridLayout(1, 2));
-            projectDetailsPanel.setLayout(new GridLayout(4, 1));
-            infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
-            infoGroupPanel.setLayout(null);
-            //Add components in order
-            add(northPanel, BorderLayout.NORTH);
-            add(projectListPanel, BorderLayout.WEST);
-            add(infoGroupPanel, BorderLayout.CENTER);
-            add(bottomPanel, BorderLayout.SOUTH);
-            northPanel.add(titlePanel);
-            infoGroupPanel.add(centerPanel);
-            centerPanel.add(infoNorthPanel, BorderLayout.NORTH);
-            infoNorthPanel.add(projectNameLbl);
-            infoNorthPanel.add(projectInfoPanel);
-            centerPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
-            projectInfoPanel.add(imageIcon);
-            projectInfoPanel.add(projectDetailsPanel);
-            projectDetailsPanel.add(projectLevelLbl);
-            projectDetailsPanel.add(mainSkillLbl);
-            projectDetailsPanel.add(budgetLbl);
-            projectDetailsPanel.add(deadlineLbl);
-            bottomPanel.add(closeBtn);
-        }
         //Styling
         {
             setOpaque(false);
@@ -176,6 +148,34 @@ public class AddProjectPanel extends JPanel implements Observer {
             infoNorthPanel.setOpaque(false);
             projectInfoPanel.setBackground(PANEL_COLOR);
             projectDetailsPanel.setBackground(PANEL_COLOR);
+        }
+        //Layout
+        {
+            //Layout Managers
+            setLayout(new BorderLayout());
+            centerPanel.setLayout(new BorderLayout());
+            projectInfoPanel.setLayout(new GridLayout(1, 2));
+            projectDetailsPanel.setLayout(new GridLayout(4, 1));
+            infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
+            infoGroupPanel.setLayout(null);
+            //Add components in order
+            add(northPanel, BorderLayout.NORTH);
+            add(projectListPanel, BorderLayout.WEST);
+            add(infoGroupPanel, BorderLayout.CENTER);
+            add(bottomPanel, BorderLayout.SOUTH);
+            northPanel.add(titlePanel);
+            infoGroupPanel.add(centerPanel);
+            centerPanel.add(infoNorthPanel, BorderLayout.NORTH);
+            infoNorthPanel.add(projectNameLbl);
+            infoNorthPanel.add(projectInfoPanel);
+            centerPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
+            projectInfoPanel.add(imageIcon);
+            projectInfoPanel.add(projectDetailsPanel);
+            projectDetailsPanel.add(projectLevelLbl);
+            projectDetailsPanel.add(mainSkillLbl);
+            projectDetailsPanel.add(budgetLbl);
+            projectDetailsPanel.add(deadlineLbl);
+            bottomPanel.add(closeBtn);
         }
     }
 

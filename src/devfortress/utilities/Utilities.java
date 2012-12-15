@@ -47,6 +47,10 @@ public class Utilities {
         return names;
     }
 
+    public static float randFloat() {
+        return rand.nextFloat();
+    }
+
     public static int randInt() {
         return rand.nextInt();
     }
