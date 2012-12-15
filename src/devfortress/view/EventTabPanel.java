@@ -163,7 +163,6 @@ public class EventTabPanel extends JPanel implements Observer {
         eventTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         ((CustomTable) eventTable).setTableSize(500, 340);
         ((CustomTable) eventTable).setHeaderColors(TABLELIGHT, TABLEDARK);
-        ((CustomTable) eventTable).setBorderColor(TABLEDARK);
         ((CustomTable) eventTable).setScrollBackground(TABLELIGHT);
         eventTable.getColumnModel().getColumn(0).setMaxWidth(50);
         projectName.setForeground(TABLEDARK);
