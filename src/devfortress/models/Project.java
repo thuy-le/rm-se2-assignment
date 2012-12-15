@@ -201,30 +201,13 @@ public class Project implements Serializable {
         for (FunctionalArea area : functionalAreas.values()) {
             total += area.getFunctionPoints();
         }
-        //level 1: 1.1 - 1.2
-        //level 2: 1.2 - 1.4
-        //level 3: 1.3 - 1.6
-        //level 4: 1.4 - 1.8
-        //level 5: 1.5 - 2.0
-        float addition = total * 10f * ((1f + (0.1f * level)) + Utilities.randFloat() * ((float) level / 10f));
-        budget = level * duration * 100 + (int) addition;
-//        budget = (int) addition;
+        budget = (int) (total * 10f * ((1f + (0.1f * level)) + Utilities.randFloat() * ((float) level / 10f)));
         bonus = 0;
-        System.out.println("-------------------");
-        System.out.println("Project: " + getName());
-        System.out.println("Level: " + getLevel());
-        System.out.println("Duration: " + duration);
-        System.out.println("Function points/month: " + total / duration);
-        System.out.println("Standard: " + (budget - (int) addition));
-        System.out.println("Addition: " + (int) addition);
-        System.out.println("Sum: " + budget);
-        System.out.println("Average/Month: " + budget / duration);
-        System.out.println("Cost/Function Points: " + (int) (addition / total));
     }
 
     public void enableBonus() {
         if (bonus == 0 && finished) {
-            bonus = (int) (((float) timeLeft) / ((float) duration) * budget);
+            bonus = (int) (((float) timeLeft) / ((float) duration) * budget * ((1f + (0.1f * level)) + Utilities.randFloat() * ((float) level / 10f)));
         }
     }
 

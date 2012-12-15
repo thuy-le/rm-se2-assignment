@@ -14,6 +14,7 @@ import devfortress.view.components.*;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -23,7 +24,9 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -48,19 +51,17 @@ public class ProjectTabPanel extends JPanel implements Observer {
     static private final int height = 418;
     static private final int arcW = 10;
     static private final int arcH = 10;
-    static private final Color contentColor = Colors.LIGHTORANGE;
+    static private final Color contentColor = Colors.LIGHTGREEN3;
     private JList prjList;
     private DefaultListModel prjModel;
     private DefaultTableModel projTableModel;
     private CustomButton btnAdd, btnAddDev, btnRemoveDev, btnCancelProject;
-    private GlassPanel rightPanel;
+    private GlassPanel infoPanel;
     private JLabel prjName, deadline, cost, info1, status;
     private JTable table;
     //constructor
 
     public ProjectTabPanel() {
-        setOpaque(false);
-
         prjModel = new DefaultListModel();
         projTableModel = new DefaultTableModel(0, 2);
         prjList = new JList();
@@ -74,98 +75,88 @@ public class ProjectTabPanel extends JPanel implements Observer {
         btnAddDev = new CustomButton("Add Developer");
         btnRemoveDev = new CustomButton("Remove Developer");
         btnCancelProject = new CustomButton("Cancel Project");
-        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
+        infoPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
         init();
     }
 
     private void init() {
+        Font font = new Font("Century Gothic", Font.BOLD, 17);
+        CustomListPanel projectListPanel = new CustomListPanel(prjList, Arrays.asList(new CustomButton[]{btnAdd}));
+        JLabel headerLbl = new JLabel("Project Details");
+        JPanel projectInfoPanel = new JPanel();
+        JLabel imageIcon = new CustomLabel(new ImageIcon("images/i6.png"));
+        JPanel projectDetailsPanel = new JPanel();
+        JPanel infoCenterSouthPanel = new JPanel();
+        JPanel infoNorthPanel = new JPanel();
+        GlassPanel infoGroupPanel = new GlassPanel(10, 15, 500, 395, 1f, contentColor, 7, 7);
         //Data
         {
+            prjList.setModel(prjModel);
+            prjList.addListSelectionListener(new MyListEvent());
+
         }
         //Style
         {
+            setOpaque(false);
+            btnAdd.setColour(Colors.DARKBLUE);
+            projectListPanel.setColor(Colors.DARKBLUE);
+            btnAdd.setTextColour(Colors.LIGHTBLUE);
+            prjList.setSelectionBackground(Colors.LIGHTGREEN);
+            prjList.setSelectionForeground(Colors.DARKBLUE);
+            prjList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+            projectInfoPanel.setOpaque(false);
+            imageIcon.setOpaque(false);
+            imageIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            projectDetailsPanel.setBackground(contentColor);
+            projectDetailsPanel.setPreferredSize(new Dimension(220, 120));
+
+            projectInfoPanel.setBackground(contentColor);
+
+            prjName.setFont(font);
+            deadline.setFont(font);
+            info1.setFont(font);
+            status.setFont(font);
+            cost.setFont(font);
+            headerLbl.setForeground(Colors.DARKBLUE);
+            headerLbl.setFont(new Font("Century Gothic", Font.BOLD, 22));
+            headerLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+            infoCenterSouthPanel.setBackground(contentColor);
+            infoNorthPanel.setOpaque(false);
+            infoPanel.setBounds(15, 15, 490, 395);
+            btnAddDev.setButtonSize(0, 0, 140, 35);
+            btnRemoveDev.setButtonSize(0, 0, 170, 35);
+            btnCancelProject.setButtonSize(0, 0, 140, 35);
         }
         //Layout
         {
+
+            setLayout(new BorderLayout());
+            infoPanel.setLayout(new BorderLayout());
+            infoGroupPanel.setLayout(null);
+            infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
+            projectInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            infoCenterSouthPanel.setLayout(new FlowLayout());
+            projectDetailsPanel.setLayout(new BoxLayout(projectDetailsPanel, BoxLayout.Y_AXIS));
+            add(projectListPanel, BorderLayout.WEST);
+            add(infoGroupPanel, BorderLayout.CENTER);
+            infoGroupPanel.add(infoPanel);
+            infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
+            infoPanel.add(((CustomProjectTable) table).getTableScroll(), BorderLayout.CENTER);
+            infoPanel.add(infoCenterSouthPanel, BorderLayout.SOUTH);
+            infoNorthPanel.add(headerLbl);
+            infoNorthPanel.add(projectInfoPanel);
+            projectInfoPanel.add(imageIcon);
+            projectInfoPanel.add(projectDetailsPanel);
+            projectDetailsPanel.add(prjName);
+            projectDetailsPanel.add(deadline);
+            projectDetailsPanel.add(info1);
+            projectDetailsPanel.add(cost);
+            projectDetailsPanel.add(status);
+            infoCenterSouthPanel.add(btnAddDev);
+            infoCenterSouthPanel.add(btnRemoveDev);
+            infoCenterSouthPanel.add(btnCancelProject);
+
         }
-        setLayout(new BorderLayout());
-        prjList.setModel(prjModel);
-        prjList.addListSelectionListener(new MyListEvent());
-        //buttons
-        java.util.List<CustomButton> btnList = new LinkedList<CustomButton>();
-
-        btnList.add(btnAdd);
-        //add button(s) and list together
-        CustomListPanel projectList = new CustomListPanel(prjList, btnList);
-        //-------Adjust look and feel
-        btnAdd.setColour(Colors.DARKBLUE);
-        projectList.setColor(Colors.DARKBLUE);
-        btnAdd.setTextColour(Colors.LIGHTBLUE);
-        prjList.setSelectionBackground(Colors.LIGHTGREEN);
-        prjList.setSelectionForeground(Colors.DARKBLUE);
-        prjList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-        //-------Add component
-        add(projectList, BorderLayout.WEST);
-        //Create a container for contents on the right
-
-        //display developer name
-        JLabel developerDetail = new JLabel("Project Details");
-        //the "top" panel contain (1) avatar, and basic details about developer
-        JPanel top = new JPanel();
-        top.setOpaque(false);
-        //display cancel button
-        JLabel imageIcon = new CustomLabel(new ImageIcon("images/cancel.png"), "Cancel this project");
-        imageIcon.setOpaque(false);
-        imageIcon.setPreferredSize(new Dimension(50, 50));
-        imageIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        //display basic details
-        JPanel topR = new JPanel();
-
-        //adjust look and feel
-        topR.setBackground(contentColor);
-        topR.setPreferredSize(new Dimension(220, 120));
-        topR.setLayout(new GridLayout(5, 1));
-        top.setBackground(contentColor);
-        top.setLayout(new GridLayout(1, 2));
-        Font font = new Font("Century Gothic", Font.BOLD, 17);
-        prjName.setFont(font);
-        deadline.setFont(font);
-        info1.setFont(font);
-        status.setFont(font);
-        cost.setFont(font);
-        developerDetail.setForeground(Colors.DARKBLUE);
-        developerDetail.setFont(new Font("Century Gothic", Font.BOLD, 22));
-        //add components
-        topR.add(prjName);
-        topR.add(deadline);
-        topR.add(info1);
-        topR.add(cost);
-        topR.add(status);
-        top.add(topR);
-        top.add(imageIcon);
-        rightPanel.add(developerDetail, BorderLayout.NORTH);
-        rightPanel.add(top, BorderLayout.CENTER);
-        add(rightPanel, BorderLayout.CENTER);
-
-        //---Bottom: contains a list of developers who belong to the project
-        //Create a table:
-
-        //add buttons
-        JPanel bottom = new JPanel();
-
-        //adjust look and feel:
-
-        bottom.setBackground(contentColor);
-        bottom.setLayout(new FlowLayout());
-        btnAddDev.setButtonSize(0, 0, 140, 35);
-        btnRemoveDev.setButtonSize(0, 0, 170, 35);
-        btnCancelProject.setButtonSize(0, 0, 140, 35);
-        //add components
-        bottom.add(btnAddDev);
-        bottom.add(btnRemoveDev);
-        bottom.add(btnCancelProject);
-        rightPanel.add(((CustomProjectTable) table).getTableScroll(), BorderLayout.NORTH);
-        rightPanel.add(bottom, BorderLayout.SOUTH);
     }
 
     //override the paint component method
@@ -219,10 +210,10 @@ public class ProjectTabPanel extends JPanel implements Observer {
 
     public synchronized void showProject(Project project) {
         if (project == null) {
-            rightPanel.setVisible(false);
+            infoPanel.setVisible(false);
         } else {
             try {
-                rightPanel.setVisible(true);
+                infoPanel.setVisible(true);
                 //set projectname... blah blah blah
                 prjName.setText("Project: " + project.getName());
                 DevDate acceptedDate = null;

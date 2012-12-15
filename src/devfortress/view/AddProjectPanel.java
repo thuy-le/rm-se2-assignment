@@ -17,14 +17,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
@@ -58,7 +58,7 @@ public class AddProjectPanel extends JPanel implements Observer {
     private static final int ARCW = 20;
     private static final float alpha = .7f;
     //components
-    private GlassPanel centerPanel;
+    private GlassPanel infoPanel;
     private CustomButton acceptProjectBtn, closeBtn;
     private CustomTable functionalTable;
     private JList projectList;
@@ -72,7 +72,7 @@ public class AddProjectPanel extends JPanel implements Observer {
      * Constructor of the class.
      */
     public AddProjectPanel() {
-        centerPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 7, 7);
+        infoPanel = new GlassPanel(25, 25, 480, 380, 1f, PANEL_COLOR, 7, 7);
         acceptProjectBtn = new CustomButton("Accept Project");
         closeBtn = new CustomButton("Close");
         projectListModel = new DefaultListModel();
@@ -89,21 +89,19 @@ public class AddProjectPanel extends JPanel implements Observer {
     }
 
     private void init() {
-        List<CustomButton> btnList = new LinkedList<CustomButton>();
-        btnList.add(acceptProjectBtn);
         Font bigFont = new Font("Century Gothic", Font.BOLD, 22);
-        Font bigFont2 = new Font("Century Gothic", Font.BOLD, 17);
+        Font bigFont2 = new Font("Century Gothic", Font.BOLD, 18);
         Font mediumFont = new Font("Century Gothic", Font.PLAIN, 16);
         Font smallFont = new Font("Century Gothic", Font.PLAIN, 15);
         GlassPanel northPanel = new GlassPanel(800, 70);
         GlassPanel bottomPanel = new GlassPanel(800, 70);
-        CustomListPanel projectListPanel = new CustomListPanel(projectList, btnList);
+        CustomListPanel projectListPanel = new CustomListPanel(projectList, Arrays.asList(new CustomButton[]{acceptProjectBtn}));
         JLabel imageIcon = new JLabel(new ImageIcon("images/i6.png"));
         JLabel titlePanel = new CustomLabel("Available Projects");
         JPanel projectInfoPanel = new JPanel();
         JPanel projectDetailsPanel = new JPanel();
         JPanel infoNorthPanel = new JPanel();
-        GlassPanel infoGroupPanel = new GlassPanel(10, 10, 480, 450, 1f, PANEL_COLOR, 7, 7);
+        GlassPanel infoGroupPanel = new GlassPanel(10, 10, 500, 450, 1f, PANEL_COLOR, 7, 7);
         //Data
         {
             // Add model for projectList:
@@ -144,7 +142,7 @@ public class AddProjectPanel extends JPanel implements Observer {
             budgetLbl.setFont(bigFont2);
             deadlineLbl.setFont(bigFont2);
             //Panels
-            centerPanel.setBounds(15, 10, 470, 410);
+            infoPanel.setBounds(15, 10, 490, 410);
             infoNorthPanel.setOpaque(false);
             projectInfoPanel.setBackground(PANEL_COLOR);
             projectDetailsPanel.setBackground(PANEL_COLOR);
@@ -153,9 +151,9 @@ public class AddProjectPanel extends JPanel implements Observer {
         {
             //Layout Managers
             setLayout(new BorderLayout());
-            centerPanel.setLayout(new BorderLayout());
-            projectInfoPanel.setLayout(new GridLayout(1, 2));
-            projectDetailsPanel.setLayout(new GridLayout(4, 1));
+            infoPanel.setLayout(new BorderLayout());
+            projectInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            projectDetailsPanel.setLayout(new BoxLayout(projectDetailsPanel, BoxLayout.Y_AXIS));
             infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
             infoGroupPanel.setLayout(null);
             //Add components in order
@@ -164,11 +162,11 @@ public class AddProjectPanel extends JPanel implements Observer {
             add(infoGroupPanel, BorderLayout.CENTER);
             add(bottomPanel, BorderLayout.SOUTH);
             northPanel.add(titlePanel);
-            infoGroupPanel.add(centerPanel);
-            centerPanel.add(infoNorthPanel, BorderLayout.NORTH);
+            infoGroupPanel.add(infoPanel);
+            infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
             infoNorthPanel.add(projectNameLbl);
             infoNorthPanel.add(projectInfoPanel);
-            centerPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
+            infoPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
             projectInfoPanel.add(imageIcon);
             projectInfoPanel.add(projectDetailsPanel);
             projectDetailsPanel.add(projectLevelLbl);
@@ -203,7 +201,7 @@ public class AddProjectPanel extends JPanel implements Observer {
 
     public synchronized void showProject(Project project) {
         if (project == null) {
-            centerPanel.setVisible(false);
+            infoPanel.setVisible(false);
             return;
         }
         // if (project != null)
@@ -213,11 +211,11 @@ public class AddProjectPanel extends JPanel implements Observer {
         } catch (InvalidDevDateException ex) {
         }
 
-        centerPanel.setVisible(true);
+        infoPanel.setVisible(true);
         projectNameLbl.setText(project.getName());
         projectLevelLbl.setText("Level: " + project.getLevel());
         mainSkillLbl.setText("Skill: " + project.getMainRequirement().getName());
-        budgetLbl.setText("Budget: " + project.getBudget());
+        budgetLbl.setText("Budget: $" + project.getBudget());
         deadlineLbl.setText("Deadline: " + deadline.getWeek() + "/" + deadline.getMonth() + "/" + deadline.getYear());
         while (functionalTableModel.getRowCount() > 0) {
             functionalTableModel.removeRow(functionalTableModel.getRowCount() - 1);

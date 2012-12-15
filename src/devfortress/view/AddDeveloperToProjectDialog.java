@@ -80,7 +80,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
     private void init(GameEngine model) {
         DefaultListModel devsListModel = devsJListPanel.getListModel();
         CustomTable skillTable = new CustomTable();
-        GlassPanel infoGroupPanel = new GlassPanel(10, 10, 480, 450, 1f, Colors.LIGHTBLUE2, 7, 7);
+        GlassPanel infoGroupPanel = new GlassPanel(10, 10, 500, 450, 1f, Colors.LIGHTBLUE2, 7, 7);
         GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.LIGHTBLUE3, 7, 7);
         JPanel assignedAreaPanel = new JPanel();
         JPanel applyBtnPanel = new JPanel();
@@ -157,7 +157,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             mainSkill.setFont(font);
             production.setFont(font);
             infoInnerPanel.setOpaque(false);
-            infoInnerPanel.setBounds(15, 10, 470, 440);
+            infoInnerPanel.setBounds(15, 10, 490, 440);
             assignedAreaPanel.setBackground(Colors.LIGHTORANGE);
             assignLbl.setFont(font);
             assignAreaCmB.setBackground(Colors.LIGHTORANGE);
