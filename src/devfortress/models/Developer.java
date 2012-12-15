@@ -31,6 +31,7 @@ import java.util.Map;
  */
 public class Developer implements Serializable {
 
+    private float randomFactor;
     private String name;
     private Map<SkillInfo, Skill> skills;
     private SkillInfo mainSkillInfo;
@@ -51,6 +52,7 @@ public class Developer implements Serializable {
         this.drunk = Utilities.randInt(2) == 1;
         this.fed = Utilities.randInt(2) == 1;
         this.lastWeekFunctionPoints = 0;
+        this.randomFactor = Utilities.randFloat() / 2 + 1f;
         randomizeSkills();
         re_calculateDeveloperInfo();
     }
@@ -263,17 +265,21 @@ public class Developer implements Serializable {
      * Calculate the salary of the developer.
      */
     private void calculateSalary() {
-        int totalPoint = 0;
+        float totalPoint = 0;
         for (SkillInfo key : skills.keySet()) {
-            if (mainSkillInfo != null && key == mainSkillInfo) {
-                totalPoint += skills.get(key).getLevel() * 3;
-            } else if (SkillInfo.specialSkills().contains(key) || SkillInfo.configSkills().contains(key)) {
-                totalPoint += skills.get(key).getLevel() * 2;
+            if (key == SkillInfo.ALGORITHMS) {
+                totalPoint += ((float) skills.get(key).getLevel()) * 3f;
+            } else if (key == SkillInfo.ANALYSIS || (mainSkillInfo != null && key == mainSkillInfo)) {
+                totalPoint += ((float) skills.get(key).getLevel()) * 2.5f;
+            } else if (key == SkillInfo.TEAM_PLAYER || SkillInfo.configSkills().contains(key) || SkillInfo.specialSkills().contains(key)) {
+                totalPoint += ((float) skills.get(key).getLevel()) * 2f;
+            } else if (key == SkillInfo.DESIGN) {
+                totalPoint += ((float) skills.get(key).getLevel()) * 1.5f;
             } else {
-                totalPoint += skills.get(key).getLevel();
+                totalPoint += ((float) skills.get(key).getLevel());
             }
         }
-        this.salary = totalPoint * 20;
+        this.salary = (int) (totalPoint * 20f * randomFactor);
     }
 
     @Override
