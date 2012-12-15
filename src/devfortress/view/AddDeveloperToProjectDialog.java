@@ -117,6 +117,28 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             devsJListPanel.addJListOnSelectionListener(this);
             assignAreaCmB.addActionListener(this);
         }
+        //Styling
+        {
+            devName.setForeground(Colors.DARKBLUE);
+            devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
+            devName.setAlignmentX(Component.CENTER_ALIGNMENT);
+            mainSkill.setFont(font);
+            mainSkill.setAlignmentX(Component.LEFT_ALIGNMENT);
+            production.setFont(font);
+            production.setAlignmentX(Component.LEFT_ALIGNMENT);
+            infoInnerPanel.setOpaque(false);
+            infoInnerPanel.setBounds(15, 10, 490, 440);
+            assignLbl.setFont(font);
+            assignAreaCmB.setBackground(Colors.LIGHTORANGE);
+            assignedAreaPanel.setBackground(Colors.LIGHTORANGE);
+            assignedAreaPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            backgroundPanel.setBackground(colour);
+            applyBtnPanel.setOpaque(false);
+            cancelBtnPanel.setOpaque(false);
+            infoNorthInnerPanel.setBackground(Colors.LIGHTORANGE);
+            infoNorthProjectInfoPanel.setBackground(Colors.LIGHTORANGE);
+            infoNorthPanel.setOpaque(false);
+        }
         //Layout. Must be in the right order
         {
             //Layout Manager
@@ -124,7 +146,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             infoGroupPanel.setLayout(null);
             infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
             infoNorthInnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            infoNorthProjectInfoPanel.setLayout(new GridLayout(3, 1));
+            infoNorthProjectInfoPanel.setLayout(new BoxLayout(infoNorthProjectInfoPanel, BoxLayout.Y_AXIS));
             assignedAreaPanel.setLayout(new BoxLayout(assignedAreaPanel, BoxLayout.X_AXIS));
             btnPanel.setLayout(new GridLayout(1, 2));
             //Add components
@@ -149,26 +171,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             applyBtnPanel.add(applyBtn);
             cancelBtnPanel.add(cancelBtn);
         }
-        //Styling
-        {
-            devName.setForeground(Colors.DARKBLUE);
-            devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
-            devName.setAlignmentX(Component.CENTER_ALIGNMENT);
-            mainSkill.setFont(font);
-            production.setFont(font);
-            infoInnerPanel.setOpaque(false);
-            infoInnerPanel.setBounds(15, 10, 490, 440);
-            assignedAreaPanel.setBackground(Colors.LIGHTORANGE);
-            assignLbl.setFont(font);
-            assignAreaCmB.setBackground(Colors.LIGHTORANGE);
-            backgroundPanel.setBackground(colour);
-            applyBtnPanel.setOpaque(false);
-            cancelBtnPanel.setOpaque(false);
-            infoNorthInnerPanel.setBackground(Colors.LIGHTORANGE);
-            infoNorthProjectInfoPanel.setBackground(Colors.LIGHTORANGE);
-            infoNorthProjectInfoPanel.setPreferredSize(new Dimension(290, 100));
-            infoNorthPanel.setOpaque(false);
-        }
+
         infoInnerPanel.setVisible(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setModalityType(ModalityType.APPLICATION_MODAL);

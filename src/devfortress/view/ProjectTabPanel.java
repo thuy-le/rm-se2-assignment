@@ -99,37 +99,34 @@ public class ProjectTabPanel extends JPanel implements Observer {
         {
             setOpaque(false);
             btnAdd.setColour(Colors.DARKBLUE);
-            projectListPanel.setColor(Colors.DARKBLUE);
             btnAdd.setTextColour(Colors.LIGHTBLUE);
             prjList.setSelectionBackground(Colors.LIGHTGREEN);
             prjList.setSelectionForeground(Colors.DARKBLUE);
             prjList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-            projectInfoPanel.setOpaque(false);
-            imageIcon.setOpaque(false);
-            imageIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            projectDetailsPanel.setBackground(contentColor);
-            projectDetailsPanel.setPreferredSize(new Dimension(220, 120));
-
-            projectInfoPanel.setBackground(contentColor);
-
             prjName.setFont(font);
             deadline.setFont(font);
             info1.setFont(font);
             status.setFont(font);
             cost.setFont(font);
+            infoPanel.setBounds(15, 15, 490, 395);
+            btnAddDev.setButtonSize(0, 0, 140, 35);
+            btnRemoveDev.setButtonSize(0, 0, 170, 35);
+            btnCancelProject.setButtonSize(0, 0, 140, 35);
+            projectListPanel.setColor(Colors.DARKBLUE);
+            projectInfoPanel.setOpaque(false);
+            imageIcon.setOpaque(false);
+            imageIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            projectDetailsPanel.setBackground(contentColor);
+            projectInfoPanel.setBackground(contentColor);
             headerLbl.setForeground(Colors.DARKBLUE);
             headerLbl.setFont(new Font("Century Gothic", Font.BOLD, 22));
             headerLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
             infoCenterSouthPanel.setBackground(contentColor);
             infoNorthPanel.setOpaque(false);
-            infoPanel.setBounds(15, 15, 490, 395);
-            btnAddDev.setButtonSize(0, 0, 140, 35);
-            btnRemoveDev.setButtonSize(0, 0, 170, 35);
-            btnCancelProject.setButtonSize(0, 0, 140, 35);
         }
         //Layout
         {
-
+            //Layout Manager
             setLayout(new BorderLayout());
             infoPanel.setLayout(new BorderLayout());
             infoGroupPanel.setLayout(null);
@@ -137,6 +134,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
             projectInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             infoCenterSouthPanel.setLayout(new FlowLayout());
             projectDetailsPanel.setLayout(new BoxLayout(projectDetailsPanel, BoxLayout.Y_AXIS));
+            //Add components
             add(projectListPanel, BorderLayout.WEST);
             add(infoGroupPanel, BorderLayout.CENTER);
             infoGroupPanel.add(infoPanel);

@@ -34,7 +34,6 @@ public class Utilities {
                     }
                 }
             } catch (IOException ex) {
-                ex.printStackTrace();
             } finally {
                 if (reader != null) {
                     try {
@@ -64,7 +63,7 @@ public class Utilities {
             int index = rand.nextInt(getNameList().size());
             return getNameList().get(index);
         } else {
-            return "";
+            return "Name";
         }
     }
 
