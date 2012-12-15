@@ -193,26 +193,30 @@ public class EventTabPanel extends JPanel implements Observer {
 
     public void showDescription() {
         int rowID = eventTable.getSelectedRow();
-        int descID = ((Integer) eventTable.getModel().getValueAt(rowID, 0)).intValue();
-        Event selectedEvent = listCurrentEvents.get(descID);
-        int effect = selectedEvent.getEffect();
-        String eventDesc = selectedEvent.getDescription();
-        eventDescription.setText(eventDesc);
-        if (effect == EffectLevel.POSITIVE) {
-            eventEffect.setIcon(new ImageIcon("images/positive.png"));
-            eventEffect.setText("Congrats!");
-            eventEffect.setFont(EFFECTFONT);
-        } else if (effect == EffectLevel.NEGATIVE) {
-            eventEffect.setIcon(new ImageIcon("images/negative.png"));
-            eventEffect.setText("Oppps! Too bad!");
-            eventEffect.setFont(EFFECTFONT);
-        } else if (effect == EffectLevel.NEUTRAL) {
-            eventEffect.setIcon(new ImageIcon("images/neutral.png"));
-            eventEffect.setText("Not bad!");
-            eventEffect.setFont(EFFECTFONT);
+        if (((Integer) eventTable.getModel().getValueAt(rowID, 0)) == null) {
+        } else {
+            int descID = ((Integer) eventTable.getModel().getValueAt(rowID, 0)).intValue();
+
+            Event selectedEvent = listCurrentEvents.get(descID);
+            int effect = selectedEvent.getEffect();
+            String eventDesc = selectedEvent.getDescription();
+            eventDescription.setText(eventDesc);
+            if (effect == EffectLevel.POSITIVE) {
+                eventEffect.setIcon(new ImageIcon("images/positive.png"));
+                eventEffect.setText("Congrats!");
+                eventEffect.setFont(EFFECTFONT);
+            } else if (effect == EffectLevel.NEGATIVE) {
+                eventEffect.setIcon(new ImageIcon("images/negative.png"));
+                eventEffect.setText("Oppps! Too bad!");
+                eventEffect.setFont(EFFECTFONT);
+            } else if (effect == EffectLevel.NEUTRAL) {
+                eventEffect.setIcon(new ImageIcon("images/neutral.png"));
+                eventEffect.setText("Not bad!");
+                eventEffect.setFont(EFFECTFONT);
+            }
+            eventEffect.repaint();
+            repaint();
         }
-        eventEffect.repaint();
-        repaint();
     }
 
     //override the paint component method
