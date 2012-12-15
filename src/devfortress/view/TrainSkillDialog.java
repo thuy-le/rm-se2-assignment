@@ -4,7 +4,6 @@
  */
 package devfortress.view;
 
-import com.sun.media.sound.JARSoundbankReader;
 import devfortress.view.components.CustomTable;
 import devfortress.enumerations.SkillInfo;
 import devfortress.models.Developer;
@@ -30,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TrainSkillDialog extends JDialog implements Observer {
 
-    private Developer developer;   
+    private Developer developer;
     private JTable skillTable;
     private DefaultTableModel skillModel;
     private SkillInfo infos[];
@@ -39,7 +38,7 @@ public class TrainSkillDialog extends JDialog implements Observer {
     private JLabel budgetLbl;
 
     public TrainSkillDialog(Developer developer) {
-        this.developer = developer;        
+        this.developer = developer;
         setSize(800, 600);
         setLayout(new BorderLayout());
         skillModel = new DefaultTableModel(0, 3);
@@ -59,12 +58,12 @@ public class TrainSkillDialog extends JDialog implements Observer {
         budgetLbl = new JLabel("");
         top.setBackground(Colors.DARKBLUE);
         budgetLbl.setForeground(Color.WHITE);
-        budgetLbl.setFont(new Font("Century Gothic", Font.PLAIN, 22));
-        budgetLbl.setText("Budget: $1000");
-        top.add(budgetLbl);        
-        add(top, BorderLayout.NORTH);            
+        budgetLbl.setFont(new Font("Century Gothic", Font.BOLD, 22));
+        budgetLbl.setText("");
+        top.add(budgetLbl);
+        add(top, BorderLayout.NORTH);
         add(bottom, BorderLayout.SOUTH);
-        
+
         setLocationRelativeTo(null);
         setTitle(developer.getName() + " - Training");
         update(null, null);
@@ -105,9 +104,13 @@ public class TrainSkillDialog extends JDialog implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {     
+    public void update(Observable o, Object arg) {
+        GameEngine model = (GameEngine) o;
+        if (model != null) {
+            budgetLbl.setText("Budget: $" + model.getBudget());
+        }
         while (skillModel.getRowCount() > 0) {
-            skillModel.removeRow(0);
+            skillModel.removeRow(skillModel.getRowCount() - 1);
         }
         Object[][] objs = new Object[infos.length][2];
         for (int i = 0; i < objs.length; i++) {
@@ -120,14 +123,14 @@ public class TrainSkillDialog extends JDialog implements Observer {
             } else {
                 Object[] os = {info.getType(), name, skill.getLevel()};
                 skillModel.addRow(os);
-            }           
-        }        
+            }
+        }
         Object[] ids = {"Type", "Skill Name", "Level"};
         skillModel.setColumnIdentifiers(ids);
         skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         skillTable.getColumnModel().getColumn(0).setMaxWidth(200);
         skillTable.getColumnModel().getColumn(0).setMinWidth(200);
-        skillTable.getColumnModel().getColumn(2).setMaxWidth(80);           
+        skillTable.getColumnModel().getColumn(2).setMaxWidth(80);
     }
 
     private class SelectionListener implements ListSelectionListener {

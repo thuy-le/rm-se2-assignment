@@ -112,8 +112,9 @@ public class DeveloperTabController {
             TrainSkillDialog dialog = new TrainSkillDialog(developerTab.getSelectedDeveloper());
             dialog.addWindowListener(new TrainSkillWindowsListener());
             TrainSkillDialogController trainSkillController = new TrainSkillDialogController(dialog, model);
-            trainSkillController.initialize();
             model.addObserver(dialog);
+            dialog.update(model, null);
+            trainSkillController.initialize();
             dialog.display();
         }
 
@@ -181,21 +182,21 @@ public class DeveloperTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             List<Developer> devs = model.getDevelopers();
-            if (devs.isEmpty()){
-            JOptionPane.showMessageDialog(null, "No developers at the momment");
-            }else{
+            if (devs.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No developers at the momment");
+            } else {
                 try {
-                for (Developer dev : devs) {
-                    model.giveDeveloperBeer(dev);
+                    for (Developer dev : devs) {
+                        model.giveDeveloperBeer(dev);
+                    }
+                    model.notifyObservers();
+                    JOptionPane.showMessageDialog(null, "All developers are now happy! Yey!");
+                } catch (InsufficientBudgetException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-                model.notifyObservers();
-                JOptionPane.showMessageDialog(null, "All developers are now happy! Yey!");
-            } catch (InsufficientBudgetException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
+
         }
-            
-    }
     }
 
     private class FeedDeveloperListener extends MouseAdapter {
