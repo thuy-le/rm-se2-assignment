@@ -64,14 +64,18 @@ public class DeveloperTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             List<Developer> devs = model.getDevelopers();
-            try {
-                for (Developer dev : devs) {
-                    model.feedDeveloper(dev);
+            if (devs == null) {
+                JOptionPane.showMessageDialog(null, "No developers at the momment");
+            } else {
+                try {
+                    for (Developer dev : devs) {
+                        model.feedDeveloper(dev);
+                    }
+                    model.notifyObservers();
+                    JOptionPane.showMessageDialog(null, "All developers are full");
+                } catch (InsufficientBudgetException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-                model.notifyObservers();
-                JOptionPane.showMessageDialog(null, "All developers are full");
-            } catch (InsufficientBudgetException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
     }
