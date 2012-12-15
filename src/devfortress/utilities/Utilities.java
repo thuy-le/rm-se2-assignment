@@ -69,10 +69,14 @@ public class Utilities {
     }
 
     public static FunctionalArea getRandomFunctionalArea(List<AreaName> areaNames, int functionPoints, boolean visible) {
-        int index = Utilities.randInt(areaNames.size());
-        FunctionalArea fA = new FunctionalArea(areaNames.get(index), functionPoints, 0, visible);
-        areaNames.remove(areaNames.get(index));
-        return fA;
+        if (!areaNames.isEmpty()) {
+            int index = Utilities.randInt(areaNames.size());
+            FunctionalArea fA = new FunctionalArea(areaNames.get(index), functionPoints, 0, visible);
+            areaNames.remove(areaNames.get(index));
+            return fA;
+        } else {
+            return null;
+        }
     }
 
     public static Skill getRandomSkill(ArrayList<SkillInfo> skills, int maxLvl) {

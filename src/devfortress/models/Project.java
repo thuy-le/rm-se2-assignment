@@ -8,6 +8,7 @@ import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.ReadOnlyMap;
 import devfortress.utilities.Utilities;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -196,18 +197,29 @@ public class Project implements Serializable {
      * Private methods and functions
      */
     private void calculateBudget() {
-        int total = 0;
+        float total = 0;
         for (FunctionalArea area : functionalAreas.values()) {
             total += area.getFunctionPoints();
         }
-        int addition = (int) ((int) total * 10 * (1 + Utilities.randFloat()));
+        //level 1: 1.1 - 1.2
+        //level 2: 1.2 - 1.4
+        //level 3: 1.3 - 1.6
+        //level 4: 1.4 - 1.8
+        //level 5: 1.5 - 2.0
+        float addition = total * 10f * ((1f + (0.1f * level)) + Utilities.randFloat() * ((float) level / 10f));
+        budget = level * duration * 100 + (int) addition;
+//        budget = (int) addition;
+        bonus = 0;
+        System.out.println("-------------------");
         System.out.println("Project: " + getName());
         System.out.println("Level: " + getLevel());
-        System.out.println("Main: " + getMainRequirement());
-        System.out.println("");
-        System.out.println("Addition: " + addition);
-        budget = level * duration * 100 + addition;
-        bonus = 0;
+        System.out.println("Duration: " + duration);
+        System.out.println("Function points/month: " + total / duration);
+        System.out.println("Standard: " + (budget - (int) addition));
+        System.out.println("Addition: " + (int) addition);
+        System.out.println("Sum: " + budget);
+        System.out.println("Average/Month: " + budget / duration);
+        System.out.println("Cost/Function Points: " + (int) (addition / total));
     }
 
     public void enableBonus() {
@@ -220,7 +232,7 @@ public class Project implements Serializable {
         level = Utilities.randInt(5) + 1;
         int numAreas = 0;
         int numUnknown = 0;
-        int pointsPerMonth = (level == 5) ? (Utilities.randInt(100) + 300) : (Utilities.randInt(75) + 25);
+        int pointsPerMonth = (level == 5) ? (Utilities.randInt(150) + 250) : (Utilities.randInt(30) + 70);
         int totalPoints = 0;
         int[] pointsHolder;
         // Dependencies on levels
@@ -282,21 +294,27 @@ public class Project implements Serializable {
         }
         {
             int numKnown = numAreas - numUnknown;
-            int i = 0;
-            for (; i < numKnown; i++) {
-                FunctionalArea functionalArea = Utilities.getRandomFunctionalArea(areaNames, pointsHolder[i], true);
-                functionalAreas.put(functionalArea.getName(), functionalArea);
+            List<AreaName> names = new ArrayList<AreaName>(areaNames);
+            int i;
+            for (i = 0; i < numKnown; i++) {
+                FunctionalArea functionalArea = Utilities.getRandomFunctionalArea(names, pointsHolder[i], true);
+                if (functionalArea != null) {
+                    functionalAreas.put(functionalArea.getName(), functionalArea);
+                    names.remove(functionalArea.getName());
+                }
             }
-            for (; i < numUnknown; i++) {
-                FunctionalArea functionalArea = Utilities.getRandomFunctionalArea(areaNames, pointsHolder[i], false);
-                functionalAreas.put(functionalArea.getName(), functionalArea);
+            for (i = numKnown; i < numAreas; i++) {
+                FunctionalArea functionalArea = Utilities.getRandomFunctionalArea(names, pointsHolder[i], false);
+                if (functionalArea != null) {
+                    functionalAreas.put(functionalArea.getName(), functionalArea);
+                    names.remove(functionalArea.getName());
+                }
             }
-
         }
         /**
          * ****
          */
-        mainRequirement = SkillInfo.values()[Utilities.randInt(SkillInfo.values().length)];
+        mainRequirement = SkillInfo.techSkills().get(Utilities.randInt(SkillInfo.techSkills().size()));
     }
 
     public void addFunctionalArea(FunctionalArea area) {
@@ -305,5 +323,11 @@ public class Project implements Serializable {
 
     public void clearEvents() {
         events.clear();
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 30; i++) {
+            new Project();
+        }
     }
 }
