@@ -64,7 +64,7 @@ public class DeveloperTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             List<Developer> devs = model.getDevelopers();
-            if (devs == null) {
+            if (devs.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No developers at the momment");
             } else {
                 try {
@@ -181,7 +181,10 @@ public class DeveloperTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             List<Developer> devs = model.getDevelopers();
-            try {
+            if (devs.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No developers at the momment");
+            }else{
+                try {
                 for (Developer dev : devs) {
                     model.giveDeveloperBeer(dev);
                 }
@@ -191,6 +194,8 @@ public class DeveloperTabController {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
+            
+    }
     }
 
     private class FeedDeveloperListener extends MouseAdapter {
