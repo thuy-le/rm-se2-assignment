@@ -66,7 +66,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         devNameLbl = new JLabel("Developer Name");
         mainSkillLbl = new JLabel("Main Skill (Level)");
         workingPrj = new JLabel("Working Project");
-        status = new JPanel(new GridLayout(1, 3));
+        status = new JPanel();
         developerList = new JList();
         skillTable = new CustomTable(skillTableModel);
         hireBtn = new CustomButton("Hire Developer");
@@ -129,6 +129,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             salaryLbl.setFont(font);
             statusLbl.setFont(font);
             status.setBackground(Colors.LIGHTORANGE);
+            status.setAlignmentX(Component.LEFT_ALIGNMENT);
 
             infoPanel.setBounds(15, 10, 490, 410);
             infoNorthPanel.setOpaque(false);
@@ -138,7 +139,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         {
             setLayout(new BorderLayout());
             infoPanel.setLayout(new BorderLayout());
-
+            status.setLayout(new FlowLayout(FlowLayout.LEFT));
             developerInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             developerInfoPanel.add(imageIcon);
             developerInfoPanel.add(developerDetailsPanel);
