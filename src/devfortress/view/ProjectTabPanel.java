@@ -6,6 +6,7 @@ package devfortress.view;
 
 import devfortress.models.exceptions.InvalidDevDateException;
 import devfortress.models.DevDate;
+import devfortress.models.Developer;
 import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
@@ -65,9 +66,11 @@ public class ProjectTabPanel extends JPanel implements Observer {
     private GlassPanel infoPanel;
     private JLabel prjName, deadline, cost, info1, status;
     private JTable table;
+    private Project selectedProject;
     //constructor
 
     public ProjectTabPanel() {
+        selectedProject = null;
         prjModel = new DefaultListModel();
         projTableModel = new DefaultTableModel(0, 2);
         prjList = new JList();
@@ -211,11 +214,14 @@ public class ProjectTabPanel extends JPanel implements Observer {
         for (Project proj : model.getProjects()) {
             prjModel.addElement(proj);
         }
-        showProject((Project) prjList.getSelectedValue());
+        if (!model.getProjects().contains(selectedProject)) {
+            selectedProject = null;
+        }
+        showProject(selectedProject);
     }
 
     public Project getSelectedProject() {
-        return (Project) prjList.getSelectedValue();
+        return selectedProject;
     }
 
     public synchronized void showProject(Project project) {
@@ -262,7 +268,15 @@ public class ProjectTabPanel extends JPanel implements Observer {
         public void valueChanged(ListSelectionEvent e) {
             if (selectedIndex != prjList.getSelectedIndex()) {
                 selectedIndex = prjList.getSelectedIndex();
-                showProject((Project) prjList.getSelectedValue());
+                Project project = (Project) prjList.getSelectedValue();
+                if (project != null) {
+                    selectedProject = project;
+                } else {
+                    if (!GameEngine.getInstance().getProjects().contains(selectedProject)) {
+                        selectedProject = null;
+                    }
+                }
+                showProject(selectedProject);
             }
         }
     }
