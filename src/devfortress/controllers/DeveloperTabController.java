@@ -98,7 +98,7 @@ public class DeveloperTabController {
                     developerTab.btnFeed.enableButton();
                     developerTab.btnParty.enableButton();
                 } else {
-                    JOptionPane.showMessageDialog(null, dev.getName() + " is hired");                    
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is hired");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "You need to choose 1 developer to hire");
@@ -187,7 +187,6 @@ public class DeveloperTabController {
         public void mouseClicked(MouseEvent e) {
             List<Developer> devs = model.getDevelopers();
             if (devs.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No developers at the momment");
             } else {
                 try {
                     for (Developer dev : devs) {
