@@ -31,6 +31,15 @@ public class DevDate implements Serializable {
         this.month = 1;
         this.week = 1;
     }
+    
+    /**
+     * Copy Contructor
+     */
+    public DevDate(DevDate date) {
+        this.year = date.year;
+        this.month = date.month;
+        this.week = date.week;
+    }
 
     public int getMonth() {
         return month;

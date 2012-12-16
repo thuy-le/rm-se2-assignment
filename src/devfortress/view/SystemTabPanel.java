@@ -124,7 +124,7 @@ public class SystemTabPanel extends JPanel implements Observer {
         GlassPanel sysInfo = new GlassPanel(15, 15, 250, 390, .9f, Colors.YELLOW, 15, 15);
         JLabel imageIcon = new JLabel(imgIcon);
         imageIcon.setPreferredSize(new Dimension(200, 200));
-        JLabel label = new JLabel("  Your budget is:");
+        JLabel label = new JLabel("  Budget:");
         JLabel label2 = new JLabel("  Total salary:");
         upArrow = new CustomLabel("");
         downArrow = new CustomLabel("");

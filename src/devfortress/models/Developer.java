@@ -154,7 +154,7 @@ public class Developer implements Serializable {
      */
     public void getTired() {
         double rand = Math.random();
-        if (rand < 0.4) {
+        if (rand < 0.0) {
             happy = false;
         }
         fed = false;

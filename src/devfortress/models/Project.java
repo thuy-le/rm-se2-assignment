@@ -307,10 +307,4 @@ public class Project implements Serializable {
     public void clearEvents() {
         events.clear();
     }
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 30; i++) {
-            new Project();
-        }
-    }
 }

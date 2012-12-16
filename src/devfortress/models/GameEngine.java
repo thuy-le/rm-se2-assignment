@@ -258,6 +258,7 @@ public class GameEngine extends Observable implements Serializable {
     public void acceptProject(Project project) {
         projects.add(project);
         marketProjects.remove(project);
+        project.setAcceptedDate(new DevDate(date));
         budget += project.getBudget() / 4;
         setChanged();
     }

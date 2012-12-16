@@ -113,11 +113,11 @@ public class ProjectTabPanel extends JPanel implements Observer {
             btnAddDev.setButtonSize(0, 0, 140, 35);
             btnRemoveDev.setButtonSize(0, 0, 170, 35);
             btnCancelProject.setButtonSize(0, 0, 140, 35);
-            
+
             btnAddDev.setCustomFont(buttonFont);
             btnRemoveDev.setCustomFont(buttonFont);
             btnCancelProject.setCustomFont(buttonFont);
-            
+
             projectListPanel.setColor(Colors.DARKBLUE);
             projectInfoPanel.setOpaque(false);
             imageIcon.setOpaque(false);
@@ -220,11 +220,10 @@ public class ProjectTabPanel extends JPanel implements Observer {
                 infoPanel.setVisible(true);
                 //set projectname... blah blah blah
                 prjName.setText("Project: " + project.getName());
-                DevDate acceptedDate = null;
-                if (project.getAcceptedDate() == null) {
-                    project.setAcceptedDate(GameEngine.getInstance().getDate());
-                }
-                acceptedDate = project.getAcceptedDate();
+                
+                DevDate acceptedDate = project.getAcceptedDate();
+                
+                System.out.println(acceptedDate.getWeek() + "/" + acceptedDate.getMonth() + "/" + acceptedDate.getYear());
                 DevDate deadlineDate = acceptedDate.addMonths(project.getDuration());
 
                 deadline.setText("Deadline: " + deadlineDate.getWeek() + "/" + deadlineDate.getMonth() + "/" + deadlineDate.getYear());
@@ -236,7 +235,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
                     projTableModel.removeRow(projTableModel.getRowCount() - 1);
                 }
                 for (FunctionalArea fA : project.getAreas().values()) {
-                    Object[] rowData = {fA.getName().toString(), fA.getFunctionPoints()};
+                    Object[] rowData = {fA.getName().toString(), fA.getCompletedPoints() + "/" + fA.getFunctionPoints()};
                     projTableModel.addRow(rowData);
                 }
                 Object[] ids = {"Functional Area", "Points"};
