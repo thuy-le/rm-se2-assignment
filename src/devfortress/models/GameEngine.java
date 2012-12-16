@@ -69,6 +69,8 @@ public class GameEngine extends Observable implements Serializable {
         developers.clear();
         projects.clear();
         date.reset();
+        numPCs = 0;
+        
         setChanged();
     }
 
