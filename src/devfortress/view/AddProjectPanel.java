@@ -10,6 +10,7 @@ import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
 import devfortress.view.components.CustomListPanel;
 import devfortress.view.components.CustomListRenderer;
+import devfortress.view.components.CustomProjectTable;
 import devfortress.view.components.CustomTable;
 import devfortress.view.components.GlassPanel;
 import java.awt.AlphaComposite;
@@ -59,7 +60,7 @@ public class AddProjectPanel extends JPanel implements Observer {
     //components
     private GlassPanel infoPanel;
     private CustomButton acceptProjectBtn, closeBtn;
-    private CustomTable functionalTable;
+    private CustomProjectTable functionalTable;
     private JList projectList;
     private JLabel projectLevelLbl, mainSkillLbl, budgetLbl, deadlineLbl, levelLbl, projectNameLbl;
     private DefaultTableModel functionalTableModel;
@@ -77,7 +78,7 @@ public class AddProjectPanel extends JPanel implements Observer {
         projectListModel = new DefaultListModel();
         functionalTableModel = new DefaultTableModel();
         projectList = new JList();
-        functionalTable = new CustomTable();
+        functionalTable = new CustomProjectTable(functionalTableModel, PANEL_COLOR);
         projectLevelLbl = new JLabel("Project Name");
         levelLbl = new JLabel("1");
         mainSkillLbl = new JLabel("Skill ABC");
@@ -108,7 +109,7 @@ public class AddProjectPanel extends JPanel implements Observer {
             projectList.setCellRenderer(new CustomListRenderer());
             projectList.addListSelectionListener(new ProjectList_ListListener());
             functionalTableModel.setColumnIdentifiers(new String[]{"Functional Area", "Point"});
-            functionalTable.init(functionalTableModel);
+//            functionalTable.init(functionalTableModel);
         }
         //Styling
         {

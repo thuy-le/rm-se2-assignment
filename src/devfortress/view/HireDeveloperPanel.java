@@ -15,6 +15,7 @@ import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.models.Skill;
 import devfortress.utilities.Colors;
+import devfortress.view.components.CustomDeveloperTable;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -68,7 +69,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     private JPanel status;
     private CustomButton hireBtn, closeBtn;
     private GlassPanel infoPanel;
-    private JTable skillTable;
+    private CustomDeveloperTable skillTable;
     private DefaultTableModel skillTableModel;
     private DefaultListModel devListModel;
     private Developer devToHire;
@@ -86,7 +87,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
         workingPrj = new JLabel("Working Project");
         status = new JPanel();
         developerList = new JList();
-        skillTable = new CustomTable(skillTableModel);
+        skillTable = new CustomDeveloperTable(skillTableModel, PNL_COLOR);
         hireBtn = new CustomButton("Hire Developer");
         closeBtn = new CustomButton("Close");
         developerDetail = new JLabel("");
@@ -170,14 +171,14 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             add(hireDevBottom, BorderLayout.SOUTH);
             hireDevHeader.add(title);
             infoGroupPanel.add(infoPanel);
-           
+
             infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
-            infoPanel.add(((CustomTable) skillTable).getTableScroll(), BorderLayout.CENTER);
+            infoPanel.add(((CustomDeveloperTable) skillTable).getTableScroll(), BorderLayout.CENTER);
             infoPanel.add(bottom, BorderLayout.SOUTH);
             infoNorthPanel.add(developerDetail);
             infoNorthPanel.add(developerInfoPanel);
             //Add components
-            
+
             developerDetailsPanel.add(devNameLbl);
             developerDetailsPanel.add(mainSkillLbl);
             developerDetailsPanel.add(salaryLbl);
@@ -185,16 +186,8 @@ public class HireDeveloperPanel extends JPanel implements Observer {
             status.add(statusLbl);
             status.add(isHappy);
             status.add(isDrunk);
-            
             hireDevBottom.add(closeBtn);
-
-            
-            
-            
         }
-
-
-
     }
     //Getters and Setters
 
