@@ -5,6 +5,7 @@
 package devfortress.view;
 
 import devfortress.view.components.CustomTabbedPaneUI;
+import java.awt.event.KeyEvent;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
@@ -52,5 +53,9 @@ public class DevFortressTabbedPane extends JTabbedPane {
         this.add(DEV_TAB_TITLE, devTab);
         this.add(PROJ_TAB_TITLE, projTab);
         this.add(EVENT_TAB_TITLE, eventTab);
+        setMnemonicAt(0, KeyEvent.VK_1);
+        setMnemonicAt(1, KeyEvent.VK_2);
+        setMnemonicAt(2, KeyEvent.VK_3);
+        setMnemonicAt(3, KeyEvent.VK_4);
     }
 }

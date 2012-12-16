@@ -220,12 +220,8 @@ public class ProjectTabPanel extends JPanel implements Observer {
                 infoPanel.setVisible(true);
                 //set projectname... blah blah blah
                 prjName.setText("Project: " + project.getName());
-                
                 DevDate acceptedDate = project.getAcceptedDate();
-                
-                System.out.println(acceptedDate.getWeek() + "/" + acceptedDate.getMonth() + "/" + acceptedDate.getYear());
                 DevDate deadlineDate = acceptedDate.addMonths(project.getDuration());
-
                 deadline.setText("Deadline: " + deadlineDate.getWeek() + "/" + deadlineDate.getMonth() + "/" + deadlineDate.getYear());
                 cost.setText("Budget: $" + project.getBudget());
                 info1.setText("Level: " + project.getLevel());
@@ -241,7 +237,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
                 Object[] ids = {"Functional Area", "Points"};
                 projTableModel.setColumnIdentifiers(ids);
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-                table.getColumnModel().getColumn(1).setMaxWidth(70);
+                table.getColumnModel().getColumn(1).setMaxWidth(100);
 
             } catch (InvalidDevDateException ex) {
             }

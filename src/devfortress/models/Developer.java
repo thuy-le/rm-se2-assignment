@@ -154,10 +154,11 @@ public class Developer implements Serializable {
      */
     public void getTired() {
         double rand = Math.random();
-        if (rand < 0.0) {
+        if (rand < 0.15) {
             happy = false;
         }
         fed = false;
+        drunk = false;
     }
 
     /**
@@ -213,7 +214,7 @@ public class Developer implements Serializable {
     }
 
     public int getLastWeekFunctionPoints() {
-        return lastWeekFunctionPoints;
+        return getCalculateLastWeekFunctionPoints();
     }
 
     public void setLastWeekFunctionPoints(int lastWeekFunctionPoints) {
@@ -222,7 +223,7 @@ public class Developer implements Serializable {
 
     public int getCalculateLastWeekFunctionPoints() {
         lastWeekFunctionPoints = getProduction(workingProject) * (fed ? 1 : 0);
-        if (lastWeekFunctionPoints < 1) {
+        if (lastWeekFunctionPoints < 1 && fed) {
             lastWeekFunctionPoints = 1;
         }
         return lastWeekFunctionPoints;
@@ -239,7 +240,6 @@ public class Developer implements Serializable {
     /*
      * Private methods
      */
-
     private void re_calculateDeveloperInfo() {
         determineMainSkill();
         calculateSalary();
@@ -292,7 +292,7 @@ public class Developer implements Serializable {
         if (project == null) {
             functionPoints = 0;
         } else {
-            int tech = skills.get(mainSkillInfo).getLevel();
+            int tech = getSkillLevel(mainSkillInfo);
             int design = getSkillLevel(SkillInfo.DESIGN);
             int algorithm = getSkillLevel(SkillInfo.ALGORITHMS);
             int analysis = getSkillLevel(SkillInfo.ANALYSIS);
@@ -305,18 +305,9 @@ public class Developer implements Serializable {
                 int haskell = 0;
                 int forth = 0;
                 {
-                    try {
-                        lisp = skills.get(SkillInfo.LISP).getLevel();
-                    } catch (Exception ex) {
-                    }
-                    try {
-                        haskell = skills.get(SkillInfo.HASKELL).getLevel();
-                    } catch (Exception ex) {
-                    }
-                    try {
-                        forth = skills.get(SkillInfo.FORTH).getLevel();
-                    } catch (Exception ex) {
-                    }
+                    lisp = getSkillLevel(SkillInfo.LISP);
+                    haskell = getSkillLevel(SkillInfo.HASKELL);
+                    forth = getSkillLevel(SkillInfo.FORTH);
                 }
                 if (lisp + haskell + forth != 0) {
                     int temp = lisp > haskell ? lisp : haskell;
@@ -336,7 +327,7 @@ public class Developer implements Serializable {
                     }
                 }
             }
-            functionPoints = (tech + 2 * design + tech * algorithm + 3 * analysis + (teamPlayer * numMem) / (12 - config));
+            functionPoints = (tech + 2 * design + tech * algorithm + 3 * analysis + ((teamPlayer * numMem) / (12 - config)));
 
             if (functionPoints < 1) {
                 functionPoints = 1;

@@ -294,12 +294,12 @@ public class GameEngine extends Observable implements Serializable {
          * Time changes
          */
         if (!ended) {
-            for (Developer dev : developers) {
-                dev.getTired();
-            }
             generateRandomEvents();
             allEventsTakeEffects();
             allProjectProgress();
+            for (Developer dev : developers) {
+                dev.getTired();
+            }
             /*
              * Calculate other factors
              */
