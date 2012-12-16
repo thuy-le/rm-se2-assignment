@@ -81,6 +81,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
 
     private void init() {
         Font font = new Font("Century Gothic", Font.BOLD, 17);
+        Font buttonFont = new Font("Century Gothic", Font.BOLD, 15);
         CustomListPanel projectListPanel = new CustomListPanel(prjList, Arrays.asList(new CustomButton[]{btnAdd}));
         JLabel headerLbl = new JLabel("Project Details");
         JPanel projectInfoPanel = new JPanel();
@@ -112,6 +113,11 @@ public class ProjectTabPanel extends JPanel implements Observer {
             btnAddDev.setButtonSize(0, 0, 140, 35);
             btnRemoveDev.setButtonSize(0, 0, 170, 35);
             btnCancelProject.setButtonSize(0, 0, 140, 35);
+            
+            btnAddDev.setCustomFont(buttonFont);
+            btnRemoveDev.setCustomFont(buttonFont);
+            btnCancelProject.setCustomFont(buttonFont);
+            
             projectListPanel.setColor(Colors.DARKBLUE);
             projectInfoPanel.setOpaque(false);
             imageIcon.setOpaque(false);
@@ -222,7 +228,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
                 DevDate deadlineDate = acceptedDate.addMonths(project.getDuration());
 
                 deadline.setText("Deadline: " + deadlineDate.getWeek() + "/" + deadlineDate.getMonth() + "/" + deadlineDate.getYear());
-                cost.setText("Budget: " + project.getBudget());
+                cost.setText("Budget: $" + project.getBudget());
                 info1.setText("Level: " + project.getLevel());
                 status.setText("Bonus: " + project.getBonus());
                 //table
