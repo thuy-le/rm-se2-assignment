@@ -56,7 +56,7 @@ public class HireDeveloperPanel extends JPanel implements Observer {
     private Developer devToHire;
     private GameEngine model;
     private JLabel isHappy, isDrunk;
-    private JLabel developerDetail = new JLabel("");
+    private JLabel developerDetail;
 
     public HireDeveloperPanel() {
         // Initialize variables
