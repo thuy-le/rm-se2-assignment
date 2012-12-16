@@ -68,9 +68,11 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     private DefaultListModel devModel;
     private JLabel isHappy;
     private JLabel isDrunk;
+    private Developer selectedDeveloper;
     //constructor
 
     public DeveloperTabPanel() {
+        selectedDeveloper = null;
         isHappy = new JLabel("");
         isDrunk = new JLabel("");
         devModel = new DefaultListModel();
@@ -258,7 +260,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     }
 
     public Developer getSelectedDeveloper() {
-        return (Developer) developerList.getSelectedValue();
+        return selectedDeveloper;
     }
 
     public void addHireDevListener(MouseListener l) {
@@ -327,10 +329,6 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             }
             setMainSkill(dev.getMainSkill().toString());
             salaryLbl.setText("Salary: $" + dev.getSalary());
-//            //Table
-//            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-//            table.getColumnModel().getColumn(1).setMaxWidth(100);
-
             while (skillModel.getRowCount() > 0) {
                 skillModel.removeRow(skillModel.getRowCount() - 1);
             }
@@ -338,7 +336,6 @@ public class DeveloperTabPanel extends JPanel implements Observer {
                 Object[] rowData = {skill.getSkillInfo().getName(), skill.getLevel()};
                 skillModel.addRow(rowData);
             }
-//            table.getColumnModel().getColumn(1).setPreferredWidth(27);
             Object[] ids = {"Skill", "Level"};
             skillModel.setColumnIdentifiers(ids);
             table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -355,7 +352,10 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         for (Developer dev : model.getDevelopers()) {
             devModel.addElement(dev);
         }
-        showDeveloper((Developer) developerList.getSelectedValue());
+        if (!model.getDevelopers().contains(selectedDeveloper)) {
+            selectedDeveloper = null;
+        }
+        showDeveloper(selectedDeveloper);
     }
 
     private class MyListEvent implements ListSelectionListener {
@@ -370,7 +370,16 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         public void valueChanged(ListSelectionEvent e) {
             if (selectedIndex != developerList.getSelectedIndex()) {
                 selectedIndex = developerList.getSelectedIndex();
-                showDeveloper((Developer) developerList.getSelectedValue());
+                Developer developer = (Developer) developerList.getSelectedValue();
+                if (developer != null) {
+                    selectedDeveloper = developer;
+                } else {
+                    if (!GameEngine.getInstance().getDevelopers().contains(selectedDeveloper)) {
+                        selectedDeveloper = null;
+                    }
+                }
+                showDeveloper(selectedDeveloper);
+                showDeveloper(selectedDeveloper);
             }
         }
     }
