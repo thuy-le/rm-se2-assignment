@@ -5,7 +5,12 @@
 package devfortress.view.components;
 
 import devfortress.utilities.Colors;
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import javax.swing.BorderFactory;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;

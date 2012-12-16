@@ -4,11 +4,6 @@
  */
 package devfortress.view;
 
-import devfortress.view.components.CustomTable;
-import devfortress.view.components.GlassPanel;
-import devfortress.view.components.CustomListPanel;
-import devfortress.view.components.CustomListRenderer;
-import devfortress.view.components.CustomButton;
 import devfortress.models.Developer;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
@@ -28,7 +23,17 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;

@@ -7,18 +7,34 @@ package devfortress.view;
 import devfortress.models.GameEngine;
 import devfortress.models.Event;
 import devfortress.models.Project;
-import devfortress.view.components.GlassPanel;
 import devfortress.utilities.Colors;
 import devfortress.utilities.EffectLevel;
-import devfortress.view.components.*;
-import java.awt.*;
+import devfortress.view.components.CustomLabel;
+import devfortress.view.components.CustomTable;
+import devfortress.view.components.GlassPanel;
+import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import javax.swing.*;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 /**
  *
@@ -114,7 +130,7 @@ public class EventTabPanel extends JPanel implements Observer {
             ((CustomTable) eventTable).getTableScroll().setVisible(false);
             tableContainer.setVisible(false);
             projectName.setText("");
-            
+
         }
     }
 

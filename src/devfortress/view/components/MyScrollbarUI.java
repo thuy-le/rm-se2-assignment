@@ -5,7 +5,13 @@
 package devfortress.view.components;
 
 import devfortress.utilities.Colors;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -51,6 +57,7 @@ public class MyScrollbarUI extends MetalScrollBarUI {
     }
 
     private static class FauxImage {
+
         static public Image create(int w, int h, Color c) {
             BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2d = bi.createGraphics();

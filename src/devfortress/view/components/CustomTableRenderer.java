@@ -5,12 +5,9 @@
 package devfortress.view.components;
 
 import java.awt.Component;
-import java.awt.Font;
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.text.TableView;
 
 /**
  *
