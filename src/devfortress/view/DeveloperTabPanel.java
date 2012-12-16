@@ -17,6 +17,7 @@ import devfortress.utilities.Colors;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -62,7 +63,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     private JLabel devName, mainSkill, workingPrj, status, salaryLbl;
     private JPanel statusPanel;
     private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev, btnTrain;
-    private GlassPanel rightPanel;
+    private GlassPanel infoPanel;
     private JTable table;
     private DefaultTableModel skillModel;
     private DefaultListModel devModel;
@@ -75,7 +76,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         isDrunk = new JLabel("");
         devModel = new DefaultListModel();
         skillModel = new DefaultTableModel(1, 2);
-        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.LIGHTORANGE, 7, 7);
+        infoPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.LIGHTORANGE, 7, 7);
         developerList = new JList();
         statusPanel = new JPanel();
         btnHire = new CustomButton("Hire");
@@ -84,7 +85,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         devName = new JLabel("Developer Name");
         mainSkill = new JLabel("Main Skill (Level)");
         workingPrj = new JLabel("Working Project");
-        status = new JLabel("Status");
+        status = new JLabel("Status: ");
         btnFireDev = new CustomButton("Fire");
         btnFeedDev = new CustomButton("Feed");
         btnPartyDev = new CustomButton("Drink");
@@ -95,14 +96,18 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     }
 
     private void init() {
-        JPanel top = new JPanel();
-        JPanel topR = new JPanel();
+        JPanel developerInfoPanel = new JPanel();
+        JPanel developerDetailsPanel = new JPanel();
         Icon imgIcon = new ImageIcon(picture);
         JLabel imageIcon = new JLabel(imgIcon);
         Font font = new Font("Century Gothic", Font.BOLD, 17);
-        CustomListPanel cl = new CustomListPanel(developerList, Arrays.asList(new CustomButton[]{btnHire, btnFeed, btnParty}));
-        JPanel bottom = new JPanel();
-        JPanel northPanel = new JPanel();
+        CustomListPanel devsListPanel = new CustomListPanel(developerList, Arrays.asList(new CustomButton[]{btnHire, btnFeed, btnParty}));
+        JPanel buttonPanel = new JPanel();
+        JPanel infoNorthPanel = new JPanel();
+//           JPanel projectDetailsPanel = new JPanel();
+//        JPanel infoCenterSouthPanel = new JPanel();
+//        JPanel infoNorthPanel = new JPanel();
+        GlassPanel infoGroupPanel = new GlassPanel(10, 15, 500, 395, 1f, Colors.DARKORANGE, 7, 7);
         //Data
         {
             developerList.addListSelectionListener(new MyListEvent());
@@ -115,67 +120,65 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             btnHire.setButtonSize(0, 0, 55, 35);
             btnFeed.setButtonSize(0, 0, 55, 35);
             btnParty.setButtonSize(0, 0, 55, 35);
-            cl.setColor(Colors.DARKBLUE);
+            devsListPanel.setColor(Colors.DARKBLUE);
             btnHire.setTextColour(Colors.LIGHTBLUE);
             btnFeed.setTextColour(Colors.LIGHTBLUE);
             btnParty.setTextColour(Colors.LIGHTBLUE);
             developerList.setSelectionBackground(Colors.LIGHTORANGE);
             developerList.setSelectionForeground(Colors.REDORANGEDARK);
             developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-            topR.setBackground(Colors.LIGHTORANGE);
-            topR.setPreferredSize(new Dimension(220, 100));
-            top.setBackground(Colors.LIGHTORANGE);
+            developerDetailsPanel.setBackground(Colors.LIGHTORANGE);
+            developerDetailsPanel.setPreferredSize(new Dimension(220, 100));
+            developerInfoPanel.setBackground(Colors.LIGHTORANGE);
             mainSkill.setFont(font);
             workingPrj.setFont(font);
             status.setFont(font);
-            status.setPreferredSize(new Dimension(100, 30));
             devName.setForeground(Colors.DARKBLUE);
             devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
+            devName.setAlignmentX(Component.CENTER_ALIGNMENT);
             statusPanel.setBackground(Colors.LIGHTORANGE);
+            statusPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             salaryLbl.setFont(font);
-            northPanel.setOpaque(false);
-            bottom.setBackground(Colors.LIGHTORANGE);
-            bottom.setLayout(new FlowLayout());
+            infoNorthPanel.setOpaque(false);
+            buttonPanel.setBackground(Colors.LIGHTORANGE);
+            buttonPanel.setLayout(new FlowLayout());
             btnFireDev.setButtonSize(0, 0, 70, 35);
             btnFeedDev.setButtonSize(0, 0, 70, 35);
             btnPartyDev.setButtonSize(0, 0, 70, 35);
             btnTrain.setButtonSize(0, 0, 70, 35);
+            infoPanel.setBounds(15, 15, 490, 450);
         }
         //Layout
         {
             //Layout Manager
             setLayout(new BorderLayout());
-            statusPanel.setLayout(new GridLayout(1, 3));
-            topR.setLayout(new GridLayout(4, 1));
-            top.setLayout(new GridLayout(1, 2));
-            northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+            developerInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            developerDetailsPanel.setLayout(new BoxLayout(developerDetailsPanel, BoxLayout.Y_AXIS));
+            statusPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
             //AddComponent
-            add(cl, BorderLayout.WEST);
-
+            add(devsListPanel, BorderLayout.WEST);
+            add(infoGroupPanel, BorderLayout.CENTER);
+            infoGroupPanel.add(infoPanel);
+            infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
+            infoPanel.add(((CustomTable) table).getTableScroll(), BorderLayout.CENTER);
+            infoPanel.add(buttonPanel, BorderLayout.SOUTH);
+            infoNorthPanel.add(devName);
+            infoNorthPanel.add(developerInfoPanel);
+            developerInfoPanel.add(imageIcon);
+            developerInfoPanel.add(developerDetailsPanel);
+            developerDetailsPanel.add(salaryLbl);
+            developerDetailsPanel.add(mainSkill);
+            developerDetailsPanel.add(workingPrj);
+            developerDetailsPanel.add(statusPanel);
             statusPanel.add(status);
             statusPanel.add(isHappy);
             statusPanel.add(isDrunk);
-            top.add(imageIcon);
-            topR.add(salaryLbl);
-            topR.add(mainSkill);
-            topR.add(workingPrj);
-            topR.add(statusPanel);
-            top.add(topR);
-            northPanel.add(devName);
-            rightPanel.add(northPanel, BorderLayout.NORTH);
-            northPanel.add(top);
-            add(rightPanel, BorderLayout.CENTER);
+            buttonPanel.add(btnFireDev);
+            buttonPanel.add(btnFeedDev);
+            buttonPanel.add(btnPartyDev);
+            buttonPanel.add(btnTrain);
         }
-
-        //add components
-        bottom.add(btnFireDev);
-        bottom.add(btnFeedDev);
-        bottom.add(btnPartyDev);
-        bottom.add(btnTrain);
-
-        rightPanel.add(((CustomTable) table).getTableScroll(), BorderLayout.CENTER);
-        rightPanel.add(bottom, BorderLayout.SOUTH);
-
     }
 
     //override the paint component method
@@ -283,9 +286,9 @@ public class DeveloperTabPanel extends JPanel implements Observer {
 
     public void showDeveloper(Developer dev) {
         if (dev == null) {
-            rightPanel.setVisible(false);
+            infoPanel.setVisible(false);
         } else {
-            rightPanel.setVisible(true);
+            infoPanel.setVisible(true);
             setDevName(dev.getName());
             String toolTip = dev.getName() + " is currently ";
             if (dev.isHappy()) {
