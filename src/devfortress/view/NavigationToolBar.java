@@ -13,8 +13,10 @@ import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 /**
@@ -23,7 +25,8 @@ import javax.swing.JToolBar;
  */
 public class NavigationToolBar extends JToolBar implements Observer {
 
-    private JLabel exitGame, newGame, aboutGame, saveGame, loadGame, seperator, budget;
+    private JLabel exitGame, newGame, aboutGame, saveGame, loadGame, budget;
+    private JPanel seperator;
 
     public NavigationToolBar() {
         setBorder(BorderFactory.createEmptyBorder());
@@ -37,7 +40,7 @@ public class NavigationToolBar extends JToolBar implements Observer {
         loadGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aboutGame = new CustomLabel(new ImageIcon("images/about.png"), "About Us");
         aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        seperator = new JLabel(new ImageIcon(generateSeperator()));
+        seperator = new JPanel();
         budget = new JLabel("");
         //adjust look and feel
         exitGame.setOpaque(false);
@@ -45,17 +48,20 @@ public class NavigationToolBar extends JToolBar implements Observer {
         saveGame.setOpaque(false);
         loadGame.setOpaque(false);
         aboutGame.setOpaque(false);
-        seperator.setSize(new Dimension(200, 55));
         budget.setForeground(Color.WHITE);
         budget.setFont(new Font("Century Gothic", Font.PLAIN, 22));
         //add components
+        newGame.setBounds(10, 10, newGame.getWidth(), newGame.getHeight());
+
         add(newGame);
         add(saveGame);
         add(loadGame);
         add(aboutGame);
         add(exitGame);
         add(seperator);
-        add(budget);
+        seperator.setOpaque(false);
+        seperator.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        seperator.add(budget);
     }
 
     public void addExitGameListener(MouseListener l) {
