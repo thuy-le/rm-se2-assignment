@@ -8,27 +8,31 @@ import devfortress.view.components.GlassPanel;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
 import devfortress.utilities.Colors;
-import devfortress.view.components.CustomPanelUI;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.plaf.PanelUI;
-import javax.swing.text.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.DocumentFilter;
 import javax.swing.text.DocumentFilter.FilterBypass;
-
+import javax.swing.text.PlainDocument;
 
 /**
  *
  * @author PC
  */
-public class NewGameWelcomePanel{
+public class NewGameWelcomePanel {
 
     private int x, y, width, height, arcH, arcW;
     private float alpha;
@@ -58,8 +62,8 @@ public class NewGameWelcomePanel{
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
-    
-    public JPanel getContainer(){
+
+    public JPanel getContainer() {
         return container;
     }
 
@@ -100,7 +104,7 @@ public class NewGameWelcomePanel{
         container.add(marginTop, BorderLayout.NORTH);
         content.add(submitName);
         container.add(content, BorderLayout.CENTER);
-        
+
     }
 
     public void addSubmitNameListener(MouseListener l) {
@@ -155,6 +159,7 @@ public class NewGameWelcomePanel{
         }
     }
 }
+
 class TextLengthDocFilter extends DocumentFilter {
 
     private int maxTextLength;
@@ -221,4 +226,3 @@ class CustomJTextField extends JTextField {
         super.paintComponent(g);
     }
 }
-

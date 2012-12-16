@@ -4,7 +4,6 @@
  */
 package devfortress.view.components;
 
-import devfortress.models.Developer;
 import devfortress.utilities.Colors;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;

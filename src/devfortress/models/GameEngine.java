@@ -30,8 +30,8 @@ public class GameEngine extends Observable implements Serializable {
     private static final int DEFAULT_BUDGET = 10000;
     private int budget;
     private DevDate date;
-    private List<Developer> developers, marketDevelopers;
-    private List<Project> projects, marketProjects, pastProjects;
+    private List<Developer> developers, developers_ReadOnly, marketDevelopers, marketDevelopers_ReadOnly;
+    private List<Project> projects, projects_ReadOnly, marketProjects, marketProject_ReadOnly, pastProjects, pastProjects_ReadOnly;
     private static GameEngine instance = new GameEngine();
     private String playerName, fileName;
     private int numPCs;
@@ -40,13 +40,20 @@ public class GameEngine extends Observable implements Serializable {
     private GameEngine() {
         this.budget = 10000;
         this.developers = new LinkedList<Developer>();
+        this.developers_ReadOnly = new ReadOnlyList<Developer>(developers);
         this.projects = new LinkedList<Project>();
+        this.projects_ReadOnly = new ReadOnlyList<Project>(projects);
         this.marketProjects = new LinkedList<Project>();
+        this.marketProject_ReadOnly = new ReadOnlyList<Project>(marketProjects);
         this.marketDevelopers = new LinkedList<Developer>();
+        this.marketDevelopers_ReadOnly = new ReadOnlyList<Developer>(marketDevelopers);
+        this.pastProjects = new LinkedList<Project>();
+        this.pastProjects_ReadOnly = new ReadOnlyList<Project>(pastProjects);
         this.date = new DevDate();
         this.playerName = "";
         this.fileName = null;
         this.ended = false;
+
     }
 
     /**
@@ -64,13 +71,13 @@ public class GameEngine extends Observable implements Serializable {
     public void initialize(String playerName) {
         this.playerName = playerName;
         this.budget = DEFAULT_BUDGET;
+        this.developers.clear();
+        this.projects.clear();
+        this.date.reset();
+        this.numPCs = 0;
+        this.ended = false;
         this.generateRandomMarketDevelopers();
         this.generateRandomMarketProjects();
-        developers.clear();
-        projects.clear();
-        date.reset();
-        numPCs = 0;
-        
         setChanged();
     }
 
@@ -112,11 +119,11 @@ public class GameEngine extends Observable implements Serializable {
      * Manage Developers
      */
     public List<Developer> getDevelopers() {
-        return new ReadOnlyList<Developer>(developers);
+        return developers_ReadOnly;
     }
 
     public List<Developer> getMarketDevelopers() {
-        return new ReadOnlyList<Developer>(marketDevelopers);
+        return marketDevelopers_ReadOnly;
     }
 
     /**
@@ -221,27 +228,27 @@ public class GameEngine extends Observable implements Serializable {
             throw new InsufficientBudgetException();
         }
     }
-
     // Manage Projects
+
     /**
      * @return a list of current working projects
      */
     public List<Project> getProjects() {
-        return new ReadOnlyList<Project>(projects);
+        return projects_ReadOnly;
     }
 
     /**
      * @return a list of new projects avalable to accept
      */
     public List<Project> getMarketProjects() {
-        return new ReadOnlyList<Project>(marketProjects);
+        return marketProject_ReadOnly;
     }
 
     /**
      * @return a list of past projects which the player had finished in the game
      */
     public List<Project> getPastProjects() {
-        return new ReadOnlyList<Project>(pastProjects);
+        return pastProjects_ReadOnly;
     }
 
     //TODO: check end game condition
@@ -352,7 +359,7 @@ public class GameEngine extends Observable implements Serializable {
             instance.ended = loadedInstance.ended;
             instance.numPCs = loadedInstance.numPCs;
             instance.pastProjects = loadedInstance.pastProjects;
-            
+
             instance.marketDevelopers = loadedInstance.marketDevelopers;
             instance.marketProjects = loadedInstance.marketProjects;
         } catch (ClassNotFoundException ex) {

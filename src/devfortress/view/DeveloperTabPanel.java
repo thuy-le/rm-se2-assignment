@@ -4,11 +4,6 @@
  */
 package devfortress.view;
 
-import devfortress.view.components.CustomTable;
-import devfortress.view.components.GlassPanel;
-import devfortress.view.components.CustomListPanel;
-import devfortress.view.components.CustomListRenderer;
-import devfortress.view.components.CustomButton;
 import devfortress.models.Developer;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
@@ -28,7 +23,17 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -63,9 +68,11 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     private DefaultListModel devModel;
     private JLabel isHappy;
     private JLabel isDrunk;
+    private Developer selectedDeveloper;
     //constructor
 
     public DeveloperTabPanel() {
+        selectedDeveloper = null;
         isHappy = new JLabel("");
         isDrunk = new JLabel("");
         devModel = new DefaultListModel();
@@ -140,6 +147,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             btnPartyDev.setButtonSize(0, 0, 70, 35);
             btnTrain.setButtonSize(0, 0, 70, 35);
             tablePanel.setBackground(Colors.LIGHTORANGE);
+            tablePanel.setOpaque(false);
             infoPanel.setBounds(15, 10, 490, 410);
             infoPanel.setBackground(Colors.LIGHTORANGE);
         }
@@ -152,16 +160,12 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             developerDetailsPanel.setLayout(new BoxLayout(developerDetailsPanel, BoxLayout.Y_AXIS));
             statusPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
+            infoGroupPanel.setLayout(null);
             //AddComponent
             add(devsListPanel, BorderLayout.WEST);
             add(infoGroupPanel, BorderLayout.CENTER);
             infoGroupPanel.add(infoPanel);
             infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
-            
-            tablePanel.setLayout(new BorderLayout());
-            tablePanel.setOpaque(false);
-            tablePanel.add(((CustomDeveloperTable) table).getTableScroll(), BorderLayout.CENTER);
-            tablePanel.add(buttonPanel, BorderLayout.SOUTH);
             infoPanel.add(tablePanel, BorderLayout.CENTER);
             infoNorthPanel.add(devName);
             infoNorthPanel.add(developerInfoPanel);
@@ -174,6 +178,9 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             statusPanel.add(status);
             statusPanel.add(isHappy);
             statusPanel.add(isDrunk);
+            tablePanel.setLayout(new BorderLayout());
+            tablePanel.add(((CustomDeveloperTable) table).getTableScroll(), BorderLayout.CENTER);
+            tablePanel.add(buttonPanel, BorderLayout.SOUTH);
             buttonPanel.add(btnFireDev);
             buttonPanel.add(btnFeedDev);
             buttonPanel.add(btnPartyDev);
@@ -253,7 +260,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     }
 
     public Developer getSelectedDeveloper() {
-        return (Developer) developerList.getSelectedValue();
+        return selectedDeveloper;
     }
 
     public void addHireDevListener(MouseListener l) {
@@ -322,7 +329,6 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             }
             setMainSkill(dev.getMainSkill().toString());
             salaryLbl.setText("Salary: $" + dev.getSalary());
-
             while (skillModel.getRowCount() > 0) {
                 skillModel.removeRow(skillModel.getRowCount() - 1);
             }
@@ -346,7 +352,10 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         for (Developer dev : model.getDevelopers()) {
             devModel.addElement(dev);
         }
-        showDeveloper((Developer) developerList.getSelectedValue());
+        if (!model.getDevelopers().contains(selectedDeveloper)) {
+            selectedDeveloper = null;
+        }
+        showDeveloper(selectedDeveloper);
     }
 
     private class MyListEvent implements ListSelectionListener {
@@ -361,7 +370,16 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         public void valueChanged(ListSelectionEvent e) {
             if (selectedIndex != developerList.getSelectedIndex()) {
                 selectedIndex = developerList.getSelectedIndex();
-                showDeveloper((Developer) developerList.getSelectedValue());
+                Developer developer = (Developer) developerList.getSelectedValue();
+                if (developer != null) {
+                    selectedDeveloper = developer;
+                } else {
+                    if (!GameEngine.getInstance().getDevelopers().contains(selectedDeveloper)) {
+                        selectedDeveloper = null;
+                    }
+                }
+                showDeveloper(selectedDeveloper);
+                showDeveloper(selectedDeveloper);
             }
         }
     }

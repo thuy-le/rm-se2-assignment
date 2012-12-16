@@ -6,6 +6,7 @@ package devfortress.view;
 
 import devfortress.models.exceptions.InvalidDevDateException;
 import devfortress.models.DevDate;
+import devfortress.models.Developer;
 import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
@@ -21,15 +22,21 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -60,9 +67,11 @@ public class ProjectTabPanel extends JPanel implements Observer {
     private GlassPanel infoPanel;
     private JLabel prjName, deadline, cost, info1, status;
     private JTable table;
+    private Project selectedProject;
     //constructor
 
     public ProjectTabPanel() {
+        selectedProject = null;
         prjModel = new DefaultListModel();
         projTableModel = new DefaultTableModel(0, 2);
         prjList = new JList();
@@ -206,11 +215,14 @@ public class ProjectTabPanel extends JPanel implements Observer {
         for (Project proj : model.getProjects()) {
             prjModel.addElement(proj);
         }
-        showProject((Project) prjList.getSelectedValue());
+        if (!model.getProjects().contains(selectedProject)) {
+            selectedProject = null;
+        }
+        showProject(selectedProject);
     }
 
     public Project getSelectedProject() {
-        return (Project) prjList.getSelectedValue();
+        return selectedProject;
     }
 
     public synchronized void showProject(Project project) {
@@ -257,7 +269,15 @@ public class ProjectTabPanel extends JPanel implements Observer {
         public void valueChanged(ListSelectionEvent e) {
             if (selectedIndex != prjList.getSelectedIndex()) {
                 selectedIndex = prjList.getSelectedIndex();
-                showProject((Project) prjList.getSelectedValue());
+                Project project = (Project) prjList.getSelectedValue();
+                if (project != null) {
+                    selectedProject = project;
+                } else {
+                    if (!GameEngine.getInstance().getProjects().contains(selectedProject)) {
+                        selectedProject = null;
+                    }
+                }
+                showProject(selectedProject);
             }
         }
     }

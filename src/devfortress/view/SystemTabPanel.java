@@ -10,12 +10,30 @@ import devfortress.view.components.GlassPanel;
 import devfortress.utilities.Colors;
 import devfortress.view.components.CustomLabel;
 import devfortress.view.components.Slot;
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import javax.swing.*;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -196,10 +214,6 @@ public class SystemTabPanel extends JPanel implements Observer {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
-    }
-
-    public void setBudget(long budget) {
-        this.budget.setText("$" + budget);
     }
 
     public void setPlayerName(String name) {
