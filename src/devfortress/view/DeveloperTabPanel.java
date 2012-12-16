@@ -23,11 +23,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BoxLayout;
@@ -76,7 +73,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         isDrunk = new JLabel("");
         devModel = new DefaultListModel();
         skillModel = new DefaultTableModel(1, 2);
-        infoPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.GREEN, 7, 7);
+        infoPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.DARKORANGE, 7, 7);
         developerList = new JList();
         statusPanel = new JPanel();
         btnHire = new CustomButton("Hire");
@@ -105,6 +102,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         JPanel buttonPanel = new JPanel();
         JPanel infoNorthPanel = new JPanel();
         GlassPanel infoGroupPanel = new GlassPanel(10, 15, 500, 395, 1f, Colors.DARKORANGE, 7, 7);
+        
         //Data
         {
             developerList.addListSelectionListener(new MyListEvent());
@@ -143,12 +141,14 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             btnFeedDev.setButtonSize(0, 0, 70, 35);
             btnPartyDev.setButtonSize(0, 0, 70, 35);
             btnTrain.setButtonSize(0, 0, 70, 35);
+            
             infoPanel.setBounds(15, 15, 490, 300);
         }
         //Layout
         {
             //Layout Manager
             setLayout(new BorderLayout());
+            infoPanel.setLayout(new BorderLayout());
             developerInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             developerDetailsPanel.setLayout(new BoxLayout(developerDetailsPanel, BoxLayout.Y_AXIS));
             statusPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
