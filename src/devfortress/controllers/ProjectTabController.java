@@ -81,10 +81,14 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            Project project = projectTab.getSelectedProject();
-            AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
-            dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
-            dialog.setVisible(true);
+            if (model.getDevelopers().isEmpty()) {
+                JOptionPane.showMessageDialog(mainFrame, "No developers at the moments");
+            } else {
+                Project project = projectTab.getSelectedProject();
+                AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
+                dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
+                dialog.setVisible(true);
+            }
         }
 
         private class ApplyMouseAdapter extends MouseAdapter {
@@ -118,10 +122,14 @@ public class ProjectTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            Project project = projectTab.getSelectedProject();
-            RemoveDeveloperFromProjectDialog dialog = new RemoveDeveloperFromProjectDialog(model, project);
-            dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
-            dialog.setVisible(true);
+            if (model.getDevelopers().isEmpty()) {
+                JOptionPane.showMessageDialog(mainFrame, "No developers at the moments");
+            } else {
+                Project project = projectTab.getSelectedProject();
+                RemoveDeveloperFromProjectDialog dialog = new RemoveDeveloperFromProjectDialog(model, project);
+                dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
+                dialog.setVisible(true);
+            }
         }
 
         private class ApplyMouseAdapter extends MouseAdapter {
