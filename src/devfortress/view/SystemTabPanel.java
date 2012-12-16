@@ -120,8 +120,8 @@ public class SystemTabPanel extends JPanel implements Observer {
 
         //$$$$$-----Local variable for UI
         Icon imgIcon = new ImageIcon(picture);
-        GlassPanel marginTop = new GlassPanel(0, 0, 250, 15, 0f, null, 0, 0);
-        GlassPanel gp3 = new GlassPanel(15, 15, 250, 390, .9f, Colors.YELLOW, 15, 15);
+        GlassPanel marginTop = new GlassPanel(0, 0, 250, 30, 0f, null, 0, 0);
+        GlassPanel sysInfo = new GlassPanel(15, 15, 250, 390, .9f, Colors.YELLOW, 15, 15);
         JLabel imageIcon = new JLabel(imgIcon);
         imageIcon.setPreferredSize(new Dimension(200, 200));
         JLabel label = new JLabel("  Your budget is:");
@@ -143,20 +143,35 @@ public class SystemTabPanel extends JPanel implements Observer {
          * ########## set border layout to the container ##########
          */
         setLayout(new BorderLayout());
-        gp3.setLayout(new FlowLayout());
+        sysInfo.setLayout(new BorderLayout());
         //-------Add components together
         leftNav.add(upArrow, BorderLayout.NORTH);
         leftNav.add(downArrow, BorderLayout.SOUTH);
         add(leftNav, BorderLayout.WEST);
         add(subContainer, BorderLayout.CENTER);
-        add(gp3, BorderLayout.EAST);
-        gp3.add(marginTop, BorderLayout.NORTH);
-        gp3.add(welcome);
-        gp3.add(imageIcon);
-        gp3.add(label);
-        gp3.add(budget);
-        gp3.add(label2);
-        gp3.add(salary);
+        add(sysInfo, BorderLayout.EAST);
+        sysInfo.add(marginTop, BorderLayout.NORTH);
+        JPanel gpCenter = new JPanel();
+        gpCenter.setOpaque(false);
+        gpCenter.setLayout(new BoxLayout(gpCenter, BoxLayout.Y_AXIS));
+        sysInfo.add(gpCenter, BorderLayout.CENTER);
+        JPanel welCmPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        welCmPnl.add(welcome);
+        welCmPnl.setOpaque(false);
+        welCmPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imageIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gpCenter.add(welCmPnl);
+        gpCenter.add(imageIcon);
+        JPanel bPnl = new JPanel();
+        bPnl.setOpaque(false);
+        bPnl.add(label);
+        bPnl.add(budget);
+        gpCenter.add(bPnl);
+        JPanel sPnl = new JPanel();
+        sPnl.setOpaque(false);
+        gpCenter.add(sPnl);
+        sPnl.add(label2);
+        sPnl.add(salary);
 
         //
         setUpArrowListener();
