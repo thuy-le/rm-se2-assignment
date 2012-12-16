@@ -76,7 +76,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         isDrunk = new JLabel("");
         devModel = new DefaultListModel();
         skillModel = new DefaultTableModel(1, 2);
-        infoPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.LIGHTORANGE, 7, 7);
+        infoPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.GREEN, 7, 7);
         developerList = new JList();
         statusPanel = new JPanel();
         btnHire = new CustomButton("Hire");
@@ -104,9 +104,6 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         CustomListPanel devsListPanel = new CustomListPanel(developerList, Arrays.asList(new CustomButton[]{btnHire, btnFeed, btnParty}));
         JPanel buttonPanel = new JPanel();
         JPanel infoNorthPanel = new JPanel();
-//           JPanel projectDetailsPanel = new JPanel();
-//        JPanel infoCenterSouthPanel = new JPanel();
-//        JPanel infoNorthPanel = new JPanel();
         GlassPanel infoGroupPanel = new GlassPanel(10, 15, 500, 395, 1f, Colors.DARKORANGE, 7, 7);
         //Data
         {
@@ -146,7 +143,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             btnFeedDev.setButtonSize(0, 0, 70, 35);
             btnPartyDev.setButtonSize(0, 0, 70, 35);
             btnTrain.setButtonSize(0, 0, 70, 35);
-            infoPanel.setBounds(15, 15, 490, 450);
+            infoPanel.setBounds(15, 15, 490, 300);
         }
         //Layout
         {
@@ -161,8 +158,12 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             add(infoGroupPanel, BorderLayout.CENTER);
             infoGroupPanel.add(infoPanel);
             infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
-            infoPanel.add(((CustomTable) table).getTableScroll(), BorderLayout.CENTER);
-            infoPanel.add(buttonPanel, BorderLayout.SOUTH);
+            JPanel tablePanel = new JPanel();
+            tablePanel.setLayout(new BorderLayout());
+            tablePanel.setOpaque(false);
+            tablePanel.add(((CustomTable) table).getTableScroll(), BorderLayout.CENTER);
+            tablePanel.add(buttonPanel, BorderLayout.SOUTH);
+            infoPanel.add(tablePanel, BorderLayout.CENTER);
             infoNorthPanel.add(devName);
             infoNorthPanel.add(developerInfoPanel);
             developerInfoPanel.add(imageIcon);
