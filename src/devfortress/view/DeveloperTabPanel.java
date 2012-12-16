@@ -63,7 +63,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     public CustomButton btnFeed, btnParty;
     private CustomButton btnHire, btnFireDev, btnFeedDev, btnPartyDev, btnTrain;
     private GlassPanel infoPanel;
-    private JTable table;
+    private CustomDeveloperTable table;
     private DefaultTableModel skillModel;
     private DefaultListModel devModel;
     private JLabel isHappy;
@@ -382,38 +382,5 @@ public class DeveloperTabPanel extends JPanel implements Observer {
                 showDeveloper(selectedDeveloper);
             }
         }
-    }
-
-    class CustomDeveloperTable extends JTable {
-
-        private JScrollPane tableScroll;
-
-        public CustomDeveloperTable(TableModel dm, Color contentColor) {
-            super(dm);
-            setFont(new Font("Century Gothic", Font.PLAIN, 15));
-            setBorder(BorderFactory.createLineBorder(Colors.REDORANGE, 1));
-            setRowHeight(25);
-            JTableHeader header = getTableHeader();
-            header.setBorder(BorderFactory.createLineBorder(Colors.REDORANGE, 1));
-            header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-            header.setBackground(Colors.REDORANGE);
-            header.setForeground(Color.WHITE);
-            tableScroll = new JScrollPane(this);
-            JScrollBar sb = tableScroll.getVerticalScrollBar();
-            sb.setUI(new MyScrollbarUI());
-            tableScroll.setBorder(BorderFactory.createEmptyBorder());
-            tableScroll.setPreferredSize(new Dimension(440, 180));
-            tableScroll.setBackground(Colors.REDORANGE);
-            tableScroll.getViewport().setBackground(contentColor);
-        }
-
-        public JScrollPane getTableScroll() {
-            return tableScroll;
-        }
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    }
+    }   
 }
