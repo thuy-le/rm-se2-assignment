@@ -140,6 +140,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             btnPartyDev.setButtonSize(0, 0, 70, 35);
             btnTrain.setButtonSize(0, 0, 70, 35);
             tablePanel.setBackground(Colors.LIGHTORANGE);
+            tablePanel.setOpaque(false);
             infoPanel.setBounds(15, 10, 490, 410);
             infoPanel.setBackground(Colors.LIGHTORANGE);
         }
@@ -152,16 +153,12 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             developerDetailsPanel.setLayout(new BoxLayout(developerDetailsPanel, BoxLayout.Y_AXIS));
             statusPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
+            infoGroupPanel.setLayout(null);
             //AddComponent
             add(devsListPanel, BorderLayout.WEST);
             add(infoGroupPanel, BorderLayout.CENTER);
             infoGroupPanel.add(infoPanel);
             infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
-            
-            tablePanel.setLayout(new BorderLayout());
-            tablePanel.setOpaque(false);
-            tablePanel.add(((CustomDeveloperTable) table).getTableScroll(), BorderLayout.CENTER);
-            tablePanel.add(buttonPanel, BorderLayout.SOUTH);
             infoPanel.add(tablePanel, BorderLayout.CENTER);
             infoNorthPanel.add(devName);
             infoNorthPanel.add(developerInfoPanel);
@@ -174,6 +171,9 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             statusPanel.add(status);
             statusPanel.add(isHappy);
             statusPanel.add(isDrunk);
+            tablePanel.setLayout(new BorderLayout());
+            tablePanel.add(((CustomDeveloperTable) table).getTableScroll(), BorderLayout.CENTER);
+            tablePanel.add(buttonPanel, BorderLayout.SOUTH);
             buttonPanel.add(btnFireDev);
             buttonPanel.add(btnFeedDev);
             buttonPanel.add(btnPartyDev);
