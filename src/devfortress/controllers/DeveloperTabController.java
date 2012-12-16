@@ -57,6 +57,9 @@ public class DeveloperTabController {
         hireDevPnl.addHireDeveloperEvent(new HireDeveloperListener());
         //train developer
         developerTab.addTrainDeveloperListener(new TrainSkillListener());
+        //Default disable the button in the developer tab
+        developerTab.btnFeed.disableButton();
+        developerTab.btnParty.disableButton();
     }
 
     private class FeedAllMouseListener extends MouseAdapter {
@@ -65,7 +68,6 @@ public class DeveloperTabController {
         public void mouseClicked(MouseEvent e) {
             List<Developer> devs = model.getDevelopers();
             if (devs.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No developers at the momment");
             } else {
                 try {
                     for (Developer dev : devs) {
@@ -93,8 +95,10 @@ public class DeveloperTabController {
                 model.notifyObservers();
                 if (model.getNumPCs() > numPCs) {
                     JOptionPane.showMessageDialog(null, dev.getName() + " is hired\n1 PC more is purchased");
+                    developerTab.btnFeed.enableButton();
+                    developerTab.btnParty.enableButton();
                 } else {
-                    JOptionPane.showMessageDialog(null, dev.getName() + " is hired");
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is hired");                    
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "You need to choose 1 developer to hire");
@@ -225,14 +229,19 @@ public class DeveloperTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             Developer dev = developerTab.getSelectedDeveloper();
+            List<Developer> devs = model.getDevelopers();
             if (dev != null) {
                 try {
                     model.fireDeveloper(dev);
                     JOptionPane.showMessageDialog(null, dev.getName() + " is fired");
                     model.notifyObservers();
+                    if (devs.isEmpty()) {
+                        developerTab.btnFeed.disableButton();
+                        developerTab.btnParty.disableButton();
+                    }
                 } catch (DeveloperBusyException ex) {
                     JOptionPane.showMessageDialog(null, dev.getName() + ex.getMessage());
-                }              
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You have to select a developer");
             }

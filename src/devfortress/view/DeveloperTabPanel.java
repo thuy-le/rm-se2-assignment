@@ -14,6 +14,7 @@ import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.models.Skill;
 import devfortress.utilities.Colors;
+import devfortress.view.components.*;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,17 +28,12 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -59,7 +55,8 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     private JList developerList;
     private JLabel devName, mainSkill, workingPrj, status, salaryLbl;
     private JPanel statusPanel;
-    private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev, btnTrain;
+    public CustomButton btnFeed, btnParty;
+    private CustomButton btnHire, btnFireDev, btnFeedDev, btnPartyDev, btnTrain;
     private GlassPanel infoPanel;
     private JTable table;
     private DefaultTableModel skillModel;
@@ -87,7 +84,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         btnFeedDev = new CustomButton("Feed");
         btnPartyDev = new CustomButton("Drink");
         btnTrain = new CustomButton("Train");
-        table = new CustomTable(skillModel);
+        table = new CustomDeveloperTable(skillModel, Colors.LIGHTORANGE);
         salaryLbl = new JLabel("Salary: ");
         init();
     }
@@ -101,8 +98,9 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         CustomListPanel devsListPanel = new CustomListPanel(developerList, Arrays.asList(new CustomButton[]{btnHire, btnFeed, btnParty}));
         JPanel buttonPanel = new JPanel();
         JPanel infoNorthPanel = new JPanel();
+        JPanel tablePanel = new JPanel();
         GlassPanel infoGroupPanel = new GlassPanel(10, 10, 500, 400, 1f, Colors.LIGHTORANGE, 7, 7);
-        
+
         //Data
         {
             developerList.addListSelectionListener(new MyListEvent());
@@ -141,8 +139,9 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             btnFeedDev.setButtonSize(0, 0, 70, 35);
             btnPartyDev.setButtonSize(0, 0, 70, 35);
             btnTrain.setButtonSize(0, 0, 70, 35);
-            
+            tablePanel.setBackground(Colors.LIGHTORANGE);
             infoPanel.setBounds(15, 10, 490, 410);
+            infoPanel.setBackground(Colors.LIGHTORANGE);
         }
         //Layout
         {
@@ -158,10 +157,10 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             add(infoGroupPanel, BorderLayout.CENTER);
             infoGroupPanel.add(infoPanel);
             infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
-            JPanel tablePanel = new JPanel();
+            
             tablePanel.setLayout(new BorderLayout());
             tablePanel.setOpaque(false);
-            tablePanel.add(((CustomTable) table).getTableScroll(), BorderLayout.CENTER);
+            tablePanel.add(((CustomDeveloperTable) table).getTableScroll(), BorderLayout.CENTER);
             tablePanel.add(buttonPanel, BorderLayout.SOUTH);
             infoPanel.add(tablePanel, BorderLayout.CENTER);
             infoNorthPanel.add(devName);
@@ -323,10 +322,10 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             }
             setMainSkill(dev.getMainSkill().toString());
             salaryLbl.setText("Salary: $" + dev.getSalary());
-            //Table
-            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            table.getColumnModel().getColumn(0).setMinWidth(400);
-            table.getColumnModel().getColumn(1).setMaxWidth(20);
+//            //Table
+//            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+//            table.getColumnModel().getColumn(1).setMaxWidth(100);
+
             while (skillModel.getRowCount() > 0) {
                 skillModel.removeRow(skillModel.getRowCount() - 1);
             }
@@ -338,7 +337,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             Object[] ids = {"Skill", "Level"};
             skillModel.setColumnIdentifiers(ids);
             table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            table.getColumnModel().getColumn(1).setMaxWidth(50);
+            table.getColumnModel().getColumn(1).setMaxWidth(100);
 
         }
         developerList.setSelectedValue(dev, true);
@@ -368,6 +367,39 @@ public class DeveloperTabPanel extends JPanel implements Observer {
                 selectedIndex = developerList.getSelectedIndex();
                 showDeveloper((Developer) developerList.getSelectedValue());
             }
+        }
+    }
+
+    class CustomDeveloperTable extends JTable {
+
+        private JScrollPane tableScroll;
+
+        public CustomDeveloperTable(TableModel dm, Color contentColor) {
+            super(dm);
+            setFont(new Font("Century Gothic", Font.PLAIN, 15));
+            setBorder(BorderFactory.createLineBorder(Colors.REDORANGE, 1));
+            setRowHeight(25);
+            JTableHeader header = getTableHeader();
+            header.setBorder(BorderFactory.createLineBorder(Colors.REDORANGE, 1));
+            header.setFont(new Font("Century Gothic", Font.BOLD, 18));
+            header.setBackground(Colors.REDORANGE);
+            header.setForeground(Color.WHITE);
+            tableScroll = new JScrollPane(this);
+            JScrollBar sb = tableScroll.getVerticalScrollBar();
+            sb.setUI(new MyScrollbarUI());
+            tableScroll.setBorder(BorderFactory.createEmptyBorder());
+            tableScroll.setPreferredSize(new Dimension(440, 180));
+            tableScroll.setBackground(Colors.REDORANGE);
+            tableScroll.getViewport().setBackground(contentColor);
+        }
+
+        public JScrollPane getTableScroll() {
+            return tableScroll;
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
         }
     }
 }
