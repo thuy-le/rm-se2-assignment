@@ -36,6 +36,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
+
 /**
  *
  * @author PC
@@ -262,35 +263,3 @@ public class ProjectTabPanel extends JPanel implements Observer {
     }
 }
 
-class CustomProjectTable extends JTable {
-
-    private JScrollPane tableScroll;
-
-    public CustomProjectTable(TableModel dm, Color contentColor) {
-        super(dm);
-        setFont(new Font("Century Gothic", Font.PLAIN, 15));
-        setBorder(BorderFactory.createLineBorder(Colors.GREEN, 1));
-        setRowHeight(25);
-        JTableHeader header = getTableHeader();
-        header.setBorder(BorderFactory.createLineBorder(Colors.DARKGREEN, 1));
-        header.setFont(new Font("Century Gothic", Font.BOLD, 18));
-        header.setBackground(Colors.DARKGREEN);
-        header.setForeground(Color.WHITE);
-        tableScroll = new JScrollPane(this);
-        JScrollBar sb = tableScroll.getVerticalScrollBar();
-        sb.setUI(new MyScrollbarUI());
-        tableScroll.setBorder(BorderFactory.createEmptyBorder());
-        tableScroll.setPreferredSize(new Dimension(440, 180));
-        tableScroll.setBackground(Colors.DARKGREEN);
-        tableScroll.getViewport().setBackground(contentColor);
-    }
-
-    public JScrollPane getTableScroll() {
-        return tableScroll;
-    }
-
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return false;
-    }
-}

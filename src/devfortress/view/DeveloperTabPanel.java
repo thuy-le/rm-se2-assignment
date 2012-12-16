@@ -322,9 +322,6 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             }
             setMainSkill(dev.getMainSkill().toString());
             salaryLbl.setText("Salary: $" + dev.getSalary());
-//            //Table
-//            table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-//            table.getColumnModel().getColumn(1).setMaxWidth(100);
 
             while (skillModel.getRowCount() > 0) {
                 skillModel.removeRow(skillModel.getRowCount() - 1);
@@ -333,7 +330,6 @@ public class DeveloperTabPanel extends JPanel implements Observer {
                 Object[] rowData = {skill.getSkillInfo().getName(), skill.getLevel()};
                 skillModel.addRow(rowData);
             }
-//            table.getColumnModel().getColumn(1).setPreferredWidth(27);
             Object[] ids = {"Skill", "Level"};
             skillModel.setColumnIdentifiers(ids);
             table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
