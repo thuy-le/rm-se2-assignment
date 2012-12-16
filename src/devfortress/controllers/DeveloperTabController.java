@@ -56,10 +56,7 @@ public class DeveloperTabController {
         //hre dev
         hireDevPnl.addHireDeveloperEvent(new HireDeveloperListener());
         //train developer
-        developerTab.addTrainDeveloperListener(new TrainSkillListener());
-        //Default disable the button in the developer tab
-        developerTab.btnFeed.disableButton();
-        developerTab.btnParty.disableButton();
+        developerTab.addTrainDeveloperListener(new TrainSkillListener());        
     }
 
     private class FeedAllMouseListener extends MouseAdapter {

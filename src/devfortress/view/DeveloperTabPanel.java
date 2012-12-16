@@ -124,6 +124,8 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             btnHire.setTextColour(Colors.LIGHTBLUE);
             btnFeed.setTextColour(Colors.LIGHTBLUE);
             btnParty.setTextColour(Colors.LIGHTBLUE);
+            btnFeed.disableButton();
+            btnParty.disableButton();
             developerList.setSelectionBackground(Colors.LIGHTORANGE);
             developerList.setSelectionForeground(Colors.REDORANGEDARK);
             developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
