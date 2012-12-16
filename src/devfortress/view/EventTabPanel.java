@@ -108,6 +108,13 @@ public class EventTabPanel extends JPanel implements Observer {
                 tableContainer.setVisible(false);
                 repaint();
             }
+        } else {
+            leftArrow.setVisible(false);
+            rightArrow.setVisible(false);
+            ((CustomTable) eventTable).getTableScroll().setVisible(false);
+            tableContainer.setVisible(false);
+            projectName.setText("");
+            
         }
     }
 
