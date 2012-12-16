@@ -77,6 +77,7 @@ public class RemoveDeveloperFromProjectDialog extends JDialog implements ActionL
         setSize(800, 540);
         setResizable(false);
         setLocationRelativeTo(null);
+        
         cmbModel = new DefaultComboBoxModel();
         for (FunctionalArea area : areas) {
             cmbModel.addElement(area);
@@ -89,12 +90,14 @@ public class RemoveDeveloperFromProjectDialog extends JDialog implements ActionL
         production = new JLabel("Production: ");
         JPanel assignedArea = new JPanel();
         assignedArea.setLayout(new BoxLayout(assignedArea, BoxLayout.X_AXIS));
+        assignedArea.setBackground(Colors.LIGHTORANGE);
         JLabel assignLbl = new JLabel("Assign: ");
         assignLbl.setFont(font);
         assignedArea.add(assignLbl);
         JComboBox pAreasCmB = new JComboBox(cmbModel);
         pAreasCmB.setEditable(false);
         pAreasCmB.addActionListener(this);
+        pAreasCmB.setBackground(Colors.LIGHTORANGE);
         assignedArea.add(pAreasCmB);
         skillTable = new CustomTable(skillTblModel);
         JPanel panel = new JPanel(new BorderLayout());

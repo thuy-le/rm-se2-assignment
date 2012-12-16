@@ -153,6 +153,8 @@ public class AddProjectPanel extends JPanel implements Observer {
             setLayout(new BorderLayout());
             infoPanel.setLayout(new BorderLayout());
             projectInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            projectInfoPanel.add(imageIcon);
+            projectInfoPanel.add(projectDetailsPanel);
             projectDetailsPanel.setLayout(new BoxLayout(projectDetailsPanel, BoxLayout.Y_AXIS));
             infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
             infoGroupPanel.setLayout(null);
@@ -164,11 +166,10 @@ public class AddProjectPanel extends JPanel implements Observer {
             northPanel.add(titlePanel);
             infoGroupPanel.add(infoPanel);
             infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
+            infoPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
             infoNorthPanel.add(projectNameLbl);
             infoNorthPanel.add(projectInfoPanel);
-            infoPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
-            projectInfoPanel.add(imageIcon);
-            projectInfoPanel.add(projectDetailsPanel);
+            
             projectDetailsPanel.add(projectLevelLbl);
             projectDetailsPanel.add(mainSkillLbl);
             projectDetailsPanel.add(budgetLbl);

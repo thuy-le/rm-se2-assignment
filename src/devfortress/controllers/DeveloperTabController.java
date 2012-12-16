@@ -232,7 +232,7 @@ public class DeveloperTabController {
                     model.notifyObservers();
                 } catch (DeveloperBusyException ex) {
                     JOptionPane.showMessageDialog(null, dev.getName() + ex.getMessage());
-                }
+                }              
             } else {
                 JOptionPane.showMessageDialog(null, "You have to select a developer");
             }

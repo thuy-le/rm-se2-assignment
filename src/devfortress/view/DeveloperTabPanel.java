@@ -17,6 +17,7 @@ import devfortress.utilities.Colors;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -24,6 +25,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -61,7 +63,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     private JLabel devName, mainSkill, workingPrj, status, salaryLbl;
     private JPanel statusPanel;
     private CustomButton btnHire, btnFeed, btnParty, btnFireDev, btnFeedDev, btnPartyDev, btnTrain;
-    private GlassPanel rightPanel;
+    private GlassPanel infoPanel;
     private JTable table;
     private DefaultTableModel skillModel;
     private DefaultListModel devModel;
@@ -70,113 +72,114 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     //constructor
 
     public DeveloperTabPanel() {
-        setOpaque(false);
-        init();
-    }
-
-    private void init() {
         isHappy = new JLabel("");
         isDrunk = new JLabel("");
         devModel = new DefaultListModel();
         skillModel = new DefaultTableModel(1, 2);
-        rightPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.LIGHTORANGE, 7, 7);
-        //------Create a JList of developers
+        infoPanel = new GlassPanel(25, 25, 480, 380, 1f, Colors.GREEN, 7, 7);
         developerList = new JList();
-        developerList.addListSelectionListener(new MyListEvent());
-        developerList.setCellRenderer(new CustomListRenderer());
-        developerList.setModel(devModel);
-        //buttons
-        statusPanel = new JPanel(new GridLayout(1, 3));
-        List<CustomButton> btnList = new LinkedList<CustomButton>();
+        statusPanel = new JPanel();
         btnHire = new CustomButton("Hire");
         btnFeed = new CustomButton("Feed");
         btnParty = new CustomButton("Party");
-        JPanel top = new JPanel();
-        JPanel topR = new JPanel();
         devName = new JLabel("Developer Name");
         mainSkill = new JLabel("Main Skill (Level)");
         workingPrj = new JLabel("Working Project");
-        status = new JLabel("Status");
-        Icon imgIcon = new ImageIcon(picture);
-        JLabel imageIcon = new JLabel(imgIcon);
-        Font font = new Font("Century Gothic", Font.BOLD, 17);
-        setLayout(new BorderLayout());
-        btnList.add(btnHire);
-        btnList.add(btnFeed);
-        btnList.add(btnParty);
-        //add button(s) and list together
-        CustomListPanel cl = new CustomListPanel(developerList, btnList);
-        //-------Adjust look and feel
-        btnHire.setButtonSize(0, 0, 55, 35);
-        btnFeed.setButtonSize(0, 0, 55, 35);
-        btnParty.setButtonSize(0, 0, 55, 35);
-        cl.setColor(Colors.DARKBLUE);
-        btnHire.setTextColour(Colors.LIGHTBLUE);
-        btnFeed.setTextColour(Colors.LIGHTBLUE);
-        btnParty.setTextColour(Colors.LIGHTBLUE);
-        developerList.setSelectionBackground(Colors.LIGHTORANGE);
-        developerList.setSelectionForeground(Colors.REDORANGEDARK);
-        developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-        JPanel bottom = new JPanel();
+        status = new JLabel("Status: ");
         btnFireDev = new CustomButton("Fire");
         btnFeedDev = new CustomButton("Feed");
         btnPartyDev = new CustomButton("Drink");
         btnTrain = new CustomButton("Train");
         table = new CustomTable(skillModel);
-        //-------Add component
-        add(cl, BorderLayout.WEST);
-
-        //------Right Hand Side:
-        //adjust look and feel
-        topR.setBackground(Colors.LIGHTORANGE);
-        topR.setPreferredSize(new Dimension(220, 100));
-        topR.setLayout(new GridLayout(4, 1));
-        top.setBackground(Colors.LIGHTORANGE);
-        top.setLayout(new GridLayout(1, 2));
-//        devName.setFont(font);
-        mainSkill.setFont(font);
-        workingPrj.setFont(font);
-        status.setFont(font);
-        status.setPreferredSize(new Dimension(100, 30));
-        devName.setForeground(Colors.DARKBLUE);
-        devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
-        statusPanel.setBackground(Colors.LIGHTORANGE);
-        //add components
-        statusPanel.add(status);
-        statusPanel.add(isHappy);
-        statusPanel.add(isDrunk);
-        top.add(imageIcon);
         salaryLbl = new JLabel("Salary: ");
-        salaryLbl.setFont(font);
-        topR.add(salaryLbl);
-        topR.add(mainSkill);
-        topR.add(workingPrj);
-        topR.add(statusPanel);
-        top.add(topR);
-        JPanel northPanel = new JPanel();
-        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
-        northPanel.setOpaque(false);
-        northPanel.add(devName);
-        rightPanel.add(northPanel, BorderLayout.NORTH);
-        northPanel.add(top);
-        add(rightPanel, BorderLayout.CENTER);
-        //---Bottom:
-        //adjust look and feel:
-        bottom.setBackground(Colors.LIGHTORANGE);
-        bottom.setLayout(new FlowLayout());
-        btnFireDev.setButtonSize(0, 0, 70, 35);
-        btnFeedDev.setButtonSize(0, 0, 70, 35);
-        btnPartyDev.setButtonSize(0, 0, 70, 35);
-        btnTrain.setButtonSize(0, 0, 70, 35);
-        //add components
-        bottom.add(btnFireDev);
-        bottom.add(btnFeedDev);
-        bottom.add(btnPartyDev);
-        bottom.add(btnTrain);
+        init();
+    }
 
-        rightPanel.add(((CustomTable) table).getTableScroll(), BorderLayout.CENTER);
-        rightPanel.add(bottom, BorderLayout.SOUTH);
-
+    private void init() {
+        JPanel developerInfoPanel = new JPanel();
+        JPanel developerDetailsPanel = new JPanel();
+        Icon imgIcon = new ImageIcon(picture);
+        JLabel imageIcon = new JLabel(imgIcon);
+        Font font = new Font("Century Gothic", Font.BOLD, 17);
+        CustomListPanel devsListPanel = new CustomListPanel(developerList, Arrays.asList(new CustomButton[]{btnHire, btnFeed, btnParty}));
+        JPanel buttonPanel = new JPanel();
+        JPanel infoNorthPanel = new JPanel();
+        GlassPanel infoGroupPanel = new GlassPanel(10, 15, 500, 395, 1f, Colors.DARKORANGE, 7, 7);
+        //Data
+        {
+            developerList.addListSelectionListener(new MyListEvent());
+            developerList.setCellRenderer(new CustomListRenderer());
+            developerList.setModel(devModel);
+        }
+        // Style
+        {
+            setOpaque(false);
+            btnHire.setButtonSize(0, 0, 55, 35);
+            btnFeed.setButtonSize(0, 0, 55, 35);
+            btnParty.setButtonSize(0, 0, 55, 35);
+            devsListPanel.setColor(Colors.DARKBLUE);
+            btnHire.setTextColour(Colors.LIGHTBLUE);
+            btnFeed.setTextColour(Colors.LIGHTBLUE);
+            btnParty.setTextColour(Colors.LIGHTBLUE);
+            developerList.setSelectionBackground(Colors.LIGHTORANGE);
+            developerList.setSelectionForeground(Colors.REDORANGEDARK);
+            developerList.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+            developerDetailsPanel.setBackground(Colors.LIGHTORANGE);
+            developerDetailsPanel.setPreferredSize(new Dimension(220, 100));
+            developerInfoPanel.setBackground(Colors.LIGHTORANGE);
+            mainSkill.setFont(font);
+            workingPrj.setFont(font);
+            status.setFont(font);
+            devName.setForeground(Colors.DARKBLUE);
+            devName.setFont(new Font("Century Gothic", Font.BOLD, 22));
+            devName.setAlignmentX(Component.CENTER_ALIGNMENT);
+            statusPanel.setBackground(Colors.LIGHTORANGE);
+            statusPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            salaryLbl.setFont(font);
+            infoNorthPanel.setOpaque(false);
+            buttonPanel.setBackground(Colors.LIGHTORANGE);
+            buttonPanel.setLayout(new FlowLayout());
+            btnFireDev.setButtonSize(0, 0, 70, 35);
+            btnFeedDev.setButtonSize(0, 0, 70, 35);
+            btnPartyDev.setButtonSize(0, 0, 70, 35);
+            btnTrain.setButtonSize(0, 0, 70, 35);
+            infoPanel.setBounds(15, 15, 490, 300);
+        }
+        //Layout
+        {
+            //Layout Manager
+            setLayout(new BorderLayout());
+            developerInfoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            developerDetailsPanel.setLayout(new BoxLayout(developerDetailsPanel, BoxLayout.Y_AXIS));
+            statusPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            infoNorthPanel.setLayout(new BoxLayout(infoNorthPanel, BoxLayout.Y_AXIS));
+            //AddComponent
+            add(devsListPanel, BorderLayout.WEST);
+            add(infoGroupPanel, BorderLayout.CENTER);
+            infoGroupPanel.add(infoPanel);
+            infoPanel.add(infoNorthPanel, BorderLayout.NORTH);
+            JPanel tablePanel = new JPanel();
+            tablePanel.setLayout(new BorderLayout());
+            tablePanel.setOpaque(false);
+            tablePanel.add(((CustomTable) table).getTableScroll(), BorderLayout.CENTER);
+            tablePanel.add(buttonPanel, BorderLayout.SOUTH);
+            infoPanel.add(tablePanel, BorderLayout.CENTER);
+            infoNorthPanel.add(devName);
+            infoNorthPanel.add(developerInfoPanel);
+            developerInfoPanel.add(imageIcon);
+            developerInfoPanel.add(developerDetailsPanel);
+            developerDetailsPanel.add(salaryLbl);
+            developerDetailsPanel.add(mainSkill);
+            developerDetailsPanel.add(workingPrj);
+            developerDetailsPanel.add(statusPanel);
+            statusPanel.add(status);
+            statusPanel.add(isHappy);
+            statusPanel.add(isDrunk);
+            buttonPanel.add(btnFireDev);
+            buttonPanel.add(btnFeedDev);
+            buttonPanel.add(btnPartyDev);
+            buttonPanel.add(btnTrain);
+        }
     }
 
     //override the paint component method
@@ -214,7 +217,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
     }
 
     public void setMainSkill(String mainSkill) {
-        this.mainSkill.setText("Main Skill: "+mainSkill);
+        this.mainSkill.setText("Main Skill: " + mainSkill);
         this.mainSkill.repaint();
     }
 
@@ -284,15 +287,15 @@ public class DeveloperTabPanel extends JPanel implements Observer {
 
     public void showDeveloper(Developer dev) {
         if (dev == null) {
-            rightPanel.setVisible(false);
+            infoPanel.setVisible(false);
         } else {
-            rightPanel.setVisible(true);
+            infoPanel.setVisible(true);
             setDevName(dev.getName());
             String toolTip = dev.getName() + " is currently ";
             if (dev.isHappy()) {
                 isHappy.setIcon(new ImageIcon("images/happy.png"));
 //                isHappy.repaint();
-                toolTip += "happy"; 
+                toolTip += "happy";
             } else {
                 isHappy.setIcon(new ImageIcon("images/unhappy.png"));
 //                isHappy.repaint();
@@ -300,7 +303,7 @@ public class DeveloperTabPanel extends JPanel implements Observer {
             }
             if (dev.isFed()) {
                 isDrunk.setIcon(new ImageIcon("images/drunk.png"));
-                toolTip += ""; 
+                toolTip += "";
             } else {
                 isDrunk.setIcon(new ImageIcon("images/notDrunk.png"));
                 toolTip += " and hungry";
@@ -311,10 +314,10 @@ public class DeveloperTabPanel extends JPanel implements Observer {
                 toolTip += ".";
             }
             statusPanel.setToolTipText(toolTip);
-            
+
             Project p = dev.getWorkingProject();
             if (p != null) {
-                setWorkingPrj("Working on: "+p.getName());
+                setWorkingPrj("Working on: " + p.getName());
             } else {
                 setWorkingPrj("Not working");
             }
