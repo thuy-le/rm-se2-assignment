@@ -6,7 +6,7 @@ Course ID: ISYS2102
 
 Team Members
 =======================
-To Bao Thien Quan <br/>
+To Bao Thien Quan - <br/>
 Tang Vinh Thanh - s3245715 <br/>
-Le Huynh Ngoc Thuy <br/>
-Pham Ngoc Thach <br/.
+Le Huynh Ngoc Thuy - <br/>
+Pham Ngoc Thach - <br/>
