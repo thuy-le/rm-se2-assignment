@@ -35,25 +35,24 @@ public class GameEngine extends Observable implements Serializable {
     private List<Developer> developers, developers_ReadOnly, marketDevelopers, marketDevelopers_ReadOnly;
     private List<Project> projects, projects_ReadOnly, marketProjects, marketProject_ReadOnly, pastProjects, pastProjects_ReadOnly;
     private static GameEngine instance = new GameEngine();
-    private String playerName, fileName;
+    private String playerName;
     private int numPCs;
     private boolean ended;
 
     private GameEngine() {
         this.budget = 10000;
         this.developers = new LinkedList<Developer>();
-        this.developers_ReadOnly = new ReadOnlyList<Developer>(developers);
         this.projects = new LinkedList<Project>();
-        this.projects_ReadOnly = new ReadOnlyList<Project>(projects);
         this.marketProjects = new LinkedList<Project>();
-        this.marketProject_ReadOnly = new ReadOnlyList<Project>(marketProjects);
         this.marketDevelopers = new LinkedList<Developer>();
-        this.marketDevelopers_ReadOnly = new ReadOnlyList<Developer>(marketDevelopers);
         this.pastProjects = new LinkedList<Project>();
+        this.developers_ReadOnly = new ReadOnlyList<Developer>(developers);
+        this.projects_ReadOnly = new ReadOnlyList<Project>(projects);
+        this.marketProject_ReadOnly = new ReadOnlyList<Project>(marketProjects);
+        this.marketDevelopers_ReadOnly = new ReadOnlyList<Developer>(marketDevelopers);
         this.pastProjects_ReadOnly = new ReadOnlyList<Project>(pastProjects);
         this.date = new DevDate();
         this.playerName = "";
-        this.fileName = null;
         this.ended = false;
 
     }
@@ -337,45 +336,50 @@ public class GameEngine extends Observable implements Serializable {
     public void saveBinary(String file) throws FileNotFoundException, IOException {
         FileOutputStream fileOut = new FileOutputStream(file);
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-        objectOut.writeObject(this);
+        GameMemento memento = new GameMemento(budget, date, playerName, numPCs, ended, developers, marketDevelopers, projects, marketProjects, pastProjects);
+        objectOut.writeObject(memento);
         objectOut.close();
         fileOut.close();
     }
 
     /**
-     * Load the game from the file. (Binary file) <p>Override the current
+     * Load the game from the file. (Binary file) <p>Reload the current
      * instance of
-     * <code>GameEngine</code> by the loaded instance from the saved file.</p>
+     * <code>{@link GameEngine}</code> with values from <code>{@link GameMemento}</code>
+     * loaded from the saved file.</p>
      *
      * @param file Namepath of the saved file
      */
-    public static void loadBinary(String file) throws FileNotFoundException, IOException {
+    public void loadBinary(String file) throws FileNotFoundException, IOException {
         FileInputStream fileIn = new FileInputStream(file);
         ObjectInputStream objectIn = new ObjectInputStream(fileIn);
         try {
-            GameEngine loadedInstance = (GameEngine) objectIn.readObject();
-            instance.budget = loadedInstance.budget;
-            instance.playerName = loadedInstance.playerName;
-            instance.date = loadedInstance.date;
-            instance.developers = loadedInstance.developers;
-            instance.ended = loadedInstance.ended;
-            instance.numPCs = loadedInstance.numPCs;
-            instance.pastProjects = loadedInstance.pastProjects;
-
-            instance.marketDevelopers = loadedInstance.marketDevelopers;
-            instance.marketProjects = loadedInstance.marketProjects;
+            GameMemento memento = (GameMemento) objectIn.readObject();
+            budget = memento.budget;
+            playerName = memento.playerName;
+            date = memento.date;
+            ended = memento.ended;
+            numPCs = memento.numPCs;
+            developers.clear();
+            marketProjects.clear();
+            pastProjects.clear();
+            marketDevelopers.clear();
+            developers = memento.developers;
+            pastProjects = memento.pastProjects;
+            marketDevelopers = memento.marketDevelopers;
+            marketProjects = memento.marketProjects;
+            developers_ReadOnly = new ReadOnlyList<Developer>(developers);
+            projects_ReadOnly = new ReadOnlyList<Project>(projects);
+            marketProject_ReadOnly = new ReadOnlyList<Project>(marketProjects);
+            marketDevelopers_ReadOnly = new ReadOnlyList<Developer>(marketDevelopers);
+            pastProjects_ReadOnly = new ReadOnlyList<Project>(pastProjects);
         } catch (ClassNotFoundException ex) {
+        } finally {
+            objectIn.close();
+            fileIn.close();
         }
-        objectIn.close();
-        fileIn.close();
-        instance.setChanged();
-        instance.notifyObservers();
-    }
-
-    public void quit() {
-        if (fileName == null || fileName.length() == 0) {
-        } else {
-        }
+        setChanged();
+        notifyObservers();
     }
 
     /*
@@ -455,6 +459,30 @@ public class GameEngine extends Observable implements Serializable {
                 message += "\n" + s;
             }
             throw new ProjectCompletedNotification(message);
+        }
+    }
+
+    private class GameMemento implements Serializable {
+
+        private int budget;
+        private DevDate date;
+        private String playerName;
+        private int numPCs;
+        private boolean ended;
+        private List<Developer> developers, marketDevelopers;
+        private List<Project> projects, marketProjects, pastProjects;
+
+        public GameMemento(int budget, DevDate date, String playerName, int numPCs, boolean ended, List<Developer> developers, List<Developer> marketDevelopers, List<Project> projects, List<Project> marketProjects, List<Project> pastProjects) {
+            this.budget = budget;
+            this.date = date;
+            this.playerName = playerName;
+            this.numPCs = numPCs;
+            this.ended = ended;
+            this.developers = developers;
+            this.marketDevelopers = marketDevelopers;
+            this.projects = projects;
+            this.marketProjects = marketProjects;
+            this.pastProjects = pastProjects;
         }
     }
 }

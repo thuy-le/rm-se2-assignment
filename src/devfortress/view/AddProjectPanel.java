@@ -169,7 +169,7 @@ public class AddProjectPanel extends JPanel implements Observer {
             infoPanel.add(functionalTable.getTableScroll(), BorderLayout.CENTER);
             infoNorthPanel.add(projectNameLbl);
             infoNorthPanel.add(projectInfoPanel);
-            
+
             projectDetailsPanel.add(projectLevelLbl);
             projectDetailsPanel.add(mainSkillLbl);
             projectDetailsPanel.add(budgetLbl);
@@ -222,7 +222,7 @@ public class AddProjectPanel extends JPanel implements Observer {
             functionalTableModel.removeRow(functionalTableModel.getRowCount() - 1);
         }
         for (FunctionalArea area : project.getAreas().values()) {
-            functionalTableModel.addRow(new Object[]{area.getName(), area.getFunctionPoints()});
+            functionalTableModel.addRow(new Object[]{area.getName(), (area.isVisible()) ? area.getFunctionPoints() : "Unknown"});
         }
         functionalTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         functionalTable.getColumnModel().getColumn(1).setMaxWidth(80);

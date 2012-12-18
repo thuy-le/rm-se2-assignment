@@ -83,7 +83,6 @@ public class MainFrameController {
             model.notifyObservers();
         }
     }
-    //TODO: When submit, the game need to be reset before re-initialized
 
     private class SubmitNameListener extends MouseAdapter {
 
