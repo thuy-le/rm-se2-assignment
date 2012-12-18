@@ -8,6 +8,7 @@ import devfortress.models.exceptions.GameOverException;
 import devfortress.enumerations.AreaName;
 import devfortress.enumerations.Expenses;
 import devfortress.enumerations.SkillInfo;
+import devfortress.models.exceptions.ProjectCompletedNotification;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.Utilities;
 import java.io.FileInputStream;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -298,7 +300,7 @@ public class GameEngine extends Observable implements Serializable {
     /*
      * System
      */
-    public void nextWeek() throws GameOverException {
+    public void nextWeek() throws GameOverException, ProjectCompletedNotification {
         /*
          * Time changes
          */
@@ -437,9 +439,22 @@ public class GameEngine extends Observable implements Serializable {
         }
     }
 
-    private void allProjectProgress() {
+    private void allProjectProgress() throws ProjectCompletedNotification {
+        List<String> finishedProjects = new ArrayList<String>();
         for (Project p : projects) {
             p.progress(date);
+            if (p.isFinished()) {
+                finishedProjects.add(p.getName() + " - level " + p.getLevel()
+                        + ".Received $" + (p.getBudget() * 3 / 4 + p.getBonus()));
+                receiveMoney(p);
+            }
+        }
+        if (!finishedProjects.isEmpty()) {
+            String message = "There are some project completed: ";
+            for (String s : finishedProjects) {
+                message += "\n" + s;
+            }
+            throw new ProjectCompletedNotification(message);
         }
     }
 }

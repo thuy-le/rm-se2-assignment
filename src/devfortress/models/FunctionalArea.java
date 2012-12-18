@@ -71,7 +71,11 @@ public class FunctionalArea implements Serializable {
             int points = dev.getLastWeekFunctionPoints();
             System.out.println(dev.getLastWeekFunctionPoints());
             completedPoints += points;
-            completed = completed ? completed : functionPoints - reducedPoints < completedPoints;
+            completedPoints =
+                    (completedPoints < functionPoints - reducedPoints)
+                        ? completedPoints
+                        : functionPoints - reducedPoints;
+            completed = completed ? completed : functionPoints - reducedPoints <= completedPoints;
         }
     }
 

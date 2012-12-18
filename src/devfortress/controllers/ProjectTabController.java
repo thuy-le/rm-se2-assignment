@@ -148,7 +148,7 @@ public class ProjectTabController {
                 for (Iterator<Developer> itr = selected.keySet().iterator(); itr.hasNext();) {
                     Developer dev = itr.next();
                     project.removeDeveloper(dev);
-
+                    model.notifyObservers();
                 }
                 dialog.dispose();
             }

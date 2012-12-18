@@ -2,6 +2,7 @@ package devfortress.controllers;
 
 import devfortress.models.exceptions.GameOverException;
 import devfortress.models.GameEngine;
+import devfortress.models.exceptions.ProjectCompletedNotification;
 import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -75,6 +76,9 @@ public class MainFrameController {
             } catch (GameOverException ex) {
                 model.notifyObservers();
                 JOptionPane.showMessageDialog(null, ex.getMessage());
+            } catch (ProjectCompletedNotification notice) {
+                model.notifyObservers();
+                JOptionPane.showMessageDialog(null, notice);
             }
             model.notifyObservers();
         }

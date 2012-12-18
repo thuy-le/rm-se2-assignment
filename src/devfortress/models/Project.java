@@ -162,9 +162,12 @@ public class Project implements Serializable {
      */
     public void progress(DevDate date) {
         finished = true;
-        for (FunctionalArea areas : functionalAreas.values()) {
-            areas.progress();
-            if (finished == true && !areas.isCompleted()) {
+        for (FunctionalArea area : functionalAreas.values()) {
+            area.progress();
+            if (area.isCompleted()) {
+                area.removeAllDeveloper();
+            }
+            if (finished == true && !area.isCompleted()) {
                 finished = false;
             }
         }
