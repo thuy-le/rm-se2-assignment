@@ -181,7 +181,7 @@ public class MainFrameController {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
                 try {
-                    GameEngine.loadBinary(file.getAbsolutePath());
+                    model.loadBinary(file.getAbsolutePath());
                     JOptionPane.showMessageDialog(null, file.getName() + " loaded.");
                 } catch (FileNotFoundException ex) {
                     String error = "Error Occur! Cannot find save file.";
