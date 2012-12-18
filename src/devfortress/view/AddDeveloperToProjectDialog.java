@@ -88,7 +88,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
         JPanel infoNorthPanel = new JPanel();
         JPanel infoNorthInnerPanel = new JPanel();
         JPanel infoNorthProjectInfoPanel = new JPanel();
-        JLabel assignLbl = new JLabel("Assign: ");
+        JLabel assignLbl = new JLabel("Assign to: ");
         JComboBox assignAreaCmB = new JComboBox(cmbModel);
         //Data
         {
@@ -97,6 +97,9 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             areas = new FunctionalArea[pAreas.size()];
             pAreas.toArray(areas);
             for (FunctionalArea area : areas) {
+                if (area.isCompleted()) { // dont display completed area
+                    continue;
+                }
                 cmbModel.addElement(area);
             }
             devsListModel.clear();

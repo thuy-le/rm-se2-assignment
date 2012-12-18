@@ -65,6 +65,7 @@ public class TrainSkillDialog extends JDialog implements Observer {
         add(bottom, BorderLayout.SOUTH);
 
         setLocationRelativeTo(null);
+        setResizable(false);
         setTitle(developer.getName() + " - Training");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
