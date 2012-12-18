@@ -39,8 +39,8 @@ public class NavigationToolBar extends JToolBar implements Observer {
         loadGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aboutGame = new CustomLabel(new ImageIcon("images/about.png"), "About Us");
         aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        seperator = new JPanel();
         budget = new JLabel("");
+        seperator = new JPanel();
         //adjust look and feel
         exitGame.setOpaque(false);
         newGame.setOpaque(false);
@@ -48,7 +48,7 @@ public class NavigationToolBar extends JToolBar implements Observer {
         loadGame.setOpaque(false);
         aboutGame.setOpaque(false);
         budget.setForeground(Color.WHITE);
-        budget.setFont(new Font("Century Gothic", Font.PLAIN, 22));
+        budget.setFont(new Font("Century Gothic", Font.PLAIN, 28));
         //add components
         newGame.setBounds(10, 10, newGame.getWidth(), newGame.getHeight());
 
@@ -94,16 +94,6 @@ public class NavigationToolBar extends JToolBar implements Observer {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(getWidth(), 55);
-    }
-
-    public Image generateSeperator() {
-        BufferedImage bi = new BufferedImage(350, 50, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bi.createGraphics();
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
-        g2d.setPaint(Colors.DARKBLUE);
-        g2d.fillRect(0, 0, 350, 50);
-        g2d.dispose();
-        return bi;
     }
 
     @Override
