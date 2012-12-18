@@ -28,19 +28,21 @@ public class MainFrameController {
     private AboutScreenPanel aboutPnl;
     private GameEngine model;
     private WelcomePanel welcome;
+    private DeveloperTabPanel devTab;
 
-    public MainFrameController(DevFortressMainFrame mainFrame, NewGameWelcomePanel welCm, NavigationToolBar navPne, InfomationPanel infoPnl, DevFortressTabbedPane tabPne, AboutScreenPanel aboutPnl, GameEngine model, WelcomePanel welcome) {
+    public MainFrameController(DevFortressMainFrame mainFrame, NewGameWelcomePanel welCm, NavigationToolBar navPne, InfomationPanel infoPnl,DeveloperTabPanel devTab, DevFortressTabbedPane tabPne, AboutScreenPanel aboutPnl, GameEngine model, WelcomePanel welcome) {
         this.mainFrame = mainFrame;
         this.welCm = welCm;
         this.aboutPnl = aboutPnl;
         this.navBar = navPne;
         this.infoPnl = infoPnl;
+        this.devTab = devTab;
         this.tabPne = tabPne;
         this.model = model;
         this.welcome = welcome;
     }
 
-    /**
+      /**
      * A temporary method to initialize the game and set up the controllers
      */
     public void initialize() {
@@ -92,6 +94,8 @@ public class MainFrameController {
                 model.initialize(welCm.getPlayerName());
                 mainFrame.remove(welCm.getContainer());
                 mainFrame.add(tabPne, BorderLayout.CENTER);
+                devTab.btnFeed.disableButton();
+                devTab.btnParty.disableButton();
                 navBar.setVisible(true);
                 infoPnl.setVisible(true);
                 tabPne.getSystemTab().setPlayerName(model.getPlayerName());

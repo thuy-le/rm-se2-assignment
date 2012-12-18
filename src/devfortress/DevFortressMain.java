@@ -35,7 +35,7 @@ public class DevFortressMain {
         EventTabPanel eventTab = new EventTabPanel();
         DevFortressTabbedPane tabPne = new DevFortressTabbedPane(devTab, projTab, sysTab, eventTab);
         //Controllers
-        MainFrameController gameController = new MainFrameController(mainFrame, welCm, nav, inf, tabPne, aboutScr, model, welcome);
+        MainFrameController gameController = new MainFrameController(mainFrame, welCm, nav, inf,devTab, tabPne, aboutScr, model, welcome);
         DeveloperTabController devController = new DeveloperTabController(devTab, model, availableDev, nav, inf, tabPne, mainFrame, sysTab);
         ProjectTabController projectController = new ProjectTabController(projTab, model, availableProject, mainFrame, tabPne, nav, inf);
         SystemTabController systemController = new SystemTabController(sysTab, model);
