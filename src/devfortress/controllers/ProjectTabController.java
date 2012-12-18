@@ -82,7 +82,7 @@ public class ProjectTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (model.getDevelopers().isEmpty()) {
-                JOptionPane.showMessageDialog(mainFrame, "No developers at the moments");
+               JOptionPane.showConfirmDialog(mainFrame, "No developer at the momment!", "DevFortress", -1);
             } else {
                 Project project = projectTab.getSelectedProject();
                 AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
@@ -165,8 +165,12 @@ public class ProjectTabController {
                 model.acceptProject(project);
                 model.notifyObservers();
                 JOptionPane.showMessageDialog(null, "New project accepted:\n" + project.getName());
+                if(model.getDevelopers().isEmpty()){
+                    projectTab.btnAddDev.disableButton();
+                    projectTab.btnRemoveDev.disableButton();
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "No Project selected");
+                JOptionPane.showMessageDialog(null, "No Project Selected","DevFortress",-1);
             }
         }
     }

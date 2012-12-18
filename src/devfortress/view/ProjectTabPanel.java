@@ -43,7 +43,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
-
 /**
  *
  * @author PC
@@ -63,7 +62,8 @@ public class ProjectTabPanel extends JPanel implements Observer {
     private JList prjList;
     private DefaultListModel prjModel;
     private DefaultTableModel projTableModel;
-    private CustomButton btnAdd, btnAddDev, btnRemoveDev, btnCancelProject;
+    private CustomButton btnAdd, btnCancelProject;
+    public CustomButton btnAddDev, btnRemoveDev;
     private GlassPanel infoPanel;
     private JLabel prjName, deadline, cost, info1, status;
     private JTable table;
@@ -282,4 +282,3 @@ public class ProjectTabPanel extends JPanel implements Observer {
         }
     }
 }
-
