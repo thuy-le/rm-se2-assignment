@@ -82,14 +82,14 @@ public class ProjectTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             
-            if (model.hasAvalableDevs()) {
-                JOptionPane.showConfirmDialog(mainFrame, "No developer at the moment!", "DevFortress", -1);
-            } else {
+//            if (model.hasAvalableDevs()) {
+//                JOptionPane.showConfirmDialog(mainFrame, "No developer at the moment!", "DevFortress", -1);
+//            } else {
                 Project project = projectTab.getSelectedProject();
                 AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
                 dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
                 dialog.setVisible(true);
-            }
+//            }
         }
         
         private class ApplyMouseAdapter extends MouseAdapter {
