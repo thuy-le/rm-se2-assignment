@@ -78,17 +78,12 @@ public class MainFrameController {
             try {
                 model.nextWeek(false);
             } catch (GameOverException ex) {
-                model.notifyObservers();
-                String message = ex.getMessage() + '\n';
-                message += "Achievements in the game: \n";
-                message += "Played time: " + model.getDate().getWeek() + " week "
-                        + model.getDate().getMonth() + " month " + model.getDate().getYear() + "year\n";
-                message += "Total hired developers: " + model.getNumHiredDevs() + '\n';
-                message += "Completed projects:\n";
-                for (Project pastProject : model.getPastProjects()) {
-                    message += pastProject.getName() + " - Level " + pastProject.getLevel() + '\n';
+                int result = JOptionPane.showConfirmDialog(null, ex.getMessage()
+                        + "\nDo you want to save your achievements?",
+                        null, JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    model.endGameReport(new File(model.getPlayerName() + ".txt"));
                 }
-                JOptionPane.showMessageDialog(null, message);
             } catch (ProjectCompletedNotification notice) {
                 model.notifyObservers();
                 JOptionPane.showMessageDialog(null, notice);
@@ -97,22 +92,17 @@ public class MainFrameController {
                 if (result == JOptionPane.YES_OPTION) { // Messy code here :(
                     try {
                         model.nextWeek(true);
-                    } catch (GameOverException ex1) {
-                        model.notifyObservers();
-                        String message = ex1.getMessage() + '\n';
-                        message += "Achievements in the game: \n";
-                        message += "Played time: " + model.getDate().getWeek() + " week "
-                                + model.getDate().getMonth() + " month " + model.getDate().getYear() + "year\n";
-                        message += "Total hired developers: " + model.getNumHiredDevs() + '\n';
-                        message += "Completed projects:\n";
-                        for (Project pastProject : model.getPastProjects()) {
-                            message += pastProject.getName() + " - Level " + pastProject.getLevel() + '\n';
+                    } catch (GameOverException ex) {
+                        result = JOptionPane.showConfirmDialog(null, ex.getMessage()
+                                + "\nDo you want to save your achievements?",
+                                null, JOptionPane.YES_NO_OPTION);
+                        if (result == JOptionPane.YES_OPTION) {
+                            model.endGameReport(new File(model.getPlayerName() + ".txt"));
                         }
-                        JOptionPane.showMessageDialog(null, message);
                     } catch (ProjectCompletedNotification ex) {
                         model.notifyObservers();
-                        JOptionPane.showMessageDialog(null, notice);
-                    } catch (HungryDeveloperNotification ex1) {
+                        JOptionPane.showMessageDialog(null, ex);
+                    } catch (HungryDeveloperNotification ex) {
                     }
                 }
             }
@@ -190,7 +180,12 @@ public class MainFrameController {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
                 try {
-                    model.saveBinary(file.getAbsolutePath());
+                    if (!file.getName().endsWith(".save")) {
+                        File newFile = new File(file.getAbsolutePath() + ".save");
+                        model.saveBinary(newFile);
+                    } else {
+                        model.saveBinary(file);
+                    }
                     JOptionPane.showMessageDialog(null, "Game saved.");
                 } catch (FileNotFoundException ex) {
                 } catch (IOException ex) {
