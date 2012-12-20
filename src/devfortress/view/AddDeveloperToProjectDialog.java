@@ -97,7 +97,7 @@ public class AddDeveloperToProjectDialog extends JDialog implements ActionListen
             areas = new FunctionalArea[pAreas.size()];
             pAreas.toArray(areas);
             for (FunctionalArea area : areas) {
-                if (area.isCompleted()) { // dont display completed area
+                if (area.isCompleted()) { // don't display completed area
                     continue;
                 }
                 cmbModel.addElement(area);

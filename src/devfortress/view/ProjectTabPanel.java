@@ -251,7 +251,18 @@ public class ProjectTabPanel extends JPanel implements Observer {
                 projTableModel.setColumnIdentifiers(ids);
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
                 table.getColumnModel().getColumn(1).setMaxWidth(100);
-
+                // Add and remove project buttons:
+                if (project.getDevelopers().isEmpty()) {
+                    btnRemoveDev.disableButton();
+                } else {
+                    btnRemoveDev.enableButton();
+                }
+                
+                if (!GameEngine.getInstance().hasAvalableDevs()) { // Still messy :(
+                    btnAddDev.disableButton();
+                } else {
+                    btnAddDev.enableButton();
+                }
             } catch (InvalidDevDateException ex) {
             }
         }

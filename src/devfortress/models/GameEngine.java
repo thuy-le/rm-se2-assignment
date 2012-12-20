@@ -8,6 +8,7 @@ import devfortress.models.exceptions.GameOverException;
 import devfortress.enumerations.AreaName;
 import devfortress.enumerations.Expenses;
 import devfortress.enumerations.SkillInfo;
+import devfortress.models.exceptions.HungryDeveloperNotification;
 import devfortress.models.exceptions.ProjectCompletedNotification;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.Utilities;
@@ -123,6 +124,18 @@ public class GameEngine extends Observable implements Serializable {
      */
     public int getNumHiredDevs() {
         return numHiredDevs;
+    }
+    
+    public boolean hasAvalableDevs() {
+        if (developers.isEmpty()) {
+            return false;
+        }
+        for (Developer dev : developers) {
+            if (dev.isAvailable()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /*
@@ -309,11 +322,19 @@ public class GameEngine extends Observable implements Serializable {
     /*
      * System
      */
-    public void nextWeek() throws GameOverException, ProjectCompletedNotification {
+    public void nextWeek(boolean ignoreHungryDevelopers) throws GameOverException,
+            ProjectCompletedNotification, HungryDeveloperNotification {
         /*
          * Time changes
          */
         if (!ended) {
+            if (!ignoreHungryDevelopers) {
+                for (Developer dev : developers) {
+                    if (!dev.isFed()) {
+                        throw new HungryDeveloperNotification();
+                    }
+                }
+            }
             generateRandomEvents();
             allEventsTakeEffects();
             allProjectProgress();

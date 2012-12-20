@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Michael
  */
 public class ProjectTabController {
-
+    
     private ProjectTabPanel projectTab;
     private DevFortressTabbedPane tabbedPane;
     private AddProjectPanel addProjectPanel;
@@ -26,7 +26,7 @@ public class ProjectTabController {
     private NavigationToolBar navBar;
     private InfomationPanel infoPanel;
     private GameEngine model;
-
+    
     public ProjectTabController(ProjectTabPanel projectTab, GameEngine model,
             AddProjectPanel addProjectPanel, DevFortressMainFrame mainFrame,
             DevFortressTabbedPane tabbedPane,
@@ -39,7 +39,7 @@ public class ProjectTabController {
         this.navBar = navBar;
         this.infoPanel = infoPanel;
     }
-
+    
     public void initialize() {
         projectTab.addNewProjectListener(new AddProjectBtnListener());
         projectTab.addDevToProjectListener(new AddDevToProjectListener());
@@ -48,9 +48,9 @@ public class ProjectTabController {
         addProjectPanel.addAcceptProjectEvent(new AcceptProjectListener());
         addProjectPanel.addCloseEvent(new CloseAddProjectPanelListener());
     }
-
+    
     private class AddProjectBtnListener extends MouseAdapter {
-
+        
         @Override
         public void mouseClicked(MouseEvent e) {
             mainFrame.remove(tabbedPane);
@@ -60,9 +60,9 @@ public class ProjectTabController {
             mainFrame.repaint();
         }
     }
-
+    
     private class CancelProjectListener extends MouseAdapter {
-
+        
         @Override
         public void mouseClicked(MouseEvent e) {
             Project pro = projectTab.getSelectedProject();
@@ -76,13 +76,14 @@ public class ProjectTabController {
             }
         }
     }
-
+    
     private class AddDevToProjectListener extends MouseAdapter {
-
+        
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (model.getDevelopers().isEmpty()) {
-               JOptionPane.showConfirmDialog(mainFrame, "No developer at the momment!", "DevFortress", -1);
+            
+            if (model.hasAvalableDevs()) {
+                JOptionPane.showConfirmDialog(mainFrame, "No developer at the moment!", "DevFortress", -1);
             } else {
                 Project project = projectTab.getSelectedProject();
                 AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
@@ -90,17 +91,17 @@ public class ProjectTabController {
                 dialog.setVisible(true);
             }
         }
-
+        
         private class ApplyMouseAdapter extends MouseAdapter {
-
+            
             AddDeveloperToProjectDialog dialog;
             Project project;
-
+            
             public ApplyMouseAdapter(AddDeveloperToProjectDialog dialog, Project project) {
                 this.dialog = dialog;
                 this.project = project;
             }
-
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
@@ -113,17 +114,18 @@ public class ProjectTabController {
                     } catch (InvalidFunctionalAreaException ex) {
                     }
                 }
+                model.notifyObservers();
                 dialog.dispose();
             }
         }
     }
-
+    
     private class RemoveDevFromProjectListener extends MouseAdapter {
-
+        
         @Override
         public void mouseClicked(MouseEvent e) {
             if (model.getDevelopers().isEmpty()) {
-                JOptionPane.showMessageDialog(mainFrame, "No developers at the moments");
+                JOptionPane.showMessageDialog(mainFrame, "No developers in project.");
             } else {
                 Project project = projectTab.getSelectedProject();
                 RemoveDeveloperFromProjectDialog dialog = new RemoveDeveloperFromProjectDialog(model, project);
@@ -131,17 +133,17 @@ public class ProjectTabController {
                 dialog.setVisible(true);
             }
         }
-
+        
         private class ApplyMouseAdapter extends MouseAdapter {
-
+            
             RemoveDeveloperFromProjectDialog dialog;
             Project project;
-
+            
             public ApplyMouseAdapter(RemoveDeveloperFromProjectDialog dialog, Project project) {
                 this.dialog = dialog;
                 this.project = project;
             }
-
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
@@ -154,9 +156,9 @@ public class ProjectTabController {
             }
         }
     }
-
+    
     private class AcceptProjectListener extends MouseAdapter {
-
+        
         @Override
         public void mouseClicked(MouseEvent e) {
             Project project = addProjectPanel.getSelectedProject();
@@ -165,18 +167,20 @@ public class ProjectTabController {
                 model.acceptProject(project);
                 model.notifyObservers();
                 JOptionPane.showMessageDialog(null, "New project accepted:\n" + project.getName());
-                if(model.getDevelopers().isEmpty()){
+                if (!model.hasAvalableDevs()) {
                     projectTab.btnAddDev.disableButton();
-                    projectTab.btnRemoveDev.disableButton();
+                } else {
+                    projectTab.btnAddDev.enableButton();
                 }
+                projectTab.btnRemoveDev.disableButton(); // Recently accepted project have no dev
             } else {
-                JOptionPane.showMessageDialog(null, "No Project Selected","DevFortress",-1);
+                JOptionPane.showMessageDialog(null, "No Project Selected", "DevFortress", -1);
             }
         }
     }
-
+    
     private class CloseAddProjectPanelListener extends MouseAdapter {
-
+        
         @Override
         public void mouseClicked(MouseEvent e) {
             mainFrame.remove(addProjectPanel);

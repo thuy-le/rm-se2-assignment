@@ -2,6 +2,8 @@ package devfortress.controllers;
 
 import devfortress.models.exceptions.GameOverException;
 import devfortress.models.GameEngine;
+import devfortress.models.Project;
+import devfortress.models.exceptions.HungryDeveloperNotification;
 import devfortress.models.exceptions.ProjectCompletedNotification;
 import devfortress.view.*;
 import java.awt.BorderLayout;
@@ -10,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -30,7 +34,7 @@ public class MainFrameController {
     private WelcomePanel welcome;
     private DeveloperTabPanel devTab;
 
-    public MainFrameController(DevFortressMainFrame mainFrame, NewGameWelcomePanel welCm, NavigationToolBar navPne, InfomationPanel infoPnl,DeveloperTabPanel devTab, DevFortressTabbedPane tabPne, AboutScreenPanel aboutPnl, GameEngine model, WelcomePanel welcome) {
+    public MainFrameController(DevFortressMainFrame mainFrame, NewGameWelcomePanel welCm, NavigationToolBar navPne, InfomationPanel infoPnl, DeveloperTabPanel devTab, DevFortressTabbedPane tabPne, AboutScreenPanel aboutPnl, GameEngine model, WelcomePanel welcome) {
         this.mainFrame = mainFrame;
         this.welCm = welCm;
         this.aboutPnl = aboutPnl;
@@ -42,7 +46,7 @@ public class MainFrameController {
         this.welcome = welcome;
     }
 
-      /**
+    /**
      * A temporary method to initialize the game and set up the controllers
      */
     public void initialize() {
@@ -74,13 +78,45 @@ public class MainFrameController {
         @Override
         public void mouseClicked(MouseEvent e) {
             try {
-                model.nextWeek();
+                model.nextWeek(false);
             } catch (GameOverException ex) {
                 model.notifyObservers();
-                JOptionPane.showMessageDialog(null, ex.getMessage());
+                String message = ex.getMessage() + '\n';
+                message += "Achievements in the game: \n";
+                message += "Played time: " + model.getDate().getWeek() + " week "
+                        + model.getDate().getMonth() + " month " + model.getDate().getYear() + "year\n";
+                message += "Total hired developers: " + model.getNumHiredDevs() + '\n';
+                message += "Completed projects:\n";
+                for (Project pastProject : model.getPastProjects()) {
+                    message += pastProject.getName() + " - Level " + pastProject.getLevel() + '\n';
+                }
+                JOptionPane.showMessageDialog(null, message);
             } catch (ProjectCompletedNotification notice) {
                 model.notifyObservers();
                 JOptionPane.showMessageDialog(null, notice);
+            } catch (HungryDeveloperNotification notice) {
+                int result = JOptionPane.showConfirmDialog(null, notice.getMessage(), null, JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) { // Messy code here :(
+                    try {
+                        model.nextWeek(true);
+                    } catch (GameOverException ex1) {
+                        model.notifyObservers();
+                        String message = ex1.getMessage() + '\n';
+                        message += "Achievements in the game: \n";
+                        message += "Played time: " + model.getDate().getWeek() + " week "
+                                + model.getDate().getMonth() + " month " + model.getDate().getYear() + "year\n";
+                        message += "Total hired developers: " + model.getNumHiredDevs() + '\n';
+                        message += "Completed projects:\n";
+                        for (Project pastProject : model.getPastProjects()) {
+                            message += pastProject.getName() + " - Level " + pastProject.getLevel() + '\n';
+                        }
+                        JOptionPane.showMessageDialog(null, message);
+                    } catch (ProjectCompletedNotification ex) {
+                        model.notifyObservers();
+                        JOptionPane.showMessageDialog(null, notice);
+                    } catch (HungryDeveloperNotification ex1) {
+                    }
+                }
             }
             model.notifyObservers();
         }
