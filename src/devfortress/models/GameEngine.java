@@ -38,6 +38,8 @@ public class GameEngine extends Observable implements Serializable {
     private String playerName;
     private int numPCs;
     private boolean ended;
+    //Some variables for end game report:
+    private int numHiredDevs;
 
     private GameEngine() {
         this.budget = 10000;
@@ -54,7 +56,7 @@ public class GameEngine extends Observable implements Serializable {
         this.date = new DevDate();
         this.playerName = "";
         this.ended = false;
-
+        this.numHiredDevs = 0;
     }
 
     /**
@@ -114,6 +116,13 @@ public class GameEngine extends Observable implements Serializable {
             list.addAll(project.getEvents());
         }
         return new ReadOnlyList<Event>(list);
+    }
+
+    /**
+     * For the end game report
+     */
+    public int getNumHiredDevs() {
+        return numHiredDevs;
     }
 
     /*
@@ -286,7 +295,8 @@ public class GameEngine extends Observable implements Serializable {
         setChanged();
     }
 
-    public void assignDeveloperToProject(Project pro, Developer dev, AreaName area) throws DeveloperBusyException, InvalidFunctionalAreaException {
+    public void assignDeveloperToProject(Project pro, Developer dev, AreaName area)
+            throws DeveloperBusyException, InvalidFunctionalAreaException {
         pro.addDeveloper(dev, area);
         setChanged();
     }
@@ -336,7 +346,8 @@ public class GameEngine extends Observable implements Serializable {
     public void saveBinary(String file) throws FileNotFoundException, IOException {
         FileOutputStream fileOut = new FileOutputStream(file);
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-        GameMemento memento = new GameMemento(budget, date, playerName, numPCs, ended, developers, marketDevelopers, projects, marketProjects, pastProjects);
+        GameMemento memento = new GameMemento(budget, date, playerName, numPCs, ended, numHiredDevs,
+                developers, marketDevelopers, projects, marketProjects, pastProjects);
         objectOut.writeObject(memento);
         objectOut.close();
         fileOut.close();
@@ -360,11 +371,13 @@ public class GameEngine extends Observable implements Serializable {
             date = memento.date;
             ended = memento.ended;
             numPCs = memento.numPCs;
+            numHiredDevs = memento.numHiredDevs;
             developers.clear();
             marketProjects.clear();
             pastProjects.clear();
             marketDevelopers.clear();
             developers = memento.developers;
+            projects = memento.projects;
             pastProjects = memento.pastProjects;
             marketDevelopers = memento.marketDevelopers;
             marketProjects = memento.marketProjects;
@@ -469,15 +482,19 @@ public class GameEngine extends Observable implements Serializable {
         private String playerName;
         private int numPCs;
         private boolean ended;
+        private int numHiredDevs;
         private List<Developer> developers, marketDevelopers;
         private List<Project> projects, marketProjects, pastProjects;
 
-        public GameMemento(int budget, DevDate date, String playerName, int numPCs, boolean ended, List<Developer> developers, List<Developer> marketDevelopers, List<Project> projects, List<Project> marketProjects, List<Project> pastProjects) {
+        public GameMemento(int budget, DevDate date, String playerName, int numPCs,
+                boolean ended, int numHiredDevs, List<Developer> developers, List<Developer> marketDevelopers,
+                List<Project> projects, List<Project> marketProjects, List<Project> pastProjects) {
             this.budget = budget;
             this.date = date;
             this.playerName = playerName;
             this.numPCs = numPCs;
             this.ended = ended;
+            this.numHiredDevs = numHiredDevs;
             this.developers = developers;
             this.marketDevelopers = marketDevelopers;
             this.projects = projects;
