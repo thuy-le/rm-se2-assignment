@@ -90,14 +90,14 @@ public class ProjectTabController {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (model.getDate().getWeek() == 1) {
-//                if (model.hasAvalableDevs()) {
-//                    JOptionPane.showConfirmDialog(mainFrame, "No developer at the moment!", "DevFortress", -1);
-//                } else {
-                Project project = projectTab.getSelectedProject();
-                AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
-                dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
-                dialog.setVisible(true);
-//                }
+                if (!model.hasAvalableDevs()) {
+                    JOptionPane.showConfirmDialog(mainFrame, "No available developer at the moment!", "DevFortress", -1);
+                } else {
+                    Project project = projectTab.getSelectedProject();
+                    AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
+                    dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
+                    dialog.setVisible(true);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You can only add developer to project at the beginning of each month");
             }
