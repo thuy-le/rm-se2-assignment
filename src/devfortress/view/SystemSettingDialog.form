@@ -26,22 +26,22 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jSeparator2" alignment="0" pref="380" max="32767" attributes="0"/>
-                  <Component id="jRadioButton8" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jRadioButton7" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jRadioButton6" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jRadioButton5" alignment="0" pref="380" max="32767" attributes="0"/>
+                  <Component id="manualGiveBeer" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="unhappyBeerMonthly" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="allBeerMonthly" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="unhappyBeerWeekly" alignment="0" pref="380" max="32767" attributes="0"/>
                   <Component id="jSeparator1" alignment="0" pref="380" max="32767" attributes="0"/>
-                  <Component id="jRadioButton1" alignment="0" pref="380" max="32767" attributes="0"/>
-                  <Component id="jRadioButton3" alignment="0" pref="380" max="32767" attributes="0"/>
-                  <Component id="jRadioButton2" alignment="0" pref="380" max="32767" attributes="0"/>
-                  <Component id="jRadioButton4" alignment="0" pref="380" max="32767" attributes="0"/>
+                  <Component id="keepAllDevFulRadio" alignment="0" pref="380" max="32767" attributes="0"/>
+                  <Component id="manualFeed" alignment="0" pref="380" max="32767" attributes="0"/>
+                  <Component id="keepWorkingFullRadio" alignment="0" pref="380" max="32767" attributes="0"/>
+                  <Component id="allBeerWeekly" alignment="0" pref="380" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jButton2" min="-2" pref="69" max="-2" attributes="0"/>
+                      <Component id="applyBtn" min="-2" pref="69" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="78" max="-2" attributes="0"/>
+                      <Component id="cancelBtn" min="-2" pref="78" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabel2" alignment="0" pref="380" max="32767" attributes="0"/>
-                  <Component id="jLabel1" alignment="0" pref="380" max="32767" attributes="0"/>
+                  <Component id="giveBeerLbl" alignment="0" pref="380" max="32767" attributes="0"/>
+                  <Component id="feedLbl" alignment="0" pref="380" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -51,33 +51,33 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Component id="feedLbl" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="keepAllDevFulRadio" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+              <Component id="keepWorkingFullRadio" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>
+              <Component id="manualFeed" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+              <Component id="giveBeerLbl" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton4" min="-2" max="-2" attributes="0"/>
+              <Component id="allBeerWeekly" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton5" min="-2" max="-2" attributes="0"/>
+              <Component id="unhappyBeerWeekly" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
+              <Component id="allBeerMonthly" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton7" min="-2" max="-2" attributes="0"/>
+              <Component id="unhappyBeerMonthly" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButton8" min="-2" max="-2" attributes="0"/>
+              <Component id="manualGiveBeer" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cancelBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="applyBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -85,66 +85,74 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+    <Component class="javax.swing.JRadioButton" name="keepAllDevFulRadio">
       <Properties>
         <Property name="text" type="java.lang.String" value="Keep all developers full"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+    <Component class="javax.swing.JRadioButton" name="keepWorkingFullRadio">
       <Properties>
         <Property name="text" type="java.lang.String" value="Keep only working developers full"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton3">
+    <Component class="javax.swing.JRadioButton" name="manualFeed">
       <Properties>
         <Property name="text" type="java.lang.String" value="Manually feed developers"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="feedLbl">
       <Properties>
         <Property name="text" type="java.lang.String" value="Feeding options"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+      </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="giveBeerLbl">
       <Properties>
         <Property name="text" type="java.lang.String" value="Giving beers options"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+      </AuxValues>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton4">
+    <Component class="javax.swing.JRadioButton" name="allBeerWeekly">
       <Properties>
         <Property name="text" type="java.lang.String" value="Let all developers have beers every week"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton5">
+    <Component class="javax.swing.JRadioButton" name="unhappyBeerWeekly">
       <Properties>
         <Property name="text" type="java.lang.String" value="Let only unhappy developers have beers every week"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton6">
+    <Component class="javax.swing.JRadioButton" name="allBeerMonthly">
       <Properties>
         <Property name="text" type="java.lang.String" value="Let all developers have beers at the end of month"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton7">
+    <Component class="javax.swing.JRadioButton" name="unhappyBeerMonthly">
       <Properties>
         <Property name="text" type="java.lang.String" value="Let unhappy developers have beers at the end of month"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButton8">
+    <Component class="javax.swing.JRadioButton" name="manualGiveBeer">
       <Properties>
         <Property name="text" type="java.lang.String" value="Manually give beers to developers"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator2">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="cancelBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="applyBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Apply"/>
       </Properties>
