@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Michael
  */
 public class ProjectTabController {
-    
+
     private ProjectTabPanel projectTab;
     private DevFortressTabbedPane tabbedPane;
     private AddProjectPanel addProjectPanel;
@@ -26,7 +26,7 @@ public class ProjectTabController {
     private NavigationToolBar navBar;
     private InfomationPanel infoPanel;
     private GameEngine model;
-    
+
     public ProjectTabController(ProjectTabPanel projectTab, GameEngine model,
             AddProjectPanel addProjectPanel, DevFortressMainFrame mainFrame,
             DevFortressTabbedPane tabbedPane,
@@ -39,7 +39,7 @@ public class ProjectTabController {
         this.navBar = navBar;
         this.infoPanel = infoPanel;
     }
-    
+
     public void initialize() {
         projectTab.addNewProjectListener(new AddProjectBtnListener());
         projectTab.addDevToProjectListener(new AddDevToProjectListener());
@@ -48,60 +48,71 @@ public class ProjectTabController {
         addProjectPanel.addAcceptProjectEvent(new AcceptProjectListener());
         addProjectPanel.addCloseEvent(new CloseAddProjectPanelListener());
     }
-    
+
     private class AddProjectBtnListener extends MouseAdapter {
-        
+
         @Override
         public void mouseClicked(MouseEvent e) {
-            mainFrame.remove(tabbedPane);
-            navBar.setVisible(false);
-            infoPanel.setVisible(false);
-            mainFrame.add(addProjectPanel);
-            mainFrame.repaint();
-        }
-    }
-    
-    private class CancelProjectListener extends MouseAdapter {
-        
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            Project pro = projectTab.getSelectedProject();
-            if (pro != null) {
-                try {
-                    model.cancelProject(pro);
-                    JOptionPane.showMessageDialog(null, pro.getName() + "cancelled");
-                    model.notifyObservers();
-                } catch (Exception ex) {
-                }
-            }
-        }
-    }
-    
-    private class AddDevToProjectListener extends MouseAdapter {
-        
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            
-            if (model.hasAvalableDevs()) {
-                JOptionPane.showConfirmDialog(mainFrame, "No developer at the moment!", "DevFortress", -1);
+            if (model.getDate().getWeek() == 1) {
+                mainFrame.remove(tabbedPane);
+                navBar.setVisible(false);
+                infoPanel.setVisible(false);
+                mainFrame.add(addProjectPanel);
+                mainFrame.repaint();
             } else {
-                Project project = projectTab.getSelectedProject();
-                AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
-                dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
-                dialog.setVisible(true);
+                JOptionPane.showMessageDialog(null, "You can only add new project at the beginning of each month");
             }
         }
-        
+    }
+
+    private class CancelProjectListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (model.getDate().getWeek() == 1) {
+                Project pro = projectTab.getSelectedProject();
+                if (pro != null) {
+                    try {
+                        model.cancelProject(pro);
+                        JOptionPane.showMessageDialog(null, pro.getName() + "cancelled");
+                        model.notifyObservers();
+                    } catch (Exception ex) {
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Project can only be cancelled at the beginning of each month");
+            }
+        }
+    }
+
+    private class AddDevToProjectListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (model.getDate().getWeek() == 1) {
+                if (model.hasAvalableDevs()) {
+                    JOptionPane.showConfirmDialog(mainFrame, "No developer at the moment!", "DevFortress", -1);
+                } else {
+                    Project project = projectTab.getSelectedProject();
+                    AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
+                    dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
+                    dialog.setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "You can only add developer to project at the beginning of each month");
+            }
+        }
+
         private class ApplyMouseAdapter extends MouseAdapter {
-            
+
             AddDeveloperToProjectDialog dialog;
             Project project;
-            
+
             public ApplyMouseAdapter(AddDeveloperToProjectDialog dialog, Project project) {
                 this.dialog = dialog;
                 this.project = project;
             }
-            
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
@@ -119,31 +130,35 @@ public class ProjectTabController {
             }
         }
     }
-    
+
     private class RemoveDevFromProjectListener extends MouseAdapter {
-        
+
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (model.getDevelopers().isEmpty()) {
-                JOptionPane.showMessageDialog(mainFrame, "No developers in project.");
+            if (model.getDate().getWeek() == 1) {
+                if (model.getDevelopers().isEmpty()) {
+                    JOptionPane.showMessageDialog(mainFrame, "No developers in project.");
+                } else {
+                    Project project = projectTab.getSelectedProject();
+                    RemoveDeveloperFromProjectDialog dialog = new RemoveDeveloperFromProjectDialog(model, project);
+                    dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
+                    dialog.setVisible(true);
+                }
             } else {
-                Project project = projectTab.getSelectedProject();
-                RemoveDeveloperFromProjectDialog dialog = new RemoveDeveloperFromProjectDialog(model, project);
-                dialog.addApplyButtonListener(new ApplyMouseAdapter(dialog, project));
-                dialog.setVisible(true);
+                JOptionPane.showMessageDialog(null, "You can only remove developer from project at the beginning of each month");
             }
         }
-        
+
         private class ApplyMouseAdapter extends MouseAdapter {
-            
+
             RemoveDeveloperFromProjectDialog dialog;
             Project project;
-            
+
             public ApplyMouseAdapter(RemoveDeveloperFromProjectDialog dialog, Project project) {
                 this.dialog = dialog;
                 this.project = project;
             }
-            
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
@@ -156,9 +171,9 @@ public class ProjectTabController {
             }
         }
     }
-    
+
     private class AcceptProjectListener extends MouseAdapter {
-        
+
         @Override
         public void mouseClicked(MouseEvent e) {
             Project project = addProjectPanel.getSelectedProject();
@@ -178,9 +193,9 @@ public class ProjectTabController {
             }
         }
     }
-    
+
     private class CloseAddProjectPanelListener extends MouseAdapter {
-        
+
         @Override
         public void mouseClicked(MouseEvent e) {
             mainFrame.remove(addProjectPanel);

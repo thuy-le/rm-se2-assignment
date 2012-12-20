@@ -125,7 +125,7 @@ public class GameEngine extends Observable implements Serializable {
     public int getNumHiredDevs() {
         return numHiredDevs;
     }
-    
+
     public boolean hasAvalableDevs() {
         if (developers.isEmpty()) {
             return false;
@@ -160,7 +160,7 @@ public class GameEngine extends Observable implements Serializable {
         int cost = (numPCs > developers.size()) ? 0 : Expenses.PC.getCost();
         if (developers.add(dev)) {
             marketDevelopers.remove(dev);
-//            budget -= cost;
+            budget -= cost;
             if (cost > 0) {
                 numPCs++;
             }
@@ -328,13 +328,13 @@ public class GameEngine extends Observable implements Serializable {
          * Time changes
          */
         if (!ended) {
-            if (!ignoreHungryDevelopers) {
-                for (Developer dev : developers) {
-                    if (!dev.isFed()) {
-                        throw new HungryDeveloperNotification();
-                    }
-                }
-            }
+//            if (!ignoreHungryDevelopers) {
+//                for (Developer dev : developers) {
+//                    if (!dev.isFed()) {
+//                        throw new HungryDeveloperNotification();
+//                    }
+//                }
+//            }
             generateRandomEvents();
             allEventsTakeEffects();
             allProjectProgress();
@@ -357,6 +357,16 @@ public class GameEngine extends Observable implements Serializable {
         } else {
             throw new GameOverException();
         }
+    }
+
+    public List<Developer> getHungryDevelopers() {
+        List<Developer> devs = new LinkedList<Developer>();
+        for (Developer dev : developers) {
+            if (!dev.isFed()) {
+                devs.add(dev);
+            }
+        }
+        return devs;
     }
 
     /**

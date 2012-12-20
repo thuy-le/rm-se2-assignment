@@ -56,7 +56,7 @@ public class DeveloperTabController {
         //hre dev
         hireDevPnl.addHireDeveloperEvent(new HireDeveloperListener());
         //train developer
-        developerTab.addTrainDeveloperListener(new TrainSkillListener());  
+        developerTab.addTrainDeveloperListener(new TrainSkillListener());
     }
 
     private class FeedAllMouseListener extends MouseAdapter {
@@ -156,12 +156,14 @@ public class DeveloperTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            //JOptionPane.showMessageDialog(null, "Hire new");
-            mainFrame.remove(tabPne);
-            infoPnl.setVisible(false);
-            navBar.setVisible(false);
-            mainFrame.add(hireDevPnl);
-//            devFortress.repaint();
+            if (model.getDate().getWeek() == 1) {
+                mainFrame.remove(tabPne);
+                infoPnl.setVisible(false);
+                navBar.setVisible(false);
+                mainFrame.add(hireDevPnl);
+            } else {
+                JOptionPane.showMessageDialog(null, "You can only hire new developers at the beginning of each month");
+            }
         }
     }
 
@@ -169,7 +171,6 @@ public class DeveloperTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            //JOptionPane.showMessageDialog(null, "Hire new");
             mainFrame.remove(hireDevPnl);
             infoPnl.setVisible(true);
             navBar.setVisible(true);
@@ -224,22 +225,26 @@ public class DeveloperTabController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            Developer dev = developerTab.getSelectedDeveloper();
-            List<Developer> devs = model.getDevelopers();
-            if (dev != null) {
-                try {
-                    model.fireDeveloper(dev);
-                    JOptionPane.showMessageDialog(null, dev.getName() + " is fired");
-                    model.notifyObservers();
-                    if (devs.isEmpty()) {
-                        developerTab.btnFeed.disableButton();
-                        developerTab.btnParty.disableButton();
+            if (model.getDate().getWeek() == 1) {
+                Developer dev = developerTab.getSelectedDeveloper();
+                List<Developer> devs = model.getDevelopers();
+                if (dev != null) {
+                    try {
+                        model.fireDeveloper(dev);
+                        JOptionPane.showMessageDialog(null, dev.getName() + " is fired");
+                        model.notifyObservers();
+                        if (devs.isEmpty()) {
+                            developerTab.btnFeed.disableButton();
+                            developerTab.btnParty.disableButton();
+                        }
+                    } catch (DeveloperBusyException ex) {
+                        JOptionPane.showMessageDialog(null, dev.getName() + ex.getMessage());
                     }
-                } catch (DeveloperBusyException ex) {
-                    JOptionPane.showMessageDialog(null, dev.getName() + ex.getMessage());
+                } else {
+                    JOptionPane.showMessageDialog(null, "You have to select a developer");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You have to select a developer");
+                JOptionPane.showMessageDialog(null, "You can only fire developers at the beginning of each month");
             }
         }
     }
