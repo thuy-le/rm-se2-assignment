@@ -4,8 +4,11 @@
  */
 package devfortress.view;
 
+import devfortress.utilities.Colors;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -23,6 +26,7 @@ import javax.swing.LayoutStyle;
 public class SettingDialog extends JDialog {
     // Variables declaration - do not modify
 
+    private static final Color COLOR = Colors.LIGHTRED;
     private JRadioButton allBeerMonthly;
     private JRadioButton allBeerWeekly;
     private JButton applyBtn;
@@ -70,7 +74,17 @@ public class SettingDialog extends JDialog {
         });
         add(innerPanel);
         innerPanel.setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(seperatorBeer, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(manualGiveBeer).addComponent(unhappyBeerMonthly).addComponent(allBeerMonthly).addComponent(unhappyBeerWeekly, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(seperatorFeed, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(keepAllDevFulRadio, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(manualFeed, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(keepWorkingFullRadio, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(allBeerWeekly, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addComponent(applyBtn, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(cancelBtn, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)).addComponent(giveBeerLbl, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(feedLbl, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)).addContainerGap()));
+        innerPanel.setBackground(COLOR);
+        keepAllDevFulRadio.setOpaque(false);
+        keepWorkingFullRadio.setOpaque(false);
+        manualFeed.setOpaque(false);
+        allBeerWeekly.setOpaque(false);
+        allBeerMonthly.setOpaque(false);
+        unhappyBeerWeekly.setOpaque(false);
+        unhappyBeerMonthly.setOpaque(false);
+        manualGiveBeer.setOpaque(false);
+
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(seperatorBeer, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(unhappyBeerWeekly, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(seperatorFeed, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(keepAllDevFulRadio, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(manualFeed, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(keepWorkingFullRadio, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(allBeerWeekly, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addComponent(applyBtn, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(cancelBtn, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)).addComponent(giveBeerLbl, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(feedLbl, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(allBeerMonthly, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(unhappyBeerMonthly, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE).addComponent(manualGiveBeer, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)).addContainerGap()));
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addComponent(feedLbl).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(keepAllDevFulRadio).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(keepWorkingFullRadio).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(manualFeed).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(seperatorFeed, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(giveBeerLbl).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(allBeerWeekly).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(unhappyBeerWeekly).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(allBeerMonthly).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(unhappyBeerMonthly).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(manualGiveBeer).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(seperatorBeer, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(cancelBtn).addComponent(applyBtn)).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         pack();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -83,11 +97,16 @@ public class SettingDialog extends JDialog {
         new SettingDialog();
     }
 
+    public void addApplyMouseListener(MouseListener l) {
+        applyBtn.addMouseListener(l);
+    }
+
     private void cancel() {
         this.dispose();
     }
 
     public static enum Options {
 
-        KEEP_ALL_DEV_FULL,}
+        KEEP_ALL_DEV_FULL,
+    }
 }

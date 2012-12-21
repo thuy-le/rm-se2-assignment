@@ -33,7 +33,7 @@ public class SystemSettingDialog extends javax.swing.JFrame {
         keepAllDevFulRadio = new javax.swing.JRadioButton();
         keepWorkingFullRadio = new javax.swing.JRadioButton();
         manualFeed = new javax.swing.JRadioButton();
-        jSeparator1 = new javax.swing.JSeparator();
+        seperatorFeed = new javax.swing.JSeparator();
         javax.swing.JLabel feedLbl = new javax.swing.JLabel();
         javax.swing.JLabel giveBeerLbl = new javax.swing.JLabel();
         allBeerWeekly = new javax.swing.JRadioButton();
@@ -41,7 +41,7 @@ public class SystemSettingDialog extends javax.swing.JFrame {
         allBeerMonthly = new javax.swing.JRadioButton();
         unhappyBeerMonthly = new javax.swing.JRadioButton();
         manualGiveBeer = new javax.swing.JRadioButton();
-        jSeparator2 = new javax.swing.JSeparator();
+        seperatorBeer = new javax.swing.JSeparator();
         cancelBtn = new javax.swing.JButton();
         applyBtn = new javax.swing.JButton();
 
@@ -78,12 +78,9 @@ public class SystemSettingDialog extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addComponent(manualGiveBeer)
-                    .addComponent(unhappyBeerMonthly)
-                    .addComponent(allBeerMonthly)
+                    .addComponent(seperatorBeer, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addComponent(unhappyBeerWeekly, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(seperatorFeed, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addComponent(keepAllDevFulRadio, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addComponent(manualFeed, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                     .addComponent(keepWorkingFullRadio, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
@@ -93,7 +90,10 @@ public class SystemSettingDialog extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(giveBeerLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addComponent(feedLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .addComponent(feedLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(allBeerMonthly, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(unhappyBeerMonthly, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(manualGiveBeer, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -108,7 +108,7 @@ public class SystemSettingDialog extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(manualFeed)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(seperatorFeed, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(giveBeerLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -122,7 +122,7 @@ public class SystemSettingDialog extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(manualGiveBeer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(seperatorBeer, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelBtn)
@@ -173,12 +173,12 @@ public class SystemSettingDialog extends javax.swing.JFrame {
     private javax.swing.JRadioButton allBeerWeekly;
     private javax.swing.JButton applyBtn;
     private javax.swing.JButton cancelBtn;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JRadioButton keepAllDevFulRadio;
     private javax.swing.JRadioButton keepWorkingFullRadio;
     private javax.swing.JRadioButton manualFeed;
     private javax.swing.JRadioButton manualGiveBeer;
+    private javax.swing.JSeparator seperatorBeer;
+    private javax.swing.JSeparator seperatorFeed;
     private javax.swing.JRadioButton unhappyBeerMonthly;
     private javax.swing.JRadioButton unhappyBeerWeekly;
     // End of variables declaration//GEN-END:variables

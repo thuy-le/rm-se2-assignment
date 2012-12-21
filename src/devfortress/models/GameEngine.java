@@ -362,6 +362,7 @@ public class GameEngine extends Observable implements Serializable {
         for (Developer dev : developers) {
             if (!dev.isFed()) {
                 devs.add(dev);
+            
             }
         }
         return devs;
@@ -370,7 +371,7 @@ public class GameEngine extends Observable implements Serializable {
     /**
      * Save the game to the file. (Binary file)
      *
-     * @param file Namepath of the save file
+     * @param file Path of the save file
      */
     public void saveBinary(File file) throws FileNotFoundException, IOException {
         FileOutputStream fileOut = new FileOutputStream(file);
@@ -388,7 +389,7 @@ public class GameEngine extends Observable implements Serializable {
      * <code>{@link GameEngine}</code> with values from <code>{@link GameMemento}</code>
      * loaded from the saved file.</p>
      *
-     * @param file Namepath of the saved file
+     * @param file Path of the saved file
      */
     public void loadBinary(String file) throws FileNotFoundException, IOException {
         FileInputStream fileIn = new FileInputStream(file);
