@@ -201,9 +201,18 @@ public class GameEngine extends Observable implements Serializable {
             dev.feed();
             setChanged();
         } else {
+            setChanged();
             throw new InsufficientBudgetException();
         }
 
+    }
+
+    public int getFeedingExpense() {
+        return (Expenses.PIZZA.getCost() + Expenses.COFFEE.getCost()) * 5 + Expenses.REDBULL.getCost();
+    }
+
+    public int getBeerExpense() {
+        return Expenses.BEER.getCost();
     }
 
     /**
@@ -222,6 +231,7 @@ public class GameEngine extends Observable implements Serializable {
             dev.drink();
             setChanged();
         } else {
+            setChanged();
             throw new InsufficientBudgetException();
         }
     }
@@ -362,7 +372,7 @@ public class GameEngine extends Observable implements Serializable {
         for (Developer dev : developers) {
             if (!dev.isFed()) {
                 devs.add(dev);
-            
+
             }
         }
         return devs;
@@ -523,11 +533,11 @@ public class GameEngine extends Observable implements Serializable {
 
             reportStream.println("Total hired developers: " + numHiredDevs);
 
-            reportStream.println("Completed Project ("+ pastProjects.size() +" projects): \n");
+            reportStream.println("Completed Project (" + pastProjects.size() + " projects): \n");
             for (Project project : pastProjects) {
-                reportStream.println(project.getName() +" - Level " + project.getLevel());
+                reportStream.println(project.getName() + " - Level " + project.getLevel());
                 reportStream.println("\t" + "Budget: " + project.getBudget());
-                reportStream.println("\t" + "Duration: "+ project.getDuration() + " months");
+                reportStream.println("\t" + "Duration: " + project.getDuration() + " months");
                 reportStream.println();
             }
 

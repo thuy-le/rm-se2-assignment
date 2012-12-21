@@ -39,23 +39,14 @@ public class DeveloperTabController {
     }
 
     public void initialize() {
-        //Feed all developers
         developerTab.addFeedAllDevListener(new FeedAllMouseListener());
-        //Open new windown, choose developer to add
         developerTab.addHireDevListener(new HireDeveloperMouseListener());
-        //Give all developers beer
         developerTab.addPartyListener(new PartyMouseListener());
-        //Feed Selected Developer
         developerTab.addFeedSelectedDevListener(new FeedDeveloperListener());
-        //Fire selected Developer
         developerTab.addFireDevListener(new FireDeveloperListener());
-        //Give selected Developer beer
         developerTab.addGiveBeerListener(new GiveBeerToDevListener());
-        //close hirePane
         hireDevPnl.addCloseHirePaneEvent(new CloseHirePaneListener());
-        //hre dev
         hireDevPnl.addHireDeveloperEvent(new HireDeveloperListener());
-        //train developer
         developerTab.addTrainDeveloperListener(new TrainSkillListener());
     }
 
@@ -67,12 +58,17 @@ public class DeveloperTabController {
             if (devs.isEmpty()) {
             } else {
                 try {
+                    int cost = model.getFeedingExpense() * devs.size();
+                    if (cost > model.getBudget()) {
+                        throw new InsufficientBudgetException();
+                    }
                     for (Developer dev : devs) {
                         model.feedDeveloper(dev);
                     }
                     model.notifyObservers();
                     JOptionPane.showMessageDialog(null, "All developers are full");
                 } catch (InsufficientBudgetException ex) {
+                    model.notifyObservers();
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
@@ -187,12 +183,17 @@ public class DeveloperTabController {
             if (devs.isEmpty()) {
             } else {
                 try {
+                    int cost = model.getBeerExpense() * devs.size();
+                    if (cost > model.getBudget()) {
+                        throw new InsufficientBudgetException();
+                    }
                     for (Developer dev : devs) {
                         model.giveDeveloperBeer(dev);
                     }
                     model.notifyObservers();
                     JOptionPane.showMessageDialog(null, "All developers are now happy! Yey!");
                 } catch (InsufficientBudgetException ex) {
+                    model.notifyObservers();
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }

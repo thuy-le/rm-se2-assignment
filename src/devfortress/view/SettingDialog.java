@@ -101,12 +101,53 @@ public class SettingDialog extends JDialog {
         applyBtn.addMouseListener(l);
     }
 
+    public Options getFeedOption() {
+        Object[] objs = feedGroup.getSelection().getSelectedObjects();
+        if (objs.length == 0) {
+            return null;
+        }
+        JRadioButton button = (JRadioButton) objs[0];
+        if (button == keepAllDevFulRadio) {
+            return Options.KEEP_ALL_DEVS_FULL;
+        } else if (button == keepWorkingFullRadio) {
+            return Options.KEEP_WORKING_DEVS_FULL;
+        } else {
+            return Options.MANUALLY_FEED_DEVS;
+        }
+    }
+
+    public Options getBeerOption() {
+        Object[] objs = beerGroup.getSelection().getSelectedObjects();
+        if (objs.length == 0) {
+            return null;
+        }
+        JRadioButton button = (JRadioButton) objs[0];
+        if (button == allBeerWeekly) {
+            return Options.ALL_DEVS_BEER_WEEKLY;
+        } else if (button == unhappyBeerWeekly) {
+            return Options.UNHAPPY_DEVS_BEER_WEEKLY;
+        } else if (button == allBeerMonthly) {
+            return Options.ALL_DEVS_BEER_MONTHLY;
+        } else if (button == unhappyBeerMonthly) {
+            return Options.UNHAPPY_DEVS_BEER_MONTHLY;
+        } else {
+            return Options.MANUALLY_GIVE_BEER;
+        }
+    }
+
     private void cancel() {
         this.dispose();
     }
 
     public static enum Options {
 
-        KEEP_ALL_DEV_FULL,
+        KEEP_ALL_DEVS_FULL,
+        KEEP_WORKING_DEVS_FULL,
+        MANUALLY_FEED_DEVS,
+        ALL_DEVS_BEER_WEEKLY,
+        ALL_DEVS_BEER_MONTHLY,
+        UNHAPPY_DEVS_BEER_WEEKLY,
+        UNHAPPY_DEVS_BEER_MONTHLY,
+        MANUALLY_GIVE_BEER
     }
 }
