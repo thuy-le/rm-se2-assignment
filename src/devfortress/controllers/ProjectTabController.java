@@ -182,12 +182,6 @@ public class ProjectTabController {
                 model.acceptProject(project);
                 model.notifyObservers();
                 JOptionPane.showMessageDialog(null, "New project accepted:\n" + project.getName());
-                if (!model.hasAvalableDevs()) {
-                    projectTab.btnAddDev.disableButton();
-                } else {
-                    projectTab.btnAddDev.enableButton();
-                }
-                projectTab.btnRemoveDev.disableButton(); // Recently accepted project have no dev
             } else {
                 JOptionPane.showMessageDialog(null, "No Project Selected", "DevFortress", -1);
             }

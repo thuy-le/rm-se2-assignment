@@ -2,7 +2,6 @@ package devfortress.controllers;
 
 import devfortress.models.exceptions.GameOverException;
 import devfortress.models.GameEngine;
-import devfortress.models.Project;
 import devfortress.models.exceptions.HungryDeveloperNotification;
 import devfortress.models.exceptions.ProjectCompletedNotification;
 import devfortress.view.*;

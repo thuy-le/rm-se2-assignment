@@ -10,6 +10,7 @@ import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
 import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,9 +35,10 @@ public class Intern extends Effect {
             dev.setHappy(true);
             //Random one area
             List<FunctionalArea> areas = new LinkedList<FunctionalArea>(project.getAreas().values());
-            for (FunctionalArea a : areas) {
-                if (a.isCompleted()) {
-                    areas.remove(a);
+            for (Iterator<FunctionalArea> itr = areas.iterator(); itr.hasNext();) {
+                FunctionalArea area = itr.next();
+                if (area.isCompleted()) {
+                    itr.remove();
                 }
             }
             FunctionalArea area = areas.get(Utilities.randInt(areas.size()));

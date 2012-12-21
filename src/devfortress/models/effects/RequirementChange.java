@@ -9,6 +9,7 @@ import devfortress.models.FunctionalArea;
 import devfortress.models.Project;
 import devfortress.utilities.EffectLevel;
 import devfortress.utilities.Utilities;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,9 +26,10 @@ public class RequirementChange extends Effect {
             description = "";
             return;
         }
-        for (FunctionalArea area : areas) {
+        for (Iterator<FunctionalArea> itr = areas.iterator(); itr.hasNext();) {
+            FunctionalArea area = itr.next();
             if (area.isCompleted()) {
-                areas.remove(area);
+                itr.remove();
             }
         }
         FunctionalArea area = areas.get(Utilities.randInt(areas.size()));

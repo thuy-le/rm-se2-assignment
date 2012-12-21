@@ -26,8 +26,7 @@ public class SolutionNotScale extends Effect {
             description = "";
             return;
         }
-        Iterator<FunctionalArea> itr = areas.iterator();
-        while (itr.hasNext()) {
+        for (Iterator<FunctionalArea> itr = areas.iterator(); itr.hasNext();) {
             FunctionalArea area = itr.next();
             if (area.isCompleted()) {
                 itr.remove();

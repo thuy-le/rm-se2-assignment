@@ -34,7 +34,7 @@ import java.util.logging.Logger;
  */
 public class GameEngine extends Observable implements Serializable {
 
-    private static final int DEFAULT_BUDGET = 10000;
+    private static final int DEFAULT_BUDGET = 1000000;
     private int budget;
     private DevDate date;
     private List<Developer> developers, developers_ReadOnly, marketDevelopers, marketDevelopers_ReadOnly;
@@ -498,13 +498,17 @@ public class GameEngine extends Observable implements Serializable {
 
     private void allProjectProgress() throws ProjectCompletedNotification {
         List<String> finishedProjects = new ArrayList<String>();
+        List<Project> projs = new LinkedList<Project>();
         for (Project p : projects) {
             p.progress(date);
             if (p.isFinished()) {
                 finishedProjects.add(p.getName() + " - level " + p.getLevel()
                         + ".Received $" + (p.getBudget() * 3 / 4 + p.getBonus()));
-                receiveMoney(p);
+                projs.add(p);
             }
+        }
+        for (Project p : projs) {
+            receiveMoney(p);
         }
         if (!finishedProjects.isEmpty()) {
             String message = "There are some project completed: ";

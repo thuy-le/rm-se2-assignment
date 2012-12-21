@@ -6,7 +6,6 @@ package devfortress.view;
 
 import devfortress.models.exceptions.InvalidDevDateException;
 import devfortress.models.DevDate;
-import devfortress.models.Developer;
 import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
@@ -27,21 +26,16 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -63,7 +57,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
     private DefaultListModel prjModel;
     private DefaultTableModel projTableModel;
     private CustomButton btnAdd, btnCancelProject;
-    public CustomButton btnAddDev, btnRemoveDev;
+    private CustomButton btnAddDev, btnRemoveDev;
     private GlassPanel infoPanel;
     private JLabel prjName, deadline, cost, info1, status;
     private JTable table;
@@ -202,7 +196,23 @@ public class ProjectTabPanel extends JPanel implements Observer {
         btnRemoveDev.addMouseListener(l);
     }
 
+    private void disableRemoveButton() {
+        btnRemoveDev.disableButton();
+    }
+
+    private void enableRemoveButton() {
+        btnRemoveDev.enableButton();
+    }
+
+    private void disableAddButton() {
+        btnAddDev.disableButton();
+    }
+
+    private void enableAddButton() {
+        btnAddDev.enableButton();
+    }
     //override the getPreferredSize method
+
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
@@ -218,14 +228,15 @@ public class ProjectTabPanel extends JPanel implements Observer {
         if (!model.getProjects().contains(selectedProject)) {
             selectedProject = null;
         }
-        showProject(selectedProject);
+
+        showProject(model, selectedProject);
     }
 
     public Project getSelectedProject() {
         return selectedProject;
     }
 
-    public synchronized void showProject(Project project) {
+    public synchronized void showProject(GameEngine model, Project project) {
         if (project == null) {
             infoPanel.setVisible(false);
         } else {
@@ -251,17 +262,15 @@ public class ProjectTabPanel extends JPanel implements Observer {
                 projTableModel.setColumnIdentifiers(ids);
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
                 table.getColumnModel().getColumn(1).setMaxWidth(100);
-                // Add and remove project buttons:
                 if (project.getDevelopers().isEmpty()) {
-                    btnRemoveDev.disableButton();
+                    disableRemoveButton();
                 } else {
-                    btnRemoveDev.enableButton();
+                    enableRemoveButton();
                 }
-                
-                if (!GameEngine.getInstance().hasAvalableDevs()) { // Still messy :(
-                    btnAddDev.disableButton();
+                if (model.hasAvalableDevs()) {
+                    enableAddButton();
                 } else {
-                    btnAddDev.enableButton();
+                    disableAddButton();
                 }
             } catch (InvalidDevDateException ex) {
             }
@@ -288,7 +297,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
                         selectedProject = null;
                     }
                 }
-                showProject(selectedProject);
+                showProject(GameEngine.getInstance(), selectedProject);
             }
         }
     }
