@@ -25,14 +25,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Team Poseidon
  */
-public class GameEngine extends Observable implements Serializable {
+public class GameEngine extends Observable {
 
     private static final int DEFAULT_BUDGET = 1000000;
     private int budget;

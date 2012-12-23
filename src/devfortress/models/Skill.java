@@ -1,11 +1,19 @@
 package devfortress.models;
 
 import devfortress.enumerations.SkillInfo;
+import devfortress.enumerations.SkillTypes;
 import java.io.Serializable;
 
 /**
- *
+ * Developers have skills, either technical skills or other soft skills.
+ * <p>- There are 4 type or skills: technical, meta, personal and configuration management</p>
+ * <p>- A skill can be trained with money. Technical skills can be leveled automatically
+ * when developer working on a project require that skill.</p>
+ * <p>- A developer will have at least 1 technical skill at the beginning.</p>
+ * <p>- Skills are used to determine developer's salary.</p>
  * @author Team Poseidon
+ * @see SkillInfo
+ * @see SkillTypes
  */
 public class Skill implements Comparable<Skill>, Serializable {
 
@@ -106,9 +114,8 @@ public class Skill implements Comparable<Skill>, Serializable {
             return -1;
         } else if (this.level > s.level) {
             return 1;
-        } else {
-            // But the skill name is sorted in ascending order
-            return -this.skillInfo.getName().compareTo(s.getSkillInfo().getName());
         }
+        // But the skill name is sorted in ascending order
+        return -this.skillInfo.getName().compareTo(s.getSkillInfo().getName());
     }
 }
