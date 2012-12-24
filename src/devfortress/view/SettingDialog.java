@@ -143,6 +143,7 @@ public class SettingDialog extends JDialog {
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
         pack();        
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setTitle("Setting");
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);

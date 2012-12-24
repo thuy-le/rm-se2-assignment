@@ -1,8 +1,8 @@
 package devfortress.controllers;
 
 import devfortress.enumerations.Options;
-import devfortress.models.exceptions.GameOverException;
 import devfortress.models.GameEngine;
+import devfortress.models.exceptions.GameOverException;
 import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -92,11 +92,11 @@ public class MainFrameController {
                 Options feedOption = dialog.getFeedOption();
                 Options beerOption = dialog.getBeerOption();
                 if (feedOption == null || beerOption == null) {
-                    JOptionPane.showMessageDialog(null, "You have to choose both options");
+                    JOptionPane.showMessageDialog(null, "You have to choose both options", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     model.setOptions(feedOption, beerOption);
                     dialog.dispose();
-                    JOptionPane.showMessageDialog(null, "Settings saved");
+                    JOptionPane.showMessageDialog(null, "Settings saved","DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }
@@ -111,7 +111,7 @@ public class MainFrameController {
             } catch (GameOverException ex) {
                 int result = JOptionPane.showConfirmDialog(null, ex.getMessage()
                         + "\nDo you want to save your achievements?",
-                        null, JOptionPane.YES_NO_OPTION);
+                        "DevFortress", JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     model.endGameReport(new File(model.getPlayerName() + ".txt"));
                 }
@@ -123,7 +123,7 @@ public class MainFrameController {
                 for (String dev : notifications) {
                     message += dev;
                 }
-                JOptionPane.showMessageDialog(null, message);
+                JOptionPane.showMessageDialog(null, message, "DevFortress", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -152,10 +152,13 @@ public class MainFrameController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            mainFrame.remove(tabPne);
-            navBar.setVisible(false);
-            infoPnl.setVisible(false);
-            mainFrame.getContentPane().add(welCm.getContainer());
+            int choosen = JOptionPane.showConfirmDialog(mainFrame, "Do you want to have a new game?", "DevFortress", JOptionPane.YES_NO_OPTION);
+            if (choosen == JOptionPane.YES_OPTION) {
+                mainFrame.remove(tabPne);
+                navBar.setVisible(false);
+                infoPnl.setVisible(false);
+                mainFrame.getContentPane().add(welCm.getContainer());
+            }
         }
     }
 
@@ -177,7 +180,10 @@ public class MainFrameController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.exit(0);
+            int choosen = JOptionPane.showConfirmDialog(mainFrame, "Exit Game?", "DevFortress", JOptionPane.YES_NO_OPTION);
+            if (choosen == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
         }
     }
 
@@ -204,11 +210,11 @@ public class MainFrameController {
                     } else {
                         model.saveBinary(file);
                     }
-                    JOptionPane.showMessageDialog(null, "Game saved.");
+                    JOptionPane.showMessageDialog(null, "Game saved.","DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException ex) {
                 } catch (IOException ex) {
                     String error = "Error Occur! Cannot save game.";
-                    JOptionPane.showMessageDialog(null, error, null, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, error, "DevFortress", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -229,13 +235,13 @@ public class MainFrameController {
                 File file = fileChooser.getSelectedFile();
                 try {
                     model.loadBinary(file.getAbsolutePath());
-                    JOptionPane.showMessageDialog(null, file.getName() + " loaded.");
+                    JOptionPane.showMessageDialog(null, file.getName() + " loaded.","DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException ex) {
                     String error = "Error Occur! Cannot find save file.";
-                    JOptionPane.showMessageDialog(null, error, null, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, error, "DevFortress", JOptionPane.ERROR_MESSAGE);
                 } catch (IOException ex) {
                     String error = "Error Occur! Cannot load game.";
-                    JOptionPane.showMessageDialog(null, error, null, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, error, "DevFortress", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
