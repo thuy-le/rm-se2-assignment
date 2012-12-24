@@ -66,7 +66,7 @@ public class DeveloperTabController {
                         model.feedDeveloper(dev);
                     }
                     model.notifyObservers();
-                    JOptionPane.showMessageDialog(null, "All developers are full");
+                    JOptionPane.showMessageDialog(null, "All developers are full", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (InsufficientBudgetException ex) {
                     model.notifyObservers();
                     JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -81,7 +81,7 @@ public class DeveloperTabController {
         public void mouseClicked(MouseEvent e) {
             Developer dev = (Developer) hireDevPnl.getDevToHire();
             if (dev != null) {
-                int choosen = JOptionPane.showConfirmDialog(mainFrame, "Do you want to hire this developer?","DevFortress", JOptionPane.YES_NO_OPTION);
+                int choosen = JOptionPane.showConfirmDialog(mainFrame, "Do you want to hire this developer?", "DevFortress", JOptionPane.YES_NO_OPTION);
                 if (choosen == JOptionPane.YES_OPTION) {
                     int numPCs = model.getNumPCs();
                     model.hireDeveloper(dev);
@@ -89,15 +89,15 @@ public class DeveloperTabController {
                     hireDevPnl.getDevModel().removeElement(dev);
                     model.notifyObservers();
                     if (model.getNumPCs() > numPCs) {
-                        JOptionPane.showMessageDialog(null, dev.getName() + " is hired\n1 PC more is purchased", "DevFortress", JOptionPane.DEFAULT_OPTION);
+                        JOptionPane.showMessageDialog(null, dev.getName() + " is hired\n1 PC more is purchased", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                         developerTab.btnFeed.enableButton();
                         developerTab.btnParty.enableButton();
                     } else {
-                        JOptionPane.showMessageDialog(null, dev.getName() + " is hired");
+                        JOptionPane.showMessageDialog(null, dev.getName() + " is hired", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You need to choose 1 developer to hire", "DevFortress", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showMessageDialog(null, "You need to choose 1 developer to hire", "DevFortress", JOptionPane.OK_OPTION);
             }
         }
     }
@@ -161,7 +161,7 @@ public class DeveloperTabController {
                 navBar.setVisible(false);
                 mainFrame.add(hireDevPnl);
             } else {
-                JOptionPane.showMessageDialog(null, "You can only hire new developers at the beginning of each month");
+                JOptionPane.showMessageDialog(null, "You can only hire new developers at the beginning of each month", "DevFortress", JOptionPane.OK_OPTION);
             }
         }
     }
@@ -194,10 +194,10 @@ public class DeveloperTabController {
                         model.giveDeveloperBeer(dev);
                     }
                     model.notifyObservers();
-                    JOptionPane.showMessageDialog(null, "All developers are now happy! Yey!");
+                    JOptionPane.showMessageDialog(null, "All developers are now happy! Yey!" , "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (InsufficientBudgetException ex) {
                     model.notifyObservers();
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
 
@@ -215,12 +215,12 @@ public class DeveloperTabController {
                     model.feedDeveloper(dev);
                     model.notifyObservers();
                     developerTab.setSelectedDeveloper(index);
-                    JOptionPane.showMessageDialog(null, dev.getName() + " is now full");
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is now full", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (InsufficientBudgetException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You have to select a developer");
+                JOptionPane.showMessageDialog(null, "You have to select a developer", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -234,21 +234,24 @@ public class DeveloperTabController {
                 List<Developer> devs = model.getDevelopers();
                 if (dev != null) {
                     try {
-                        model.fireDeveloper(dev);
-                        JOptionPane.showMessageDialog(null, dev.getName() + " is fired");
-                        model.notifyObservers();
-                        if (devs.isEmpty()) {
-                            developerTab.btnFeed.disableButton();
-                            developerTab.btnParty.disableButton();
+                        int choosen = JOptionPane.showConfirmDialog(mainFrame, "Do you want to fire " + dev.getName() + " ?", "DevFortress", JOptionPane.YES_NO_OPTION);
+                        if (choosen == JOptionPane.YES_OPTION) {
+                            model.fireDeveloper(dev);
+                            JOptionPane.showMessageDialog(null, dev.getName() + " is fired", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
+                            model.notifyObservers();
+                            if (devs.isEmpty()) {
+                                developerTab.btnFeed.disableButton();
+                                developerTab.btnParty.disableButton();
+                            }
                         }
                     } catch (DeveloperBusyException ex) {
                         JOptionPane.showMessageDialog(null, dev.getName() + ex.getMessage());
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "You have to select a developer");
+                    JOptionPane.showMessageDialog(null, "You have to select a developer", "DevFortress", JOptionPane.OK_OPTION);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You can only fire developers at the beginning of each month");
+                JOptionPane.showMessageDialog(null, "You can only fire developers at the beginning of each month", "DevFortress", JOptionPane.OK_OPTION);
             }
         }
     }
@@ -264,12 +267,12 @@ public class DeveloperTabController {
                     model.giveDeveloperBeer(dev);
                     model.notifyObservers();
                     developerTab.setSelectedDeveloper(index);
-                    JOptionPane.showMessageDialog(null, dev.getName() + " is now very happy");
+                    JOptionPane.showMessageDialog(null, dev.getName() + " is now very happy", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (InsufficientBudgetException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You have to select a developer");
+                JOptionPane.showMessageDialog(null, "You have to select a developer", "DevFortress", JOptionPane.OK_OPTION);
             }
         }
     }
