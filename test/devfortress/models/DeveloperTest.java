@@ -16,12 +16,22 @@ public class DeveloperTest {
     Developer testObject = null;
     Project mockProject;
     AreaName[] areas;
+    FunctionalArea mockArea1, mockArea2, mockArea3;
+    Skill techSkill1, techSkill2, techSkill3, metaSkill;
     
     public DeveloperTest() {
         mockProject = mock(Project.class);
         when(mockProject.getName()).thenReturn("Mock Project");
         when(mockProject.getMainRequirement()).thenReturn(SkillInfo.JAVA);
         when(mockProject.getLevel()).thenReturn(1);
+        
+        areas = new AreaName[]{AreaName.CODING, AreaName.DOCUMENTATION, AreaName.SECURITY};
+        mockArea1 = mock(FunctionalArea.class);
+        when(mockArea1.getName()).thenReturn(areas[0]);
+        mockArea2 = mock(FunctionalArea.class);
+        when(mockArea2.getName()).thenReturn(areas[1]);
+        mockArea3 = mock(FunctionalArea.class);
+        when(mockArea3.getName()).thenReturn(areas[2]);
     }
 
     @Before
@@ -37,6 +47,7 @@ public class DeveloperTest {
      * Test of determineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
      * Case 1: developer with no skill.
+     * @deprecated the developer's skill have been randomized at the constructor
      */
     @Test
     public void testDetermineMainSkill_1() {
@@ -49,10 +60,11 @@ public class DeveloperTest {
      * Test of determineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
      * Case 2: developer with 1 technical skill.
+     * @deprecated the developer's skill have been randomized at the constructor
      */
     @Test
     public void testDetermineMainSkill_2() {
-        Skill testSkill = new Skill(1, SkillInfo.JAVA);
+        Skill testSkill = new Skill(10, SkillInfo.JAVA);
         testObject.addSkill(testSkill);
         SkillInfo expResult = testSkill.getSkillInfo();
         SkillInfo result = testObject.getMainSkill();
@@ -141,123 +153,11 @@ public class DeveloperTest {
     }
 
     /**
-     * Test of getName method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testGetName() {
-        System.out.println("getName");
-        Developer instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getSalary method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testGetSalary() {
-        System.out.println("getSalary");
-        Developer instance = null;
-        int expResult = 0;
-        int result = instance.getSalary();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getSkills method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testGetSkills() {
-        System.out.println("getSkills");
-        Developer instance = null;
-        Map expResult = null;
-        Map result = instance.getSkills();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setHappy method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testSetHappy() {
-        System.out.println("setHappy");
-        boolean happy = false;
-        Developer instance = null;
-        instance.setHappy(happy);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of feed method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testFeed() {
-        System.out.println("feed");
-        Developer instance = null;
-        instance.feed();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of drink method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testDrink() {
-        System.out.println("drink");
-        Developer instance = null;
-        instance.drink();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getTired method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testGetTired() {
-        System.out.println("getTired");
-        Developer instance = null;
-        instance.getTired();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addSkill method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testAddSkill() {
-        System.out.println("addSkill");
-        Skill skill = null;
-        Developer instance = null;
-        instance.addSkill(skill);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of trainSkill method, of class Developer.
      * Simple test.
      */
     @Test
-    public void testTrainSkill1() {
+    public void testTrainSkill_1() {
         SkillInfo testSkillInfo = SkillInfo.C;
         testObject.trainSkill(testSkillInfo);
         testObject.trainSkill(testSkillInfo);
@@ -270,39 +170,11 @@ public class DeveloperTest {
      * Simple test.
      */
     @Test
-    public void testTrainSkill2() {
+    public void testTrainSkill_2() {
         SkillInfo testSkillInfo = SkillInfo.C;
         testObject.addSkill(new Skill(10, testSkillInfo));
         testObject.trainSkill(testSkillInfo);
         int expResult = 10;
         assertEquals(expResult, testObject.getSkills().get(testSkillInfo).getLevel());
-    }
-
-    /**
-     * Test of acceptProject method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testAcceptProject() throws Exception {
-        System.out.println("acceptProject");
-        Project project = null;
-        AreaName area = null;
-        Developer instance = null;
-        instance.acceptProject(project, area);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of leaveProject method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testLeaveProject() {
-        System.out.println("leaveProject");
-        Developer instance = null;
-        instance.leaveProject();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }
