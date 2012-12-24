@@ -351,7 +351,9 @@ public class GameEngine extends Observable implements Serializable {
             if (feedOption == Options.KEEP_ALL_DEVS_FULL) {
                 for (Developer dev : developers) {
                     try {
-                        feedDeveloper(dev);
+                        if (!dev.isFed()) {
+                            feedDeveloper(dev);
+                        }
                     } catch (InsufficientBudgetException ex) {
                         throw new GameOverException();
                     }
@@ -359,8 +361,10 @@ public class GameEngine extends Observable implements Serializable {
             } else if (feedOption == Options.KEEP_WORKING_DEVS_FULL) {
                 for (Developer dev : developers) {
                     try {
-                        if (!dev.isFed()) {
-                            feedDeveloper(dev);
+                        if (!dev.isAvailable()) {
+                            if (!dev.isFed()) {
+                                feedDeveloper(dev);
+                            }
                         }
                     } catch (InsufficientBudgetException ex) {
                         throw new GameOverException();
