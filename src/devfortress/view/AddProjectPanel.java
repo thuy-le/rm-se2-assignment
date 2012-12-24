@@ -251,6 +251,7 @@ public class AddProjectPanel extends JPanel implements Observer {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
+            selectedProject = null;
             if (projectList.getSelectedIndex() != -1) {
                 selectedProject = (Project) projectList.getSelectedValue();
                 showProject((Project) projectList.getSelectedValue());

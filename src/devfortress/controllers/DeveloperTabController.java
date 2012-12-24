@@ -81,20 +81,23 @@ public class DeveloperTabController {
         public void mouseClicked(MouseEvent e) {
             Developer dev = (Developer) hireDevPnl.getDevToHire();
             if (dev != null) {
-                int numPCs = model.getNumPCs();
-                model.hireDeveloper(dev);
-                developerTab.getDevModel().addElement(dev);
-                hireDevPnl.getDevModel().removeElement(dev);
-                model.notifyObservers();
-                if (model.getNumPCs() > numPCs) {
-                    JOptionPane.showMessageDialog(null, dev.getName() + " is hired\n1 PC more is purchased");
-                    developerTab.btnFeed.enableButton();
-                    developerTab.btnParty.enableButton();
-                } else {
-                    JOptionPane.showMessageDialog(null, dev.getName() + " is hired");
+                int choosen = JOptionPane.showConfirmDialog(mainFrame, "Do you want to hire this developer?","DevFortress", JOptionPane.YES_NO_OPTION);
+                if (choosen == JOptionPane.YES_OPTION) {
+                    int numPCs = model.getNumPCs();
+                    model.hireDeveloper(dev);
+                    developerTab.getDevModel().addElement(dev);
+                    hireDevPnl.getDevModel().removeElement(dev);
+                    model.notifyObservers();
+                    if (model.getNumPCs() > numPCs) {
+                        JOptionPane.showMessageDialog(null, dev.getName() + " is hired\n1 PC more is purchased", "DevFortress", JOptionPane.DEFAULT_OPTION);
+                        developerTab.btnFeed.enableButton();
+                        developerTab.btnParty.enableButton();
+                    } else {
+                        JOptionPane.showMessageDialog(null, dev.getName() + " is hired");
+                    }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "You need to choose 1 developer to hire");
+                JOptionPane.showMessageDialog(null, "You need to choose 1 developer to hire", "DevFortress", JOptionPane.DEFAULT_OPTION);
             }
         }
     }

@@ -185,10 +185,10 @@ public class ProjectTabController {
                 // add project to project list:
                 model.acceptProject(project);
                 model.notifyObservers();
-                JOptionPane.showMessageDialog(null, "New project accepted:\n" + project.getName(), "DevFortress", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showMessageDialog(null, "New project accepted:\n" + project.getName(), "DevFortress",JOptionPane.INFORMATION_MESSAGE);                
             } else {
                 JOptionPane.showMessageDialog(null, "No Project Selected", "DevFortress", JOptionPane.OK_OPTION);
-            }
+            }            
         }
     }
 
