@@ -92,7 +92,7 @@ public class MainFrameController {
                 Options feedOption = dialog.getFeedOption();
                 Options beerOption = dialog.getBeerOption();
                 if (feedOption == null || beerOption == null) {
-                    JOptionPane.showMessageDialog(null, "You have to choose both options", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "You have to choose both options", "DevFortress", JOptionPane.OK_OPTION);
                 } else {
                     model.setOptions(feedOption, beerOption);
                     dialog.dispose();
