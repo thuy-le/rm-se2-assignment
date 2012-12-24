@@ -54,6 +54,7 @@ public class MainFrameController {
         navBar.addNewGameListener(new NewGameListener());
         navBar.addSaveGameListener(new SaveGameListener());
         navBar.addLoadGameListener(new LoadGameListener());
+        navBar.addSettingListener(new SettingListener());
         aboutPnl.addBackListener(new AboutBackBtnListener());
         welcome.addNewGameListener(new OpenNewGameListener());
 
@@ -67,6 +68,55 @@ public class MainFrameController {
             //welCm.getContainer().setVisible(true);
             mainFrame.getContentPane().add(welCm.getContainer(), BorderLayout.CENTER);
             mainFrame.getContentPane().repaint();
+        }
+    }
+
+    private class SettingListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            SettingDialog dialog = new SettingDialog();
+            dialog.addApplyMouseListener(new ApplyListener(dialog));
+        }
+
+        private class ApplyListener extends MouseAdapter {
+
+            private SettingDialog dialog;
+
+            public ApplyListener(SettingDialog dialog) {
+                this.dialog = dialog;
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                SettingDialog.Options feedOption = dialog.getFeedOption();
+                SettingDialog.Options beerOption = dialog.getBeerOption();
+                if (feedOption == null || beerOption == null) {
+                    JOptionPane.showMessageDialog(null, "You have to choose both options");
+                } else {
+                    switch (feedOption) {
+                        case KEEP_ALL_DEVS_FULL:
+                            break;
+                        case KEEP_WORKING_DEVS_FULL:
+                            break;
+                        case MANUALLY_FEED_DEVS:
+                            break;
+                    }
+                    switch (beerOption) {
+                        case ALL_DEVS_BEER_WEEKLY:
+                            break;
+                        case UNHAPPY_DEVS_BEER_WEEKLY:
+                            break;
+                        case ALL_DEVS_BEER_MONTHLY:
+                            break;
+                        case UNHAPPY_DEVS_BEER_MONTHLY:
+                            break;
+                        case MANUALLY_GIVE_BEER:
+                            break;
+                    }
+                    dialog.dispose();
+                }
+            }
         }
     }
 
