@@ -1,14 +1,14 @@
 package devfortress.models;
 
-import devfortress.models.exceptions.InvalidFunctionalAreaException;
-import devfortress.models.exceptions.DeveloperBusyException;
-import devfortress.models.exceptions.InsufficientBudgetException;
-import devfortress.models.exceptions.GameAlreadyInitializedException;
-import devfortress.models.exceptions.GameOverException;
 import devfortress.enumerations.AreaName;
 import devfortress.enumerations.Expenses;
 import devfortress.enumerations.Options;
 import devfortress.enumerations.SkillInfo;
+import devfortress.models.exceptions.DeveloperBusyException;
+import devfortress.models.exceptions.GameAlreadyInitializedException;
+import devfortress.models.exceptions.GameOverException;
+import devfortress.models.exceptions.InsufficientBudgetException;
+import devfortress.models.exceptions.InvalidFunctionalAreaException;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.Utilities;
 import java.io.File;
@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -33,7 +31,7 @@ import java.util.logging.Logger;
  */
 public class GameEngine extends Observable implements Serializable {
 
-    private static final int DEFAULT_BUDGET = 1000000;
+    private static final int DEFAULT_BUDGET = 20000;
     private int budget;
     private DevDate date;
     private List<Developer> developers, developers_ReadOnly, marketDevelopers, marketDevelopers_ReadOnly;
@@ -278,7 +276,7 @@ public class GameEngine extends Observable implements Serializable {
     }
 
     /**
-     * @return a list of new projects avalable to accept
+     * @return a list of new projects available to accept
      */
     public List<Project> getMarketProjects() {
         return marketProject_ReadOnly;
@@ -340,6 +338,7 @@ public class GameEngine extends Observable implements Serializable {
      * System
      */
     public void nextWeek() throws GameOverException {
+        projectNotifications.clear();
         if (!ended) {
             //Things to do every week
             generateRandomEvents();
@@ -427,15 +426,9 @@ public class GameEngine extends Observable implements Serializable {
         }
     }
 
-    public List<Developer> getHungryDevelopers() {
-        List<Developer> devs = new LinkedList<Developer>();
-        for (Developer dev : developers) {
-            if (!dev.isFed()) {
-                devs.add(dev);
+    public List<String> getFinishedProjects() {
 
-            }
-        }
-        return devs;
+        return projectNotifications;
     }
 
     /**
@@ -570,7 +563,7 @@ public class GameEngine extends Observable implements Serializable {
             p.progress(date);
             if (p.isFinished()) {
                 projectNotifications.add(p.getName() + " - level " + p.getLevel()
-                        + ".Received $" + (p.getBudget() * 3 / 4 + p.getBonus()));
+                        + " is finished. Received $" + (p.getBudget() * 3 / 4 + p.getBonus()) + "\n");
                 finishedProjects.add(p);
             }
         }

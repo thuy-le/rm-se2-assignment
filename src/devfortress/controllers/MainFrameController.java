@@ -3,8 +3,6 @@ package devfortress.controllers;
 import devfortress.enumerations.Options;
 import devfortress.models.exceptions.GameOverException;
 import devfortress.models.GameEngine;
-import devfortress.models.exceptions.HungryDeveloperNotification;
-import devfortress.models.exceptions.ProjectCompletedNotification;
 import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -12,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -96,8 +95,8 @@ public class MainFrameController {
                     JOptionPane.showMessageDialog(null, "You have to choose both options");
                 } else {
                     model.setOptions(feedOption, beerOption);
-                    JOptionPane.showMessageDialog(null, "Settings saved");
                     dialog.dispose();
+                    JOptionPane.showMessageDialog(null, "Settings saved");
                 }
             }
         }
@@ -118,6 +117,14 @@ public class MainFrameController {
                 }
             }
             model.notifyObservers();
+            List<String> notifications = model.getFinishedProjects();
+            if (notifications.size() > 0) {
+                String message = "Some projects are finished:\n";
+                for (String dev : notifications) {
+                    message += dev;
+                }
+                JOptionPane.showMessageDialog(null, message);
+            }
         }
     }
 

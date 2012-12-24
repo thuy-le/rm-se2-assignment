@@ -52,7 +52,7 @@ public class SystemTabPanel extends JPanel implements Observer {
     static private final int arcW = 10;
     static private final int arcH = 10;
     //declare private variables
-    private JLabel budget, welcome, salary;
+    private JLabel budget, welcome, totalExpense;
     private JPanel subContainer;
     private JPanel leftNav;
     private List<Developer> developers;
@@ -133,7 +133,7 @@ public class SystemTabPanel extends JPanel implements Observer {
         subContainer = new GlassPanel(550, 400);
         leftNav = new GlassPanel(50, 500);
         budget = new JLabel("$");
-        salary = new JLabel("5000");
+        totalExpense = new JLabel("5000");
         welcome = new JLabel();
 
         //$$$$$-----Local variable for UI
@@ -142,8 +142,8 @@ public class SystemTabPanel extends JPanel implements Observer {
         GlassPanel sysInfo = new GlassPanel(15, 15, 250, 390, .9f, Colors.YELLOW, 15, 15);
         JLabel imageIcon = new JLabel(imgIcon);
         imageIcon.setPreferredSize(new Dimension(200, 200));
-        JLabel label = new JLabel("  Budget:");
-        JLabel label2 = new JLabel("  Total salary:");
+        JLabel label = new JLabel("Budget:");
+        JLabel label2 = new JLabel("Monthly cost:");
         upArrow = new CustomLabel("");
         downArrow = new CustomLabel("");
         upArrow.setIcon(new ImageIcon("images/arrowUp.png"));
@@ -154,7 +154,7 @@ public class SystemTabPanel extends JPanel implements Observer {
         welcome.setFont(new Font("Century Gothic", Font.BOLD, 17));
         welcome.setForeground(Colors.DARKBLUE);
         budget.setFont(new Font("Century Gothic", Font.BOLD, 20));
-        salary.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        totalExpense.setFont(new Font("Century Gothic", Font.BOLD, 20));
         label.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         label2.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         /*
@@ -189,7 +189,7 @@ public class SystemTabPanel extends JPanel implements Observer {
         sPnl.setOpaque(false);
         gpCenter.add(sPnl);
         sPnl.add(label2);
-        sPnl.add(salary);
+        sPnl.add(totalExpense);
 
         //
         setUpArrowListener();
@@ -241,7 +241,8 @@ public class SystemTabPanel extends JPanel implements Observer {
         for (Iterator<Developer> itr = devs.iterator(); itr.hasNext();) {
             total += itr.next().getSalary();
         }
-        salary.setText("$" + total);
+        total += (model.getFeedingExpense() + model.getBeerExpense()) * devs.size() * 4;
+        totalExpense.setText("$" + total);
         String welcomeStr = "<html>Hi, " + model.getPlayerName() + " ◕‿◕</html>";
         welcome.setText(welcomeStr);
     }

@@ -11,7 +11,6 @@ import devfortress.view.components.CustomLabel;
 import devfortress.view.components.CustomListPanel;
 import devfortress.view.components.CustomListRenderer;
 import devfortress.view.components.CustomProjectTable;
-import devfortress.view.components.CustomTable;
 import devfortress.view.components.GlassPanel;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
@@ -25,6 +24,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
@@ -194,8 +194,12 @@ public class AddProjectPanel extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         model = (GameEngine) o;
         projectListModel.clear();
-        for (Project project : model.getMarketProjects()) {
-            projectListModel.addElement(project);
+        Iterator<Project> itr = model.getMarketProjects().iterator();
+        synchronized (model.getMarketProjects()) {
+            for (; itr.hasNext();) {
+                Project project = itr.next();
+                projectListModel.addElement(project);
+            }
         }
         showProject((Project) projectList.getSelectedValue());
     }

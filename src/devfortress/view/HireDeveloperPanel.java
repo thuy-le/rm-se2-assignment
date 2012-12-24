@@ -4,18 +4,17 @@
  */
 package devfortress.view;
 
-import devfortress.view.components.CustomListPanel;
-import devfortress.view.components.CustomLabel;
-import devfortress.view.components.CustomListRenderer;
-import devfortress.view.components.CustomButton;
-import devfortress.view.components.GlassPanel;
-import devfortress.view.components.CustomTable;
 import devfortress.models.Developer;
 import devfortress.models.GameEngine;
 import devfortress.models.Project;
 import devfortress.models.Skill;
 import devfortress.utilities.Colors;
+import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomDeveloperTable;
+import devfortress.view.components.CustomLabel;
+import devfortress.view.components.CustomListPanel;
+import devfortress.view.components.CustomListRenderer;
+import devfortress.view.components.GlassPanel;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,6 +29,7 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;

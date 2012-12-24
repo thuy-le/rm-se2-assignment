@@ -18,6 +18,7 @@ public class ReadOnlySet<E> implements Set<E> {
 
     public ReadOnlySet(Set<E> set) {
         this.set = set;
+
     }
 
     @Override
