@@ -5,6 +5,7 @@ import devfortress.enumerations.SkillInfo;
 import java.util.Map;
 import org.junit.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit test for <code>{@link Developer}</code>.
@@ -13,18 +14,16 @@ import static org.junit.Assert.*;
 public class DeveloperTest {
     
     Developer testObject = null;
+    Project mockProject;
+    AreaName[] areas;
     
     public DeveloperTest() {
+        mockProject = mock(Project.class);
+        when(mockProject.getName()).thenReturn("Mock Project");
+        when(mockProject.getMainRequirement()).thenReturn(SkillInfo.JAVA);
+        when(mockProject.getLevel()).thenReturn(1);
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-    
     @Before
     public void setUp() {
         testObject = new Developer();
@@ -35,82 +34,24 @@ public class DeveloperTest {
     }
 
     /**
-     * Test of isHappy method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testIsHappy() {
-        System.out.println("isHappy");
-        Developer instance = null;
-        boolean expResult = false;
-        boolean result = instance.isHappy();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isFed method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testIsFed() {
-        System.out.println("isFed");
-        Developer instance = null;
-        boolean expResult = false;
-        boolean result = instance.isFed();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isDrunk method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testIsDrunk() {
-        System.out.println("isDrunk");
-        Developer instance = null;
-        boolean expResult = false;
-        boolean result = instance.isDrunk();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isAvailable method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testIsAvailable() {
-        System.out.println("isAvailable");
-        Developer instance = null;
-        boolean expResult = false;
-        boolean result = instance.isAvailable();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getMainSkill method, of class Developer.
+     * Test of determineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
      * Case 1: developer with no skill.
      */
     @Test
-    public void testGetMainSkill1() {
+    public void testDetermineMainSkill_1() {
         SkillInfo expResult = null;
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
     
     /**
-     * Test of getMainSkill method, of class Developer.
+     * Test of determineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
      * Case 2: developer with 1 technical skill.
      */
     @Test
-    public void testGetMainSkill2() {
+    public void testDetermineMainSkill_2() {
         Skill testSkill = new Skill(1, SkillInfo.JAVA);
         testObject.addSkill(testSkill);
         SkillInfo expResult = testSkill.getSkillInfo();
@@ -119,12 +60,12 @@ public class DeveloperTest {
     }
     
     /**
-     * Test of getMainSkill method, of class Developer.
+     * Test of DetermineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
      * Case 3: developer with 2 skills, 1 technical skill and 1 communication skill.
      */
     @Test
-    public void testGetMainSkill3() {
+    public void testDetermineMainSkill_3() {
         Skill techSkill = new Skill(1, SkillInfo.JAVA);
         Skill comSkill = new Skill(4, SkillInfo.COMMUNICATION);
         testObject.addSkill(comSkill);
@@ -135,12 +76,12 @@ public class DeveloperTest {
     }
     
     /**
-     * Test of getMainSkill method, of class Developer.
+     * Test of DetermineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
      * Case 4: developer with 2 skills, both technical.
      */
     @Test
-    public void testGetMainSkill4() {
+    public void testDetermineMainSkill_4() {
         Skill techSkill1 = new Skill(1, SkillInfo.JAVA);
         Skill techSkill2 = new Skill(4, SkillInfo.C);
         testObject.addSkill(techSkill1);
@@ -151,12 +92,12 @@ public class DeveloperTest {
     }
     
     /**
-     * Test of getMainSkill method, of class Developer.
+     * Test of DetermineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
      * Case 5: developer with 2 technical skills with the same level.
      */
     @Test
-    public void testGetMainSkill5() {
+    public void testDetermineMainSkill_5() {
         Skill techSkill1 = new Skill(4, SkillInfo.JAVA);
         Skill techSkill2 = new Skill(4, SkillInfo.C);
         testObject.addSkill(techSkill1);
@@ -167,12 +108,12 @@ public class DeveloperTest {
     }
     
     /**
-     * Test of getMainSkill method, of class Developer.
+     * Test of DetermineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
      * Case 6: developer no technical skill.
      */
     @Test
-    public void testGetMainSkill6() {
+    public void testDetermineMainSkill_6() {
         Skill comSkill = new Skill(1, SkillInfo.COMMUNICATION);
         Skill metaSkill = new Skill(4, SkillInfo.DESIGN);
         Skill teamSkill = new Skill(10, SkillInfo.TEAM_PLAYER);
