@@ -74,9 +74,12 @@ public class ProjectTabController {
                 Project pro = projectTab.getSelectedProject();
                 if (pro != null) {
                     try {
-                        model.cancelProject(pro);
-                        JOptionPane.showMessageDialog(null, pro.getName() + "cancelled");
-                        model.notifyObservers();
+                        int input = JOptionPane.showConfirmDialog(mainFrame, "Do you want to cancel this project", "DevFortress", JOptionPane.YES_NO_OPTION);
+                        if (input == JOptionPane.YES_OPTION) {
+                            model.cancelProject(pro);
+                            JOptionPane.showMessageDialog(null, pro.getName() + " cancelled");
+                            model.notifyObservers();
+                        }
                     } catch (Exception ex) {
                     }
                 }
@@ -92,7 +95,7 @@ public class ProjectTabController {
         public void mouseClicked(MouseEvent e) {
             if (model.getDate().getWeek() == 1) {
                 if (!model.hasAvalableDevs()) {
-                    JOptionPane.showConfirmDialog(mainFrame, "No available developer at the moment!", "DevFortress", -1);
+                    JOptionPane.showMessageDialog(mainFrame, "No developers at the moment","DevFortress",JOptionPane.OK_OPTION);
                 } else {
                     Project project = projectTab.getSelectedProject();
                     AddDeveloperToProjectDialog dialog = new AddDeveloperToProjectDialog(model, project);
@@ -138,7 +141,7 @@ public class ProjectTabController {
         public void mouseClicked(MouseEvent e) {
             if (model.getDate().getWeek() == 1) {
                 if (model.getDevelopers().isEmpty()) {
-                    JOptionPane.showMessageDialog(mainFrame, "No developers in project.");
+                    JOptionPane.showMessageDialog(mainFrame, "No developers in project","DevFortress",JOptionPane.OK_OPTION);
                 } else {
                     Project project = projectTab.getSelectedProject();
                     RemoveDeveloperFromProjectDialog dialog = new RemoveDeveloperFromProjectDialog(model, project);
@@ -182,9 +185,9 @@ public class ProjectTabController {
                 // add project to project list:
                 model.acceptProject(project);
                 model.notifyObservers();
-                JOptionPane.showMessageDialog(null, "New project accepted:\n" + project.getName());
+                JOptionPane.showMessageDialog(null, "New project accepted:\n" + project.getName(), "DevFortress", JOptionPane.DEFAULT_OPTION);
             } else {
-                JOptionPane.showMessageDialog(null, "No Project Selected", "DevFortress", -1);
+                JOptionPane.showMessageDialog(null, "No Project Selected", "DevFortress", JOptionPane.OK_OPTION);
             }
         }
     }
