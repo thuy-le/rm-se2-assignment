@@ -64,7 +64,7 @@ public class InfomationPanel extends GlassPanel implements Observer {
     }
 
     public void setDate(DevDate date) {
-        dateLbl.setText("<html>Week <b>" + date.getWeek() + "</b> <b>" + date.getMonthString() + "</b> Year <b>" + date.getYear() + "</b></html>");
+        dateLbl.setText("<html>Week <b>" + date.getWeek() + "</b> (of 4) <b>" + date.getMonthString() + "</b> Year <b>" + date.getYear() + "</b></html>");
     }
 
     @Override
