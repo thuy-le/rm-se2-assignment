@@ -1,5 +1,6 @@
 package devfortress.controllers;
 
+import devfortress.enumerations.Options;
 import devfortress.models.exceptions.GameOverException;
 import devfortress.models.GameEngine;
 import devfortress.models.exceptions.HungryDeveloperNotification;
@@ -89,31 +90,13 @@ public class MainFrameController {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                SettingDialog.Options feedOption = dialog.getFeedOption();
-                SettingDialog.Options beerOption = dialog.getBeerOption();
+                Options feedOption = dialog.getFeedOption();
+                Options beerOption = dialog.getBeerOption();
                 if (feedOption == null || beerOption == null) {
                     JOptionPane.showMessageDialog(null, "You have to choose both options");
                 } else {
-                    switch (feedOption) {
-                        case KEEP_ALL_DEVS_FULL:
-                            break;
-                        case KEEP_WORKING_DEVS_FULL:
-                            break;
-                        case MANUALLY_FEED_DEVS:
-                            break;
-                    }
-                    switch (beerOption) {
-                        case ALL_DEVS_BEER_WEEKLY:
-                            break;
-                        case UNHAPPY_DEVS_BEER_WEEKLY:
-                            break;
-                        case ALL_DEVS_BEER_MONTHLY:
-                            break;
-                        case UNHAPPY_DEVS_BEER_MONTHLY:
-                            break;
-                        case MANUALLY_GIVE_BEER:
-                            break;
-                    }
+                    model.setOptions(feedOption, beerOption);
+                    JOptionPane.showMessageDialog(null, "Settings saved");
                     dialog.dispose();
                 }
             }
@@ -125,34 +108,13 @@ public class MainFrameController {
         @Override
         public void mouseClicked(MouseEvent e) {
             try {
-                model.nextWeek(false);
+                model.nextWeek();
             } catch (GameOverException ex) {
                 int result = JOptionPane.showConfirmDialog(null, ex.getMessage()
                         + "\nDo you want to save your achievements?",
                         null, JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION) {
                     model.endGameReport(new File(model.getPlayerName() + ".txt"));
-                }
-            } catch (ProjectCompletedNotification notice) {
-                model.notifyObservers();
-                JOptionPane.showMessageDialog(null, notice);
-            } catch (HungryDeveloperNotification notice) {
-                int result = JOptionPane.showConfirmDialog(null, notice.getMessage(), null, JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) { // Messy code here :(
-                    try {
-                        model.nextWeek(true);
-                    } catch (GameOverException ex) {
-                        result = JOptionPane.showConfirmDialog(null, ex.getMessage()
-                                + "\nDo you want to save your achievements?",
-                                null, JOptionPane.YES_NO_OPTION);
-                        if (result == JOptionPane.YES_OPTION) {
-                            model.endGameReport(new File(model.getPlayerName() + ".txt"));
-                        }
-                    } catch (ProjectCompletedNotification ex) {
-                        model.notifyObservers();
-                        JOptionPane.showMessageDialog(null, ex);
-                    } catch (HungryDeveloperNotification ex) {
-                    }
                 }
             }
             model.notifyObservers();

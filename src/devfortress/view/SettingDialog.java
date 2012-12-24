@@ -4,6 +4,7 @@
  */
 package devfortress.view;
 
+import devfortress.enumerations.Options;
 import devfortress.utilities.Colors;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -11,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
-import javax.swing.DefaultButtonModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -140,15 +140,5 @@ public class SettingDialog extends JDialog {
         this.dispose();
     }
 
-    public static enum Options {
-
-        KEEP_ALL_DEVS_FULL,
-        KEEP_WORKING_DEVS_FULL,
-        MANUALLY_FEED_DEVS,
-        ALL_DEVS_BEER_WEEKLY,
-        ALL_DEVS_BEER_MONTHLY,
-        UNHAPPY_DEVS_BEER_WEEKLY,
-        UNHAPPY_DEVS_BEER_MONTHLY,
-        MANUALLY_GIVE_BEER
-    }
+    
 }
