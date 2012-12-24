@@ -7,9 +7,15 @@ package devfortress.view;
 import devfortress.models.GameEngine;
 import devfortress.view.components.CustomLabel;
 import devfortress.utilities.Colors;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
@@ -24,8 +30,8 @@ import javax.swing.JToolBar;
  */
 public class NavigationToolBar extends JToolBar implements Observer {
 
-    private JLabel exitGame, newGame, aboutGame, saveGame, loadGame, budget;
-    private JPanel seperator;
+    private JLabel exitGame, newGame, aboutGame, saveGame, loadGame, setting, budget;
+    private JPanel budgetPanel;
 
     public NavigationToolBar() {
         setBorder(BorderFactory.createEmptyBorder());
@@ -39,14 +45,17 @@ public class NavigationToolBar extends JToolBar implements Observer {
         loadGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aboutGame = new CustomLabel(new ImageIcon("images/about.png"), "About Us");
         aboutGame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        budget = new JLabel("");
-        seperator = new JPanel();
+        setting = new CustomLabel(new ImageIcon("images/setting.png"), "Setting");
+        setting.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        budget = new JLabel();
+        budgetPanel = new JPanel();
         //adjust look and feel
         exitGame.setOpaque(false);
         newGame.setOpaque(false);
         saveGame.setOpaque(false);
         loadGame.setOpaque(false);
         aboutGame.setOpaque(false);
+        setting.setOpaque(false);
         budget.setForeground(Color.WHITE);
         budget.setFont(new Font("Century Gothic", Font.PLAIN, 28));
         //add components
@@ -56,11 +65,12 @@ public class NavigationToolBar extends JToolBar implements Observer {
         add(saveGame);
         add(loadGame);
         add(aboutGame);
+        add(setting);
         add(exitGame);
-        add(seperator);
-        seperator.setOpaque(false);
-        seperator.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        seperator.add(budget);
+        add(budgetPanel);
+        budgetPanel.setOpaque(false);
+        budgetPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        budgetPanel.add(budget);
     }
 
     public void addExitGameListener(MouseListener l) {
@@ -81,6 +91,10 @@ public class NavigationToolBar extends JToolBar implements Observer {
 
     public void addLoadGameListener(MouseListener l) {
         loadGame.addMouseListener(l);
+    }
+
+    public void addSettingListener(MouseListener l) {
+        setting.addMouseListener(l);
     }
 
     @Override
