@@ -107,7 +107,7 @@ public enum SkillInfo {
         initializeArrayLists();
         return techSkills;
     }
-    
+
     public String getName() {
         return name;
     }

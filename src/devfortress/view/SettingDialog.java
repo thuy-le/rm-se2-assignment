@@ -4,12 +4,14 @@
  */
 package devfortress.view;
 
+import devfortress.enumerations.Options;
 import devfortress.utilities.Colors;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -37,6 +39,7 @@ public class SettingDialog extends JDialog {
     private JRadioButton unhappyBeerMonthly;
     private JRadioButton unhappyBeerWeekly;
     private ButtonGroup feedGroup, beerGroup;
+//    private DefaultButtonModel feedModel, beerModel;
 
     public SettingDialog() {
         keepAllDevFulRadio = new JRadioButton("Keep all developers full");
@@ -50,6 +53,10 @@ public class SettingDialog extends JDialog {
         applyBtn = new JButton("Apply");
         feedGroup = new ButtonGroup();
         beerGroup = new ButtonGroup();
+//        feedModel = new DefaultButtonModel();
+//        beerModel = new DefaultButtonModel();
+//        feedGroup.setSelected(feedModel, false);
+//        beerGroup.setSelected(beerModel, false);
         JButton cancelBtn = new JButton("Cancel");
         JSeparator seperatorFeed = new JSeparator();
         JSeparator seperatorBeer = new JSeparator();
@@ -93,23 +100,18 @@ public class SettingDialog extends JDialog {
         setVisible(true);
     }
 
-    public static void main(String[] a) {
-        new SettingDialog();
-    }
-
     public void addApplyMouseListener(MouseListener l) {
         applyBtn.addMouseListener(l);
     }
 
     public Options getFeedOption() {
-        Object[] objs = feedGroup.getSelection().getSelectedObjects();
-        if (objs.length == 0) {
+        ButtonModel btnModel = feedGroup.getSelection();
+        if (btnModel == null) {
             return null;
         }
-        JRadioButton button = (JRadioButton) objs[0];
-        if (button == keepAllDevFulRadio) {
+        if (btnModel == keepAllDevFulRadio.getModel()) {
             return Options.KEEP_ALL_DEVS_FULL;
-        } else if (button == keepWorkingFullRadio) {
+        } else if (btnModel == keepWorkingFullRadio.getModel()) {
             return Options.KEEP_WORKING_DEVS_FULL;
         } else {
             return Options.MANUALLY_FEED_DEVS;
@@ -117,18 +119,17 @@ public class SettingDialog extends JDialog {
     }
 
     public Options getBeerOption() {
-        Object[] objs = beerGroup.getSelection().getSelectedObjects();
-        if (objs.length == 0) {
+        ButtonModel btnModel = beerGroup.getSelection();
+        if (btnModel == null) {
             return null;
         }
-        JRadioButton button = (JRadioButton) objs[0];
-        if (button == allBeerWeekly) {
+        if (btnModel == allBeerWeekly.getModel()) {
             return Options.ALL_DEVS_BEER_WEEKLY;
-        } else if (button == unhappyBeerWeekly) {
+        } else if (btnModel == unhappyBeerWeekly.getModel()) {
             return Options.UNHAPPY_DEVS_BEER_WEEKLY;
-        } else if (button == allBeerMonthly) {
+        } else if (btnModel == allBeerMonthly.getModel()) {
             return Options.ALL_DEVS_BEER_MONTHLY;
-        } else if (button == unhappyBeerMonthly) {
+        } else if (btnModel == unhappyBeerMonthly.getModel()) {
             return Options.UNHAPPY_DEVS_BEER_MONTHLY;
         } else {
             return Options.MANUALLY_GIVE_BEER;
@@ -139,15 +140,5 @@ public class SettingDialog extends JDialog {
         this.dispose();
     }
 
-    public static enum Options {
-
-        KEEP_ALL_DEVS_FULL,
-        KEEP_WORKING_DEVS_FULL,
-        MANUALLY_FEED_DEVS,
-        ALL_DEVS_BEER_WEEKLY,
-        ALL_DEVS_BEER_MONTHLY,
-        UNHAPPY_DEVS_BEER_WEEKLY,
-        UNHAPPY_DEVS_BEER_MONTHLY,
-        MANUALLY_GIVE_BEER
-    }
+    
 }

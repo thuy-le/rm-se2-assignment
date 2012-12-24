@@ -77,7 +77,7 @@ public class RemoveDeveloperFromProjectDialog extends JDialog implements ActionL
         setSize(800, 540);
         setResizable(false);
         setLocationRelativeTo(null);
-        
+
         cmbModel = new DefaultComboBoxModel();
         for (FunctionalArea area : areas) {
             cmbModel.addElement(area);
@@ -102,8 +102,10 @@ public class RemoveDeveloperFromProjectDialog extends JDialog implements ActionL
         skillTable = new CustomTable(skillTblModel);
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(colour);
-        applyBtn = new CustomButton("Apply");
-        cancelBtn = new CustomButton("Cancel");
+        applyBtn = new CustomButton("Remove Developers");
+        cancelBtn = new CustomButton("Close");
+        applyBtn.setButtonSize(0, 0, 185, 35);
+        cancelBtn.setButtonSize(0, 0, 185, 35);
         cancelBtn.addMouseListener(new CancelButtonMouseAdapter());
         GlassPanel infoGPanel = new GlassPanel(10, 10, 480, 450, 1f, Colors.LIGHTBLUE2, 7, 7);
         GlassPanel btnPanel = new GlassPanel(15, 0, 745, 40, 1f, Colors.LIGHTBLUE3, 7, 7);

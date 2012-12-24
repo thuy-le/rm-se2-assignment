@@ -1,15 +1,14 @@
 package devfortress.models;
 
-import devfortress.models.exceptions.InvalidFunctionalAreaException;
-import devfortress.models.exceptions.DeveloperBusyException;
-import devfortress.models.exceptions.InsufficientBudgetException;
-import devfortress.models.exceptions.GameAlreadyInitializedException;
-import devfortress.models.exceptions.GameOverException;
 import devfortress.enumerations.AreaName;
 import devfortress.enumerations.Expenses;
+import devfortress.enumerations.Options;
 import devfortress.enumerations.SkillInfo;
-import devfortress.models.exceptions.HungryDeveloperNotification;
-import devfortress.models.exceptions.ProjectCompletedNotification;
+import devfortress.models.exceptions.DeveloperBusyException;
+import devfortress.models.exceptions.GameAlreadyInitializedException;
+import devfortress.models.exceptions.GameOverException;
+import devfortress.models.exceptions.InsufficientBudgetException;
+import devfortress.models.exceptions.InvalidFunctionalAreaException;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.Utilities;
 import java.io.File;
@@ -32,15 +31,17 @@ import java.util.Observable;
  */
 public class GameEngine extends Observable {
 
-    private static final int DEFAULT_BUDGET = 1000000;
+    private static final int DEFAULT_BUDGET = 20000;
     private int budget;
     private DevDate date;
     private List<Developer> developers, developers_ReadOnly, marketDevelopers, marketDevelopers_ReadOnly;
     private List<Project> projects, projects_ReadOnly, marketProjects, marketProject_ReadOnly, pastProjects, pastProjects_ReadOnly;
+    private List<String> projectNotifications;
     private static GameEngine instance = new GameEngine();
     private String playerName;
     private int numPCs;
     private boolean ended;
+    private Options feedOption, beerOption;
     //Some variables for end game report:
     private int numHiredDevs;
 
@@ -56,6 +57,9 @@ public class GameEngine extends Observable {
         this.marketProject_ReadOnly = new ReadOnlyList<Project>(marketProjects);
         this.marketDevelopers_ReadOnly = new ReadOnlyList<Developer>(marketDevelopers);
         this.pastProjects_ReadOnly = new ReadOnlyList<Project>(pastProjects);
+        this.projectNotifications = new ArrayList<String>();
+        this.feedOption = Options.MANUALLY_FEED_DEVS;
+        this.beerOption = Options.MANUALLY_GIVE_BEER;
         this.date = new DevDate();
         this.playerName = "";
         this.ended = false;
@@ -205,6 +209,11 @@ public class GameEngine extends Observable {
 
     }
 
+    public void setOptions(Options feedOption, Options beerOption) {
+        this.feedOption = feedOption;
+        this.beerOption = beerOption;
+    }
+
     public int getFeedingExpense() {
         return (Expenses.PIZZA.getCost() + Expenses.COFFEE.getCost()) * 5 + Expenses.REDBULL.getCost();
     }
@@ -267,7 +276,7 @@ public class GameEngine extends Observable {
     }
 
     /**
-     * @return a list of new projects avalable to accept
+     * @return a list of new projects available to accept
      */
     public List<Project> getMarketProjects() {
         return marketProject_ReadOnly;
@@ -328,35 +337,87 @@ public class GameEngine extends Observable {
     /*
      * System
      */
-    public void nextWeek(boolean ignoreHungryDevelopers) throws GameOverException,
-            ProjectCompletedNotification, HungryDeveloperNotification {
-        /*
-         * Time changes
-         */
+    public void nextWeek() throws GameOverException {
+        projectNotifications.clear();
         if (!ended) {
-//            if (!ignoreHungryDevelopers) {
-//                for (Developer dev : developers) {
-//                    if (!dev.isFed()) {
-//                        throw new HungryDeveloperNotification();
-//                    }
-//                }
-//            }
+            //Things to do every week
             generateRandomEvents();
             allEventsTakeEffects();
             allProjectProgress();
             for (Developer dev : developers) {
                 dev.getTired();
             }
+            if (feedOption == Options.KEEP_ALL_DEVS_FULL) {
+                for (Developer dev : developers) {
+                    try {
+                        if (!dev.isFed()) {
+                            feedDeveloper(dev);
+                        }
+                    } catch (InsufficientBudgetException ex) {
+                        throw new GameOverException();
+                    }
+                }
+            } else if (feedOption == Options.KEEP_WORKING_DEVS_FULL) {
+                for (Developer dev : developers) {
+                    try {
+                        if (!dev.isAvailable()) {
+                            if (!dev.isFed()) {
+                                feedDeveloper(dev);
+                            }
+                        }
+                    } catch (InsufficientBudgetException ex) {
+                        throw new GameOverException();
+                    }
+                }
+            }
+            if (beerOption == Options.ALL_DEVS_BEER_WEEKLY) {
+                for (Developer dev : developers) {
+                    try {
+                        giveDeveloperBeer(dev);
+                    } catch (InsufficientBudgetException ex) {
+                        throw new GameOverException();
+                    }
+                }
+            } else if (beerOption == Options.UNHAPPY_DEVS_BEER_WEEKLY) {
+                for (Developer dev : developers) {
+                    try {
+                        if (!dev.isHappy()) {
+                            giveDeveloperBeer(dev);
+                        }
+                    } catch (InsufficientBudgetException ex) {
+                        throw new GameOverException();
+                    }
+                }
+            }
+
+
             /*
              * Calculate other factors
              */
             if (date.getWeek() == 4) {
-                /*
-                 * Projects, Developers, Events...
-                 */
+                //Things to do every month
                 paySalary();
                 generateRandomMarketDevelopers();
                 generateRandomMarketProjects();
+                if (beerOption == Options.ALL_DEVS_BEER_MONTHLY) {
+                    for (Developer dev : developers) {
+                        try {
+                            giveDeveloperBeer(dev);
+                        } catch (InsufficientBudgetException ex) {
+                            throw new GameOverException();
+                        }
+                    }
+                } else if (beerOption == Options.UNHAPPY_DEVS_BEER_MONTHLY) {
+                    for (Developer dev : developers) {
+                        try {
+                            if (!dev.isHappy()) {
+                                giveDeveloperBeer(dev);
+                            }
+                        } catch (InsufficientBudgetException ex) {
+                            throw new GameOverException();
+                        }
+                    }
+                }
             }
             date.nextWeek();
             setChanged();
@@ -365,15 +426,9 @@ public class GameEngine extends Observable {
         }
     }
 
-    public List<Developer> getHungryDevelopers() {
-        List<Developer> devs = new LinkedList<Developer>();
-        for (Developer dev : developers) {
-            if (!dev.isFed()) {
-                devs.add(dev);
+    public List<String> getFinishedProjects() {
 
-            }
-        }
-        return devs;
+        return projectNotifications;
     }
 
     /**
@@ -411,9 +466,16 @@ public class GameEngine extends Observable {
             numPCs = memento.numPCs;
             numHiredDevs = memento.numHiredDevs;
             developers.clear();
+            projects.clear();
             marketProjects.clear();
             pastProjects.clear();
             marketDevelopers.clear();
+            developers_ReadOnly.clear();
+            projects_ReadOnly.clear();
+            marketProject_ReadOnly.clear();
+            marketDevelopers_ReadOnly.clear();
+            pastProjects_ReadOnly.clear();
+            projectNotifications.clear();
             developers = memento.developers;
             projects = memento.projects;
             pastProjects = memento.pastProjects;
@@ -425,6 +487,7 @@ public class GameEngine extends Observable {
             marketDevelopers_ReadOnly = new ReadOnlyList<Developer>(marketDevelopers);
             pastProjects_ReadOnly = new ReadOnlyList<Project>(pastProjects);
         } catch (ClassNotFoundException ex) {
+            System.exit(0);
         } finally {
             objectIn.close();
             fileIn.close();
@@ -484,7 +547,6 @@ public class GameEngine extends Observable {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 
@@ -494,26 +556,19 @@ public class GameEngine extends Observable {
         }
     }
 
-    private void allProjectProgress() throws ProjectCompletedNotification {
-        List<String> finishedProjects = new ArrayList<String>();
-        List<Project> projs = new LinkedList<Project>();
+    private void allProjectProgress() {
+        projectNotifications.clear();
+        List<Project> finishedProjects = new LinkedList<Project>();
         for (Project p : projects) {
             p.progress(date);
             if (p.isFinished()) {
-                finishedProjects.add(p.getName() + " - level " + p.getLevel()
-                        + ".Received $" + (p.getBudget() * 3 / 4 + p.getBonus()));
-                projs.add(p);
+                projectNotifications.add(p.getName() + " - level " + p.getLevel()
+                        + " is finished. Received $" + (p.getBudget() * 3 / 4 + p.getBonus()) + "\n");
+                finishedProjects.add(p);
             }
         }
-        for (Project p : projs) {
+        for (Project p : finishedProjects) {
             receiveMoney(p);
-        }
-        if (!finishedProjects.isEmpty()) {
-            String message = "There are some project completed: ";
-            for (String s : finishedProjects) {
-                message += "\n" + s;
-            }
-            throw new ProjectCompletedNotification(message);
         }
     }
 
@@ -527,23 +582,23 @@ public class GameEngine extends Observable {
         PrintStream reportStream = null;
         try {
             reportStream = new PrintStream(reportFile);
-            reportStream.println("---------------------------------------------------");
-            reportStream.println("Achievements in the game:");
+            reportStream.println("---------------------------------------------------\r");
+            reportStream.println("Achievements in the game:\r");
 
             reportStream.println("Time played: " + date.getWeek() + " week "
-                    + date.getMonth() + " month " + date.getYear() + "year");
+                    + date.getMonth() + " month " + date.getYear() + "year\r");
 
-            reportStream.println("Total hired developers: " + numHiredDevs);
+            reportStream.println("Total hired developers: " + numHiredDevs + "\r");
 
-            reportStream.println("Completed Project (" + pastProjects.size() + " projects): \n");
+            reportStream.println("Completed Project (" + pastProjects.size() + " projects): \r\n\r");
             for (Project project : pastProjects) {
-                reportStream.println(project.getName() + " - Level " + project.getLevel());
-                reportStream.println("\t" + "Budget: " + project.getBudget());
-                reportStream.println("\t" + "Duration: " + project.getDuration() + " months");
+                reportStream.println(project.getName() + " - Level " + project.getLevel() + "\r");
+                reportStream.println("\t" + "Budget: " + project.getBudget() + "\r");
+                reportStream.println("\t" + "Duration: " + project.getDuration() + " months\r");
                 reportStream.println();
             }
 
-            reportStream.println("Great work, " + playerName + "!");
+            reportStream.println("Great work, " + playerName + "!\r");
         } catch (FileNotFoundException ex) {
         } finally {
             if (reportStream != null) {

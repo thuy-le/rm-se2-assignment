@@ -10,7 +10,6 @@ import devfortress.view.components.GlassPanel;
 import devfortress.view.components.CustomLabel;
 import devfortress.utilities.Colors;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -34,29 +33,28 @@ public class InfomationPanel extends GlassPanel implements Observer {
 
     public InfomationPanel() {
         super(0, 0, 795, 50, .85f, Colors.DARKBLUE, 10, 10);
-        dateLbl = new JLabel(){
+        dateLbl = new JLabel() {
 
             @Override
             protected void paintComponent(Graphics g) {
                 ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 super.paintComponent(g);
-                
+
             }
-            
         };
         nextTurnBtn = new CustomLabel(new ImageIcon(ICON_PATH), NEXT_WEEK_TOOLTIP_TEXT);
         dateLbl.setFont(new Font(FONT, Font.PLAIN, 22));
         dateLbl.setForeground(Colors.LIGHTBLUE);
         nextTurnBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        JPanel labelContainer = new GlassPanel(500,100);
+        JPanel labelContainer = new GlassPanel(500, 100);
         labelContainer.setLayout(new FlowLayout(FlowLayout.RIGHT));
         labelContainer.add(dateLbl);
-        JPanel nextContainer = new GlassPanel(280,100);
+        JPanel nextContainer = new GlassPanel(280, 100);
         nextContainer.setLayout(new FlowLayout(FlowLayout.RIGHT));
         nextContainer.add(nextTurnBtn);
         add(labelContainer, BorderLayout.CENTER);
         add(nextContainer, BorderLayout.EAST);
-        
+
         //add event
         nextTurnBtn.addMouseListener(new nextBtnOnHover());
     }
@@ -66,7 +64,7 @@ public class InfomationPanel extends GlassPanel implements Observer {
     }
 
     public void setDate(DevDate date) {
-        dateLbl.setText("<html>Week <b>" + date.getWeek() + "</b> Month <b>" + date.getMonth() + "</b> Year <b>" + date.getYear() + "</b></html>");
+        dateLbl.setText("<html>Week <b>" + date.getWeek() + "</b> <b>" + date.getMonthString() + "</b> Year <b>" + date.getYear() + "</b></html>");
     }
 
     @Override
@@ -74,8 +72,8 @@ public class InfomationPanel extends GlassPanel implements Observer {
         GameEngine model = (GameEngine) o;
         setDate(model.getDate());
     }
-    
-    private class nextBtnOnHover extends MouseAdapter{
+
+    private class nextBtnOnHover extends MouseAdapter {
 
         @Override
         public void mouseEntered(MouseEvent e) {
@@ -88,6 +86,5 @@ public class InfomationPanel extends GlassPanel implements Observer {
             nextTurnBtn.setIcon(new ImageIcon(ICON_PATH));
             nextTurnBtn.repaint();
         }
-        
     }
 }

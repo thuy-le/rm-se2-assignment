@@ -1,5 +1,6 @@
 package devfortress.controllers;
 
+import devfortress.enumerations.AreaName;
 import devfortress.models.Developer;
 import devfortress.models.FunctionalArea;
 import devfortress.models.GameEngine;
@@ -120,7 +121,7 @@ public class ProjectTabController {
                     Developer dev = itr.next();
                     FunctionalArea area = selected.get(dev);
                     try {
-                        project.addDeveloper(dev, area.getName());
+                        model.assignDeveloperToProject(project, dev, area.getName());
                     } catch (DeveloperBusyException ex) {
                     } catch (InvalidFunctionalAreaException ex) {
                     }
@@ -164,9 +165,9 @@ public class ProjectTabController {
                 Map<Developer, FunctionalArea> selected = dialog.getSelectedDevelopers();
                 for (Iterator<Developer> itr = selected.keySet().iterator(); itr.hasNext();) {
                     Developer dev = itr.next();
-                    project.removeDeveloper(dev);
-                    model.notifyObservers();
+                    model.removeDeveloperFromProject(dev, project);
                 }
+                model.notifyObservers();
                 dialog.dispose();
             }
         }

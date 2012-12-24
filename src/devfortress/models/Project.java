@@ -31,7 +31,10 @@ public class Project implements Serializable {
     private SkillInfo mainRequirement;
     private List<Event> events;
     private List<Developer> developers;
-    private LinkedList<AreaName> areaNames;
+    private List<AreaName> areaNames;
+    private ReadOnlyMap<AreaName, FunctionalArea> fA_RO;
+    private ReadOnlyList<Developer> devs_RO;
+    private ReadOnlyList<Event> events_RO;
 
     public Project() {
         acceptedDate = null;
@@ -42,6 +45,9 @@ public class Project implements Serializable {
         this.developers = new LinkedList<Developer>();
         this.areaNames = new LinkedList<AreaName>(Arrays.asList(AreaName.values()));
         this.finished = false;
+        this.devs_RO = new ReadOnlyList<Developer>(developers);
+        this.events_RO = new ReadOnlyList<Event>(events);
+        this.fA_RO = new ReadOnlyMap<AreaName, FunctionalArea>(functionalAreas);
         randomize();
         calculateBudget();
     }
@@ -89,15 +95,15 @@ public class Project implements Serializable {
     }
 
     public Map<AreaName, FunctionalArea> getAreas() {
-        return new ReadOnlyMap<AreaName, FunctionalArea>(functionalAreas);
+        return fA_RO;
     }
 
     public List<Developer> getDevelopers() {
-        return new ReadOnlyList<Developer>(developers);
+        return devs_RO;
     }
 
     public List<Event> getEvents() {
-        return new ReadOnlyList<Event>(events);
+        return events_RO;
     }
 
     /**

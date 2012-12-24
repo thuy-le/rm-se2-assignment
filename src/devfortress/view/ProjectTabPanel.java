@@ -77,7 +77,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
         status = new JLabel("Status");
         table = new CustomProjectTable(projTableModel, contentColor);
         btnAddDev = new CustomButton("Add Developer");
-        btnRemoveDev = new CustomButton("Remove Developer");
+        btnRemoveDev = new CustomButton("View Developers");
         btnCancelProject = new CustomButton("Cancel Project");
         infoPanel = new GlassPanel(25, 25, 480, 380, 1f, contentColor, 7, 7);
         init();
@@ -114,9 +114,9 @@ public class ProjectTabPanel extends JPanel implements Observer {
             status.setFont(font);
             cost.setFont(font);
             infoPanel.setBounds(15, 15, 490, 395);
-            btnAddDev.setButtonSize(0, 0, 140, 35);
-            btnRemoveDev.setButtonSize(0, 0, 170, 35);
-            btnCancelProject.setButtonSize(0, 0, 140, 35);
+            btnAddDev.setButtonSize(0, 0, 145, 35);
+            btnRemoveDev.setButtonSize(0, 0, 145, 35);
+            btnCancelProject.setButtonSize(0, 0, 145, 35);
 
             btnAddDev.setCustomFont(buttonFont);
             btnRemoveDev.setCustomFont(buttonFont);

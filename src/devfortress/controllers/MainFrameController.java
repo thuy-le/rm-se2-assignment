@@ -1,9 +1,8 @@
 package devfortress.controllers;
 
+import devfortress.enumerations.Options;
 import devfortress.models.exceptions.GameOverException;
 import devfortress.models.GameEngine;
-import devfortress.models.exceptions.HungryDeveloperNotification;
-import devfortress.models.exceptions.ProjectCompletedNotification;
 import devfortress.view.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -11,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -54,6 +54,7 @@ public class MainFrameController {
         navBar.addNewGameListener(new NewGameListener());
         navBar.addSaveGameListener(new SaveGameListener());
         navBar.addLoadGameListener(new LoadGameListener());
+        navBar.addSettingListener(new SettingListener());
         aboutPnl.addBackListener(new AboutBackBtnListener());
         welcome.addNewGameListener(new OpenNewGameListener());
 
@@ -70,12 +71,43 @@ public class MainFrameController {
         }
     }
 
+    private class SettingListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            SettingDialog dialog = new SettingDialog();
+            dialog.addApplyMouseListener(new ApplyListener(dialog));
+        }
+
+        private class ApplyListener extends MouseAdapter {
+
+            private SettingDialog dialog;
+
+            public ApplyListener(SettingDialog dialog) {
+                this.dialog = dialog;
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Options feedOption = dialog.getFeedOption();
+                Options beerOption = dialog.getBeerOption();
+                if (feedOption == null || beerOption == null) {
+                    JOptionPane.showMessageDialog(null, "You have to choose both options");
+                } else {
+                    model.setOptions(feedOption, beerOption);
+                    dialog.dispose();
+                    JOptionPane.showMessageDialog(null, "Settings saved");
+                }
+            }
+        }
+    }
+
     private class NextWeekListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
             try {
-                model.nextWeek(false);
+                model.nextWeek();
             } catch (GameOverException ex) {
                 int result = JOptionPane.showConfirmDialog(null, ex.getMessage()
                         + "\nDo you want to save your achievements?",
@@ -83,29 +115,16 @@ public class MainFrameController {
                 if (result == JOptionPane.YES_OPTION) {
                     model.endGameReport(new File(model.getPlayerName() + ".txt"));
                 }
-            } catch (ProjectCompletedNotification notice) {
-                model.notifyObservers();
-                JOptionPane.showMessageDialog(null, notice);
-            } catch (HungryDeveloperNotification notice) {
-                int result = JOptionPane.showConfirmDialog(null, notice.getMessage(), null, JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) { // Messy code here :(
-                    try {
-                        model.nextWeek(true);
-                    } catch (GameOverException ex) {
-                        result = JOptionPane.showConfirmDialog(null, ex.getMessage()
-                                + "\nDo you want to save your achievements?",
-                                null, JOptionPane.YES_NO_OPTION);
-                        if (result == JOptionPane.YES_OPTION) {
-                            model.endGameReport(new File(model.getPlayerName() + ".txt"));
-                        }
-                    } catch (ProjectCompletedNotification ex) {
-                        model.notifyObservers();
-                        JOptionPane.showMessageDialog(null, ex);
-                    } catch (HungryDeveloperNotification ex) {
-                    }
-                }
             }
             model.notifyObservers();
+            List<String> notifications = model.getFinishedProjects();
+            if (notifications.size() > 0) {
+                String message = "Some projects are finished:\n";
+                for (String dev : notifications) {
+                    message += dev;
+                }
+                JOptionPane.showMessageDialog(null, message);
+            }
         }
     }
 
