@@ -1,44 +1,25 @@
 package devfortress.models;
 
-import devfortress.enumerations.AreaName;
 import devfortress.enumerations.SkillInfo;
-import java.util.Map;
 import org.junit.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Unit test for <code>{@link Developer}</code>.
  * @author Tang Vinh Thanh <s3245715@rmit.edu.vn>
  */
 public class DeveloperTest {
-    
+
     Developer testObject = null;
-    Project mockProject;
-    AreaName[] areas;
-    FunctionalArea mockArea1, mockArea2, mockArea3;
-    Skill techSkill1, techSkill2, techSkill3, metaSkill;
-    
+
     public DeveloperTest() {
-        mockProject = mock(Project.class);
-        when(mockProject.getName()).thenReturn("Mock Project");
-        when(mockProject.getMainRequirement()).thenReturn(SkillInfo.JAVA);
-        when(mockProject.getLevel()).thenReturn(1);
-        
-        areas = new AreaName[]{AreaName.CODING, AreaName.DOCUMENTATION, AreaName.SECURITY};
-        mockArea1 = mock(FunctionalArea.class);
-        when(mockArea1.getName()).thenReturn(areas[0]);
-        mockArea2 = mock(FunctionalArea.class);
-        when(mockArea2.getName()).thenReturn(areas[1]);
-        mockArea3 = mock(FunctionalArea.class);
-        when(mockArea3.getName()).thenReturn(areas[2]);
     }
 
     @Before
     public void setUp() {
         testObject = new Developer();
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -55,7 +36,7 @@ public class DeveloperTest {
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of determineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
@@ -70,7 +51,7 @@ public class DeveloperTest {
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of DetermineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
@@ -86,7 +67,7 @@ public class DeveloperTest {
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of DetermineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
@@ -102,7 +83,7 @@ public class DeveloperTest {
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of DetermineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
@@ -118,7 +99,7 @@ public class DeveloperTest {
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of DetermineMainSkill method, of class Developer.
      * <p>Actually, this is the test of determineMainSkill() method.</p>
@@ -138,21 +119,6 @@ public class DeveloperTest {
     }
 
     /**
-     * Test of getWorkingArea method, of class Developer.
-     */
-    @Ignore
-    @Test
-    public void testGetWorkingArea() {
-        System.out.println("getWorkingArea");
-        Developer instance = null;
-        AreaName expResult = null;
-        AreaName result = instance.getWorkingArea();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of trainSkill method, of class Developer.
      * Simple test.
      */
@@ -164,7 +130,7 @@ public class DeveloperTest {
         int expResult = 2;
         assertEquals(expResult, testObject.getSkills().get(testSkillInfo).getLevel());
     }
-    
+
     /**
      * Test of trainSkill method, of class Developer.
      * Simple test.
