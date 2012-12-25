@@ -399,6 +399,7 @@ public class GameEngine extends Observable {
                 paySalary();
                 generateRandomMarketDevelopers();
                 generateRandomMarketProjects();
+                randomLevelDeveloper();
                 if (beerOption == Options.ALL_DEVS_BEER_MONTHLY) {
                     for (Developer dev : developers) {
                         try {
@@ -418,6 +419,7 @@ public class GameEngine extends Observable {
                         }
                     }
                 }
+                randomUnhappyDevLeave();
             }
             date.nextWeek();
             setChanged();
@@ -571,6 +573,33 @@ public class GameEngine extends Observable {
             receiveMoney(p);
         }
     }
+    
+    private void randomLevelDeveloper() {
+        int randInt;
+        for (Project project : projects) {
+            for (Developer dev : project.getDevelopers()) {
+                randInt = Utilities.randInt(100);
+                if (randInt < 5) {
+                    dev.trainSkill(project.getMainRequirement());
+                }
+            }
+        }
+    }
+    
+    private void randomUnhappyDevLeave() {
+        int randInt;
+        for (Developer dev : developers) {
+            if (!dev.isHappy()) {
+                randInt = Utilities.randInt(100);
+                if (randInt < 8) {
+                    if (dev.getWorkingProject() != null) {
+                        dev.getWorkingProject().removeDeveloper(dev);
+                    }
+                    developers.remove(dev);
+                }
+            }
+        }
+    }
 
     /**
      * Save the end game report in a text file (.txt).
@@ -599,6 +628,7 @@ public class GameEngine extends Observable {
             }
 
             reportStream.println("Great work, " + playerName + "!\r");
+            reportStream.println("---------------------------------------------------");
         } catch (FileNotFoundException ex) {
         } finally {
             if (reportStream != null) {
