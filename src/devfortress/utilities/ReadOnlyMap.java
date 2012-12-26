@@ -18,14 +18,12 @@ import java.util.Set;
 public class ReadOnlyMap<K, V> implements Map<K, V>, Serializable {
 
     private Map<K, V> map;
-    private ReadOnlySet<Entry<K, V>> entrySet;
     private ReadOnlySet<K> keySet;
     private ReadOnlyCollection<V> values;
 
     public ReadOnlyMap(Map m_map) {
         this.map = m_map;
         this.keySet = new ReadOnlySet<K>(map.keySet());
-        this.entrySet = new ReadOnlySet<Entry<K, V>>(map.entrySet());
         this.values = new ReadOnlyCollection<V>(map.values());
     }
 
@@ -67,7 +65,7 @@ public class ReadOnlyMap<K, V> implements Map<K, V>, Serializable {
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return entrySet;
+        return new ReadOnlySet<Entry<K, V>>(map.entrySet());
     }
 
     @Override
