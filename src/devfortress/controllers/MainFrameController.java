@@ -64,11 +64,12 @@ public class MainFrameController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("clicked");
-            mainFrame.remove(welcome.getContainer());
-//            welCm.getContainer().setVisible(true);
+            mainFrame.getContentPane().remove(welcome.getContainer());
+            System.out.println("removd");
             mainFrame.getContentPane().add(welCm.getContainer(), BorderLayout.CENTER);
+            welCm.getContainer().setVisible(true);
             mainFrame.getContentPane().repaint();
+            System.out.println("added");
         }
     }
 
@@ -97,7 +98,7 @@ public class MainFrameController {
                 } else {
                     model.setOptions(feedOption, beerOption);
                     dialog.dispose();
-                    JOptionPane.showMessageDialog(null, "Settings saved","DevFortress", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Settings saved", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }
@@ -206,12 +207,13 @@ public class MainFrameController {
                 File file = fileChooser.getSelectedFile();
                 try {
                     if (!file.getName().endsWith(".save")) {
+                        System.out.println("test");
                         File newFile = new File(file.getAbsolutePath() + ".save");
                         model.saveBinary(newFile);
                     } else {
                         model.saveBinary(file);
-                    }                    
-                    JOptionPane.showMessageDialog(null, "Game saved.","DevFortress", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    JOptionPane.showMessageDialog(null, "Game saved.", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException ex) {
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -237,7 +239,7 @@ public class MainFrameController {
                 File file = fileChooser.getSelectedFile();
                 try {
                     model.loadBinary(file.getAbsolutePath());
-                    JOptionPane.showMessageDialog(null, file.getName() + " loaded.","DevFortress", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, file.getName() + " loaded.", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException ex) {
                     String error = "Error Occur! Cannot find save file.";
                     JOptionPane.showMessageDialog(null, error, "DevFortress", JOptionPane.ERROR_MESSAGE);

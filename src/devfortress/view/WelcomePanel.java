@@ -56,10 +56,6 @@ public class WelcomePanel {
         JLabel welcome = new CustomLabel("Welcome to DevFortress");
         JLabel decor = new CustomLabel("***");
 
-        //Global Variables
-//        newGame = new GlassPanel(130, 0, 250, 70, .8f, Colors.DEEPBLUE, 10, 10);
-//        loadGame = new GlassPanel(130, 0, 250, 70, .8f, Colors.DEEPBLUE, 10, 10);
-//        exit = new GlassPanel(130, 0, 250, 70, .8f, Colors.DEEPBLUE, 10, 10);
         newGame = new CustomButton("New game");
         loadGame = new CustomButton("Load game");
         exit = new CustomButton("Exit");

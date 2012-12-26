@@ -28,7 +28,7 @@ public class DevFortressMain {
         AddProjectPanel availableProject = new AddProjectPanel();
         WelcomePanel welcome = new WelcomePanel();
         //Views
-        DevFortressMainFrame mainFrame = new DevFortressMainFrame(welCm, nav, inf);
+        DevFortressMainFrame mainFrame = new DevFortressMainFrame(welCm, nav, inf, welcome);
         DeveloperTabPanel devTab = new DeveloperTabPanel();
         SystemTabPanel sysTab = new SystemTabPanel(devTab);
         ProjectTabPanel projTab = new ProjectTabPanel();
