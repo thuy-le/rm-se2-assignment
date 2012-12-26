@@ -22,7 +22,7 @@ public class DevFortressMainFrame extends JFrame {
     private JPanel contentPane;
 
     //constructor
-    public DevFortressMainFrame(NewGameWelcomePanel welcome, NavigationToolBar navBar, InfomationPanel infoPnl) {
+    public DevFortressMainFrame(NewGameWelcomePanel welcome, NavigationToolBar navBar, InfomationPanel infoPnl, WelcomePanel wp) {
         //initialization
         background = new ImageIcon(BG_IMAGE_PATH);
         contentPane = new CustomJPanel();
@@ -36,7 +36,8 @@ public class DevFortressMainFrame extends JFrame {
 //                );
         contentPane.setLayout(new BorderLayout());
         setLayout(new BorderLayout());
-        getContentPane().add(welcome.getContainer(), BorderLayout.CENTER);
+        //getContentPane().add(welcome.getContainer(), BorderLayout.CENTER);
+        getContentPane().add(wp.getContainer(), BorderLayout.CENTER);
         getContentPane().add(navBar, BorderLayout.NORTH);
         getContentPane().add(infoPnl, BorderLayout.SOUTH);
         infoPnl.setVisible(false);
