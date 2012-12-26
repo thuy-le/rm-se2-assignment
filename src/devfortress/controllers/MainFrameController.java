@@ -64,8 +64,9 @@ public class MainFrameController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            System.out.println("clicked");
             mainFrame.remove(welcome.getContainer());
-            //welCm.getContainer().setVisible(true);
+//            welCm.getContainer().setVisible(true);
             mainFrame.getContentPane().add(welCm.getContainer(), BorderLayout.CENTER);
             mainFrame.getContentPane().repaint();
         }
