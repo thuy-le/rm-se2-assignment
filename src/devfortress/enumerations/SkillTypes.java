@@ -1,10 +1,12 @@
 package devfortress.enumerations;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Team Poseidon
  */
-public enum SkillTypes {
+public enum SkillTypes implements Serializable {
 
     TECHNICAL("Technical"),
     META("Meta"),

@@ -4,13 +4,14 @@
  */
 package devfortress.utilities;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
  *
  * @author Team Poseidon
  */
-class ReadOnlyIterator<E> implements Iterator<E> {
+class ReadOnlyIterator<E> implements Iterator<E>, Serializable {
 
     private Iterator<E> itr;
 

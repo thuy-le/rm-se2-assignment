@@ -1,12 +1,13 @@
 package devfortress.enumerations;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Team Poseidon
  */
-public enum SkillInfo {
+public enum SkillInfo implements Serializable {
 
     //Technical
     JAVA("Java", SkillTypes.TECHNICAL),
