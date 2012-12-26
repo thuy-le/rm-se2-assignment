@@ -4,6 +4,7 @@
  */
 package devfortress.utilities;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Set;
  *
  * @author Team Poseidon
  */
-public class ReadOnlyMap<K, V> implements Map<K, V> {
+public class ReadOnlyMap<K, V> implements Map<K, V>, Serializable  {
 
     private Map<K, V> map;
     private ReadOnlySet<Entry<K, V>> entrySet;
