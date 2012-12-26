@@ -579,7 +579,7 @@ public class GameEngine extends Observable {
     private void randomUnhappyDevLeave() {
         int randInt;
         for (Developer dev : developers) {
-            if (!dev.isHappy()) {
+            if (dev != null && !dev.isHappy()) {
                 randInt = Utilities.randInt(100);
                 if (randInt < 8) {
                     if (dev.getWorkingProject() != null) {

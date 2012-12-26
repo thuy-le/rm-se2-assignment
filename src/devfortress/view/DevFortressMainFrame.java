@@ -36,8 +36,8 @@ public class DevFortressMainFrame extends JFrame {
 //                );
         contentPane.setLayout(new BorderLayout());
         setLayout(new BorderLayout());
-        //getContentPane().add(welcome.getContainer(), BorderLayout.CENTER);
-        getContentPane().add(wp.getContainer(), BorderLayout.CENTER);
+        getContentPane().add(welcome.getContainer(), BorderLayout.CENTER);
+//        getContentPane().add(wp.getContainer(), BorderLayout.CENTER);
         getContentPane().add(navBar, BorderLayout.NORTH);
         getContentPane().add(infoPnl, BorderLayout.SOUTH);
         infoPnl.setVisible(false);
