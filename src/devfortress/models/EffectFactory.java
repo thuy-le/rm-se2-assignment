@@ -67,21 +67,29 @@ public class EffectFactory {
         if (effect != null) {
             effect.setEngine(model);
         }
-        switch (EffectNames.values()[chances[index]]) {
-            case BONUS:
-                if (model.getDate().getWeek() != 4) {
-                    effect = null;
-                }
-                break;
-            case DEVELOPER_KILLED:
-                List<Developer> devs = model.getDevelopers();
-                for (Developer dev : devs) {
-                    if (dev.isHappy()) {
+        if (model != null) {
+            switch (EffectNames.values()[chances[index]]) {
+                case BONUS:
+                    if (model.getDate().getWeek() != 4) {
                         effect = null;
-                        break;
                     }
-                }
-                break;
+                    break;
+                case DEVELOPER_KILLED:
+                    List<Developer> devs = model.getDevelopers();
+                    for (Developer dev : devs) {
+                        if (dev.isHappy()) {
+                            effect = null;
+                            break;
+                        }
+                    }
+                    break;
+            }
+        } else {
+            switch (EffectNames.values()[chances[index]]) {
+                case BONUS:
+                case DEVELOPER_KILLED:
+                    return getRandomEffect(model);
+            }
         }
         return effect;
     }
