@@ -99,22 +99,20 @@ public class ReadOnlyList<E> implements List<E>, Serializable {
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Restricted Operation");
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        return false;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        return false;
     }
 
     @Override
-    public void add(int index, E element) {
-        throw new UnsupportedOperationException("Restricted Operation");
+    public void add(int index, E element) {      
     }
 
     @Override
@@ -125,27 +123,27 @@ public class ReadOnlyList<E> implements List<E>, Serializable {
 
     @Override
     public E set(int index, E element) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        return null;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        return false;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        return false;
     }
 
     @Override
     public E remove(int index) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        return null;
     }
 
     @Override
     public boolean remove(Object o) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        return false;
     }
 }
 
@@ -189,16 +187,16 @@ class ReadOnlyListIterator<E> implements ListIterator<E>, Serializable{
 
     @Override
     public void add(E e) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        
     }
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("Restricted Operation");
+        
     }
 
     @Override
     public void set(E e) {
-        throw new UnsupportedOperationException("Restricted Operation");
+        
     }
 }
