@@ -4,11 +4,13 @@
  */
 package devfortress.enumerations;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Team Poseidon
  */
-public enum AreaName {
+public enum AreaName implements Serializable {
 
     //Area Name
     CODING("Coding"),

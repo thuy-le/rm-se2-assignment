@@ -149,7 +149,7 @@ public class ReadOnlyList<E> implements List<E>, Serializable {
     }
 }
 
-class ReadOnlyListIterator<E> implements ListIterator<E> {
+class ReadOnlyListIterator<E> implements ListIterator<E>, Serializable{
 
     private ListIterator<E> itr;
 

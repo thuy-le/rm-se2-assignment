@@ -1,10 +1,12 @@
 package devfortress.enumerations;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Team Poseidon
  */
-public enum EffectNames {
+public enum EffectNames implements Serializable{
 
     DEVELOPER_SICK(10, "Function points output was halved"),
     DEVELOPER_KILLED(1, "Maximum output for each developer on project is 1. The victim and the murderer is removed"),

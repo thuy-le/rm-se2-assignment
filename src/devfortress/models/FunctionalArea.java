@@ -18,6 +18,7 @@ public class FunctionalArea implements Serializable {
     private int completedPoints;
     private boolean visible, completed;
     private Set<Developer> developers;
+    private ReadOnlySet<Developer> devs_RO;
 
     public FunctionalArea(AreaName name, int functionPoints, int reducedPoints, boolean visible) {
         this.name = name;
@@ -25,13 +26,14 @@ public class FunctionalArea implements Serializable {
         this.reducedPoints = reducedPoints;
         this.visible = visible;
         this.developers = new HashSet<Developer>();
+        this.devs_RO = new ReadOnlySet<Developer>(developers);
     }
 
     /*
      * Getters
      */
     public Set<Developer> getDevelopers() {
-        return new ReadOnlySet<Developer>(developers);
+        return devs_RO;
     }
 
     public int getFunctionPoints() {
@@ -72,8 +74,8 @@ public class FunctionalArea implements Serializable {
             completedPoints += points;
             completedPoints =
                     (completedPoints < functionPoints - reducedPoints)
-                        ? completedPoints
-                        : functionPoints - reducedPoints;
+                    ? completedPoints
+                    : functionPoints - reducedPoints;
             completed = completed ? completed : functionPoints - reducedPoints <= completedPoints;
         }
     }

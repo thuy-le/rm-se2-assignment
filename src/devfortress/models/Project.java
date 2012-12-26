@@ -32,7 +32,6 @@ public class Project implements Serializable {
     private List<Event> events;
     private List<Developer> developers;
     private List<AreaName> areaNames;
-    private ReadOnlyMap<AreaName, FunctionalArea> fA_RO;
     private ReadOnlyList<Developer> devs_RO;
     private ReadOnlyList<Event> events_RO;
 
@@ -47,7 +46,6 @@ public class Project implements Serializable {
         this.finished = false;
         this.devs_RO = new ReadOnlyList<Developer>(developers);
         this.events_RO = new ReadOnlyList<Event>(events);
-        this.fA_RO = new ReadOnlyMap<AreaName, FunctionalArea>(functionalAreas);
         randomize();
         calculateBudget();
     }
@@ -95,7 +93,7 @@ public class Project implements Serializable {
     }
 
     public Map<AreaName, FunctionalArea> getAreas() {
-        return fA_RO;
+        return new ReadOnlyMap<AreaName, FunctionalArea>(functionalAreas);
     }
 
     public List<Developer> getDevelopers() {
