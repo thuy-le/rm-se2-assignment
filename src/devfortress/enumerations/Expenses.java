@@ -1,10 +1,12 @@
 package devfortress.enumerations;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Team Poseidon
  */
-public enum Expenses {
+public enum Expenses implements Serializable{
 
     PC("PC", 600),
     BEER("Beer", 5),

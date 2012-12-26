@@ -4,6 +4,7 @@
  */
 package devfortress.utilities;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
  *
  * @author Team Poseidon
  */
-public class ReadOnlySet<E> implements Set<E> {
+public class ReadOnlySet<E> implements Set<E>, Serializable {
 
     private Set<E> set;
 

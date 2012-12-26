@@ -4,11 +4,13 @@
  */
 package devfortress.enumerations;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Team Poseidon
  */
-public enum Options {
+public enum Options implements Serializable {
 
     KEEP_ALL_DEVS_FULL,
     KEEP_WORKING_DEVS_FULL,

@@ -4,22 +4,10 @@ import devfortress.enumerations.AreaName;
 import devfortress.enumerations.Expenses;
 import devfortress.enumerations.Options;
 import devfortress.enumerations.SkillInfo;
-import devfortress.models.exceptions.DeveloperBusyException;
-import devfortress.models.exceptions.GameAlreadyInitializedException;
-import devfortress.models.exceptions.GameOverException;
-import devfortress.models.exceptions.InsufficientBudgetException;
-import devfortress.models.exceptions.InvalidFunctionalAreaException;
+import devfortress.models.exceptions.*;
 import devfortress.utilities.ReadOnlyList;
 import devfortress.utilities.Utilities;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -449,10 +437,10 @@ public class GameEngine extends Observable {
     }
 
     /**
-     * Load the game from the file. (Binary file) <p>Reload the current
-     * instance of
-     * <code>{@link GameEngine}</code> with values from <code>{@link GameMemento}</code>
-     * loaded from the saved file.</p>
+     * Load the game from the file. (Binary file) <p>Reload the current instance
+     * of
+     * <code>{@link GameEngine}</code> with values from
+     * <code>{@link GameMemento}</code> loaded from the saved file.</p>
      *
      * @param file Path of the saved file
      */
@@ -573,7 +561,7 @@ public class GameEngine extends Observable {
             receiveMoney(p);
         }
     }
-    
+
     private void randomLevelDeveloper() {
         int randInt;
         for (Project project : projects) {
@@ -585,7 +573,7 @@ public class GameEngine extends Observable {
             }
         }
     }
-    
+
     private void randomUnhappyDevLeave() {
         int randInt;
         for (Developer dev : developers) {
@@ -602,10 +590,11 @@ public class GameEngine extends Observable {
     }
 
     /**
-     * Save the end game report in a text file (.txt).
-     * <p>The report contain the achievements the player get when playing the game
-     * such as the time finished in game and completed projects.</p>
-     * @param reportFileName  
+     * Save the end game report in a text file (.txt). <p>The report contain the
+     * achievements the player get when playing the game such as the time
+     * finished in game and completed projects.</p>
+     *
+     * @param reportFileName
      */
     public void endGameReport(File reportFile) {
         PrintStream reportStream = null;
@@ -634,34 +623,6 @@ public class GameEngine extends Observable {
             if (reportStream != null) {
                 reportStream.close();
             }
-        }
-    }
-
-    private class GameMemento implements Serializable {
-
-        private int budget;
-        private DevDate date;
-        private String playerName;
-        private int numPCs;
-        private boolean ended;
-        private int numHiredDevs;
-        private List<Developer> developers, marketDevelopers;
-        private List<Project> projects, marketProjects, pastProjects;
-
-        public GameMemento(int budget, DevDate date, String playerName, int numPCs,
-                boolean ended, int numHiredDevs, List<Developer> developers, List<Developer> marketDevelopers,
-                List<Project> projects, List<Project> marketProjects, List<Project> pastProjects) {
-            this.budget = budget;
-            this.date = date;
-            this.playerName = playerName;
-            this.numPCs = numPCs;
-            this.ended = ended;
-            this.numHiredDevs = numHiredDevs;
-            this.developers = developers;
-            this.marketDevelopers = marketDevelopers;
-            this.projects = projects;
-            this.marketProjects = marketProjects;
-            this.pastProjects = pastProjects;
         }
     }
 }

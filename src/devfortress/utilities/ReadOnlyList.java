@@ -4,6 +4,7 @@
  */
 package devfortress.utilities;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.ListIterator;
  *
  * @author Team Poseidon
  */
-public class ReadOnlyList<E> implements List<E> {
+public class ReadOnlyList<E> implements List<E>, Serializable {
 
     private List<E> list;
 
@@ -148,7 +149,7 @@ public class ReadOnlyList<E> implements List<E> {
     }
 }
 
-class ReadOnlyListIterator<E> implements ListIterator<E> {
+class ReadOnlyListIterator<E> implements ListIterator<E>, Serializable{
 
     private ListIterator<E> itr;
 

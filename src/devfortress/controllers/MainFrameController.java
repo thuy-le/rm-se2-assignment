@@ -210,10 +210,11 @@ public class MainFrameController {
                         model.saveBinary(newFile);
                     } else {
                         model.saveBinary(file);
-                    }
+                    }                    
                     JOptionPane.showMessageDialog(null, "Game saved.","DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException ex) {
                 } catch (IOException ex) {
+                    ex.printStackTrace();
                     String error = "Error Occur! Cannot save game.";
                     JOptionPane.showMessageDialog(null, error, "DevFortress", JOptionPane.ERROR_MESSAGE);
                 }
