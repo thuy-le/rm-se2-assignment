@@ -95,7 +95,7 @@ public class ProjectTest {
      * Test of removeDeveloper method, of class Project.
      */
     @Test
-    public void testRemoveDeveloper2() throws Exception {
+    public void testRemoveDeveloper() throws Exception {
         System.out.println("removeDeveloper");
         Project instance = new Project();
         Developer d1 = mock(Developer.class);

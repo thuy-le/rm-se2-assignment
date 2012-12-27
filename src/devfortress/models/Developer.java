@@ -270,7 +270,7 @@ public class Developer implements Serializable {
             if (key == SkillInfo.ALGORITHMS) {
                 totalPoint += ((float) skills.get(key).getLevel()) * 3f;
             } else if (key == SkillInfo.ANALYSIS || (mainSkillInfo != null && key == mainSkillInfo)) {
-                totalPoint += ((float) skills.get(key).getLevel()) * 2.5f;
+                totalPoint += ((float) skills.get(key).getLevel()) * 2f;
             } else if (key == SkillInfo.TEAM_PLAYER || SkillInfo.configSkills().contains(key) || SkillInfo.specialSkills().contains(key)) {
                 totalPoint += ((float) skills.get(key).getLevel()) * 2f;
             } else if (key == SkillInfo.DESIGN) {

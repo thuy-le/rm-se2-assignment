@@ -175,6 +175,11 @@ public class Project implements Serializable {
                 finished = false;
             }
         }
+        for (Developer dev : devs_RO) {
+            if (dev.getMainSkill() != mainRequirement) {
+                dev.setHappy(false);
+            }
+        }
         if (date.getWeek() == 4 && timeLeft != 0) {
             timeLeft -= 1;
         }

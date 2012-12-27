@@ -272,6 +272,9 @@ public class EventTabPanel extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         GameEngine model = (GameEngine) o;
         listProject = model.getProjects();
+        eventDescription.setText("");
+        eventEffect.setText("");
+        eventEffect.setIcon(null);
         showEvent();
     }
 

@@ -431,9 +431,7 @@ public class GameEngine extends Observable {
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
         GameMemento memento = new GameMemento(budget, date, playerName, numPCs, ended, numHiredDevs,
                 developers, marketDevelopers, projects, marketProjects, pastProjects);
-        System.out.println("here");
         objectOut.writeObject(memento);
-        System.out.println("here2");
         objectOut.close();
         fileOut.close();
     }
@@ -532,10 +530,8 @@ public class GameEngine extends Observable {
                 List<Developer> devs = p.getDevelopers();
                 p.clearEvents();
                 for (Developer dev : devs) {
-//                    for (int i = 0; i < 5; i++) {
                     Event event = new Event(fact.getRandomEffect(this), p);
                     p.addEvent(event);
-//                    }
                 }
             }
         } catch (Exception ex) {
