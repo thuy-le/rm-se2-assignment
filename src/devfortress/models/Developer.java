@@ -189,6 +189,15 @@ public class Developer implements Serializable {
         re_calculateDeveloperInfo();
     }
 
+    public int getNextLevelCost(SkillInfo skillInfo) {
+        Skill skill = skills.get(skillInfo);
+        if (skill != null) {
+            return skill.getNextLevelCost();
+        } else {
+            return (new Skill(0, skillInfo)).getNextLevelCost();
+        }
+    }
+
     /**
      * This function should be only called by
      * <code>{@link Project}</code>.
@@ -240,6 +249,7 @@ public class Developer implements Serializable {
     /*
      * Private methods
      */
+
     private void re_calculateDeveloperInfo() {
         determineMainSkill();
         calculateSalary();
