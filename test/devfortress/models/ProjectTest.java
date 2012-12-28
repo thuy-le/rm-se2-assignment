@@ -41,54 +41,51 @@ public class ProjectTest {
     @Test
     public void testAddDeveloper() throws Exception {
         System.out.println("addDeveloper");
-        Project instance = new Project();
         Developer dev = mock(Developer.class);
-        AreaName area = (AreaName) instance.getAreas().keySet().toArray()[0];
-        instance.addDeveloper(dev, area);
+        AreaName area = (AreaName) testObject.getAreas().keySet().toArray()[0];
+        testObject.addDeveloper(dev, area);
         dev = mock(Developer.class);
-        instance.addDeveloper(dev, area);
+        testObject.addDeveloper(dev, area);
         dev = mock(Developer.class);
-        instance.addDeveloper(dev, area);
+        testObject.addDeveloper(dev, area);
         dev = mock(Developer.class);
-        instance.addDeveloper(dev, area);
-        assertEquals(instance.getDevelopers().size(), 4);
+        testObject.addDeveloper(dev, area);
+        assertEquals(testObject.getDevelopers().size(), 4);
     }
 
     @Test
     public void testAddDeveloper2() throws Exception {
         System.out.println("addDeveloper");
-        Project instance = new Project();
         Developer dev = mock(Developer.class);
-        AreaName area = (AreaName) instance.getAreas().keySet().toArray()[0];
-        instance.addDeveloper(dev, area);
+        AreaName area = (AreaName) testObject.getAreas().keySet().toArray()[0];
+        testObject.addDeveloper(dev, area);
         dev = new Developer();
-        instance.addDeveloper(dev, area);
+        testObject.addDeveloper(dev, area);
         try {
-            instance.addDeveloper(dev, area);
+            testObject.addDeveloper(dev, area);
         } catch (DeveloperBusyException developerBusyException) {
         } catch (InvalidFunctionalAreaException invalidFunctionalAreaException) {
         }
         dev = mock(Developer.class);
-        instance.addDeveloper(dev, area);
-        assertEquals(instance.getDevelopers().size(), 3);
+        testObject.addDeveloper(dev, area);
+        assertEquals(testObject.getDevelopers().size(), 3);
     }
 
     @Test
     public void testAddDeveloper3() throws Exception {
         System.out.println("addDeveloper");
-        Project instance = new Project();
         Developer dev = mock(Developer.class);
-        AreaName area = (AreaName) instance.getAreas().keySet().toArray()[0];
-        instance.addDeveloper(dev, area);
+        AreaName area = (AreaName) testObject.getAreas().keySet().toArray()[0];
+        testObject.addDeveloper(dev, area);
         dev = mock(Developer.class);
-        instance.addDeveloper(dev, area);
+        testObject.addDeveloper(dev, area);
         dev = mock(Developer.class);
         try {
-            instance.addDeveloper(dev, null);
+            testObject.addDeveloper(dev, null);
         } catch (DeveloperBusyException developerBusyException) {
         } catch (InvalidFunctionalAreaException invalidFunctionalAreaException) {
         }
-        assertEquals(instance.getDevelopers().size(), 2);
+        assertEquals(testObject.getDevelopers().size(), 2);
     }
 
     /**
@@ -97,19 +94,22 @@ public class ProjectTest {
     @Test
     public void testRemoveDeveloper() throws Exception {
         System.out.println("removeDeveloper");
-        Project instance = new Project();
         Developer d1 = mock(Developer.class);
-        AreaName area = (AreaName) instance.getAreas().keySet().toArray()[0];
-        instance.addDeveloper(d1, area);
+        AreaName area = (AreaName) testObject.getAreas().keySet().toArray()[0];
+        when(d1.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d1, area);
         Developer d2 = mock(Developer.class);
-        instance.addDeveloper(d2, area);
+        when(d2.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d2, area);
         Developer d3 = mock(Developer.class);
-        instance.addDeveloper(d3, area);
+        when(d3.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d3, area);
         Developer d4 = mock(Developer.class);
-        instance.addDeveloper(d4, area);
-        instance.removeDeveloper(d2);
-        instance.removeDeveloper(d1);
-        assertEquals(instance.getDevelopers().size(), 2);
+        when(d4.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d4, area);
+        testObject.removeDeveloper(d2);
+        testObject.removeDeveloper(d1);
+        assertEquals(2, testObject.getDevelopers().size());
     }
 
     /**
@@ -118,11 +118,9 @@ public class ProjectTest {
     @Test
     public void testRemoveFunctionalArea() {
         System.out.println("removeFunctionalArea");
-        AreaName area = null;
-        Project instance = new Project();
-        instance.removeFunctionalArea(area);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        AreaName area = (AreaName) testObject.getAreas().keySet().toArray()[0];
+        testObject.removeFunctionalArea(area);
+        assertEquals(null, testObject.getAreas().get(area));
     }
 
     /**
