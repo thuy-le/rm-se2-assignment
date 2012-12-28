@@ -1,5 +1,9 @@
 package devfortress.models;
 
+import devfortress.utilities.Utilities;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import devfortress.models.exceptions.DeveloperBusyException;
 import devfortress.models.exceptions.InvalidFunctionalAreaException;
 import devfortress.enumerations.AreaName;
@@ -16,8 +20,6 @@ import static org.junit.Assert.*;
 public class ProjectTest {
 
     private Project testObject;
-    private FunctionalArea area1, area2;
-    private Developer dev1, dev2;
 
     public ProjectTest() {
     }
@@ -146,6 +148,44 @@ public class ProjectTest {
     }
 
     /**
+     * Test of removeAllEvents method, of class Project.
+     */
+    @Test
+    public void testRemoveAllEvents() {
+        System.out.println("removeAllEvents");
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.removeAllEvents();
+        assertEquals(0, testObject.getEvents().size());
+    }
+
+    @Test
+    public void testAddFunctionalArea() {
+        System.out.println("addFunctionalArea");
+        //Get a list of available areas
+        List<FunctionalArea> pAreas = new LinkedList<FunctionalArea>(testObject.getAreas().values());
+        List<AreaName> areas = new LinkedList<AreaName>(Arrays.asList(AreaName.values()));
+        for (FunctionalArea area : pAreas) {
+            areas.remove(area.getName());
+        }
+        if (areas.isEmpty()) {
+            fail("Test failed due to random factor");
+        } else {
+            int points = pAreas.get(Utilities.randInt(pAreas.size())).getFunctionPoints();
+            points = (int) (((double) points) * (1 + Math.random() / 10));
+            //Generate a random functional area
+            FunctionalArea area = Utilities.getRandomFunctionalArea(areas, points, true);
+            testObject.addFunctionalArea(area);
+            assertEquals(area, testObject.getAreas().get(area.getName()));
+        }
+    }
+
+    /**
      * Test of addFunctionalArea method, of class Project.
      * <p>Add mock FunctionalArea with AreaName.</p>
      */
@@ -181,6 +221,33 @@ public class ProjectTest {
         when(area.getName()).thenReturn(name);
 
         testObject.addFunctionalArea(area);
+    }
+
+    @Test
+    public void testRemoveAllDevelopers() throws DeveloperBusyException, InvalidFunctionalAreaException {
+        System.out.println("removeAllDevelopers");
+        Developer d1 = mock(Developer.class);
+        AreaName area = (AreaName) testObject.getAreas().keySet().toArray()[0];
+        when(d1.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d1, area);
+        Developer d2 = mock(Developer.class);
+        when(d2.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d2, area);
+        Developer d3 = mock(Developer.class);
+        when(d3.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d3, area);
+        Developer d4 = mock(Developer.class);
+        when(d4.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d4, area);
+        testObject.removeAllDevelopers();
+        assertEquals(0, testObject.getDevelopers().size());
+    }
+
+    @Test
+    public void testEnableBonus() {
+        System.out.println("enableBonus");
+        testObject.enableBonus();
+        assertEquals(true, testObject.isBonused());
     }
 
     /**

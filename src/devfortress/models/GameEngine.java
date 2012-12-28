@@ -538,7 +538,7 @@ public class GameEngine extends Observable {
 
             for (Project p : projects) {
                 List<Developer> devs = p.getDevelopers();
-                p.clearEvents();
+                p.removeAllEvents();
                 for (Developer dev : devs) {
                     Event event = new Event(fact.getRandomEffect(this), p);
                     p.addEvent(event);
