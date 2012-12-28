@@ -69,11 +69,6 @@ public class EffectFactory {
         }
         if (model != null) {
             switch (EffectNames.values()[chances[index]]) {
-                case BONUS:
-                    if (model.getDate().getWeek() != 4) {
-                        effect = null;
-                    }
-                    break;
                 case DEVELOPER_KILLED:
                     List<Developer> devs = model.getDevelopers();
                     for (Developer dev : devs) {
