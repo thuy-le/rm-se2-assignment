@@ -8,7 +8,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
- *
+ * Unit test for <code>{@link FunctionalArea}</code>.
+ * <a href="http://github.com/kentback/junit/wiki">Junit 4.10</a>
+ * and <a href="http://code.google.com/p/mockito/">Mockito 1.9.5</a>.</p>
  * @author Team Poseidon
  */
 public class FunctionalAreaTest {

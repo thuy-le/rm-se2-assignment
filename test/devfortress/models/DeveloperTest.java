@@ -6,7 +6,8 @@ import static org.junit.Assert.*;
 
 /**
  * Unit test for <code>{@link Developer}</code>.
- * @author Tang Vinh Thanh <s3245715@rmit.edu.vn>
+ * <a href="http://github.com/kentback/junit/wiki">Junit 4.10</a>.</p>
+ * @author Team Poseidon
  */
 public class DeveloperTest {
 
