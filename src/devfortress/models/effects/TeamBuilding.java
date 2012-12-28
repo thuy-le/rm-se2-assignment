@@ -19,6 +19,6 @@ public class TeamBuilding extends Effect {
             dev.setLastWeekFunctionPoints(5);
         }
         description = "Team building! Everyone only produced 5 function points last week. However, everyone is happy now";
-        effect = EffectLevel.NEUTRAL;
+        effectLevel = EffectLevel.NEUTRAL;
     }
 }

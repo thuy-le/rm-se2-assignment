@@ -23,7 +23,7 @@ public class Redundancies extends Effect {
         List<Developer> devs = new LinkedList<Developer>(project.getDevelopers());
         if (devs.isEmpty()) {
             description = "";
-            effect = EffectLevel.NEUTRAL;
+            effectLevel = EffectLevel.NEUTRAL;
             return;
         }
         Developer dev = devs.get(Utilities.randInt(devs.size()));
@@ -33,6 +33,6 @@ public class Redundancies extends Effect {
             d.setHappy(false);
         }
         description = dev.getName() + " is removed from the project. Everyone is sad";
-        effect = EffectLevel.NEGATIVE;
+        effectLevel = EffectLevel.NEGATIVE;
     }
 }

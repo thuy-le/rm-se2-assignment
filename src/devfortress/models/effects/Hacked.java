@@ -25,6 +25,6 @@ public class Hacked extends Effect {
         }
         //Set description
         description = "System was hacked. All developers do not produce anything this week.";
-        effect = EffectLevel.NEGATIVE;
+        effectLevel = EffectLevel.NEGATIVE;
     }
 }

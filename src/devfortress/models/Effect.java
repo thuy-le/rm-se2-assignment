@@ -11,11 +11,11 @@ public abstract class Effect implements Serializable {
 
     protected String description;
     protected GameEngine engine;
-    protected int effect;
+    protected int effectLevel;
 
     public Effect() {
         description = "Default";
-        effect = EffectLevel.NEUTRAL;
+        effectLevel = EffectLevel.NEUTRAL;
     }
 
     public void setEngine(GameEngine engine) {
@@ -27,8 +27,8 @@ public abstract class Effect implements Serializable {
     public String getEventDescription() {
         return description;
     }
-    
+
     public int getEventEffect() {
-        return effect;
+        return effectLevel;
     }
 }
