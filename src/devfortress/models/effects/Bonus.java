@@ -19,10 +19,10 @@ public class Bonus extends Effect {
         project.enableBonus();
         if (project.getBonus() == 0) {
             description = "";
-            effect = EffectLevel.NEUTRAL;
+            effectLevel = EffectLevel.NEUTRAL;
         } else {
             description = "Project " + project.getName() + " has been given $" + project.getBonus() + " bonus for early completion";
-            effect = EffectLevel.POSITIVE;
+            effectLevel = EffectLevel.POSITIVE;
         }
     }
 }

@@ -1,6 +1,7 @@
 package devfortress.models;
 
 import devfortress.enumerations.AreaName;
+import devfortress.enumerations.SkillInfo;
 import devfortress.utilities.ReadOnlySet;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -69,7 +70,9 @@ public class FunctionalArea implements Serializable {
      * Function called every week. Called by project
      */
     public void progress() {
+        reducedPoints = 0;
         for (Developer dev : developers) {
+            addReducePoints(dev.getSkillLevel(SkillInfo.COMMUNICATION));
             int points = dev.getLastWeekFunctionPoints();
             completedPoints += points;
             completedPoints =
@@ -82,10 +85,14 @@ public class FunctionalArea implements Serializable {
 
     public void progress(int points) {
         completedPoints += points;
+        completedPoints =
+                (completedPoints < functionPoints - reducedPoints)
+                ? completedPoints
+                : functionPoints - reducedPoints;
         completed = completed ? completed : functionPoints - reducedPoints <= completedPoints;
     }
 
-    public void reducePoints(int points) {
+    public void addReducePoints(int points) {
         reducedPoints += points;
     }
 

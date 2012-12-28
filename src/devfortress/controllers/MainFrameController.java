@@ -57,6 +57,8 @@ public class MainFrameController {
         navBar.addSettingListener(new SettingListener());
         aboutPnl.addBackListener(new AboutBackBtnListener());
         welcome.addNewGameListener(new OpenNewGameListener());
+        welcome.loadGameListener(new LoadGameListener());
+        welcome.exitGameListener(new ExitGameListener());
 
     }
 
@@ -64,11 +66,15 @@ public class MainFrameController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            mainFrame.getContentPane().remove(welcome.getContainer());
+            mainFrame.remove(welcome);
             System.out.println("removd");
-            mainFrame.getContentPane().add(welCm.getContainer(), BorderLayout.CENTER);
-            welCm.getContainer().setVisible(true);
-            mainFrame.getContentPane().repaint();
+            mainFrame.add(tabPne, BorderLayout.CENTER);
+            mainFrame.add(welCm, BorderLayout.CENTER);
+            tabPne.setVisible(false);
+            navBar.setVisible(false);
+            infoPnl.setVisible(false);
+            tabPne.getSystemTab().setPlayerName(model.getPlayerName());
+            model.notifyObservers();
             System.out.println("added");
         }
     }
@@ -79,6 +85,7 @@ public class MainFrameController {
         public void mouseClicked(MouseEvent e) {
             SettingDialog dialog = new SettingDialog();
             dialog.addApplyMouseListener(new ApplyListener(dialog));
+            dialog.display();
         }
 
         private class ApplyListener extends MouseAdapter {
@@ -110,23 +117,32 @@ public class MainFrameController {
         public void mouseClicked(MouseEvent e) {
             try {
                 model.nextWeek();
+                List<String> notifications = model.getFinishedProjects();
+                if (notifications.size() > 0) {
+                    String message = "Some projects are finished:\n";
+                    for (String dev : notifications) {
+                        message += dev;
+                    }
+                    JOptionPane.showMessageDialog(null, message, "DevFortress", JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (GameOverException ex) {
-                int result = JOptionPane.showConfirmDialog(null, ex.getMessage()
-                        + "\nDo you want to save your achievements?",
-                        "DevFortress", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    model.endGameReport(new File(model.getPlayerName() + ".txt"));
+                if (!model.isEnded()) {
+                    int result = JOptionPane.showConfirmDialog(null, ex.getMessage()
+                            + "\nDo you want to save your achievements?",
+                            "DevFortress", JOptionPane.YES_NO_OPTION);
+                    if (result == JOptionPane.YES_OPTION) {
+                        model.endGameReport(new File(model.getPlayerName() + ".txt"));
+                        JOptionPane.showMessageDialog(null, "Your achievement has been saved.\n"
+                                + " Please check out the file \"" + model.getPlayerName() + ".txt\"");
+                    }
+                    model.setEnded(true);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Game is already over!");
                 }
             }
             model.notifyObservers();
-            List<String> notifications = model.getFinishedProjects();
-            if (notifications.size() > 0) {
-                String message = "Some projects are finished:\n";
-                for (String dev : notifications) {
-                    message += dev;
-                }
-                JOptionPane.showMessageDialog(null, message, "DevFortress", JOptionPane.INFORMATION_MESSAGE);
-            }
+
         }
     }
 
@@ -136,12 +152,13 @@ public class MainFrameController {
         public void mouseClicked(MouseEvent e) {
             if (!welCm.getPlayerName().trim().equals("")) {
                 model.initialize(welCm.getPlayerName());
-                mainFrame.remove(welCm.getContainer());
+                mainFrame.remove(welCm);
                 mainFrame.add(tabPne, BorderLayout.CENTER);
                 devTab.btnFeed.disableButton();
                 devTab.btnParty.disableButton();
                 navBar.setVisible(true);
                 infoPnl.setVisible(true);
+                tabPne.setVisible(true);
                 tabPne.getSystemTab().setPlayerName(model.getPlayerName());
                 model.notifyObservers();
 
@@ -156,10 +173,11 @@ public class MainFrameController {
         public void mouseClicked(MouseEvent e) {
             int choosen = JOptionPane.showConfirmDialog(mainFrame, "Do you want to have a new game?", "DevFortress", JOptionPane.YES_NO_OPTION);
             if (choosen == JOptionPane.YES_OPTION) {
-                mainFrame.remove(tabPne);
+                //mainFrame.remove(tabPne);
+                tabPne.setVisible(false);
                 navBar.setVisible(false);
                 infoPnl.setVisible(false);
-                mainFrame.getContentPane().add(welCm.getContainer());
+                mainFrame.getContentPane().add(welCm);
             }
         }
     }
@@ -213,7 +231,7 @@ public class MainFrameController {
                     } else {
                         model.saveBinary(file);
                     }
-                    JOptionPane.showMessageDialog(null, "Game saved.", "DevFortress", JOptionPane.INFORMATION_MESSAGE);                
+                    JOptionPane.showMessageDialog(null, "Game saved.", "DevFortress", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException ex) {
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -233,7 +251,6 @@ public class MainFrameController {
             fileChooser.setDialogTitle("Load Game");
             fileChooser.setVisible(true);
             fileChooser.setFileFilter(new FileNameExtensionFilter("Save file", "save"));
-
             int returnVal = fileChooser.showDialog(null, "Load");
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
@@ -243,11 +260,19 @@ public class MainFrameController {
                 } catch (FileNotFoundException ex) {
                     String error = "Error Occur! Cannot find save file.";
                     JOptionPane.showMessageDialog(null, error, "DevFortress", JOptionPane.ERROR_MESSAGE);
+                    return;
                 } catch (IOException ex) {
                     String error = "Error Occur! Cannot load game.";
                     JOptionPane.showMessageDialog(null, error, "DevFortress", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
             }
+            welcome.setVisible(false);
+            welCm.setVisible(false);
+            mainFrame.getContentPane().add(tabPne);
+            tabPne.setSelectedIndex(0);
+            navBar.setVisible(true);
+            infoPnl.setVisible(true);
         }
     }
 

@@ -35,6 +35,7 @@ public class TrainSkillDialog extends JDialog implements Observer {
     private SkillInfo infos[];
     private CustomButton btnTrain, btnClose;
     private int selectedIndex;
+    private SkillInfo selectedSkill;
     private JLabel budgetLbl;
 
     public TrainSkillDialog(Developer developer) {
@@ -125,6 +126,9 @@ public class TrainSkillDialog extends JDialog implements Observer {
                 skillModel.addRow(os);
             }
         }
+        if (selectedSkill != null) {
+            btnTrain.setText("Train (-$" + developer.getNextLevelCost(selectedSkill) + ")");
+        }
         Object[] ids = {"Type", "Skill Name", "Level"};
         skillModel.setColumnIdentifiers(ids);
         skillTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -144,9 +148,15 @@ public class TrainSkillDialog extends JDialog implements Observer {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
+            if (getSkillInfo() != null) {
+                selectedSkill = getSkillInfo();
+            }
             int current = table.getSelectedRow();
             if (selectedIndex != current && e.getSource() == table.getSelectionModel() && table.getRowSelectionAllowed()) {
                 selectedIndex = current;
+            }
+            if (selectedSkill != null) {
+                btnTrain.setText("Train (-$" + developer.getNextLevelCost(selectedSkill) + ")");
             }
         }
     }

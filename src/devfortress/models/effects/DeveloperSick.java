@@ -25,7 +25,7 @@ public class DeveloperSick extends Effect {
         }
         if (devs.isEmpty()) {
             description = "";
-            effect = EffectLevel.NEUTRAL;
+            effectLevel = EffectLevel.NEUTRAL;
             return;
         }
         //Who s sick
@@ -36,6 +36,6 @@ public class DeveloperSick extends Effect {
         dev.setLastWeekFunctionPoints(fPoints);
         //Set description
         description = dev.getName() + " is sick and only produces " + fPoints + " this week";
-        effect = EffectLevel.NEGATIVE;
+        effectLevel = EffectLevel.NEGATIVE;
     }
 }

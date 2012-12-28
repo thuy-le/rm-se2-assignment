@@ -409,11 +409,22 @@ public class GameEngine extends Observable {
                 }
                 randomUnhappyDevLeave();
             }
+            if (developers.isEmpty()) {
+                throw new GameOverException("Game Over! You have no developers to continue the game");
+            }
             date.nextWeek();
             setChanged();
         } else {
-            throw new GameOverException();
+            throw new GameOverException("Game Over!");
         }
+    }
+
+    public boolean isEnded() {
+        return ended;
+    }
+
+    public void setEnded(boolean ended) {
+        this.ended = ended;
     }
 
     public List<String> getFinishedProjects() {
@@ -431,9 +442,7 @@ public class GameEngine extends Observable {
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
         GameMemento memento = new GameMemento(budget, date, playerName, numPCs, ended, numHiredDevs,
                 developers, marketDevelopers, projects, marketProjects, pastProjects);
-        System.out.println("here");
         objectOut.writeObject(memento);
-        System.out.println("here2");
         objectOut.close();
         fileOut.close();
     }
@@ -500,7 +509,6 @@ public class GameEngine extends Observable {
             budget -= dev.getSalary();
             if (budget <= 0) {
                 budget = 0;
-                ended = true;
                 setChanged();
                 throw new GameOverException();
             }
@@ -530,12 +538,10 @@ public class GameEngine extends Observable {
 
             for (Project p : projects) {
                 List<Developer> devs = p.getDevelopers();
-                p.clearEvents();
+                p.removeAllEvents();
                 for (Developer dev : devs) {
-//                    for (int i = 0; i < 5; i++) {
                     Event event = new Event(fact.getRandomEffect(this), p);
                     p.addEvent(event);
-//                    }
                 }
             }
         } catch (Exception ex) {
@@ -579,7 +585,7 @@ public class GameEngine extends Observable {
     private void randomUnhappyDevLeave() {
         int randInt;
         for (Developer dev : developers) {
-            if (!dev.isHappy()) {
+            if (dev != null && !dev.isHappy()) {
                 randInt = Utilities.randInt(100);
                 if (randInt < 8) {
                     if (dev.getWorkingProject() != null) {

@@ -255,7 +255,7 @@ public class ProjectTabPanel extends JPanel implements Observer {
                     projTableModel.removeRow(projTableModel.getRowCount() - 1);
                 }
                 for (FunctionalArea fA : project.getAreas().values()) {
-                    Object[] rowData = {fA.getName().toString(), fA.getCompletedPoints() + "/" + fA.getFunctionPoints()};
+                    Object[] rowData = {fA.getName().toString(), fA.getCompletedPoints() + "/" + (fA.getFunctionPoints() - fA.getReducedPoints())};
                     projTableModel.addRow(rowData);
                 }
                 Object[] ids = {"Functional Area", "Points"};

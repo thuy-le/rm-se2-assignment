@@ -7,8 +7,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Unit test for Skill class.
- * <p>The test is written using
+ * Unit test for <code>{@link Skill}</code> class.
+ * <p>The tests are written using
  * <a href="http://github.com/kentback/junit/wiki">Junit 4.10</a>
  * and <a href="http://code.google.com/p/mockito/">Mockito 1.9.5</a>.</p>
  * @author Team Poseidon
@@ -143,7 +143,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(1, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -153,7 +153,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(3, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -163,7 +163,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(19, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -173,7 +173,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(2, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -183,7 +183,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(6, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -193,7 +193,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(22, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -203,7 +203,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(3, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -213,7 +213,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(6, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */

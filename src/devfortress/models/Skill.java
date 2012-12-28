@@ -22,7 +22,7 @@ public class Skill implements Comparable<Skill>, Serializable {
     private int nextLevelCost;
 
     public Skill(int level, SkillInfo skill) {
-        this.level = level;
+        this.level = (level < 0) ? 0 : (level > 10) ? 10 : level;
         this.skillInfo = skill;
         nextLevelCost = calculateNextLevelCost();
     }

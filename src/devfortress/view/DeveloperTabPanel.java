@@ -355,6 +355,13 @@ public class DeveloperTabPanel extends JPanel implements Observer {
         if (!model.getDevelopers().contains(selectedDeveloper)) {
             selectedDeveloper = null;
         }
+        if (model.getDevelopers().size() > 0) {
+            btnFeed.enableButton();
+            btnParty.enableButton();
+        } else {
+            btnFeed.disableButton();
+            btnParty.disableButton();
+        }
         showDeveloper(selectedDeveloper);
     }
 
@@ -382,5 +389,5 @@ public class DeveloperTabPanel extends JPanel implements Observer {
                 showDeveloper(selectedDeveloper);
             }
         }
-    }   
+    }
 }

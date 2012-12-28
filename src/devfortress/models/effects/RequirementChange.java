@@ -35,6 +35,6 @@ public class RequirementChange extends Effect {
         FunctionalArea area = areas.get(Utilities.randInt(areas.size()));
         area.addFunctionPoints(25);
         description = "Requirement changed. Area \"" + area.getName().toString() + "\" is added with 25 function points";
-        effect = EffectLevel.NEGATIVE;
+        effectLevel = EffectLevel.NEGATIVE;
     }
 }

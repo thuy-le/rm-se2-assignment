@@ -8,12 +8,7 @@ import devfortress.view.components.GlassPanel;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
 import devfortress.utilities.Colors;
-import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -32,25 +27,18 @@ import javax.swing.text.PlainDocument;
  *
  * @author PC
  */
-public class NewGameWelcomePanel {
+public class NewGameWelcomePanel extends JPanel{
 
-    private int x, y, width, height, arcH, arcW;
-    private float alpha;
-    private Color colour;
+    private int X = 20, Y = 25, WIDTH = 755, HEIGHT = 520, ARCH = 20, ARCW = 20;
+    private float ALPHA = .7f;
+    private Color COLOUR = Colors.YELLOW;
     private String playerName;
     private JTextField playerTxt;
     private CustomButton submitName;
-    private JPanel container;
+    //private JPanel container;
 
     public NewGameWelcomePanel() {
-        this.x = 20;
-        this.y = 25;
-        this.width = 755;
-        this.height = 520;
-        this.arcW = 20;
-        this.arcH = 20;
-        this.alpha = .7f;
-        this.colour = Colors.YELLOW;
+        setOpaque(false);
         init();
     }
 
@@ -63,12 +51,12 @@ public class NewGameWelcomePanel {
         this.playerName = playerName;
     }
 
-    public JPanel getContainer() {
-        return container;
-    }
+//    public JPanel getContainer() {
+//        return container;
+//    }
 
     private void init() {
-        container = new GlassPanel(x, y, width, height, alpha, colour, arcW, arcH);
+        //container = new GlassPanel(x, y, width, height, alpha, colour, arcW, arcH);
         //Local Variables
         GlassPanel marginTop = new GlassPanel(800, 100);
         GlassPanel content = new GlassPanel(500, 400);
@@ -101,10 +89,29 @@ public class NewGameWelcomePanel {
         content.add(welcome);
         content.add(decor);
         content.add(textHolder);
-        container.add(marginTop, BorderLayout.NORTH);
+        add(marginTop, BorderLayout.NORTH);
         content.add(submitName);
-        container.add(content, BorderLayout.CENTER);
+        add(content, BorderLayout.CENTER);
 
+    }
+    
+    //override the paint component method
+    @Override
+    public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, ALPHA));
+        if (COLOUR != null) {
+            g2d.setColor(COLOUR);
+        }
+        g2d.drawRoundRect(X, Y, WIDTH, HEIGHT, ARCW, ARCH);
+        g2d.fillRoundRect(X, Y, WIDTH, HEIGHT, ARCW, ARCH);
+    }
+
+    //override the getPreferredSize method
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(WIDTH, HEIGHT);
     }
 
     public void addSubmitNameListener(MouseListener l) {

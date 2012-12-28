@@ -189,6 +189,15 @@ public class Developer implements Serializable {
         re_calculateDeveloperInfo();
     }
 
+    public int getNextLevelCost(SkillInfo skillInfo) {
+        Skill skill = skills.get(skillInfo);
+        if (skill != null) {
+            return skill.getNextLevelCost();
+        } else {
+            return (new Skill(0, skillInfo)).getNextLevelCost();
+        }
+    }
+
     /**
      * This function should be only called by
      * <code>{@link Project}</code>.
@@ -240,6 +249,7 @@ public class Developer implements Serializable {
     /*
      * Private methods
      */
+
     private void re_calculateDeveloperInfo() {
         determineMainSkill();
         calculateSalary();
@@ -270,7 +280,7 @@ public class Developer implements Serializable {
             if (key == SkillInfo.ALGORITHMS) {
                 totalPoint += ((float) skills.get(key).getLevel()) * 3f;
             } else if (key == SkillInfo.ANALYSIS || (mainSkillInfo != null && key == mainSkillInfo)) {
-                totalPoint += ((float) skills.get(key).getLevel()) * 2.5f;
+                totalPoint += ((float) skills.get(key).getLevel()) * 2f;
             } else if (key == SkillInfo.TEAM_PLAYER || SkillInfo.configSkills().contains(key) || SkillInfo.specialSkills().contains(key)) {
                 totalPoint += ((float) skills.get(key).getLevel()) * 2f;
             } else if (key == SkillInfo.DESIGN) {

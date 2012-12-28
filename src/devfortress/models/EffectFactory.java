@@ -6,9 +6,6 @@ import devfortress.utilities.Utilities;
 import java.util.List;
 
 /**
- * Because the EventFactory does not vary, there will be no AbstractEventFactory
- * Future changes can be easily made for a fully developed AbstractFactory
- * design pattern if needed
  *
  * @author Team Poseidon
  */
@@ -69,11 +66,6 @@ public class EffectFactory {
         }
         if (model != null) {
             switch (EffectNames.values()[chances[index]]) {
-                case BONUS:
-                    if (model.getDate().getWeek() != 4) {
-                        effect = null;
-                    }
-                    break;
                 case DEVELOPER_KILLED:
                     List<Developer> devs = model.getDevelopers();
                     for (Developer dev : devs) {

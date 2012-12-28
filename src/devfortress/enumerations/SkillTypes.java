@@ -11,7 +11,7 @@ public enum SkillTypes implements Serializable {
     TECHNICAL("Technical"),
     META("Meta"),
     PERSONAL("Personal"),
-    CONFIGURATION_MANAGEMENT("Configuration Mnagement");
+    CONFIGURATION_MANAGEMENT("Configuration Management");
     private String name;
 
     private SkillTypes(String name) {

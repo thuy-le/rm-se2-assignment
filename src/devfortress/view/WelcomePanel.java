@@ -8,10 +8,7 @@ import devfortress.utilities.Colors;
 import devfortress.view.components.CustomButton;
 import devfortress.view.components.CustomLabel;
 import devfortress.view.components.GlassPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,34 +17,27 @@ import javax.swing.JPanel;
  *
  * @author PC
  */
-public class WelcomePanel {
+public class WelcomePanel extends JPanel{
 
-    private int x, y, width, height, arcH, arcW;
-    private float alpha;
-    private Color colour;
-    private JPanel container;
+    private int X = 20, Y = 25, WIDTH = 755, HEIGHT = 520, ARCH = 20, ARCW = 20;
+    private float ALPHA = .7f;
+    private Color COLOUR = Colors.YELLOW;
+    //private JPanel container;
     private JPanel newGame;
     private JPanel loadGame;
     private JPanel exit;
 
     public WelcomePanel() {
-        this.x = 20;
-        this.y = 25;
-        this.width = 755;
-        this.height = 520;
-        this.arcW = 20;
-        this.arcH = 20;
-        this.alpha = .7f;
-        this.colour = Colors.YELLOW;
+        setOpaque(false);
         init();
     }
 
-    public JPanel getContainer() {
-        return container;
-    }
+//    public JPanel getContainer() {
+//        return container;
+//    }
 
     private void init() {
-        container = new GlassPanel(x, y, width, height, alpha, colour, arcW, arcH);
+        //container = new GlassPanel(x, y, width, height, alpha, colour, arcW, arcH);
         //Local Variables
         GlassPanel marginTop = new GlassPanel(800, 50);
         GlassPanel content = new GlassPanel(500, 400);
@@ -89,11 +79,39 @@ public class WelcomePanel {
         buttonHolder.add(newGame);
         buttonHolder.add(loadGame);
         buttonHolder.add(exit);
-        container.add(marginTop, BorderLayout.NORTH);
-        container.add(content, BorderLayout.CENTER);
+        add(marginTop, BorderLayout.NORTH);
+        add(content, BorderLayout.CENTER);
     }
     
     public void addNewGameListener(MouseListener l){
         newGame.addMouseListener(l);
     }
+    
+    public void loadGameListener(MouseListener l){
+        loadGame.addMouseListener(l);
+    }
+    
+    public void exitGameListener(MouseListener l){
+        exit.addMouseListener(l);
+    }
+    
+    //override the paint component method
+    @Override
+    public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, ALPHA));
+        if (COLOUR != null) {
+            g2d.setColor(COLOUR);
+        }
+        g2d.drawRoundRect(X, Y, WIDTH, HEIGHT, ARCW, ARCH);
+        g2d.fillRoundRect(X, Y, WIDTH, HEIGHT, ARCW, ARCH);
+    }
+
+    //override the getPreferredSize method
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(WIDTH, HEIGHT);
+    }
+
 }

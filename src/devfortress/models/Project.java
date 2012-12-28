@@ -25,7 +25,7 @@ import java.util.Set;
 public class Project implements Serializable {
 
     private int duration, level, budget, bonus, timeLeft;
-    private boolean finished;
+    private boolean finished, bonused;
     private DevDate acceptedDate;
     private Map<AreaName, FunctionalArea> functionalAreas;
     private SkillInfo mainRequirement;
@@ -46,6 +46,7 @@ public class Project implements Serializable {
         this.finished = false;
         this.devs_RO = new ReadOnlyList<Developer>(developers);
         this.events_RO = new ReadOnlyList<Event>(events);
+        this.bonused = false;
         randomize();
         calculateBudget();
     }
@@ -65,10 +66,18 @@ public class Project implements Serializable {
     }
 
     public int getBonus() {
+        if (bonused) {
+            if (bonus == 0 && finished) {
+                bonus = (int) (((float) timeLeft) / ((float) duration) * budget * ((1f + (0.1f * level)) + Utilities.randFloat() * ((float) level / 10f)));
+            }
+        } else {
+            bonus = 0;
+        }
         return bonus;
     }
 
     public int getBudget() {
+
         return budget;
     }
 
@@ -90,6 +99,10 @@ public class Project implements Serializable {
 
     public boolean isFinished() {
         return finished;
+    }
+
+    public boolean isBonused() {
+        return bonused;
     }
 
     public Map<AreaName, FunctionalArea> getAreas() {
@@ -128,24 +141,26 @@ public class Project implements Serializable {
      * @param dev
      */
     public synchronized void removeDeveloper(Developer dev) {
-        functionalAreas.get(dev.getWorkingArea()).removeDeveloper(dev);
-        developers.remove(dev);
-        dev.leaveProject();
+        if (functionalAreas.get(dev.getWorkingArea()) != null) {
+            functionalAreas.get(dev.getWorkingArea()).removeDeveloper(dev);
+            developers.remove(dev);
+            dev.leaveProject();
+        }
+
+
     }
 
     public void removeFunctionalArea(AreaName area) {
-        Set<Developer> devs = new HashSet<Developer>(functionalAreas.get(area).getDevelopers());
-        synchronized (devs) {
-            Iterator<Developer> itr = devs.iterator();
-            for (; itr.hasNext();) {
-                removeDeveloper(itr.next());
+        if (functionalAreas.get(area) != null) {
+            Set<Developer> devs = new HashSet<Developer>(functionalAreas.get(area).getDevelopers());
+            synchronized (devs) {
+                Iterator<Developer> itr = devs.iterator();
+                for (; itr.hasNext();) {
+                    removeDeveloper(itr.next());
+                }
+                functionalAreas.remove(area);
             }
-            functionalAreas.remove(area);
         }
-    }
-
-    public void reduceFunctionalPoints(AreaName area, int points) {
-        functionalAreas.get(area).reducePoints(points);
     }
 
     public void addEvent(Event event) {
@@ -173,6 +188,11 @@ public class Project implements Serializable {
             }
             if (finished == true && !area.isCompleted()) {
                 finished = false;
+            }
+        }
+        for (Developer dev : devs_RO) {
+            if (dev.getMainSkill() != mainRequirement) {
+                dev.setHappy(false);
             }
         }
         if (date.getWeek() == 4 && timeLeft != 0) {
@@ -208,14 +228,12 @@ public class Project implements Serializable {
         for (FunctionalArea area : functionalAreas.values()) {
             total += area.getFunctionPoints();
         }
-        budget = (int) (total * 10f * ((1f + (0.1f * level)) + Utilities.randFloat() * ((float) level / 10f)));
+        budget = (int) (total * 12f * ((1f + (0.1f * level)) + Utilities.randFloat() * ((float) level / 10f)));
         bonus = 0;
     }
 
     public void enableBonus() {
-        if (bonus == 0 && finished) {
-            bonus = (int) (((float) timeLeft) / ((float) duration) * budget * ((1f + (0.1f * level)) + Utilities.randFloat() * ((float) level / 10f)));
-        }
+        bonused = true;
     }
 
     private void randomize() {
@@ -309,9 +327,5 @@ public class Project implements Serializable {
 
     public void addFunctionalArea(FunctionalArea area) {
         functionalAreas.put(area.getName(), area);
-    }
-
-    public void clearEvents() {
-        events.clear();
     }
 }

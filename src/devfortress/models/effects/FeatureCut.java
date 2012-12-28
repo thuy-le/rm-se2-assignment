@@ -34,13 +34,13 @@ public class FeatureCut extends Effect {
 
         if (areas.isEmpty()) {
             description = "";
-            effect = EffectLevel.NEUTRAL;
+            effectLevel = EffectLevel.NEUTRAL;
             return;
         }
         FunctionalArea area = areas.get(Utilities.randInt(areas.size()));
         project.removeFunctionalArea(area.getName());
         //Set description
         description = "Area \"" + area.getName().toString() + "\" is cut from the project";
-        effect = EffectLevel.POSITIVE;
+        effectLevel = EffectLevel.POSITIVE;
     }
 }
