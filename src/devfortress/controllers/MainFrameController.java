@@ -79,6 +79,7 @@ public class MainFrameController {
         public void mouseClicked(MouseEvent e) {
             SettingDialog dialog = new SettingDialog();
             dialog.addApplyMouseListener(new ApplyListener(dialog));
+            dialog.display();
         }
 
         private class ApplyListener extends MouseAdapter {
@@ -110,23 +111,32 @@ public class MainFrameController {
         public void mouseClicked(MouseEvent e) {
             try {
                 model.nextWeek();
+                List<String> notifications = model.getFinishedProjects();
+                if (notifications.size() > 0) {
+                    String message = "Some projects are finished:\n";
+                    for (String dev : notifications) {
+                        message += dev;
+                    }
+                    JOptionPane.showMessageDialog(null, message, "DevFortress", JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (GameOverException ex) {
-                int result = JOptionPane.showConfirmDialog(null, ex.getMessage()
-                        + "\nDo you want to save your achievements?",
-                        "DevFortress", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    model.endGameReport(new File(model.getPlayerName() + ".txt"));
+                if (!model.isEnded()) {
+                    int result = JOptionPane.showConfirmDialog(null, ex.getMessage()
+                            + "\nDo you want to save your achievements?",
+                            "DevFortress", JOptionPane.YES_NO_OPTION);
+                    if (result == JOptionPane.YES_OPTION) {
+                        model.endGameReport(new File(model.getPlayerName() + ".txt"));
+                        JOptionPane.showMessageDialog(null, "Your achievement has been saved.\n"
+                                + " Please check out the file \"" + model.getPlayerName() + ".txt\"");
+                    }
+                    model.setEnded(true);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Game is already over!");
                 }
             }
             model.notifyObservers();
-            List<String> notifications = model.getFinishedProjects();
-            if (notifications.size() > 0) {
-                String message = "Some projects are finished:\n";
-                for (String dev : notifications) {
-                    message += dev;
-                }
-                JOptionPane.showMessageDialog(null, message, "DevFortress", JOptionPane.INFORMATION_MESSAGE);
-            }
+
         }
     }
 

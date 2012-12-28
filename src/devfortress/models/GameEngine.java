@@ -409,11 +409,22 @@ public class GameEngine extends Observable {
                 }
                 randomUnhappyDevLeave();
             }
+            if (developers.isEmpty()) {
+                throw new GameOverException("Game Over! You have no developers to continue the game");
+            }
             date.nextWeek();
             setChanged();
         } else {
-            throw new GameOverException();
+            throw new GameOverException("Game Over!");
         }
+    }
+
+    public boolean isEnded() {
+        return ended;
+    }
+
+    public void setEnded(boolean ended) {
+        this.ended = ended;
     }
 
     public List<String> getFinishedProjects() {
@@ -498,7 +509,6 @@ public class GameEngine extends Observable {
             budget -= dev.getSalary();
             if (budget <= 0) {
                 budget = 0;
-                ended = true;
                 setChanged();
                 throw new GameOverException();
             }

@@ -126,20 +126,6 @@ public class ProjectTest {
     }
 
     /**
-     * Test of reduceFunctionalPoints method, of class Project.
-     */
-    @Test
-    public void testReduceFunctionalPoints() {
-        System.out.println("reduceFunctionalPoints");
-        AreaName area = null;
-        int points = 0;
-        Project instance = new Project();
-        instance.reduceFunctionalPoints(area, points);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of progress method, of class Project.
      */
     @Test

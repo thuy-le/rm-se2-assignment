@@ -41,11 +41,11 @@ public class NewTechnology extends Effect {
             if (remaining > reducePoints) {
                 description += reducePoints + " function points is removed from " + area.getName().toString();
                 effect = EffectLevel.POSITIVE;
-                area.reducePoints(reducePoints);
+                area.addReducePoints(reducePoints);
                 reducePoints = 0;
             } else {
                 int decrease = remaining;
-                area.reducePoints(decrease);
+                area.addReducePoints(decrease);
                 reducePoints -= decrease;
                 description += decrease + " function points is removed from " + area.getName().toString() + ". ";
                 effect = EffectLevel.POSITIVE;

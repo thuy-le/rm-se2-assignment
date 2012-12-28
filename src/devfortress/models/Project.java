@@ -144,10 +144,7 @@ public class Project implements Serializable {
         }
     }
 
-    public void reduceFunctionalPoints(AreaName area, int points) {
-        functionalAreas.get(area).reducePoints(points);
-    }
-
+ 
     public void addEvent(Event event) {
         events.add(event);
     }
