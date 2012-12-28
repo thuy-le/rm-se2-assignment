@@ -1,9 +1,12 @@
 package devfortress.models;
 
+import devfortress.utilities.Utilities;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import devfortress.models.exceptions.DeveloperBusyException;
 import devfortress.models.exceptions.InvalidFunctionalAreaException;
 import devfortress.enumerations.AreaName;
-import java.util.Date;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +33,7 @@ public class ProjectTest {
 
     @After
     public void tearDown() {
-        testObject.clearEvents();
+        testObject.removeAllEvents();
         for (AreaName area : AreaName.values()) {
             testObject.removeFunctionalArea(area);
         }
@@ -180,22 +183,21 @@ public class ProjectTest {
     @Test
     public void testAddFunctionalArea() {
         System.out.println("addFunctionalArea");
-        FunctionalArea area = null;
-        Project instance = new Project();
-        instance.addFunctionalArea(area);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of clearEvents method, of class Project.
-     */
-    @Test
-    public void testClearEvents() {
-        System.out.println("clearEvents");
-        Project instance = new Project();
-        instance.clearEvents();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //Get a list of available areas
+        List<FunctionalArea> pAreas = new LinkedList<FunctionalArea>(testObject.getAreas().values());
+        List<AreaName> areas = new LinkedList<AreaName>(Arrays.asList(AreaName.values()));
+        for (FunctionalArea area : pAreas) {
+            areas.remove(area.getName());
+        }
+        if (areas.isEmpty()) {
+            fail("Test failed due to random factor");
+        } else {
+            int points = pAreas.get(Utilities.randInt(pAreas.size())).getFunctionPoints();
+            points = (int) (((double) points) * (1 + Math.random() / 10));
+            //Generate a random functional area
+            FunctionalArea area = Utilities.getRandomFunctionalArea(areas, points, true);
+            testObject.addFunctionalArea(area);
+            assertEquals(area, testObject.getAreas().get(area.getName()));
+        }
     }
 }

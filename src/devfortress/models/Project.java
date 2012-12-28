@@ -328,8 +328,4 @@ public class Project implements Serializable {
     public void addFunctionalArea(FunctionalArea area) {
         functionalAreas.put(area.getName(), area);
     }
-
-    public void clearEvents() {
-        events.clear();
-    }
 }
