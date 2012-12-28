@@ -3,6 +3,7 @@ package devfortress.models;
 import devfortress.models.exceptions.DeveloperBusyException;
 import devfortress.models.exceptions.InvalidFunctionalAreaException;
 import devfortress.enumerations.AreaName;
+import java.util.Date;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -124,40 +125,43 @@ public class ProjectTest {
     }
 
     /**
-     * Test of progress method, of class Project.
-     */
-    @Test
-    public void testProgress() {
-        System.out.println("progress");
-        DevDate date = null;
-        Project instance = new Project();
-        instance.progress(date);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of removeAllEvents method, of class Project.
      */
     @Test
     public void testRemoveAllEvents() {
         System.out.println("removeAllEvents");
-        Project instance = new Project();
-        instance.removeAllEvents();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.addEvent(new Event(EffectFactory.getInstance().getRandomEffect(GameEngine.getInstance()), testObject));
+        testObject.removeAllEvents();
+        assertEquals(0, testObject.getEvents().size());
     }
 
     /**
      * Test of removeAllDevelopers method, of class Project.
      */
     @Test
-    public void testRemoveAllDevelopers() {
+    public void testRemoveAllDevelopers() throws DeveloperBusyException, InvalidFunctionalAreaException {
         System.out.println("removeAllDevelopers");
-        Project instance = new Project();
-        instance.removeAllDevelopers();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Developer d1 = mock(Developer.class);
+        AreaName area = (AreaName) testObject.getAreas().keySet().toArray()[0];
+        when(d1.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d1, area);
+        Developer d2 = mock(Developer.class);
+        when(d2.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d2, area);
+        Developer d3 = mock(Developer.class);
+        when(d3.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d3, area);
+        Developer d4 = mock(Developer.class);
+        when(d4.getWorkingArea()).thenReturn(area);
+        testObject.addDeveloper(d4, area);
+        testObject.removeAllDevelopers();
+        assertEquals(0, testObject.getDevelopers().size());
     }
 
     /**
@@ -166,10 +170,8 @@ public class ProjectTest {
     @Test
     public void testEnableBonus() {
         System.out.println("enableBonus");
-        Project instance = new Project();
-        instance.enableBonus();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        testObject.enableBonus();
+        assertEquals(true, testObject.isBonused());
     }
 
     /**
