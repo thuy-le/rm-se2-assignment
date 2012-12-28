@@ -6,9 +6,6 @@ import devfortress.utilities.Utilities;
 import java.util.List;
 
 /**
- * Because the EventFactory does not vary, there will be no AbstractEventFactory
- * Future changes can be easily made for a fully developed AbstractFactory
- * design pattern if needed
  *
  * @author Team Poseidon
  */
