@@ -143,7 +143,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(1, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -153,7 +153,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(3, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -163,7 +163,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(19, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -173,7 +173,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(2, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -183,7 +183,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(6, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -193,7 +193,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(22, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -203,7 +203,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(3, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */
@@ -213,7 +213,7 @@ public class SkillTest {
         int result = testObject.getNextLevelCost();
         assertEquals(6, result);
     }
-    
+
     /**
      * Test of getNextLevelCost method, of class Skill.
      */

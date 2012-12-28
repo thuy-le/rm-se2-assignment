@@ -37,6 +37,7 @@ public class ProjectTest {
      */
     @Test
     public void testAddDeveloper_1() throws Exception {
+
         Developer dev = mock(Developer.class);
         AreaName area = (AreaName) testObject.getAreas().keySet().toArray()[0];
         testObject.addDeveloper(dev, area);
@@ -122,7 +123,6 @@ public class ProjectTest {
     }
 
     /**
-<<<<<<< HEAD
      * Test of removeFunctionalArea method, of class Project.
      * <p>Remove an area that has developer work on it.</p>
      */
@@ -191,14 +191,14 @@ public class ProjectTest {
     public void testProgress_1() {
         DevDate date = mock(DevDate.class);
         when(date.getWeek()).thenReturn(2).thenReturn(3).thenReturn(4).thenReturn(1);
-        
+
         testObject.progress(date);
-        
+
         for (FunctionalArea area : testObject.getAreas().values()) {
             assertEquals(0, area.getCompletedPoints());
         }
     }
-    
+
     /**
      * Test of progress method, of class Project.
      * <p>With 1 developer on one functional area.</p>
@@ -207,13 +207,34 @@ public class ProjectTest {
     public void testProgress_2() throws DeveloperBusyException, InvalidFunctionalAreaException {
         DevDate date = mock(DevDate.class);
         when(date.getWeek()).thenReturn(2).thenReturn(3).thenReturn(4).thenReturn(1);
-        
+
         Developer dev = mock(Developer.class);
         when(dev.getLastWeekFunctionPoints()).thenReturn(10);
-        
+
         FunctionalArea area = (FunctionalArea) testObject.getAreas().values().toArray()[0];
         testObject.addDeveloper(dev, area.getName());
-        
+
         testObject.progress(date);
+        assertEquals(dev.getCalculateLastWeekFunctionPoints(), area.getCompletedPoints());
+    }
+
+    /**
+     * Test of progress method, of class Project.
+     * <p>With 1 developer on one functional area until the functional area is completed.</p>
+     */
+    @Test
+    public void testProgress_3() throws DeveloperBusyException, InvalidFunctionalAreaException {
+        DevDate date = mock(DevDate.class);
+        when(date.getWeek()).thenReturn(2).thenReturn(3).thenReturn(4).thenReturn(1);
+
+        Developer dev = mock(Developer.class);
+        when(dev.getLastWeekFunctionPoints()).thenReturn(10);
+
+        FunctionalArea area = (FunctionalArea) testObject.getAreas().values().toArray()[0];
+        testObject.addDeveloper(dev, area.getName());
+        while (!area.isCompleted()) {
+            testObject.progress(date);
+        }
+        assertEquals(0, testObject.getDevelopers().size());
     }
 }

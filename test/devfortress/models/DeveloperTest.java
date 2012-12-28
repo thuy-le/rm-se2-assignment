@@ -10,14 +10,11 @@ import static org.junit.Assert.*;
  */
 public class DeveloperTest {
 
-    Developer testObject = null;
-
     public DeveloperTest() {
     }
 
     @Before
     public void setUp() {
-        testObject = new Developer();
     }
 
     @After
@@ -32,9 +29,9 @@ public class DeveloperTest {
      */
     @Test
     public void testDetermineMainSkill_1() {
-        SkillInfo expResult = null;
+        Developer testObject = new Developer();
         SkillInfo result = testObject.getMainSkill();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -45,9 +42,10 @@ public class DeveloperTest {
      */
     @Test
     public void testDetermineMainSkill_2() {
+        Developer testObject = new Developer();
         Skill testSkill = new Skill(10, SkillInfo.JAVA);
         testObject.addSkill(testSkill);
-        SkillInfo expResult = testSkill.getSkillInfo();
+        SkillInfo expResult = SkillInfo.JAVA;
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
@@ -59,11 +57,12 @@ public class DeveloperTest {
      */
     @Test
     public void testDetermineMainSkill_3() {
-        Skill techSkill = new Skill(1, SkillInfo.JAVA);
-        Skill comSkill = new Skill(4, SkillInfo.COMMUNICATION);
-        testObject.addSkill(comSkill);
-        testObject.addSkill(techSkill);
-        SkillInfo expResult = techSkill.getSkillInfo();
+        Developer testObject = new Developer();
+        Skill testSkill = new Skill(9, SkillInfo.JAVA);
+        Skill testSkill2 = new Skill(10, SkillInfo.COMMUNICATION);
+        testObject.addSkill(testSkill);
+        testObject.addSkill(testSkill2);
+        SkillInfo expResult = SkillInfo.JAVA;
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
@@ -75,6 +74,7 @@ public class DeveloperTest {
      */
     @Test
     public void testDetermineMainSkill_4() {
+        Developer testObject = new Developer();
         Skill techSkill1 = new Skill(1, SkillInfo.JAVA);
         Skill techSkill2 = new Skill(4, SkillInfo.C);
         testObject.addSkill(techSkill1);
@@ -91,29 +91,12 @@ public class DeveloperTest {
      */
     @Test
     public void testDetermineMainSkill_5() {
-        Skill techSkill1 = new Skill(4, SkillInfo.JAVA);
-        Skill techSkill2 = new Skill(4, SkillInfo.C);
+        Developer testObject = new Developer();
+        Skill techSkill1 = new Skill(10, SkillInfo.JAVA);
+        Skill techSkill2 = new Skill(10, SkillInfo.C);
         testObject.addSkill(techSkill1);
         testObject.addSkill(techSkill2);
         SkillInfo expResult = techSkill2.getSkillInfo();
-        SkillInfo result = testObject.getMainSkill();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of DetermineMainSkill method, of class Developer.
-     * <p>Actually, this is the test of determineMainSkill() method.</p>
-     * Case 6: developer no technical skill.
-     */
-    @Test
-    public void testDetermineMainSkill_6() {
-        Skill comSkill = new Skill(1, SkillInfo.COMMUNICATION);
-        Skill metaSkill = new Skill(4, SkillInfo.DESIGN);
-        Skill teamSkill = new Skill(10, SkillInfo.TEAM_PLAYER);
-        testObject.addSkill(comSkill);
-        testObject.addSkill(metaSkill);
-        testObject.addSkill(teamSkill);
-        SkillInfo expResult = null;
         SkillInfo result = testObject.getMainSkill();
         assertEquals(expResult, result);
     }
@@ -124,10 +107,11 @@ public class DeveloperTest {
      */
     @Test
     public void testTrainSkill_1() {
+        Developer testObject = new Developer();
         SkillInfo testSkillInfo = SkillInfo.C;
+        int expResult = testObject.getSkillLevel(SkillInfo.C) + 2;
         testObject.trainSkill(testSkillInfo);
         testObject.trainSkill(testSkillInfo);
-        int expResult = 2;
         assertEquals(expResult, testObject.getSkills().get(testSkillInfo).getLevel());
     }
 
@@ -137,6 +121,7 @@ public class DeveloperTest {
      */
     @Test
     public void testTrainSkill_2() {
+        Developer testObject = new Developer();
         SkillInfo testSkillInfo = SkillInfo.C;
         testObject.addSkill(new Skill(10, testSkillInfo));
         testObject.trainSkill(testSkillInfo);

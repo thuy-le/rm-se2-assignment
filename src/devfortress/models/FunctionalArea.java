@@ -85,6 +85,10 @@ public class FunctionalArea implements Serializable {
 
     public void progress(int points) {
         completedPoints += points;
+        completedPoints =
+                (completedPoints < functionPoints - reducedPoints)
+                ? completedPoints
+                : functionPoints - reducedPoints;
         completed = completed ? completed : functionPoints - reducedPoints <= completedPoints;
     }
 

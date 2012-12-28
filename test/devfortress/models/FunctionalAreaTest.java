@@ -17,19 +17,17 @@ public class FunctionalAreaTest {
     private Developer dev1, dev2;
 
     public FunctionalAreaTest() {
+    }
+
+    @Before
+    public void setUp() {
+        testObject = new FunctionalArea(AreaName.CODING, 100, 0, true);
         dev1 = mock(Developer.class);
         when(dev1.getLastWeekFunctionPoints()).thenReturn(10);
         when(dev1.isAvailable()).thenReturn(true);
         dev2 = mock(Developer.class);
         when(dev2.getLastWeekFunctionPoints()).thenReturn(15);
         when(dev2.isAvailable()).thenReturn(true);
-
-    }
-
-    @Before
-    public void setUp() {
-        testObject = new FunctionalArea(AreaName.CODING, 100, 0, true);
-
         testObject.addDeveloper(dev1);
         testObject.addDeveloper(dev2);
     }
@@ -37,46 +35,8 @@ public class FunctionalAreaTest {
     @After
     public void tearDown() {
         testObject = null;
-    }
-
-    /**
-     * Test of addFunctionPoints method, of class FunctionalArea.
-     */
-    @Test
-    public void testAddFunctionPoints_1() {
-        int points = 25;
-        testObject.addFunctionPoints(points);
-        assertEquals(125, testObject.getFunctionPoints());
-    }
-
-    /**
-     * Test of addFunctionPoints method, of class FunctionalArea.
-     */
-    @Test
-    public void testAddFunctionPoints_2() {
-        int points = 1;
-        testObject.addFunctionPoints(points);
-        assertEquals(101, testObject.getFunctionPoints());
-    }
-
-    /**
-     * Test of addFunctionPoints method, of class FunctionalArea.
-     */
-    @Test
-    public void testAddFunctionPoints_3() {
-        int points = 0;
-        testObject.addFunctionPoints(points);
-        assertEquals(100, testObject.getFunctionPoints());
-    }
-
-    /**
-     * Test of addFunctionPoints method, of class FunctionalArea.
-     */
-    @Test
-    public void testAddFunctionPoints_4() {
-        int points = -1;
-        testObject.addFunctionPoints(points);
-        assertEquals(100, testObject.getFunctionPoints());
+        dev1 = null;
+        dev2 = null;
     }
 
     /**
@@ -141,7 +101,7 @@ public class FunctionalAreaTest {
         assertTrue(testObject.addDeveloper(dev3));
         assertEquals(3, testObject.getDevelopers().size());
     }
-    
+
     /**
      * Test of addDeveloper method, of class FunctionalArea.
      */
@@ -161,7 +121,7 @@ public class FunctionalAreaTest {
         testObject.removeDeveloper(dev1);
         assertEquals(1, testObject.getDevelopers().size());
     }
-    
+
     /**
      * Test of removeDeveloper method, of class FunctionalArea.
      */
@@ -171,7 +131,6 @@ public class FunctionalAreaTest {
         testObject.removeDeveloper(dev3);
         assertEquals(2, testObject.getDevelopers().size());
     }
-
 
     /**
      * Test of removeAllDeveloper method, of class FunctionalArea.

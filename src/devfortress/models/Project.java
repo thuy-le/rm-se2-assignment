@@ -141,19 +141,25 @@ public class Project implements Serializable {
      * @param dev
      */
     public synchronized void removeDeveloper(Developer dev) {
-        functionalAreas.get(dev.getWorkingArea()).removeDeveloper(dev);
-        developers.remove(dev);
-        dev.leaveProject();
+        if (functionalAreas.get(dev.getWorkingArea()) != null) {
+            functionalAreas.get(dev.getWorkingArea()).removeDeveloper(dev);
+            developers.remove(dev);
+            dev.leaveProject();
+        }
+
+
     }
 
     public void removeFunctionalArea(AreaName area) {
-        Set<Developer> devs = new HashSet<Developer>(functionalAreas.get(area).getDevelopers());
-        synchronized (devs) {
-            Iterator<Developer> itr = devs.iterator();
-            for (; itr.hasNext();) {
-                removeDeveloper(itr.next());
+        if (functionalAreas.get(area) != null) {
+            Set<Developer> devs = new HashSet<Developer>(functionalAreas.get(area).getDevelopers());
+            synchronized (devs) {
+                Iterator<Developer> itr = devs.iterator();
+                for (; itr.hasNext();) {
+                    removeDeveloper(itr.next());
+                }
+                functionalAreas.remove(area);
             }
-            functionalAreas.remove(area);
         }
     }
 
