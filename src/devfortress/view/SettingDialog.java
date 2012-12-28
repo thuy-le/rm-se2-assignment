@@ -100,6 +100,9 @@ public class SettingDialog extends JDialog {
         setResizable(false);
         setLocationRelativeTo(null);
         setModalityType(ModalityType.APPLICATION_MODAL);
+    }
+
+    public void display() {
         setVisible(true);
     }
 

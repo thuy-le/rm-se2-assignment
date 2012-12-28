@@ -22,7 +22,7 @@ public class Holiday extends Effect {
         List<Developer> devs = project.getDevelopers();
         if (devs.isEmpty()) {
             description = "";
-            effect = EffectLevel.NEUTRAL;
+            effectLevel = EffectLevel.NEUTRAL;
             return;
         }
 
@@ -34,6 +34,6 @@ public class Holiday extends Effect {
         }
         //Set description
         description = "Holiday! Yey! Everyone is happy. However, " + dev.getName() + " only produces " + 1 + " this week.";
-        effect = EffectLevel.NEUTRAL;
+        effectLevel = EffectLevel.NEUTRAL;
     }
 }

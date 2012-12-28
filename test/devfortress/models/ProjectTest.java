@@ -122,6 +122,7 @@ public class ProjectTest {
     }
 
     /**
+<<<<<<< HEAD
      * Test of removeFunctionalArea method, of class Project.
      * <p>Remove an area that has developer work on it.</p>
      */

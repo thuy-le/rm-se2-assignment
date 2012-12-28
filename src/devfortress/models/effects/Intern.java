@@ -26,7 +26,7 @@ public class Intern extends Effect {
             List<Developer> devs = project.getDevelopers();
             if (devs.isEmpty()) {
                 description = "";
-                effect = EffectLevel.NEUTRAL;
+                effectLevel = EffectLevel.NEUTRAL;
                 return;
             }
 
@@ -46,7 +46,7 @@ public class Intern extends Effect {
             area.progress(5);
             //Set description
             description = "Student intern has completed 5 function points in " + area.getName().toString() + ". " + dev.getName() + " is very happy about that";
-            effect = EffectLevel.POSITIVE;
+            effectLevel = EffectLevel.POSITIVE;
         }
     }
 }

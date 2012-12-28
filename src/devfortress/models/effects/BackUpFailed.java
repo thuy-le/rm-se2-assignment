@@ -30,6 +30,6 @@ public class BackUpFailed extends Effect {
         area.addFunctionPoints(index);
         //Set description
         description = "Add 25 function points into " + area.getName().toString();
-        effect = EffectLevel.NEGATIVE;
+        effectLevel = EffectLevel.NEGATIVE;
     }
 }
